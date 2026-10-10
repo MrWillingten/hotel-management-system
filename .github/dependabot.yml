@@ -4,6 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: weekly
+    # Only propose a change when the allowed range excludes a new release;
+    # do not raise minimum versions that still work.
+    versioning-strategy: increase-if-necessary
     open-pull-requests-limit: 5
   - package-ecosystem: github-actions
     directory: "/"
