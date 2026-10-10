@@ -17,7 +17,7 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | A7 | 🟡 | Session fixation | New token at every login, previous one destroyed | ✅ S1 |
 | A8 | 🟡 | Last manager deactivated | Refused | ⏳ S2 |
 | A9 | 🟡 | Manager knows a reset password | `must_change_password` forces a change | ⏳ S2 |
-| A10 | 🟡 | Missing traceability | Hash-chained audit log | ⏳ S2 |
+| A10 | 🟡 | Missing traceability | Hash-chained, append-only audit log (triggers + SHA-256 chain); `hotel audit verify`; manager viewer | ✅ S2 |
 | A11 | ⚪ | TOTP replay | Remember last used time step | ⏳ stretch |
 
 ## Web

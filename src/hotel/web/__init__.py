@@ -7,7 +7,7 @@ import os
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
-from flask import Flask, g
+from flask import Flask, g, request, url_for
 from flask_babel import Babel, get_locale
 from flask_wtf.csrf import CSRFProtect
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -17,7 +17,7 @@ from hotel.bootstrap import Services, build_services
 from hotel.config import LANGUAGES, ConfigurationError, Settings
 from hotel.secret_key import load_or_create_secret_key
 from hotel.web import errors, security
-from hotel.web.blueprints import auth, dashboard, preferences
+from hotel.web.blueprints import audit, auth, dashboard, preferences
 from hotel.web.context import SERVICES_KEY
 from hotel.web.preferences import current_theme, select_locale, text_direction
 
@@ -66,8 +66,15 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
     babel.init_app(app, locale_selector=select_locale)
     security.install(app)
     errors.install(app)
-    for blueprint in (auth.bp, dashboard.bp, preferences.bp):
+    for blueprint in (audit.bp, auth.bp, dashboard.bp, preferences.bp):
         app.register_blueprint(blueprint)
+
+    @app.template_global()
+    def page_url(page: int) -> str:
+        """The current URL with a different ?page=, keeping every other filter."""
+        args = request.args.to_dict()
+        args["page"] = str(page)
+        return url_for(request.endpoint, **(request.view_args or {}), **args)
 
     @app.context_processor
     def interface_context():

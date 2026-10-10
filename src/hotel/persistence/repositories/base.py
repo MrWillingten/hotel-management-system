@@ -7,6 +7,14 @@ from typing import Any
 Params = Sequence[Any]
 
 
+def escape_like(text: str) -> str:
+    """Make % and _ match themselves in a LIKE pattern (used with ESCAPE '\\').
+
+    Without this, searching for "50%" would match everything starting with "50".
+    """
+    return text.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+
+
 class BaseRepository:
     """Shared plumbing. Repositories never commit: the UnitOfWork does."""
 

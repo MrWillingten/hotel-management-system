@@ -39,6 +39,8 @@ MESSAGES = {
     "password.contains_username": _l("The password must not contain the username."),
     "password.too_common": _l("This password is too common. Choose a less predictable one."),
     "period.departure_not_after_arrival": _l("The departure date must be after the arrival date."),
+    "field.not_a_number": _l("Enter a whole number."),
+    "field.invalid_date": _l("Enter a valid date."),
     "money.invalid": _l("Enter an amount such as 180 or 180.500."),
     "money.too_many_decimals": _l("Amounts have at most 3 decimals (millimes)."),
 }

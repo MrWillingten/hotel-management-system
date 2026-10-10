@@ -3,6 +3,7 @@ from zoneinfo import ZoneInfo
 
 import pytest
 
+from hotel.domain.actor import Actor
 from hotel.domain.clock import FixedClock, SystemClock
 from hotel.domain.enums import Role
 from hotel.domain.errors import (
@@ -19,7 +20,7 @@ from hotel.domain.users import (
     normalize_username,
     validate_username,
 )
-from hotel.services.authorization import require_role
+from hotel.services.authorization import require_role, require_staff
 
 TUNIS = ZoneInfo("Africa/Tunis")
 NOON = datetime(2026, 7, 8, 12, 0, tzinfo=UTC)
@@ -139,12 +140,21 @@ def test_password_policy_accepts_a_long_passphrase():
 
 # ------------------------------------------------------------ authorization
 def test_require_role():
-    manager = _user()
-    receptionist = _user(role=Role.RECEPTIONIST)
+    manager = Actor(_user())
+    receptionist = Actor(_user(role=Role.RECEPTIONIST))
     assert require_role(manager, Role.MANAGER) is manager
+    assert require_staff(receptionist) is receptionist
+    assert require_role(Actor.system(), Role.MANAGER).is_system  # command line
     with pytest.raises(PermissionDeniedError):
         require_role(receptionist, Role.MANAGER)
     with pytest.raises(PermissionDeniedError):
-        require_role(None, Role.MANAGER)
+        require_role(Actor(None, label="anonymous"), Role.MANAGER)
     with pytest.raises(PermissionDeniedError):
-        require_role(_user(is_active=False), Role.MANAGER)
+        require_role(Actor(_user(is_active=False)), Role.MANAGER)
+
+
+def test_actor_labels():
+    assert Actor(_user()).username == "mona"
+    assert Actor(_user()).user_id == 1
+    assert Actor.system().username == "cli"
+    assert Actor.system().user_id is None

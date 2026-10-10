@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 00:24+0100\n"
+"POT-Creation-Date: 2026-10-11 00:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,10 +24,25 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
+msgid "Action"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Administration"
+msgstr ""
+
+msgid "All actions"
+msgstr ""
+
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr ""
 
 msgid "An unexpected error occurred. It has been logged."
+msgstr ""
+
+msgid "Audit log"
 msgstr ""
 
 msgid "Back to the dashboard"
@@ -51,19 +66,37 @@ msgstr ""
 msgid "Database schema"
 msgstr ""
 
+msgid "Details"
+msgstr ""
+
 msgid "Done"
 msgstr ""
 
 msgid "Enter a name of 1 to 100 characters."
 msgstr ""
 
+msgid "Enter a valid date."
+msgstr ""
+
+msgid "Enter a whole number."
+msgstr ""
+
 msgid "Enter an amount such as 180 or 180.500."
+msgstr ""
+
+msgid "Everyone"
+msgstr ""
+
+msgid "Filter"
 msgstr ""
 
 msgid "Form expired"
 msgstr ""
 
 msgid "Foundations: sign-in, themes, languages"
+msgstr ""
+
+msgid "From"
 msgstr ""
 
 msgid "Front desk and billing"
@@ -87,6 +120,16 @@ msgstr ""
 msgid "Incident reference:"
 msgstr ""
 
+#, python-format
+msgid ""
+"Integrity check failed at entry #%(id)s: the log was altered or entries "
+"were removed."
+msgstr ""
+
+#, python-format
+msgid "Integrity verified: %(count)s entries, none altered or removed."
+msgstr ""
+
 msgid "Invalid username or password, or the account is temporarily locked."
 msgstr ""
 
@@ -108,19 +151,35 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+msgid "Next page"
+msgstr ""
+
 msgid "No account exists yet."
+msgstr ""
+
+msgid "No entries match these filters."
 msgstr ""
 
 msgid "Not allowed"
 msgstr ""
 
+#, python-format
+msgid "Page %(page)s of %(pages)s"
+msgstr ""
+
 msgid "Page not found"
+msgstr ""
+
+msgid "Pages"
 msgstr ""
 
 msgid "Password"
 msgstr ""
 
 msgid "Planned"
+msgstr ""
+
+msgid "Previous"
 msgstr ""
 
 msgid "Project roadmap"
@@ -130,6 +189,9 @@ msgid "Reception and management"
 msgstr ""
 
 msgid "Receptionist"
+msgstr ""
+
+msgid "Record"
 msgstr ""
 
 msgid "Reports, operations and translations"
@@ -213,6 +275,9 @@ msgstr ""
 msgid "Time zone: %(tz)s"
 msgstr ""
 
+msgid "To"
+msgstr ""
+
 msgid "Too large"
 msgstr ""
 
@@ -235,6 +300,9 @@ msgstr ""
 msgid "Use the account your manager created for you."
 msgstr ""
 
+msgid "User"
+msgstr ""
+
 msgid "Username"
 msgstr ""
 
@@ -246,6 +314,9 @@ msgstr ""
 
 #, python-format
 msgid "Welcome, %(name)s."
+msgstr ""
+
+msgid "When"
 msgstr ""
 
 msgid "You don't have permission to do that."
@@ -263,3 +334,4 @@ msgstr ""
 
 msgid "Your session"
 msgstr ""
+

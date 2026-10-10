@@ -66,6 +66,10 @@ def test_placeholders_are_kept(language):
             for placeholder in (
                 "%(name)s",
                 "%(greeting)s",
+                "%(id)s",
+                "%(count)s",
+                "%(page)s",
+                "%(pages)s",
                 "%(tz)s",
                 "%(minutes)s",
                 "%(min_length)s",

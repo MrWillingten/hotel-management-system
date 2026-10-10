@@ -15,6 +15,7 @@ from hotel.domain.clock import Clock, SystemClock
 from hotel.domain.passwords import PasswordPolicy
 from hotel.persistence.db import initialise_database
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
+from hotel.services.audit import AuditService
 from hotel.services.auth import AuthService
 from hotel.services.passwords import PasswordHasher, ScryptParams
 
@@ -32,6 +33,7 @@ class Services:
     uow_factory: UnitOfWorkFactory
     schema_version: int
     auth: AuthService
+    audit: AuditService
 
 
 def build_services(settings: Settings, *, clock: Clock | None = None) -> Services:
@@ -49,4 +51,5 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
         uow_factory=uow_factory,
         schema_version=schema_version,
         auth=AuthService(uow_factory, clock, hasher, policy),
+        audit=AuditService(uow_factory, clock),
     )

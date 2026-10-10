@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 00:24+0100\n"
+"POT-Creation-Date: 2026-10-11 00:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -26,11 +26,26 @@ msgstr "%(greeting)s، %(name)s"
 msgid "Access denied"
 msgstr "تم رفض الوصول"
 
+msgid "Action"
+msgstr "الإجراء"
+
+msgid "Address"
+msgstr "العنوان"
+
+msgid "Administration"
+msgstr "الإدارة"
+
+msgid "All actions"
+msgstr "كل الإجراءات"
+
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr "تحتوي المبالغ على 3 أرقام عشرية كحد أقصى (المليمات)."
 
 msgid "An unexpected error occurred. It has been logged."
 msgstr "حدث خطأ غير متوقع. تم تسجيله."
+
+msgid "Audit log"
+msgstr "سجل التدقيق"
 
 msgid "Back to the dashboard"
 msgstr "العودة إلى لوحة القيادة"
@@ -53,20 +68,38 @@ msgstr "لوحة القيادة"
 msgid "Database schema"
 msgstr "مخطط قاعدة البيانات"
 
+msgid "Details"
+msgstr "التفاصيل"
+
 msgid "Done"
 msgstr "مكتمل"
 
 msgid "Enter a name of 1 to 100 characters."
 msgstr "أدخل اسمًا من 1 إلى 100 حرف."
 
+msgid "Enter a valid date."
+msgstr "أدخل تاريخًا صالحًا."
+
+msgid "Enter a whole number."
+msgstr "أدخل عددًا صحيحًا."
+
 msgid "Enter an amount such as 180 or 180.500."
 msgstr "أدخل مبلغًا مثل 180 أو 180.500."
+
+msgid "Everyone"
+msgstr "الجميع"
+
+msgid "Filter"
+msgstr "تصفية"
 
 msgid "Form expired"
 msgstr "انتهت صلاحية النموذج"
 
 msgid "Foundations: sign-in, themes, languages"
 msgstr "الأساسيات: تسجيل الدخول والسمات واللغات"
+
+msgid "From"
+msgstr "من"
 
 msgid "Front desk and billing"
 msgstr "الاستقبال والفوترة"
@@ -89,6 +122,14 @@ msgstr "توقيت الفندق"
 msgid "Incident reference:"
 msgstr "مرجع الحادثة:"
 
+#, python-format
+msgid "Integrity check failed at entry #%(id)s: the log was altered or entries were removed."
+msgstr "فشل التحقق من السلامة عند الإدخال رقم %(id)s: تم تعديل السجل أو حذف إدخالات منه."
+
+#, python-format
+msgid "Integrity verified: %(count)s entries, none altered or removed."
+msgstr "تم التحقق من السلامة: %(count)s إدخال، لم يُعدَّل أو يُحذف أي منها."
+
 msgid "Invalid username or password, or the account is temporarily locked."
 msgstr "اسم المستخدم أو كلمة المرور غير صحيحة، أو أن الحساب مقفل مؤقتًا."
 
@@ -110,20 +151,36 @@ msgstr "حسب النظام"
 msgid "Next"
 msgstr "التالي"
 
+msgid "Next page"
+msgstr "الصفحة التالية"
+
 msgid "No account exists yet."
 msgstr "لا يوجد أي حساب بعد."
+
+msgid "No entries match these filters."
+msgstr "لا توجد إدخالات تطابق هذه المرشحات."
 
 msgid "Not allowed"
 msgstr "غير مسموح"
 
+#, python-format
+msgid "Page %(page)s of %(pages)s"
+msgstr "الصفحة %(page)s من %(pages)s"
+
 msgid "Page not found"
 msgstr "الصفحة غير موجودة"
+
+msgid "Pages"
+msgstr "الصفحات"
 
 msgid "Password"
 msgstr "كلمة المرور"
 
 msgid "Planned"
 msgstr "مخطط له"
+
+msgid "Previous"
+msgstr "السابقة"
 
 msgid "Project roadmap"
 msgstr "خارطة طريق المشروع"
@@ -133,6 +190,9 @@ msgstr "الاستقبال والإدارة"
 
 msgid "Receptionist"
 msgstr "موظف استقبال"
+
+msgid "Record"
+msgstr "السجل"
 
 msgid "Reports, operations and translations"
 msgstr "التقارير والعمليات والترجمات"
@@ -213,6 +273,9 @@ msgstr "كلمة المرور هذه تكرر الأحرف نفسها كثيرً
 msgid "Time zone: %(tz)s"
 msgstr "المنطقة الزمنية: %(tz)s"
 
+msgid "To"
+msgstr "إلى"
+
 msgid "Too large"
 msgstr "كبير جدًا"
 
@@ -233,6 +296,9 @@ msgstr "استخدم %(max_length)s حرفًا كحد أقصى."
 msgid "Use the account your manager created for you."
 msgstr "استخدم الحساب الذي أنشأه لك مديرك."
 
+msgid "User"
+msgstr "المستخدم"
+
 msgid "Username"
 msgstr "اسم المستخدم"
 
@@ -245,6 +311,9 @@ msgstr "لم نعثر على ما تبحث عنه."
 #, python-format
 msgid "Welcome, %(name)s."
 msgstr "مرحبًا، %(name)s."
+
+msgid "When"
+msgstr "التاريخ"
 
 msgid "You don't have permission to do that."
 msgstr "ليست لديك صلاحية للقيام بذلك."
@@ -261,3 +330,4 @@ msgstr "سيتم تسجيل خروجك بعد %(minutes)s دقيقة من عدم
 
 msgid "Your session"
 msgstr "جلستك"
+

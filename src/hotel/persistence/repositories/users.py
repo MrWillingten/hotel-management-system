@@ -14,6 +14,10 @@ _SELECT_BY_ID = (
     "SELECT id, username, full_name, password_hash, role, is_active, must_change_password, "
     "failed_attempts, locked_until, created_at, version FROM app_user WHERE id = ?"
 )
+_SELECT_ALL = (
+    "SELECT id, username, full_name, password_hash, role, is_active, must_change_password, "
+    "failed_attempts, locked_until, created_at, version FROM app_user ORDER BY username"
+)
 _SELECT_BY_USERNAME = (
     "SELECT id, username, full_name, password_hash, role, is_active, must_change_password, "
     "failed_attempts, locked_until, created_at, version FROM app_user WHERE username = ?"
@@ -44,6 +48,9 @@ class UserRepository(BaseRepository):
     def get_by_username(self, username: str) -> User | None:
         row = self._fetch_one(_SELECT_BY_USERNAME, (username,))
         return _to_user(row) if row else None
+
+    def list_all(self) -> list[User]:
+        return [_to_user(row) for row in self._fetch_all(_SELECT_ALL)]
 
     def count(self) -> int:
         return self._fetch_one("SELECT COUNT(*) FROM app_user")[0]
