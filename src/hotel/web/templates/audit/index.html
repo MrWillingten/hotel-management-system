@@ -1,0 +1,81 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/paging.html" import pagination -%}
+{% block title %}{{ _("Audit log") }}{% endblock %}
+{% block page_title %}{{ _("Audit log") }}{% endblock %}
+{% block content %}
+{%- if check.ok %}
+<div class="alert alert--success">{{ icon("shield") }}
+  <p>{{ _("Integrity verified: %(count)s entries, none altered or removed.", count=check.checked) }}</p>
+</div>
+{%- else %}
+<div class="alert alert--danger" role="alert">{{ icon("alert") }}
+  <p>{{ _("Integrity check failed at entry #%(id)s: the log was altered or entries were removed.", id=check.broken_at) }}</p>
+</div>
+{%- endif %}
+
+<form class="filters" method="get" action="{{ url_for('audit.index') }}">
+  <div class="field">
+    <label class="field__label" for="f-user">{{ _("User") }}</label>
+    <select class="field__input" id="f-user" name="user">
+      <option value="">{{ _("Everyone") }}</option>
+      {%- for id, username in users %}
+      <option value="{{ id }}" {%- if filters.user_id == id %} selected{% endif %}>{{ username }}</option>
+      {%- endfor %}
+    </select>
+  </div>
+  <div class="field">
+    <label class="field__label" for="f-action">{{ _("Action") }}</label>
+    <select class="field__input" id="f-action" name="action">
+      <option value="">{{ _("All actions") }}</option>
+      {%- for group in groups %}
+      <option value="{{ group }}" {%- if filters.action_prefix == group %} selected{% endif %}>{{ group }}*</option>
+      {%- endfor %}
+    </select>
+  </div>
+  <div class="field">
+    <label class="field__label" for="f-since">{{ _("From") }}</label>
+    <input class="field__input" id="f-since" name="since" type="date" value="{{ filters.since or '' }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="f-until">{{ _("To") }}</label>
+    <input class="field__input" id="f-until" name="until" type="date" value="{{ filters.until or '' }}">
+  </div>
+  <button class="button button--primary" type="submit">{{ _("Filter") }}</button>
+</form>
+{%- if error %}<div class="alert alert--danger">{{ icon("alert") }}<p>{{ error.values() | first }}</p></div>{% endif %}
+
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">{{ _("When") }}</th>
+        <th scope="col">{{ _("User") }}</th>
+        <th scope="col">{{ _("Action") }}</th>
+        <th scope="col">{{ _("Record") }}</th>
+        <th scope="col">{{ _("Details") }}</th>
+        <th scope="col">{{ _("Address") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for entry in page.items %}
+      <tr>
+        <td dir="ltr">{{ entry.id }}</td>
+        <td>{{ entry.at | datetimeformat("short") }}</td>
+        <td>{{ entry.username or "—" }}</td>
+        <td><code dir="ltr">{{ entry.action }}</code></td>
+        <td dir="ltr">{% if entry.entity %}{{ entry.entity }} #{{ entry.entity_id }}{% else %}—{% endif %}</td>
+        <td class="table__details" dir="ltr">
+          {%- for key, value in entry.details | dictsort %}<span>{{ key }}={{ value }}</span>{% endfor -%}
+        </td>
+        <td dir="ltr">{{ entry.ip or "—" }}</td>
+      </tr>
+      {%- else %}
+      <tr><td colspan="7" class="table__empty">{{ _("No entries match these filters.") }}</td></tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+{{ pagination(page) }}
+{% endblock %}

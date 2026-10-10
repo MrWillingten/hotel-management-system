@@ -4,7 +4,7 @@
 {%- from "macros/forms.html" import csrf -%}
 
 {%- macro nav_link(endpoint, label, glyph) -%}
-{%- set active = request.endpoint == endpoint %}
+{%- set active = request.endpoint == endpoint or (request.blueprint and endpoint.startswith(request.blueprint ~ ".")) %}
 <a class="nav__link{% if active %} nav__link--active{% endif %}" href="{{ url_for(endpoint) }}"
    {%- if active %} aria-current="page"{% endif %}>{{ icon(glyph) }}<span>{{ label }}</span></a>
 {%- endmacro -%}
@@ -19,6 +19,10 @@
     </a>
     <nav class="nav" aria-label="{{ _('Main') }}">
       {{ nav_link("dashboard.index", _("Dashboard"), "home") }}
+      {%- if current_user and current_user.is_manager %}
+      <p class="nav__heading">{{ _("Administration") }}</p>
+      {{ nav_link("audit.index", _("Audit log"), "shield") }}
+      {%- endif %}
     </nav>
     <div class="sidebar__footer">
       <span class="muted">v{{ app_version }}</span>

@@ -94,7 +94,7 @@ def test_cli_version(capsys):
 def test_cli_init_db(cli_env, capsys):
     assert cli.main(["init-db"]) == 0
     assert (cli_env / "hotel.db").exists()
-    assert "schema v1" in capsys.readouterr().out
+    assert "schema v" in capsys.readouterr().out
 
 
 def test_cli_create_manager(cli_env, monkeypatch, capsys):

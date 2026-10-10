@@ -7,6 +7,7 @@ import secrets
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 
+from hotel.domain.actor import Actor
 from hotel.domain.clock import Clock
 from hotel.domain.enums import Role
 from hotel.domain.errors import AuthenticationError, BusinessRuleViolation, ValidationError
@@ -19,6 +20,7 @@ from hotel.domain.users import (
     validate_username,
 )
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
+from hotel.services.audit import record
 from hotel.services.passwords import PasswordHasher
 
 _MAX_TOKEN_LENGTH = 128
@@ -93,7 +95,18 @@ class AuthService:
                 role=Role.MANAGER,
                 created_at=self._clock.now(),
             )
-            return uow.users.add(user)
+            user = uow.users.add(user)
+            record(
+                uow,
+                self._clock,
+                Actor.system(),
+                "user.created",
+                entity="user",
+                entity_id=user.id,
+                role=user.role.value,
+                first_manager=True,
+            )
+            return user
 
     # ------------------------------------------------------------ sign in / out
     def login(self, username: str, password: str, *, ip: str, user_agent: str = "") -> LoginResult:
@@ -111,13 +124,24 @@ class AuthService:
         with self._uow() as uow:
             uow.login_failures.delete_older_than(now - timedelta(days=1))
             recent = uow.login_failures.count_for_ip_since(ip, now - settings.ip_window)
+            anonymous = Actor(user=None, ip=ip, label="anonymous")
             if recent >= settings.ip_max_failures:
                 failure = "auth.too_many_attempts"
+                record(uow, self._clock, anonymous, "auth.throttled")
             else:
                 user = uow.users.get_by_username(lookup_name) if lookup_name else None
                 if user is None or not user.is_active:
                     self._hasher.verify_dummy(password)  # same cost as a real check
                     failure = "auth.invalid_credentials"
+                    # The attempted name is not logged for unknown accounts: people
+                    # sometimes type their password into the username field.
+                    record(
+                        uow,
+                        self._clock,
+                        anonymous,
+                        "auth.login_failed",
+                        reason="unknown_or_inactive",
+                    )
                 else:
                     # The password is checked even when the account is locked, so a
                     # locked account answers exactly as slowly as an unlocked one.
@@ -125,9 +149,29 @@ class AuthService:
                     locked = user.is_locked(now)
                     if password_ok and not locked:
                         return self._open_session(uow, user, password, ip, user_agent, now)
+                    actor = Actor(user=user, ip=ip)
                     if not locked:  # attempts while locked do not extend the lock
                         user.register_failed_login(now, settings.lockout)
                         uow.users.update(user)
+                    record(
+                        uow,
+                        self._clock,
+                        actor,
+                        "auth.login_failed",
+                        entity="user",
+                        entity_id=user.id,
+                        reason="locked" if locked else "password",
+                    )
+                    if not locked and user.is_locked(now):
+                        record(
+                            uow,
+                            self._clock,
+                            actor,
+                            "auth.account_locked",
+                            entity="user",
+                            entity_id=user.id,
+                            until=user.locked_until.isoformat(),
+                        )
                     failure = "auth.invalid_credentials"
                 uow.login_failures.add(ip, lookup_name or None, now)
         # Raised only after the `with` block has committed: raising inside it would
@@ -163,6 +207,14 @@ class AuthService:
                 user_agent=user_agent[:_MAX_USER_AGENT_LENGTH] or None,
             )
         )
+        record(
+            uow,
+            self._clock,
+            Actor(user=user, ip=ip),
+            "auth.login",
+            entity="user",
+            entity_id=user.id,
+        )
         return LoginResult(token=token, user=user)
 
     def authenticate_session(self, token: str | None) -> User | None:
@@ -191,5 +243,18 @@ class AuthService:
     def logout(self, token: str | None) -> None:
         if not token or len(token) > _MAX_TOKEN_LENGTH:
             return
+        token_hash = hash_token(token)
         with self._uow() as uow:
-            uow.sessions.delete(hash_token(token))
+            session = uow.sessions.get(token_hash)
+            if session is None:
+                return
+            uow.sessions.delete(token_hash)
+            user = uow.users.get(session.user_id)
+            record(
+                uow,
+                self._clock,
+                Actor(user=user),
+                "auth.logout",
+                entity="user",
+                entity_id=session.user_id,
+            )

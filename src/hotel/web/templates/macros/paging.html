@@ -1,0 +1,15 @@
+{#- Previous / next links that keep the current filters. -#}
+{%- from "macros/icons.html" import icon -%}
+{%- macro pagination(page) -%}
+{%- if page.pages > 1 %}
+<nav class="pagination" aria-label="{{ _('Pages') }}">
+  {%- if page.has_previous %}
+  <a class="button button--ghost button--small" href="{{ page_url(page.page - 1) }}" rel="prev">{{ _("Previous") }}</a>
+  {%- endif %}
+  <span class="muted">{{ _("Page %(page)s of %(pages)s", page=page.page, pages=page.pages) }}</span>
+  {%- if page.has_next %}
+  <a class="button button--ghost button--small" href="{{ page_url(page.page + 1) }}" rel="next">{{ _("Next page") }}</a>
+  {%- endif %}
+</nav>
+{%- endif %}
+{%- endmacro %}

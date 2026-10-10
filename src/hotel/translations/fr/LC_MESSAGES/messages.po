@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 00:24+0100\n"
+"POT-Creation-Date: 2026-10-11 00:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -25,11 +25,26 @@ msgstr "%(greeting)s, %(name)s"
 msgid "Access denied"
 msgstr "Accès refusé"
 
+msgid "Action"
+msgstr "Action"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "Administration"
+msgstr "Administration"
+
+msgid "All actions"
+msgstr "Toutes les actions"
+
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr "Les montants ont au plus 3 décimales (millimes)."
 
 msgid "An unexpected error occurred. It has been logged."
 msgstr "Une erreur inattendue s'est produite. Elle a été enregistrée."
+
+msgid "Audit log"
+msgstr "Journal d'audit"
 
 msgid "Back to the dashboard"
 msgstr "Retour au tableau de bord"
@@ -52,20 +67,38 @@ msgstr "Tableau de bord"
 msgid "Database schema"
 msgstr "Schéma de la base"
 
+msgid "Details"
+msgstr "Détails"
+
 msgid "Done"
 msgstr "Terminé"
 
 msgid "Enter a name of 1 to 100 characters."
 msgstr "Saisissez un nom de 1 à 100 caractères."
 
+msgid "Enter a valid date."
+msgstr "Saisissez une date valide."
+
+msgid "Enter a whole number."
+msgstr "Saisissez un nombre entier."
+
 msgid "Enter an amount such as 180 or 180.500."
 msgstr "Saisissez un montant comme 180 ou 180.500."
+
+msgid "Everyone"
+msgstr "Tout le monde"
+
+msgid "Filter"
+msgstr "Filtrer"
 
 msgid "Form expired"
 msgstr "Formulaire expiré"
 
 msgid "Foundations: sign-in, themes, languages"
 msgstr "Fondations : connexion, thèmes, langues"
+
+msgid "From"
+msgstr "Du"
 
 msgid "Front desk and billing"
 msgstr "Réception et facturation"
@@ -88,6 +121,16 @@ msgstr "Heure de l'hôtel"
 msgid "Incident reference:"
 msgstr "Référence de l'incident :"
 
+#, python-format
+msgid "Integrity check failed at entry #%(id)s: the log was altered or entries were removed."
+msgstr ""
+"Échec du contrôle d'intégrité à l'entrée n° %(id)s : le journal a été modifié ou des entrées ont "
+"été supprimées."
+
+#, python-format
+msgid "Integrity verified: %(count)s entries, none altered or removed."
+msgstr "Intégrité vérifiée : %(count)s entrées, aucune modifiée ni supprimée."
+
 msgid "Invalid username or password, or the account is temporarily locked."
 msgstr "Nom d'utilisateur ou mot de passe incorrect, ou compte temporairement verrouillé."
 
@@ -109,20 +152,36 @@ msgstr "Selon le système"
 msgid "Next"
 msgstr "Prochain"
 
+msgid "Next page"
+msgstr "Page suivante"
+
 msgid "No account exists yet."
 msgstr "Aucun compte n'existe encore."
+
+msgid "No entries match these filters."
+msgstr "Aucune entrée ne correspond à ces filtres."
 
 msgid "Not allowed"
 msgstr "Non autorisé"
 
+#, python-format
+msgid "Page %(page)s of %(pages)s"
+msgstr "Page %(page)s sur %(pages)s"
+
 msgid "Page not found"
 msgstr "Page introuvable"
+
+msgid "Pages"
+msgstr "Pages"
 
 msgid "Password"
 msgstr "Mot de passe"
 
 msgid "Planned"
 msgstr "Prévu"
+
+msgid "Previous"
+msgstr "Précédente"
 
 msgid "Project roadmap"
 msgstr "Feuille de route du projet"
@@ -132,6 +191,9 @@ msgstr "Réception et gestion"
 
 msgid "Receptionist"
 msgstr "Réceptionniste"
+
+msgid "Record"
+msgstr "Enregistrement"
 
 msgid "Reports, operations and translations"
 msgstr "Rapports, exploitation et traductions"
@@ -212,6 +274,9 @@ msgstr "Ce mot de passe répète trop les mêmes caractères."
 msgid "Time zone: %(tz)s"
 msgstr "Fuseau horaire : %(tz)s"
 
+msgid "To"
+msgstr "Au"
+
 msgid "Too large"
 msgstr "Trop volumineux"
 
@@ -234,6 +299,9 @@ msgstr "Utilisez au plus %(max_length)s caractères."
 msgid "Use the account your manager created for you."
 msgstr "Utilisez le compte que votre gestionnaire a créé pour vous."
 
+msgid "User"
+msgstr "Utilisateur"
+
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
@@ -246,6 +314,9 @@ msgstr "Nous n'avons pas trouvé ce que vous cherchez."
 #, python-format
 msgid "Welcome, %(name)s."
 msgstr "Bienvenue, %(name)s."
+
+msgid "When"
+msgstr "Date"
 
 msgid "You don't have permission to do that."
 msgstr "Vous n'avez pas l'autorisation d'effectuer cette action."
@@ -262,3 +333,4 @@ msgstr "Vous serez déconnecté après %(minutes)s minutes d'inactivité."
 
 msgid "Your session"
 msgstr "Votre session"
+

@@ -18,12 +18,14 @@ from pathlib import Path
 from types import TracebackType
 
 from hotel.persistence.db import connect
+from hotel.persistence.repositories.audit import AuditRepository
 from hotel.persistence.repositories.login_failures import LoginFailureRepository
 from hotel.persistence.repositories.sessions import SessionRepository
 from hotel.persistence.repositories.users import UserRepository
 
 
 class UnitOfWork:
+    audit: AuditRepository
     users: UserRepository
     sessions: SessionRepository
     login_failures: LoginFailureRepository
@@ -37,6 +39,7 @@ class UnitOfWork:
         # IMMEDIATE takes the write lock now rather than at the first write, so two
         # operations can never both read "room is free" and then both write.
         self._conn.execute("BEGIN IMMEDIATE")
+        self.audit = AuditRepository(self._conn)
         self.users = UserRepository(self._conn)
         self.sessions = SessionRepository(self._conn)
         self.login_failures = LoginFailureRepository(self._conn)
