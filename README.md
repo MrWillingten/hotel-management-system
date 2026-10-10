@@ -7,7 +7,7 @@ services, billing with taxes, and management reports, without double bookings.
 Semester project for the *Python Programming* course (Engineering, Cybersecurity,
 1st year). Built in two-week sprints; see the [roadmap](docs/roadmap.md).
 
-![CI](https://img.shields.io/badge/CI-Ubuntu%20%7C%20Windows-a0522d)
+[![CI](https://github.com/MrWillingten/hotel-management-system/actions/workflows/ci.yml/badge.svg)](https://github.com/MrWillingten/hotel-management-system/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-a0522d)
 ![Languages](https://img.shields.io/badge/UI-English%20%7C%20Fran%C3%A7ais%20%7C%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9-a0522d)
 
@@ -134,3 +134,7 @@ Commits written with the assistant carry a `Co-Authored-By` trailer.
   and [Noto Sans Arabic](https://notofonts.github.io/), SIL Open Font License 1.1
   (licence texts in `src/hotel/web/static/fonts/`)
 * Common-password list derived from [SecLists](https://github.com/danielmiessler/SecLists) (MIT)
+
+## License
+
+[MIT](LICENSE) © 2026 MrWillingten
