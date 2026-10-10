@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# Application data: database, secret key, logs and backups never go to Git
+instance/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite3
+backups/
+logs/
+secret_key
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Editors and local tool settings
+.idea/
+.vscode/
+.claude/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Environment files may contain secrets
+.env
+.env.*

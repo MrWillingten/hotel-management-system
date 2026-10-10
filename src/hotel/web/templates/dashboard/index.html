@@ -1,0 +1,53 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Dashboard") }}{% endblock %}
+{% block page_title %}{{ _("Dashboard") }}{% endblock %}
+{% block content %}
+<section class="welcome">
+  <div>
+    <p class="welcome__eyebrow">{{ now | dateformat("full") }}</p>
+    <h2 class="welcome__title">{{ _("%(greeting)s, %(name)s", greeting=greeting, name=current_user.full_name) }}</h2>
+    <p class="muted">{{ _("The front desk figures will appear here once reservations are available.") }}</p>
+  </div>
+  <span class="badge badge--accent">{{ _("Manager") if current_user.is_manager else _("Receptionist") }}</span>
+</section>
+
+<div class="grid grid--cards">
+  <article class="card card--interactive">
+    <div class="card__icon">{{ icon("clock") }}</div>
+    <h3 class="card__title">{{ _("Hotel time") }}</h3>
+    <p class="card__value">{{ now | timeformat("short") }}</p>
+    <p class="muted">{{ _("Time zone: %(tz)s", tz=config["BABEL_DEFAULT_TIMEZONE"]) }}</p>
+  </article>
+
+  <article class="card card--interactive">
+    <div class="card__icon">{{ icon("database") }}</div>
+    <h3 class="card__title">{{ _("System") }}</h3>
+    <dl class="facts">
+      <div><dt>{{ _("Version") }}</dt><dd dir="ltr">{{ app_version }}</dd></div>
+      <div><dt>{{ _("Database schema") }}</dt><dd dir="ltr">{{ schema_version }}</dd></div>
+    </dl>
+  </article>
+
+  <article class="card card--interactive">
+    <div class="card__icon">{{ icon("shield") }}</div>
+    <h3 class="card__title">{{ _("Your session") }}</h3>
+    <p class="muted">{{ _("You'll be signed out after %(minutes)s minutes without activity.", minutes=idle_minutes) }}</p>
+  </article>
+</div>
+
+<section class="panel">
+  <h2 class="panel__title">{{ _("Project roadmap") }}</h2>
+  <ol class="roadmap">
+    {%- for number, label, status in roadmap %}
+    <li class="roadmap__item roadmap__item--{{ status }}">
+      <span class="roadmap__number" dir="ltr">{{ number }}</span>
+      <span class="roadmap__label">{{ label }}</span>
+      <span class="badge badge--{{ {'done': 'success', 'next': 'accent', 'planned': 'neutral'}[status] }}">
+        {{- {"done": _("Done"), "next": _("Next"), "planned": _("Planned")}[status] -}}
+      </span>
+    </li>
+    {%- endfor %}
+  </ol>
+</section>
+{% endblock %}

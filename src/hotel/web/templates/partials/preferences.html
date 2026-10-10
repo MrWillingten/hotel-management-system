@@ -1,0 +1,30 @@
+{#- Theme and language switchers. Plain forms: they work without JavaScript. -#}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/forms.html" import csrf -%}
+{%- set back = request.full_path.rstrip("?") -%}
+<div class="prefs">
+  <form class="segmented" method="post" action="{{ url_for('preferences.set_theme') }}"
+        aria-label="{{ _('Colour theme') }}">
+    {{ csrf() }}
+    <input type="hidden" name="next" value="{{ back }}">
+    {%- for value, label, glyph in [("light", _("Light"), "sun"), ("system", _("Match system"), "monitor"), ("dark", _("Dark"), "moon")] %}
+    <button class="segmented__item" type="submit" name="theme" value="{{ value }}"
+            title="{{ label }}" aria-pressed="{{ 'true' if theme == value else 'false' }}">
+      {{ icon(glyph) }}<span class="visually-hidden">{{ label }}</span>
+    </button>
+    {%- endfor %}
+  </form>
+  <form class="segmented" method="post" action="{{ url_for('preferences.set_language') }}"
+        aria-label="{{ _('Language') }}">
+    {{ csrf() }}
+    <input type="hidden" name="next" value="{{ back }}">
+    {%- for code, name in languages %}
+    <button class="segmented__item segmented__item--text" type="submit" name="language"
+            value="{{ code }}" lang="{{ code }}" title="{{ name }}"
+            aria-pressed="{{ 'true' if locale == code else 'false' }}">
+      {{- {"en": "EN", "fr": "FR", "ar": "ع"}[code] -}}
+      <span class="visually-hidden">{{ name }}</span>
+    </button>
+    {%- endfor %}
+  </form>
+</div>

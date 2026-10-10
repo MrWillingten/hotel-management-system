@@ -1,0 +1,14 @@
+{%- extends "base.html" -%}
+{% block title %}{{ title }}{% endblock %}
+{% block body_class %}auth{% endblock %}
+{% block body %}
+<main class="error-page" id="main" tabindex="-1">
+  <p class="error-page__status" dir="ltr">{{ status }}</p>
+  <h1 class="error-page__title">{{ title }}</h1>
+  <p class="muted">{{ message }}</p>
+  {%- if incident %}
+  <p class="muted">{{ _("Incident reference:") }} <code dir="ltr">{{ incident }}</code></p>
+  {%- endif %}
+  <a class="button button--primary" href="{{ url_for('dashboard.index') }}">{{ _("Back to the dashboard") }}</a>
+</main>
+{% endblock %}

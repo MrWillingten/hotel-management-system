@@ -1,0 +1,57 @@
+{#- Layout for signed-in pages: sidebar navigation, top bar, content. -#}
+{%- extends "base.html" -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/forms.html" import csrf -%}
+
+{%- macro nav_link(endpoint, label, glyph) -%}
+{%- set active = request.endpoint == endpoint %}
+<a class="nav__link{% if active %} nav__link--active{% endif %}" href="{{ url_for(endpoint) }}"
+   {%- if active %} aria-current="page"{% endif %}>{{ icon(glyph) }}<span>{{ label }}</span></a>
+{%- endmacro -%}
+
+{% block body_class %}app{% endblock %}
+{% block body %}
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="{{ url_for('dashboard.index') }}">
+      <span class="brand__mark" aria-hidden="true">{{ hotel_name[:1] }}</span>
+      <span class="brand__name">{{ hotel_name }}</span>
+    </a>
+    <nav class="nav" aria-label="{{ _('Main') }}">
+      {{ nav_link("dashboard.index", _("Dashboard"), "home") }}
+    </nav>
+    <div class="sidebar__footer">
+      <span class="muted">v{{ app_version }}</span>
+    </div>
+  </aside>
+
+  <div class="main-column">
+    <header class="topbar">
+      <h1 class="topbar__title">{% block page_title %}{% endblock %}</h1>
+      <div class="topbar__actions">
+        {% include "partials/preferences.html" %}
+        {%- if current_user %}
+        <div class="user-chip">
+          <span class="user-chip__avatar" aria-hidden="true">{{ current_user.full_name[:1] }}</span>
+          <span class="user-chip__text">
+            <span class="user-chip__name">{{ current_user.full_name }}</span>
+            <span class="user-chip__role">{{ _("Manager") if current_user.is_manager else _("Receptionist") }}</span>
+          </span>
+        </div>
+        <form method="post" action="{{ url_for('auth.logout') }}">
+          {{ csrf() }}
+          <button class="icon-button" type="submit" title="{{ _('Sign out') }}">
+            {{ icon("logout") }}<span class="visually-hidden">{{ _("Sign out") }}</span>
+          </button>
+        </form>
+        {%- endif %}
+      </div>
+    </header>
+
+    <main class="content" id="main" tabindex="-1">
+      {% include "partials/flashes.html" %}
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</div>
+{% endblock %}

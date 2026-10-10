@@ -1,0 +1,88 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hotel"
+version = "0.1.0"
+description = "Hotel Reservation and Management System: a secure, multilingual web application for reception staff and managers."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "Flask>=3.1,<4",
+    "Flask-WTF>=1.2,<2",      # used only for CSRF protection
+    "Flask-Babel>=4.0,<5",    # interface translations (en, fr, ar)
+    "waitress>=3.0,<4",       # production WSGI server that runs on Windows and Linux
+    "tzdata>=2024.1",         # time-zone database (Windows ships none)
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-cov>=5",
+    "hypothesis>=6.100",
+    "ruff>=0.6",
+    "bandit>=1.7",
+    "pip-audit>=2.7",
+    "pre-commit>=3.7",
+]
+
+[project.scripts]
+hotel = "hotel.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+hotel = [
+    "data/*.txt",
+    "persistence/migrations/*.sql",
+    "translations/*/LC_MESSAGES/*.po",
+    "translations/*/LC_MESSAGES/*.mo",
+    "web/templates/**/*.html",
+    "web/static/**/*",
+]
+
+# ---------------------------------------------------------------- tests
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+filterwarnings = [
+    "error::DeprecationWarning:hotel.*",
+    "error::ResourceWarning",                          # leaked files or database handles
+    "error::pytest.PytestUnraisableExceptionWarning",
+]
+
+[tool.coverage.run]
+source = ["hotel"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
+skip_covered = true
+exclude_also = [
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+    "@abstractmethod",
+]
+
+# ---------------------------------------------------------------- linting
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "RUF", "N", "C4", "DTZ", "PT"]
+ignore = [
+    "RUF001",  # ambiguous unicode characters: we deliberately use Arabic text
+    "N818",    # BusinessRuleViolation reads better than BusinessRuleViolationError
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S104", "S105", "S106", "S311"]  # asserts, dummy passwords, test hosts
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv"]

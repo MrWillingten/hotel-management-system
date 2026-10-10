@@ -1,0 +1,14 @@
+{%- from "macros/icons.html" import icon -%}
+{%- with messages = get_flashed_messages(with_categories=true) %}
+{%- if messages %}
+<div class="flashes" role="status" aria-live="polite">
+  {%- for category, message in messages %}
+  {%- set kind = category if category in ("success", "info", "warning", "danger") else "info" %}
+  <div class="alert alert--{{ kind }}">
+    {{ icon({"success": "check", "warning": "alert", "danger": "alert"}.get(kind, "info")) }}
+    <p>{{ message }}</p>
+  </div>
+  {%- endfor %}
+</div>
+{%- endif %}
+{%- endwith %}

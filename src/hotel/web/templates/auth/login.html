@@ -1,0 +1,54 @@
+{%- extends "base.html" -%}
+{%- from "macros/forms.html" import csrf, field -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Sign in") }}{% endblock %}
+{% block body_class %}auth{% endblock %}
+{% block body %}
+<div class="auth-layout">
+  <section class="auth-hero" aria-hidden="true">
+    <div class="auth-hero__inner">
+      <span class="brand__mark brand__mark--large">{{ hotel_name[:1] }}</span>
+      <p class="auth-hero__name">{{ hotel_name }}</p>
+      <p class="auth-hero__tagline">{{ _("Reception and management") }}</p>
+    </div>
+  </section>
+
+  <main class="auth-panel" id="main" tabindex="-1">
+    <div class="auth-panel__prefs">{% include "partials/preferences.html" %}</div>
+
+    <div class="auth-card">
+      <h1 class="auth-card__title">{{ _("Sign in") }}</h1>
+      <p class="muted">{{ _("Use the account your manager created for you.") }}</p>
+
+      {% include "partials/flashes.html" %}
+
+      {%- if needs_setup %}
+      <div class="alert alert--info">
+        {{ icon("key") }}
+        <div>
+          <p><strong>{{ _("No account exists yet.") }}</strong></p>
+          <p>{{ _("Create the first manager account from a terminal, in the project folder:") }}</p>
+          <code class="code-block" dir="ltr">python -m hotel create-manager</code>
+        </div>
+      </div>
+      {%- endif %}
+
+      {%- if error %}
+      <div class="alert alert--danger" role="alert">{{ icon("alert") }}<p>{{ error }}</p></div>
+      {%- endif %}
+
+      <form class="stack" method="post" action="{{ url_for('auth.login') }}" novalidate>
+        {{ csrf() }}
+        {%- if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+        {{ field("username", _("Username"), value=username, autocomplete="username",
+                 autofocus=not username, maxlength=32) }}
+        {{ field("password", _("Password"), type="password", autocomplete="current-password",
+                 autofocus=username != "", maxlength=128) }}
+        <button class="button button--primary button--block" type="submit">{{ _("Sign in") }}</button>
+      </form>
+    </div>
+
+    <p class="auth-panel__footer muted">{{ hotel_name }} · v{{ app_version }}</p>
+  </main>
+</div>
+{% endblock %}

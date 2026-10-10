@@ -1,0 +1,24 @@
+{#- Form helpers shared by every page. -#}
+
+{%- macro csrf() -%}
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+{%- endmacro %}
+
+{%- macro field(name, label, value="", type="text", error=None, autocomplete=None,
+                required=True, autofocus=False, hint=None, maxlength=None) -%}
+<div class="field{% if error %} field--invalid{% endif %}">
+  <label class="field__label" for="f-{{ name }}">{{ label }}</label>
+  <input class="field__input" id="f-{{ name }}" name="{{ name }}" type="{{ type }}"
+         {%- if type != "password" %} value="{{ value }}"{% endif %}
+         {%- if autocomplete %} autocomplete="{{ autocomplete }}"{% endif %}
+         {%- if maxlength %} maxlength="{{ maxlength }}"{% endif %}
+         {%- if required %} required{% endif %}
+         {%- if autofocus %} autofocus{% endif %}
+         {%- if error %} aria-invalid="true" aria-describedby="f-{{ name }}-error"{% elif hint %} aria-describedby="f-{{ name }}-hint"{% endif %}>
+  {%- if error %}
+  <p class="field__error" id="f-{{ name }}-error">{{ error }}</p>
+  {%- elif hint %}
+  <p class="field__hint" id="f-{{ name }}-hint">{{ hint }}</p>
+  {%- endif %}
+</div>
+{%- endmacro %}

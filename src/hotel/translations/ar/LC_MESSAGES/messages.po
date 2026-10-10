@@ -1,0 +1,263 @@
+# Arabic translations for hotel.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the hotel project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: hotel VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-10-11 00:24+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ar\n"
+"Language-Team: ar <none>\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : "
+"n%100>=0 && n%100<=2 ? 4 : 5);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#, python-format
+msgid "%(greeting)s, %(name)s"
+msgstr "%(greeting)s، %(name)s"
+
+msgid "Access denied"
+msgstr "تم رفض الوصول"
+
+msgid "Amounts have at most 3 decimals (millimes)."
+msgstr "تحتوي المبالغ على 3 أرقام عشرية كحد أقصى (المليمات)."
+
+msgid "An unexpected error occurred. It has been logged."
+msgstr "حدث خطأ غير متوقع. تم تسجيله."
+
+msgid "Back to the dashboard"
+msgstr "العودة إلى لوحة القيادة"
+
+msgid "Bad request"
+msgstr "طلب غير صالح"
+
+msgid "Colour theme"
+msgstr "سمة الألوان"
+
+msgid "Create the first manager account from a terminal, in the project folder:"
+msgstr "أنشئ أول حساب مدير من الطرفية، داخل مجلد المشروع:"
+
+msgid "Dark"
+msgstr "داكن"
+
+msgid "Dashboard"
+msgstr "لوحة القيادة"
+
+msgid "Database schema"
+msgstr "مخطط قاعدة البيانات"
+
+msgid "Done"
+msgstr "مكتمل"
+
+msgid "Enter a name of 1 to 100 characters."
+msgstr "أدخل اسمًا من 1 إلى 100 حرف."
+
+msgid "Enter an amount such as 180 or 180.500."
+msgstr "أدخل مبلغًا مثل 180 أو 180.500."
+
+msgid "Form expired"
+msgstr "انتهت صلاحية النموذج"
+
+msgid "Foundations: sign-in, themes, languages"
+msgstr "الأساسيات: تسجيل الدخول والسمات واللغات"
+
+msgid "Front desk and billing"
+msgstr "الاستقبال والفوترة"
+
+msgid "Good afternoon"
+msgstr "طاب يومك"
+
+msgid "Good evening"
+msgstr "مساء الخير"
+
+msgid "Good morning"
+msgstr "صباح الخير"
+
+msgid "Hardening, report and demo"
+msgstr "التحصين والتقرير والعرض التوضيحي"
+
+msgid "Hotel time"
+msgstr "توقيت الفندق"
+
+msgid "Incident reference:"
+msgstr "مرجع الحادثة:"
+
+msgid "Invalid username or password, or the account is temporarily locked."
+msgstr "اسم المستخدم أو كلمة المرور غير صحيحة، أو أن الحساب مقفل مؤقتًا."
+
+msgid "Language"
+msgstr "اللغة"
+
+msgid "Light"
+msgstr "فاتح"
+
+msgid "Main"
+msgstr "القائمة الرئيسية"
+
+msgid "Manager"
+msgstr "مدير"
+
+msgid "Match system"
+msgstr "حسب النظام"
+
+msgid "Next"
+msgstr "التالي"
+
+msgid "No account exists yet."
+msgstr "لا يوجد أي حساب بعد."
+
+msgid "Not allowed"
+msgstr "غير مسموح"
+
+msgid "Page not found"
+msgstr "الصفحة غير موجودة"
+
+msgid "Password"
+msgstr "كلمة المرور"
+
+msgid "Planned"
+msgstr "مخطط له"
+
+msgid "Project roadmap"
+msgstr "خارطة طريق المشروع"
+
+msgid "Reception and management"
+msgstr "الاستقبال والإدارة"
+
+msgid "Receptionist"
+msgstr "موظف استقبال"
+
+msgid "Reports, operations and translations"
+msgstr "التقارير والعمليات والترجمات"
+
+msgid "Reservations and availability"
+msgstr "الحجوزات والتوفر"
+
+msgid "Rooms, guests, staff and audit log"
+msgstr "الغرف والنزلاء والموظفون وسجل التدقيق"
+
+msgid "Sign in"
+msgstr "تسجيل الدخول"
+
+msgid "Sign out"
+msgstr "تسجيل الخروج"
+
+msgid "Skip to content"
+msgstr "انتقل إلى المحتوى"
+
+msgid "Some fields need your attention."
+msgstr "بعض الحقول تحتاج إلى مراجعة."
+
+msgid "Someone else changed this record. Reload the page to see their changes."
+msgstr "قام شخص آخر بتعديل هذا السجل. أعد تحميل الصفحة لرؤية التعديلات."
+
+msgid "Something went wrong"
+msgstr "حدث خطأ ما"
+
+msgid "Something went wrong. Try again."
+msgstr "حدث خطأ ما. حاول مرة أخرى."
+
+msgid "System"
+msgstr "النظام"
+
+msgid "The data sent was too large."
+msgstr "البيانات المرسلة كبيرة جدًا."
+
+msgid "The departure date must be after the arrival date."
+msgstr "يجب أن يكون تاريخ المغادرة بعد تاريخ الوصول."
+
+msgid "The first manager account already exists."
+msgstr "حساب المدير الأول موجود بالفعل."
+
+msgid "The front desk figures will appear here once reservations are available."
+msgstr "ستظهر أرقام الاستقبال هنا بمجرد توفر الحجوزات."
+
+msgid "The page you asked for doesn't exist."
+msgstr "الصفحة المطلوبة غير موجودة."
+
+msgid "The password must not contain the username."
+msgstr "يجب ألا تحتوي كلمة المرور على اسم المستخدم."
+
+msgid "The request couldn't be understood."
+msgstr "تعذّر فهم الطلب."
+
+msgid "This action can't be done this way."
+msgstr "لا يمكن تنفيذ هذا الإجراء بهذه الطريقة."
+
+msgid "This change conflicts with existing data."
+msgstr "يتعارض هذا التغيير مع بيانات موجودة."
+
+msgid "This form expired or was sent from another site. Reload the page and try again."
+msgstr "انتهت صلاحية هذا النموذج أو أُرسل من موقع آخر. أعد تحميل الصفحة وحاول مرة أخرى."
+
+msgid "This operation isn't allowed."
+msgstr "هذه العملية غير مسموح بها."
+
+msgid "This operation isn't possible in the record's current state."
+msgstr "هذه العملية غير ممكنة في الحالة الحالية للسجل."
+
+msgid "This password is too common. Choose a less predictable one."
+msgstr "كلمة المرور هذه شائعة جدًا. اختر كلمة يصعب تخمينها."
+
+msgid "This password repeats the same characters too much."
+msgstr "كلمة المرور هذه تكرر الأحرف نفسها كثيرًا."
+
+#, python-format
+msgid "Time zone: %(tz)s"
+msgstr "المنطقة الزمنية: %(tz)s"
+
+msgid "Too large"
+msgstr "كبير جدًا"
+
+msgid "Too many failed sign-in attempts from this computer. Wait a few minutes and try again."
+msgstr "محاولات تسجيل دخول فاشلة كثيرة من هذا الجهاز. انتظر بضع دقائق ثم حاول مرة أخرى."
+
+msgid "Use 3 to 32 characters: letters, digits, dots, hyphens or underscores."
+msgstr "استخدم من 3 إلى 32 حرفًا: أحرف لاتينية أو أرقام أو نقاط أو شرطات أو شرطات سفلية."
+
+#, python-format
+msgid "Use at least %(min_length)s characters."
+msgstr "استخدم %(min_length)s حرفًا على الأقل."
+
+#, python-format
+msgid "Use at most %(max_length)s characters."
+msgstr "استخدم %(max_length)s حرفًا كحد أقصى."
+
+msgid "Use the account your manager created for you."
+msgstr "استخدم الحساب الذي أنشأه لك مديرك."
+
+msgid "Username"
+msgstr "اسم المستخدم"
+
+msgid "Version"
+msgstr "الإصدار"
+
+msgid "We couldn't find what you were looking for."
+msgstr "لم نعثر على ما تبحث عنه."
+
+#, python-format
+msgid "Welcome, %(name)s."
+msgstr "مرحبًا، %(name)s."
+
+msgid "You don't have permission to do that."
+msgstr "ليست لديك صلاحية للقيام بذلك."
+
+msgid "You don't have permission to open this page."
+msgstr "ليست لديك صلاحية لفتح هذه الصفحة."
+
+msgid "You have been signed out."
+msgstr "تم تسجيل خروجك."
+
+#, python-format
+msgid "You'll be signed out after %(minutes)s minutes without activity."
+msgstr "سيتم تسجيل خروجك بعد %(minutes)s دقيقة من عدم النشاط."
+
+msgid "Your session"
+msgstr "جلستك"
