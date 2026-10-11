@@ -8,7 +8,7 @@ from hotel.domain.paging import PageRequest
 
 def test_demo_data_fills_an_empty_hotel(services):
     assert not is_demo(services)
-    result = seed_demo(services, guests=30)
+    result = seed_demo(services, guests=30, history_days=10)
     assert result.rooms == 17
     assert result.guests == 30
     assert result.reservations >= 15
@@ -38,11 +38,11 @@ def test_demo_data_is_deterministic(services, settings, clock, tmp_path):
     from hotel.bootstrap import build_services
     from hotel.config import Settings
 
-    seed_demo(services, guests=10)
+    seed_demo(services, guests=10, history_days=5)
     other = build_services(
         Settings(environment="testing", data_dir=tmp_path / "b", scrypt_n=2**10), clock=clock
     )
-    seed_demo(other, guests=10)
+    seed_demo(other, guests=10, history_days=5)
 
     def names(svc):
         return [g.full_name for g in svc.guests.search(Actor.system(), "", PageRequest()).items]
