@@ -19,16 +19,18 @@ Semester project for the *Python Programming* course (Engineering, Cybersecurity
 |---|---|---|
 | ![Availability grid](docs/screenshots/availability-grid.jpg) | ![Availability grid in Arabic](docs/screenshots/availability-arabic-rtl.jpg) | ![Guest list with masked document numbers](docs/screenshots/guests-dark.jpg) |
 
-| Bill with taxes and a deposit | Issued invoice (print-ready) |
-|---|---|
-| ![Bill preview with VAT and tourist tax](docs/screenshots/bill-dark.jpg) | ![Invoice F-2026-00001](docs/screenshots/invoice-dark.jpg) |
+| Bill with taxes and a deposit | Issued invoice (print-ready) | Management reports (demo data) |
+|---|---|---|
+| ![Bill preview with VAT and tourist tax](docs/screenshots/bill-dark.jpg) | ![Invoice F-2026-00001](docs/screenshots/invoice-dark.jpg) | ![Reports with occupancy and revenue](docs/screenshots/reports-dark.jpg) |
 
 ## Status
 
-**v0.4.0 – Sprint 4** is complete. The application can already:
+**v0.9.0 – Sprint 5: code complete.** The application can:
 
 * **Run the front desk**: today's arrivals and departures, check-in, no-shows, check-out, rooms to clean, occupancy tonight and money still due
 * **Bill exactly**: nights at their locked prices, extra services, manager discounts (capped), configurable taxes, deposits, payments and refunds, all in integer millimes
+* **Report to management**: occupancy, revenue, average rates, cancellations and balances for any period, with SVG charts and safe CSV exports
+* **Close each day** with a night audit (no-shows, overdue departures, frozen figures) and price rooms by **season and weekend**
 * **Issue invoices** at check-out with gap-free numbers (`F-2026-00001`); issued invoices can never be changed, and print cleanly
 * **Take reservations** for one or more rooms, with exact prices locked per night, and explain refusals with free alternatives
 * **Change and cancel reservations**, applying the hotel's late-cancellation fee (20 % by default, set by the manager) automatically
@@ -37,9 +39,10 @@ Semester project for the *Python Programming* course (Engineering, Cybersecurity
 * **Manage rooms, guests and staff** with duplicate detection, masked ID numbers and role-based access
 * **Keep a tamper-evident audit log** and **back up** the database every day
 * **Speak English, French and Arabic** (right-to-left), in light or dark mode, on any screen size
-* 480+ automated tests, run on Ubuntu and Windows by GitHub Actions
+* **Anonymise** old guests on request, keeping invoices intact
+* 530+ automated tests, run on Ubuntu and Windows by GitHub Actions
 
-Reports, charts, CSV export and the night audit arrive in Sprint 5 ([roadmap](docs/roadmap.md)).
+Sprint 6 adds the stretch goals (TOTP, Docker, JSON API…), then the freeze, the report and the demo ([roadmap](docs/roadmap.md)).
 
 ## Quick start
 
