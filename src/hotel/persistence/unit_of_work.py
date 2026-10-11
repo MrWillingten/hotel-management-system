@@ -26,6 +26,7 @@ from hotel.persistence.repositories.guests import GuestRepository
 from hotel.persistence.repositories.invoices import InvoiceRepository
 from hotel.persistence.repositories.login_failures import LoginFailureRepository
 from hotel.persistence.repositories.night_audit import SnapshotRepository
+from hotel.persistence.repositories.rates import RatePeriodRepository
 from hotel.persistence.repositories.reports import ReportRepository
 from hotel.persistence.repositories.reservations import CounterRepository, ReservationRepository
 from hotel.persistence.repositories.rooms import (
@@ -60,6 +61,7 @@ class UnitOfWork:
     invoices: InvoiceRepository
     reports: ReportRepository
     snapshots: SnapshotRepository
+    rate_periods: RatePeriodRepository
 
     def __init__(self, database_path: Path) -> None:
         self._database_path = database_path
@@ -90,6 +92,7 @@ class UnitOfWork:
         self.invoices = InvoiceRepository(self._conn)
         self.reports = ReportRepository(self._conn)
         self.snapshots = SnapshotRepository(self._conn)
+        self.rate_periods = RatePeriodRepository(self._conn)
         return self
 
     def __exit__(

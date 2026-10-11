@@ -158,6 +158,12 @@ MESSAGES = {
     "report.range_reversed": _l("The last night must not be before the first night."),
     "report.range_too_long": _l("A report covers at most %(max)s nights (two years)."),
     "night_audit.day_not_over": _l("Only a day that is over can be closed."),
+    "rate_period.name_invalid": _l("Enter a name of 1 to 60 characters."),
+    "rate_period.too_long": _l("A rate period lasts at most %(max)s nights."),
+    "rate_period.dates_reversed": _l("The last night must not be before the first night."),
+    "rate_period.overlap": _l(
+        "This category already has a rate on some of these nights (%(name)s)."
+    ),
     "field.not_a_number": _l("Enter a whole number."),
     "field.invalid_date": _l("Enter a valid date."),
     "money.invalid": _l("Enter an amount such as 180 or 180.500."),

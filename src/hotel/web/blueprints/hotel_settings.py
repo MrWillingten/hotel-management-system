@@ -24,6 +24,9 @@ def _hotel_settings(data) -> HotelSettings:
         cancellation_window_hours=forms.integer(data, "cancellation_window_hours"),
         grace_period_hours=forms.integer(data, "grace_period_hours"),
         discount_cap_bp=forms.percent(data, "discount_cap"),
+        weekend_surcharge_bp=forms.percent(data, "weekend_surcharge"),
+        # Checkboxes named weekend_<weekday>; only 0-6 can ever be stored.
+        weekend_nights=",".join(str(d) for d in range(7) if forms.checkbox(data, f"weekend_{d}")),
     )
 
 

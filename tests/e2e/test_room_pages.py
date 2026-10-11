@@ -154,3 +154,31 @@ def test_receptionist_access(client, services, manager):
     for path in ("/rooms/new", f"/rooms/{room.id}/edit", "/rooms/categories"):
         assert client.get(path).status_code == 403, path
     assert client.get("/rooms/999").status_code == 404
+
+
+def test_seasonal_rates_page(signed_in, services, hotel):
+    from tests.conftest import csrf_token
+
+    category_id = hotel.rooms["204"].category_id
+    page = signed_in.get("/rooms/rates").get_data(as_text=True)
+    assert "No rate period" in page
+    data = {
+        "csrf_token": csrf_token(signed_in, "/rooms/rates"),
+        "name": "Summer",
+        "category_id": category_id,
+        "first_night": "2026-07-10",
+        "last_night": "2026-07-20",
+        "nightly_rate": "250",
+    }
+    assert signed_in.post("/rooms/rates", data=data).status_code == 302
+    assert "Summer" in signed_in.get("/rooms/rates").get_data(as_text=True)
+    clash = signed_in.post(
+        "/rooms/rates", data={**data, "csrf_token": csrf_token(signed_in, "/rooms/rates")}
+    )
+    assert clash.status_code == 400
+    [period] = services.rooms.rate_periods(hotel.boss)
+    response = signed_in.post(
+        f"/rooms/rates/{period.id}/delete",
+        data={"csrf_token": csrf_token(signed_in, "/rooms/rates")},
+    )
+    assert "keep their prices" in signed_in.get(response.headers["Location"]).get_data(as_text=True)

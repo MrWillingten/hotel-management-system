@@ -20,6 +20,8 @@ class HotelSettings:
     cancellation_window_hours: int = 48
     grace_period_hours: int = 0
     discount_cap_bp: int = 3_000  # 30 %
+    weekend_surcharge_bp: int = 0  # story 5.6; 0 = no weekend price
+    weekend_nights: str = "5,6"  # date.weekday() numbers: Saturday and Sunday nights
 
     # Allowed ranges, checked by validated(): name -> (lowest, highest).
     _LIMITS = {  # noqa: RUF012 - class constant, not a field (no annotation)
@@ -27,6 +29,7 @@ class HotelSettings:
         "cancellation_window_hours": (0, 168),
         "grace_period_hours": (0, 72),
         "discount_cap_bp": (0, BASIS_POINTS_PER_UNIT),
+        "weekend_surcharge_bp": (0, BASIS_POINTS_PER_UNIT),
     }
 
     def validated(self) -> HotelSettings:
@@ -36,9 +39,17 @@ class HotelSettings:
             for name, (low, high) in self._LIMITS.items()
             if not low <= getattr(self, name) <= high
         }
+        days = [d for d in self.weekend_nights.split(",") if d]  # "" means no weekend
+        if any(d not in {"0", "1", "2", "3", "4", "5", "6"} for d in days):
+            problems["weekend_nights"] = "settings.out_of_range"
         if problems:
             raise ValidationError("settings.invalid", fields=problems)
         return self
+
+    @property
+    def weekend_days(self) -> frozenset[int]:
+        """The weekend nights as weekday numbers (Monday 0 ... Sunday 6)."""
+        return frozenset(int(d) for d in self.weekend_nights.split(",") if d.isdigit())
 
     def cancellation_policy(self) -> CancellationPolicy:
         return CancellationPolicy(
@@ -64,7 +75,12 @@ class HotelSettings:
             if raw is None:
                 continue
             try:
-                value = time.fromisoformat(raw) if item.type == "time" else int(raw)
+                if item.type == "time":
+                    value = time.fromisoformat(raw)
+                elif item.type == "str":
+                    value = raw
+                else:
+                    value = int(raw)
             except ValueError:
                 continue
             settings = replace(settings, **{item.name: value})

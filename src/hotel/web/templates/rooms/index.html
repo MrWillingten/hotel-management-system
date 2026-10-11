@@ -17,6 +17,7 @@
   {%- if current_user.is_manager %}
   <div class="page-actions__buttons">
     <a class="button button--ghost" href="{{ url_for('rooms.categories') }}">{{ _("Categories") }}</a>
+    <a class="button button--ghost" href="{{ url_for('rooms.rates') }}">{{ _("Seasonal rates") }}</a>
     <a class="button button--primary" href="{{ url_for('rooms.create') }}">{{ _("Add a room") }}</a>
   </div>
   {%- endif %}

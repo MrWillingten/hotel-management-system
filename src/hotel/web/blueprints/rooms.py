@@ -214,3 +214,47 @@ def categories():
         errors=errors,
         values=values,
     ), (400 if errors else 200)
+
+
+# ---------------------------------------------------------------- seasonal rates (5.6)
+@bp.route("/rates", methods=["GET", "POST"])
+@roles_required(Role.MANAGER)
+def rates():
+    actor = current_actor()
+    errors, values = forms.FormErrors(), {}
+    if request.method == "POST":
+        values = request.form
+        try:
+            period = services().rooms.add_rate_period(
+                actor,
+                category_id=forms.integer(values, "category_id"),
+                name=forms.text(values, "name", max_length=60),
+                first_night=forms.calendar_date(values, "first_night"),
+                last_night=forms.calendar_date(values, "last_night"),
+                nightly_rate=forms.money(values, "nightly_rate"),
+            )
+        except HotelError as exc:
+            errors = forms.FormErrors.from_error(exc)
+        else:
+            flash(_("Rate period %(name)s added.", name=period.name), "success")
+            return redirect(url_for("rooms.rates"))
+    return render_template(
+        "rooms/rates.html",
+        periods=services().rooms.rate_periods(actor),
+        categories=services().rooms.list_categories(actor),
+        settings=services().hotel_settings.get(actor),
+        errors=errors,
+        values=values,
+    ), (400 if errors else 200)
+
+
+@bp.post("/rates/<int:period_id>/delete")
+@roles_required(Role.MANAGER)
+def delete_rate(period_id: int):
+    try:
+        services().rooms.delete_rate_period(current_actor(), period_id)
+    except HotelError as exc:
+        flash(message_for(exc.code, exc.params), "danger")
+    else:
+        flash(_("Rate period removed. Existing bookings keep their prices."), "success")
+    return redirect(url_for("rooms.rates"))

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, timedelta
 
 from hotel.domain.actor import Actor
 from hotel.domain.clock import Clock
@@ -10,6 +10,7 @@ from hotel.domain.enums import Role
 from hotel.domain.errors import ConflictError, NotFoundError, StaleDataError, ValidationError
 from hotel.domain.money import Money
 from hotel.domain.period import StayPeriod
+from hotel.domain.pricing import RatePeriod, validate_rate_period
 from hotel.domain.rooms import (
     MAX_MAINTENANCE_NIGHTS,
     Housekeeping,
@@ -283,6 +284,80 @@ class RoomService:
                 maintenance_id=maintenance_id,
             )
             return result
+
+    # ------------------------------------------------------------ seasonal rates (5.6)
+    def rate_periods(self, actor: Actor) -> list[RatePeriod]:
+        require_staff(actor)
+        with self._uow() as uow:
+            return uow.rate_periods.list()
+
+    def add_rate_period(
+        self,
+        actor: Actor,
+        *,
+        category_id: int,
+        name: str,
+        first_night: date,
+        last_night: date,
+        nightly_rate: Money,
+    ) -> RatePeriod:
+        """A price for every room of a category on these nights (new bookings only)."""
+        require_role(actor, Role.MANAGER)
+        if last_night < first_night:
+            raise ValidationError(
+                "rate_period.dates_reversed", fields={"last_night": "rate_period.dates_reversed"}
+            )
+        period = StayPeriod(first_night, last_night + timedelta(days=1))
+        name = validate_rate_period(name, period, nightly_rate)
+        with self._uow() as uow:
+            if uow.categories.get(category_id) is None:
+                raise ValidationError(
+                    "room.category_unknown", fields={"category_id": "room.category_unknown"}
+                )
+            clash = uow.rate_periods.overlapping(category_id, period)
+            if clash:
+                # Two prices for the same night would make the result depend on order.
+                raise ConflictError(
+                    "rate_period.overlap",
+                    fields={"first_night": "rate_period.overlap"},
+                    name=clash[0].name,
+                )
+            period_id = uow.rate_periods.add(
+                RatePeriod(
+                    None, category_id, name, period, nightly_rate, created_at=self._clock.now()
+                )
+            )
+            record(
+                uow,
+                self._clock,
+                actor,
+                "rate_period.created",
+                entity="rate_period",
+                entity_id=period_id,
+                category_id=category_id,
+                first=first_night.isoformat(),
+                last=last_night.isoformat(),
+                rate=str(nightly_rate),
+            )
+            return uow.rate_periods.get(period_id)
+
+    def delete_rate_period(self, actor: Actor, period_id: int) -> None:
+        """Safe: bookings keep the prices they were made with (BR20)."""
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            period = uow.rate_periods.get(period_id)
+            if period is None:
+                raise NotFoundError(entity="rate_period", id=period_id)
+            uow.rate_periods.delete(period_id)
+            record(
+                uow,
+                self._clock,
+                actor,
+                "rate_period.deleted",
+                entity="rate_period",
+                entity_id=period_id,
+                name=period.name,
+            )
 
     # ------------------------------------------------------------ helpers
     def _states(self, uow: UnitOfWork) -> dict[int, str]:

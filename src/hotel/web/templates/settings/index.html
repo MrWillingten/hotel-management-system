@@ -1,5 +1,5 @@
 {%- extends "layouts/app.html" -%}
-{%- from "macros/forms.html" import csrf, field, form_errors -%}
+{%- from "macros/forms.html" import checkbox, csrf, field, form_errors -%}
 {%- from "macros/taxes.html" import base_label, rate, rule_fields -%}
 {%- macro pct(bp) %}{{ "%g" | format(bp / 100) }}{% endmacro -%}
 {% block title %}{{ _("Settings and taxes") }}{% endblock %}
@@ -25,6 +25,15 @@
                  hint=_("Cancelling within this time after booking is always free.")) }}
         {{ field("discount_cap", _("Maximum total discount (%%)"), value=values.get("discount_cap", pct(settings.discount_cap_bp)), error=errors.discount_cap or errors.discount_cap_bp) }}
       </div>
+      {{ field("weekend_surcharge", _("Weekend surcharge (%%)"), value=values.get("weekend_surcharge", pct(settings.weekend_surcharge_bp)), error=errors.weekend_surcharge or errors.weekend_surcharge_bp,
+               hint=_("Added to the room's rate on weekend nights, unless a seasonal rate applies. 0 = none.")) }}
+      <fieldset class="weekdays">
+        <legend class="field__label">{{ _("Weekend nights (the night starting on…)") }}</legend>
+        {%- set names = [_("Monday"), _("Tuesday"), _("Wednesday"), _("Thursday"), _("Friday"), _("Saturday"), _("Sunday")] %}
+        {%- for day in range(7) %}
+        {{ checkbox("weekend_" ~ day, names[day], checked=("weekend_" ~ day in values) if values else day in settings.weekend_days) }}
+        {%- endfor %}
+      </fieldset>
       <button class="button button--primary" type="submit">{{ _("Save settings") }}</button>
     </form>
   </section>
