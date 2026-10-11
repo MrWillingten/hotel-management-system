@@ -4,6 +4,7 @@
     init-db          create or upgrade the database
     create-manager   create the first manager account
     reset-password   give any account a temporary password (forgotten password)
+    night-audit      close a finished day: no-shows, overdue departures, snapshot
     seed --demo      add fictional demonstration data to an empty hotel
     backup           write a backup now
     restore FILE     replace the database with a backup (application stopped)
@@ -65,9 +66,13 @@ def cmd_run(args: argparse.Namespace) -> int:
 
     settings = Settings.from_env(environment="development" if args.dev else None)
     app = create_app(settings)
-    backup = app.extensions["hotel.services"].backups.auto_backup_if_due()
+    services = app.extensions["hotel.services"]
+    backup = services.backups.auto_backup_if_due()
     if backup is not None:
         print(f"Daily backup written to {backup}")
+    # Days that ended while the application was stopped are closed now.
+    for outcome in services.night_audit.catch_up(Actor.system("night-audit")):
+        print(f"Night audit: {outcome.day} closed ({len(outcome.no_shows)} no-shows).")
     if not _is_loopback(args.host):
         print(
             "WARNING: listening on a network address. Without HTTPS, passwords travel in "
@@ -144,6 +149,31 @@ def cmd_reset_password(args: argparse.Namespace) -> int:
     print(f"Password reset. '{user.username}' must choose a new one at the next sign-in.")
     if not user.is_active:
         print("Note: this account is deactivated; a manager must reactivate it.")
+    return 0
+
+
+def cmd_night_audit(args: argparse.Namespace) -> int:
+    from datetime import date
+
+    services = build_services(Settings.from_env())
+    try:
+        day = date.fromisoformat(args.date) if args.date else None
+        outcome = services.night_audit.run(Actor.system("night-audit"), day)
+    except ValueError:
+        print("Use a date such as 2026-12-24.", file=sys.stderr)
+        return 2
+    except HotelError as error:
+        print(f"Night audit refused: {error.code}", file=sys.stderr)
+        return 1
+    if outcome.already_closed:
+        print(f"{outcome.day} was already closed; nothing changed.")
+        return 0
+    snapshot = outcome.snapshot
+    print(f"{outcome.day} closed.")
+    print(f"  Occupancy: {snapshot.nights_sold}/{snapshot.nights_sellable} rooms")
+    print(f"  Invoiced: {snapshot.invoiced} DT, cash received: {snapshot.cash} DT")
+    print(f"  No-shows recorded: {', '.join(outcome.no_shows) or 'none'}")
+    print(f"  Still checked in after departure: {', '.join(outcome.overdue) or 'none'}")
     return 0
 
 
@@ -248,6 +278,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     reset.add_argument("username")
     reset.set_defaults(handler=cmd_reset_password)
+
+    audit_day = commands.add_parser(
+        "night-audit", help="close a finished day (yesterday by default)"
+    )
+    audit_day.add_argument("--date", help="the day to close, YYYY-MM-DD")
+    audit_day.set_defaults(handler=cmd_night_audit)
 
     seed = commands.add_parser("seed", help="add fictional demonstration data")
     seed.add_argument("--demo", action="store_true", help="confirm that demo data is wanted")

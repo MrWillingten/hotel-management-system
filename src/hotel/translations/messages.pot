@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 13:31+0100\n"
+"POT-Creation-Date: 2026-10-11 13:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -252,6 +252,9 @@ msgid "At most the balance due."
 msgstr ""
 
 msgid "Audit log"
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 msgid "Availability"
@@ -526,10 +529,22 @@ msgstr ""
 msgid "Cleaned, to inspect"
 msgstr ""
 
+msgid "Close a day"
+msgstr ""
+
 msgid "Close for maintenance"
 msgstr ""
 
+msgid "Close the day"
+msgstr ""
+
 msgid "Close the room"
+msgstr ""
+
+msgid "Closed by"
+msgstr ""
+
+msgid "Closed days"
 msgstr ""
 
 msgid "Code"
@@ -586,6 +601,12 @@ msgid "Date"
 msgstr ""
 
 msgid "Dates"
+msgstr ""
+
+msgid "Day"
+msgstr ""
+
+msgid "Day closed."
 msgstr ""
 
 msgid "Deactivate account"
@@ -841,6 +862,13 @@ msgstr ""
 msgid "Guests in the house"
 msgstr ""
 
+msgid ""
+"Guests who never came become no-shows, guests still in after their "
+"departure are listed, and the day's figures are frozen. Running it twice "
+"changes nothing; finished days are also closed automatically when the "
+"application starts."
+msgstr ""
+
 msgid "Hotel rules"
 msgstr ""
 
@@ -1031,6 +1059,9 @@ msgstr ""
 msgid "Night"
 msgstr ""
 
+msgid "Night audit"
+msgstr ""
+
 msgid "Night of"
 msgstr ""
 
@@ -1064,6 +1095,9 @@ msgid "No account exists yet."
 msgstr ""
 
 msgid "No backups yet."
+msgstr ""
+
+msgid "No day closed yet."
 msgstr ""
 
 msgid "No departures left today."
@@ -1131,6 +1165,9 @@ msgstr ""
 msgid "No-shows"
 msgstr ""
 
+msgid "No-shows recorded"
+msgstr ""
+
 msgid "Not allowed"
 msgstr ""
 
@@ -1171,6 +1208,9 @@ msgid "Of the accommodation; also charged for a no-show."
 msgstr ""
 
 msgid "Only a confirmed reservation can be cancelled."
+msgstr ""
+
+msgid "Only a day that is over can be closed."
 msgstr ""
 
 msgid "Out of service"
@@ -1558,6 +1598,9 @@ msgstr ""
 msgid "Stay"
 msgstr ""
 
+msgid "Still checked in after departure"
+msgstr ""
+
 msgid "Subtotal before discounts and taxes"
 msgstr ""
 
@@ -1687,6 +1730,9 @@ msgid "This change conflicts with existing data."
 msgstr ""
 
 msgid "This charge was already voided."
+msgstr ""
+
+msgid "This day was already closed; nothing changed."
 msgstr ""
 
 msgid ""

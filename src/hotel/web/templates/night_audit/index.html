@@ -1,0 +1,69 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Night audit") }}{% endblock %}
+{% block page_title %}{{ _("Night audit") }}{% endblock %}
+{% block content %}
+<div class="grid grid--two">
+  <section class="panel panel--accent">
+    <h2 class="panel__title">{{ _("Close a day") }}</h2>
+    <p class="muted">{{ _("Guests who never came become no-shows, guests still in after their departure are listed, and the day's figures are frozen. Running it twice changes nothing; finished days are also closed automatically when the application starts.") }}</p>
+    {{ form_errors(errors) }}
+    <form class="stack" method="post" novalidate>
+      {{ csrf() }}
+      {{ field("day", _("Day"), type="date", value=yesterday.isoformat(), error=errors.day) }}
+      <button class="button button--primary" type="submit">{{ _("Close the day") }}</button>
+    </form>
+  </section>
+
+  {%- if outcome %}
+  <section class="panel">
+    <h2 class="panel__title">{{ outcome.day | dateformat("full") }}</h2>
+    {%- if outcome.already_closed %}
+    <div class="alert alert--info">{{ icon("info") }}<p>{{ _("This day was already closed; nothing changed.") }}</p></div>
+    {%- else %}
+    <div class="alert alert--success">{{ icon("check") }}<p>{{ _("Day closed.") }}</p></div>
+    {%- endif %}
+    <dl class="facts">
+      <div><dt>{{ _("No-shows recorded") }}</dt><dd dir="ltr">{{ outcome.no_shows | join(", ") or "—" }}</dd></div>
+      <div><dt>{{ _("Still checked in after departure") }}</dt><dd dir="ltr">{{ outcome.overdue | join(", ") or "—" }}</dd></div>
+      <div><dt>{{ _("Occupancy") }}</dt><dd>{{ outcome.snapshot.occupancy_bp | percent }}</dd></div>
+      <div><dt>{{ _("Invoiced") }}</dt><dd>{{ outcome.snapshot.invoiced | money }}</dd></div>
+      <div><dt>{{ _("Cash received") }}</dt><dd>{{ outcome.snapshot.cash | money }}</dd></div>
+    </dl>
+  </section>
+  {%- endif %}
+</div>
+
+<section class="panel">
+  <h2 class="panel__title">{{ _("Closed days") }}</h2>
+  <div class="table-wrap table-wrap--flat">
+    <table class="table">
+      <thead><tr>
+        <th scope="col">{{ _("Day") }}</th>
+        <th scope="col" class="num">{{ _("Occupancy") }}</th>
+        <th scope="col" class="num">{{ _("Room value") }}</th>
+        <th scope="col" class="num">{{ _("Invoiced") }}</th>
+        <th scope="col" class="num">{{ _("Cash received") }}</th>
+        <th scope="col" class="num">{{ _("No-shows") }}</th>
+        <th scope="col">{{ _("Closed by") }}</th>
+      </tr></thead>
+      <tbody>
+        {%- for s in snapshots %}
+        <tr>
+          <td>{{ s.day | dateformat("medium") }}</td>
+          <td class="num" dir="ltr">{{ s.occupancy_bp | percent }} <span class="muted">({{ s.nights_sold }}/{{ s.nights_sellable }})</span></td>
+          <td class="num">{{ s.room_value | money }}</td>
+          <td class="num">{{ s.invoiced | money }}</td>
+          <td class="num">{{ s.cash | money }}</td>
+          <td class="num">{{ s.no_shows }}</td>
+          <td>{{ s.created_by_name or _("Automatic") }}</td>
+        </tr>
+        {%- else %}
+        <tr><td colspan="7" class="table__empty">{{ _("No day closed yet.") }}</td></tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
