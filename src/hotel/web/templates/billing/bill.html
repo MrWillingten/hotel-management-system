@@ -35,7 +35,7 @@
         {{ field("amount", _("Amount (DT)"), value=bill.balance, hint=_("At most the balance due.")) }}
         {{ select("method", _("Method"), method_options, "CASH") }}
         {{ field("reference", _("Reference"), required=False, maxlength=60, hint=_("Card slip or transfer number, if any.")) }}
-        <button class="button button--primary" type="submit">{{ _("Record") }}</button>
+        <button class="button button--primary" type="submit">{{ _("Record the payment") }}</button>
       </form>
     </section>
     {%- elif bill.balance.is_negative() and current_user.is_manager %}
@@ -47,7 +47,7 @@
         {{ field("amount", _("Amount (DT)"), value=-bill.balance) }}
         {{ select("method", _("Method"), method_options, "CASH") }}
         {{ field("reference", _("Reference"), required=False, maxlength=60) }}
-        <button class="button button--primary" type="submit">{{ _("Refund") }}</button>
+        <button class="button button--primary" type="submit">{{ _("Record the refund") }}</button>
       </form>
     </section>
     {%- elif bill.balance.is_negative() %}

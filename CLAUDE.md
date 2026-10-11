@@ -117,12 +117,13 @@ browsers checklist, OWASP ASVS L1 self-assessment, test evidence table,
 report (40–50 pages), screenshots in both themes and three languages,
 demo script and two rehearsals. As agreed: draft the Sprint 6 stories and
 show them to the student **before** creating issues.
-Pending from Sprint 5: the student's translation review (#55) with
-`scripts/i18n_review.py` (file `translations-review.csv`, git-ignored).
+Sprint 5 translation review done by the assistant at the student's request
+(34 corrections, see docs/translations.md); a native-speaker read before the
+demo is still advised.
 
 ### Known open issues / limitations (not bugs yet fixed)
-- French and Arabic texts are drafts → the student reviews them with
-  `scripts/i18n_review.py` (issue #55).
+- French and Arabic texts reviewed once (AI) → a native-speaker read before the
+  demo with `scripts/i18n_review.py`.
 - Shortening a stay within 48 h charges no fee; early departure charges no
   fee either (decision F, documented).
 - Check-out is allowed with a balance due (shown under "Unpaid after

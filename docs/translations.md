@@ -57,6 +57,14 @@ speaker before the final demo.
 
 ## Reviewing the translations (story 5.5)
 
+**Review done on 11 Oct 2026** with the workflow below: all 636 texts read,
+34 corrections applied (consistent terms: Arabic "كشف الحساب" for the bill
+and "الفاتورة" for the invoice, "فئة" for category, "gestionnaire" in French;
+clearer status labels; two English words that had two meanings, "Record"
+and "Refund", got separate texts for their buttons). The reviewer was the
+AI assistant at the student's request, so a quick read by a native speaker
+is still recommended before the demo; the same commands apply.
+
 The French and Arabic texts were drafted by AI and must be checked by a
 native speaker before the demo.
 

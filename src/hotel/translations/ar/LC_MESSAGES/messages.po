@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 13:44+0100\n"
+"POT-Creation-Date: 2026-10-11 14:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -92,7 +92,7 @@ msgid ""
 "A rate period replaces the nightly rate of every room in its category. Without one, the weekend "
 "rule applies, then the room's own rate. Existing bookings always keep their prices."
 msgstr ""
-"تحلّ فترة التسعير محل سعر الليلة لجميع غرف صنفها. وفي غيابها تُطبَّق قاعدة نهاية الأسبوع ثم سعر "
+"تحلّ فترة التسعير محل سعر الليلة لجميع غرف فئتها. وفي غيابها تُطبَّق قاعدة نهاية الأسبوع ثم سعر "
 "الغرفة نفسها. تحتفظ الحجوزات القائمة دائماً بأسعارها."
 
 #, python-format
@@ -107,7 +107,7 @@ msgid "A stay lasts at most %(max)s nights."
 msgstr "تستمر الإقامة %(max)s ليلة كحد أقصى."
 
 msgid "Access"
-msgstr "الوصول"
+msgstr "صلاحيات الدخول"
 
 msgid "Access denied"
 msgstr "تم رفض الوصول"
@@ -239,7 +239,7 @@ msgid "Anonymised"
 msgstr "مجهول الهوية"
 
 msgid "Another booking took one of these rooms a moment ago. Search again."
-msgstr "حجز آخر أخذ إحدى هذه الغرف قبل لحظات. ابحث من جديد."
+msgstr "استحوذ حجز آخر على إحدى هذه الغرف قبل لحظات. أعد البحث."
 
 msgid "Another room already has this number."
 msgstr "توجد غرفة أخرى بهذا الرقم بالفعل."
@@ -258,7 +258,7 @@ msgid "Arrival time, special requests..."
 msgstr "وقت الوصول، طلبات خاصة…"
 
 msgid "Arrivals"
-msgstr "الوصول"
+msgstr "الوافدون"
 
 msgid "Arriving from"
 msgstr "الوصول ابتداءً من"
@@ -341,10 +341,10 @@ msgid "Between 6 and 120. Only proposed to a manager, never automatic."
 msgstr "بين 6 و120. يُقترح على المدير فقط ولا يتم تلقائياً."
 
 msgid "Bill"
-msgstr "الفاتورة"
+msgstr "كشف الحساب"
 
 msgid "Bill and payments"
-msgstr "الفاتورة والمدفوعات"
+msgstr "كشف الحساب والمدفوعات"
 
 msgid "Book"
 msgstr "حجز"
@@ -361,7 +361,7 @@ msgid "Booked on"
 msgstr "تاريخ الحجز"
 
 msgid "Bookings open at most two years ahead."
-msgstr "الحجوزات متاحة قبل سنتين كحد أقصى."
+msgstr "يمكن الحجز قبل سنتين على الأكثر."
 
 msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
 msgstr "بطاقة التعريف: 8 أرقام. جواز السفر: من 5 إلى 20 حرفًا أو رقمًا."
@@ -644,7 +644,7 @@ msgid "Departure"
 msgstr "المغادرة"
 
 msgid "Departures"
-msgstr "المغادرة"
+msgstr "المغادرون"
 
 msgid "Deposit"
 msgstr "عربون"
@@ -1024,7 +1024,7 @@ msgid "Maintenance history"
 msgstr "سجل الصيانة"
 
 msgid "Manage categories"
-msgstr "إدارة الأصناف"
+msgstr "إدارة الفئات"
 
 msgid "Manager"
 msgstr "مدير"
@@ -1033,13 +1033,13 @@ msgid "Manual"
 msgstr "يدوية"
 
 msgid "Mark cleaned"
-msgstr "وضع علامة: نُظِّفت"
+msgstr "تأكيد التنظيف"
 
 msgid "Mark inspected"
-msgstr "وضع علامة: عوينت"
+msgstr "تأكيد المعاينة"
 
 msgid "Mark to clean"
-msgstr "وضع علامة للتنظيف"
+msgstr "تحتاج إلى تنظيف"
 
 msgid "Match system"
 msgstr "حسب النظام"
@@ -1150,7 +1150,7 @@ msgid "No day closed yet."
 msgstr "لم يُقفل أي يوم بعد."
 
 msgid "No departures left today."
-msgstr "لا مغادرات متبقية اليوم."
+msgstr "لا توجد مغادرات أخرى اليوم."
 
 msgid "No discount."
 msgstr "لا يوجد تخفيض."
@@ -1178,7 +1178,7 @@ msgid "No money received yet."
 msgstr "لم يُستلم أي مبلغ بعد."
 
 msgid "No more arrivals expected today."
-msgstr "لا وصول متوقع بعد اليوم."
+msgstr "لا يُنتظر وصول نزلاء آخرين اليوم."
 
 msgid "No nights sold in this period."
 msgstr "لم تُبع أي ليلة في هذه الفترة."
@@ -1241,7 +1241,7 @@ msgid "Notes"
 msgstr "ملاحظات"
 
 msgid "Nothing to pay."
-msgstr "لا شيء للدفع."
+msgstr "لا يوجد مبلغ مستحق."
 
 msgid "Number"
 msgstr "الرقم"
@@ -1280,13 +1280,13 @@ msgid "Out of service"
 msgstr "خارج الخدمة"
 
 msgid "Outstanding"
-msgstr "المتبقي المستحق"
+msgstr "المبالغ المستحقة"
 
 msgid "Outstanding balances"
 msgstr "الأرصدة غير المسددة"
 
 msgid "Overdue"
-msgstr "متجاوز"
+msgstr "تجاوز موعد المغادرة"
 
 #, python-format
 msgid "Page %(page)s of %(pages)s"
@@ -1385,7 +1385,7 @@ msgid "Receptionist"
 msgstr "موظف استقبال"
 
 msgid "Record"
-msgstr "السجل"
+msgstr "العنصر"
 
 msgid "Record a deposit"
 msgstr "تسجيل عربون"
@@ -1401,6 +1401,12 @@ msgstr "سجّل دفعة أولاً"
 
 msgid "Record the no-show"
 msgstr "تأكيد عدم الحضور"
+
+msgid "Record the payment"
+msgstr "تسجيل الدفعة"
+
+msgid "Record the refund"
+msgstr "تسجيل الاسترداد"
 
 msgid "Reference"
 msgstr "المرجع"
@@ -1717,13 +1723,13 @@ msgid "The arrival time has passed: record a no-show instead of a cancellation."
 msgstr "مضى وقت الوصول: سجّل عدم حضور بدلًا من الإلغاء."
 
 msgid "The bill is closed: discounts can no longer change."
-msgstr "الفاتورة مغلقة: لم يعد بالإمكان تغيير التخفيضات."
+msgstr "كشف الحساب مغلق: لم يعد بالإمكان تغيير التخفيضات."
 
 msgid "The bill is closed: this charge can no longer be changed."
-msgstr "الفاتورة مغلقة: لم يعد بالإمكان تعديل هذا الاحتساب."
+msgstr "كشف الحساب مغلق: لم يعد بالإمكان تعديل هذا الاحتساب."
 
 msgid "The bill is settled."
-msgstr "تمت تسوية الفاتورة."
+msgstr "تمت تسوية كشف الحساب."
 
 msgid "The catalogue is empty."
 msgstr "الكتالوج فارغ."
@@ -1807,7 +1813,7 @@ msgstr "لا يمكن التراجع عن هذا."
 
 #, python-format
 msgid "This category already has a rate on some of these nights (%(name)s)."
-msgstr "لهذا الصنف سعر محدد مسبقاً في بعض هذه الليالي (%(name)s)."
+msgstr "لهذه الفئة سعر محدد مسبقاً في بعض هذه الليالي (%(name)s)."
 
 msgid "This change conflicts with existing data."
 msgstr "يتعارض هذا التغيير مع بيانات موجودة."

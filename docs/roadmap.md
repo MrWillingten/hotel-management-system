@@ -107,7 +107,7 @@ gettext and Babel catalogues.
 | 5.6 | #62 | ✅ |
 | 5.7 | #63 | ✅ |
 | 5.8 | #64 | ✅ |
-| 5.5 (tooling) | #65 | ✅ – the student's review of the texts is still open (#55) |
+| 5.5 | #65 | ✅ – review done by the assistant at the student's request (34 corrections) |
 
 Retrospective: SQL `GROUP BY` kept every report a handful of queries,
 and keeping the arithmetic (rates, averages) in the domain made the
