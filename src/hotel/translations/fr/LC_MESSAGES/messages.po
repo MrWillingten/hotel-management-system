@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 09:11+0100\n"
+"POT-Creation-Date: 2026-10-11 09:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -33,6 +33,10 @@ msgstr "%(name)s ajouté au catalogue."
 #, python-format
 msgid "%(name)s is checked in."
 msgstr "%(name)s est enregistré(e) à l'arrivée."
+
+#, python-format
+msgid "%(quantity)s × %(price)s"
+msgstr "%(quantity)s × %(price)s"
 
 #, python-format
 msgid "%(sold)s of %(sellable)s rooms"
@@ -90,6 +94,10 @@ msgstr "Accès refusé"
 
 msgid "Accommodation"
 msgstr "Hébergement"
+
+#, python-format
+msgid "Accommodation only. All discounts together: at most %(cap)s of it."
+msgstr "Sur l'hébergement uniquement. Toutes remises confondues : au plus %(cap)s de celui-ci."
 
 msgid "Accommodation total (before tax)"
 msgstr "Total hébergement (hors taxes)"
@@ -174,6 +182,9 @@ msgstr "Toutes les chambres"
 msgid "Amount"
 msgstr "Montant"
 
+msgid "Amount (DT)"
+msgstr "Montant (DT)"
+
 msgid "Amount per adult per night"
 msgstr "Montant par adulte et par nuit"
 
@@ -217,6 +228,9 @@ msgstr "Arrivée jusqu'au"
 msgid "At least 12 characters. A short sentence is easy to remember and hard to guess."
 msgstr "Au moins 12 caractères. Une courte phrase est facile à retenir et difficile à deviner."
 
+msgid "At most the balance due."
+msgstr "Au plus le solde dû."
+
 msgid "Audit log"
 msgstr "Journal d'audit"
 
@@ -235,6 +249,9 @@ msgstr "Retour au personnel"
 msgid "Back to the dashboard"
 msgstr "Retour au tableau de bord"
 
+msgid "Back to the reservation"
+msgstr "Retour à la réservation"
+
 msgid "Back up now"
 msgstr "Sauvegarder maintenant"
 
@@ -251,6 +268,12 @@ msgstr "Les sauvegardes sont stockées dans ce dossier du serveur :"
 msgid "Bad request"
 msgstr "Requête invalide"
 
+msgid "Balance due"
+msgstr "Solde dû"
+
+msgid "Bank transfer"
+msgstr "Virement"
+
 msgid "Before"
 msgstr "Avant"
 
@@ -259,6 +282,12 @@ msgstr "Avant une restauration"
 
 msgid "Before an upgrade"
 msgstr "Avant une mise à jour"
+
+msgid "Bill"
+msgstr "Note"
+
+msgid "Bill and payments"
+msgstr "Note et paiements"
 
 msgid "Book"
 msgstr "Réserver"
@@ -322,6 +351,15 @@ msgstr "La capacité doit être comprise entre 1 et %(max)s personnes."
 #, python-format
 msgid "Capacity: %(count)s"
 msgstr "Capacité : %(count)s"
+
+msgid "Card"
+msgstr "Carte"
+
+msgid "Card slip or transfer number, if any."
+msgstr "Ticket de carte ou numéro de virement, le cas échéant."
+
+msgid "Cash"
+msgstr "Espèces"
 
 msgid "Categories"
 msgstr "Catégories"
@@ -416,6 +454,9 @@ msgstr "Choisissez un rôle."
 msgid "Choose a service from the catalogue."
 msgstr "Choisissez un service du catalogue."
 
+msgid "Choose how the money was paid."
+msgstr "Choisissez le moyen de paiement."
+
 msgid "Choose the dates first."
 msgstr "Choisissez d'abord les dates."
 
@@ -502,11 +543,37 @@ msgstr "Départ"
 msgid "Departures"
 msgstr "Départs"
 
+msgid "Deposit"
+msgstr "Acompte"
+
 msgid "Description"
 msgstr "Description"
 
+msgid "Detail"
+msgstr "Détail"
+
 msgid "Details"
 msgstr "Détails"
+
+msgid "Discount granted."
+msgstr "Remise accordée."
+
+msgid "Discount removed."
+msgstr "Remise retirée."
+
+#, python-format
+msgid "Discount: %(reason)s"
+msgstr "Remise : %(reason)s"
+
+msgid "Discounts"
+msgstr "Remises"
+
+msgid "Discounts limited to the maximum allowed"
+msgstr "Remises limitées au maximum autorisé"
+
+#, python-format
+msgid "Discounts would total %(requested)s DT, above the allowed maximum of %(cap)s DT."
+msgstr "Les remises atteindraient %(requested)s DT, au-delà du maximum autorisé de %(cap)s DT."
 
 msgid "Do not rent"
 msgstr "Ne pas louer"
@@ -587,6 +654,12 @@ msgstr "Saisissez un nombre entier."
 msgid "Enter an amount above 0 and at most 1,000 DT."
 msgstr "Saisissez un montant supérieur à 0 et au plus 1 000 DT."
 
+msgid "Enter an amount above 0 and at most 1,000,000 DT."
+msgstr "Saisissez un montant supérieur à 0 et au plus 1 000 000 DT."
+
+msgid "Enter an amount above 0."
+msgstr "Saisissez un montant supérieur à 0."
+
 msgid "Enter an amount such as 180 or 180.500."
 msgstr "Saisissez un montant comme 180 ou 180.500."
 
@@ -619,6 +692,9 @@ msgstr "Première nuit fermée"
 
 msgid "First name"
 msgstr "Prénom"
+
+msgid "Fixed amount (DT)"
+msgstr "Montant fixe (DT)"
 
 msgid "Flags"
 msgstr "Indicateurs"
@@ -659,6 +735,12 @@ msgstr "Bonsoir"
 
 msgid "Good morning"
 msgstr "Bonjour"
+
+msgid "Grant"
+msgstr "Accorder"
+
+msgid "Grant a discount"
+msgstr "Accorder une remise"
 
 msgid "Guest"
 msgstr "Client"
@@ -787,6 +869,9 @@ msgstr "Selon le système"
 msgid "Maximum total discount (%%)"
 msgstr "Remise totale maximale (%%)"
 
+msgid "Method"
+msgstr "Moyen"
+
 msgid "Name"
 msgstr "Nom"
 
@@ -863,6 +948,9 @@ msgstr "Aucune sauvegarde pour l'instant."
 msgid "No departures left today."
 msgstr "Plus aucun départ aujourd'hui."
 
+msgid "No discount."
+msgstr "Aucune remise."
+
 msgid "No entries match these filters."
 msgstr "Aucune entrée ne correspond à ces filtres."
 
@@ -872,6 +960,9 @@ msgstr "Aucun client ne correspond à « %(query)s »."
 
 msgid "No guests registered yet."
 msgstr "Aucun client enregistré pour l'instant."
+
+msgid "No money received yet."
+msgstr "Aucun encaissement pour l'instant."
 
 msgid "No more arrivals expected today."
 msgstr "Plus aucune arrivée prévue aujourd'hui."
@@ -917,6 +1008,9 @@ msgstr "Pas encore nettoyée : chambre %(rooms)s. Vérifiez avec le ménage avan
 msgid "Notes"
 msgstr "Remarques"
 
+msgid "Nothing to pay."
+msgstr "Rien à payer."
+
 msgid "Occupancy tonight"
 msgstr "Occupation ce soir"
 
@@ -945,6 +1039,9 @@ msgstr "Page introuvable"
 msgid "Pages"
 msgstr "Pages"
 
+msgid "Paid"
+msgstr "Payé"
+
 msgid "Passport"
 msgstr "Passeport"
 
@@ -953,6 +1050,12 @@ msgstr "Mot de passe"
 
 msgid "Past"
 msgstr "Passé"
+
+msgid "Payment"
+msgstr "Paiement"
+
+msgid "Payments"
+msgstr "Paiements"
 
 msgid "Percentage"
 msgstr "Pourcentage"
@@ -991,6 +1094,10 @@ msgstr "Réactiver le compte"
 msgid "Reason"
 msgstr "Motif"
 
+#, python-format
+msgid "Received %(amount)s."
+msgstr "Reçu : %(amount)s."
+
 msgid "Reception and management"
 msgstr "Réception et gestion"
 
@@ -1000,11 +1107,33 @@ msgstr "Réceptionniste"
 msgid "Record"
 msgstr "Enregistrement"
 
+msgid "Record a deposit"
+msgstr "Enregistrer un acompte"
+
 msgid "Record a no-show"
 msgstr "Enregistrer une non-présentation"
 
+msgid "Record a payment"
+msgstr "Enregistrer un paiement"
+
 msgid "Record the no-show"
 msgstr "Enregistrer la non-présentation"
+
+msgid "Reference"
+msgstr "Référence"
+
+msgid "Refund"
+msgstr "Rembourser"
+
+msgid "Refund owed to the guest"
+msgstr "Remboursement dû au client"
+
+msgid "Refund the guest"
+msgstr "Rembourser le client"
+
+#, python-format
+msgid "Refunded %(amount)s."
+msgstr "Remboursé : %(amount)s."
 
 msgid "Register a guest"
 msgstr "Enregistrer un client"
@@ -1018,8 +1147,14 @@ msgstr "Enregistrer le client"
 msgid "Registered"
 msgstr "Enregistré le"
 
+msgid "Remove"
+msgstr "Retirer"
+
 msgid "Remove this room"
 msgstr "Retirer cette chambre"
+
+msgid "Removed"
+msgstr "Retirée"
 
 msgid "Reopens on"
 msgstr "Réouverture le"
@@ -1084,6 +1219,10 @@ msgstr "La chambre %(number)s est marquée à nettoyer."
 #, python-format
 msgid "Room %(number)s is ready for the next guest."
 msgstr "La chambre %(number)s est prête pour le prochain client."
+
+#, python-format
+msgid "Room %(room)s"
+msgstr "Chambre %(room)s"
 
 #, python-format
 msgid "Room %(room)s can sleep at most %(capacity)s guests (%(occupants)s requested)."
@@ -1212,11 +1351,17 @@ msgstr "Statut"
 msgid "Stay"
 msgstr "Séjour"
 
+msgid "Subtotal before discounts and taxes"
+msgstr "Sous-total avant remises et taxes"
+
 #, python-format
 msgid "Tax rule %(name)s added."
 msgstr "Taxe %(name)s ajoutée."
 
 msgid "Tax rules"
+msgstr "Taxes"
+
+msgid "Taxes"
 msgstr "Taxes"
 
 msgid "Temporary password"
@@ -1225,14 +1370,28 @@ msgstr "Mot de passe temporaire"
 msgid "Temporary password set. They must choose a new one at their next sign-in."
 msgstr "Mot de passe temporaire défini. La personne devra en choisir un nouveau à sa prochaine connexion."
 
+#, python-format
+msgid "That is more than the balance due (%(due)s DT)."
+msgstr "C'est plus que le solde dû (%(due)s DT)."
+
+#, python-format
+msgid "That is more than the guest overpaid (%(credit)s DT)."
+msgstr "C'est plus que le trop-perçu du client (%(credit)s DT)."
+
 msgid "The arrival date can't be in the past."
 msgstr "La date d'arrivée ne peut pas être passée."
 
 msgid "The arrival time has passed: record a no-show instead of a cancellation."
 msgstr "L'heure d'arrivée est passée : enregistrez une non-présentation plutôt qu'une annulation."
 
+msgid "The bill is closed: discounts can no longer change."
+msgstr "La note est clôturée : les remises ne peuvent plus changer."
+
 msgid "The bill is closed: this charge can no longer be changed."
 msgstr "La facture est clôturée : cette prestation ne peut plus être modifiée."
+
+msgid "The bill is settled."
+msgstr "La note est réglée."
 
 msgid "The catalogue is empty."
 msgstr "Le catalogue est vide."
@@ -1271,6 +1430,9 @@ msgstr "Le client est à l'hôtel : seuls la date de départ et les occupants p
 
 msgid "The hotel must keep at least one active manager."
 msgstr "L'hôtel doit garder au moins un gestionnaire actif."
+
+msgid "The hotel owes the guest a refund. Ask a manager to record it."
+msgstr "L'hôtel doit un remboursement au client. Demandez à un gérant de l'enregistrer."
 
 msgid "The nights of this reservation were released when it was cancelled or marked as a no-show."
 msgstr "Les nuits de cette réservation ont été libérées lors de son annulation ou de la non-présentation."
@@ -1319,6 +1481,9 @@ msgstr "Ce formulaire a expiré ou a été envoyé depuis un autre site. Recharg
 msgid "This form was already submitted. Check the charges before trying again."
 msgstr "Ce formulaire a déjà été envoyé. Vérifiez les prestations avant de réessayer."
 
+msgid "This form was already submitted. Check the payments before trying again."
+msgstr "Ce formulaire a déjà été envoyé. Vérifiez les paiements avant de réessayer."
+
 msgid "This form was already submitted. Check the reservation before trying again."
 msgstr "Ce formulaire a déjà été envoyé. Vérifiez la réservation avant de réessayer."
 
@@ -1333,6 +1498,9 @@ msgstr "Ce client est marqué « ne pas louer » : la réservation sera refus
 
 msgid "This is a different person: register anyway"
 msgstr "C'est une autre personne : enregistrer quand même"
+
+msgid "This is a preview: the invoice is issued at check-out, with the taxes in force at that moment."
+msgstr "Ceci est un aperçu : la facture est émise au départ, avec les taxes en vigueur à ce moment."
 
 msgid "This is recorded in the audit log."
 msgstr "Cette action est enregistrée dans le journal d'audit."
@@ -1391,6 +1559,9 @@ msgstr ""
 "Trop de tentatives de connexion échouées depuis cet ordinateur. Patientez quelques minutes, puis "
 "réessayez."
 
+msgid "Total"
+msgstr "Total"
+
 msgid "Type"
 msgstr "Type"
 
@@ -1444,6 +1615,9 @@ msgstr "VIP"
 
 msgid "VIP guest"
 msgstr "Client VIP"
+
+msgid "Value"
+msgstr "Valeur"
 
 #, python-format
 msgid "Version %(version)s · database schema %(schema)s · time zone %(tz)s"
@@ -1499,4 +1673,8 @@ msgstr "Vos autres sessions ouvertes seront déconnectées."
 
 msgid "Your password has been changed."
 msgstr "Votre mot de passe a été modifié."
+
+#, python-format
+msgid "on %(base)s"
+msgstr "sur %(base)s"
 

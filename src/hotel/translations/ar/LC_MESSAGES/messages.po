@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 09:11+0100\n"
+"POT-Creation-Date: 2026-10-11 09:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -34,6 +34,10 @@ msgstr "تمت إضافة %(name)s إلى الكتالوج."
 #, python-format
 msgid "%(name)s is checked in."
 msgstr "تم تسجيل وصول %(name)s."
+
+#, python-format
+msgid "%(quantity)s × %(price)s"
+msgstr "%(quantity)s × %(price)s"
 
 #, python-format
 msgid "%(sold)s of %(sellable)s rooms"
@@ -89,6 +93,10 @@ msgstr "تم رفض الوصول"
 
 msgid "Accommodation"
 msgstr "الإقامة"
+
+#, python-format
+msgid "Accommodation only. All discounts together: at most %(cap)s of it."
+msgstr "على الإقامة فقط. مجموع التخفيضات: %(cap)s منها كحد أقصى."
 
 msgid "Accommodation total (before tax)"
 msgstr "مجموع الإقامة (قبل الضرائب)"
@@ -173,6 +181,9 @@ msgstr "كل الغرف"
 msgid "Amount"
 msgstr "المبلغ"
 
+msgid "Amount (DT)"
+msgstr "المبلغ (د.ت)"
+
 msgid "Amount per adult per night"
 msgstr "مبلغ لكل بالغ في الليلة"
 
@@ -216,6 +227,9 @@ msgstr "الوصول حتى"
 msgid "At least 12 characters. A short sentence is easy to remember and hard to guess."
 msgstr "12 حرفًا على الأقل. الجملة القصيرة سهلة التذكر وصعبة التخمين."
 
+msgid "At most the balance due."
+msgstr "لا يتجاوز الرصيد المستحق."
+
 msgid "Audit log"
 msgstr "سجل التدقيق"
 
@@ -234,6 +248,9 @@ msgstr "العودة إلى الموظفين"
 msgid "Back to the dashboard"
 msgstr "العودة إلى لوحة القيادة"
 
+msgid "Back to the reservation"
+msgstr "العودة إلى الحجز"
+
 msgid "Back up now"
 msgstr "نسخ احتياطي الآن"
 
@@ -250,6 +267,12 @@ msgstr "تُحفظ النسخ الاحتياطية في هذا المجلد عل
 msgid "Bad request"
 msgstr "طلب غير صالح"
 
+msgid "Balance due"
+msgstr "الرصيد المستحق"
+
+msgid "Bank transfer"
+msgstr "تحويل بنكي"
+
 msgid "Before"
 msgstr "قبل"
 
@@ -258,6 +281,12 @@ msgstr "قبل الاستعادة"
 
 msgid "Before an upgrade"
 msgstr "قبل التحديث"
+
+msgid "Bill"
+msgstr "الفاتورة"
+
+msgid "Bill and payments"
+msgstr "الفاتورة والمدفوعات"
 
 msgid "Book"
 msgstr "حجز"
@@ -321,6 +350,15 @@ msgstr "يجب أن تكون السعة بين 1 و%(max)s أشخاص."
 #, python-format
 msgid "Capacity: %(count)s"
 msgstr "السعة: %(count)s"
+
+msgid "Card"
+msgstr "بطاقة"
+
+msgid "Card slip or transfer number, if any."
+msgstr "إيصال البطاقة أو رقم التحويل إن وُجد."
+
+msgid "Cash"
+msgstr "نقداً"
 
 msgid "Categories"
 msgstr "الفئات"
@@ -415,6 +453,9 @@ msgstr "اختر دورًا."
 msgid "Choose a service from the catalogue."
 msgstr "اختر خدمة من الكتالوج."
 
+msgid "Choose how the money was paid."
+msgstr "اختر طريقة الدفع."
+
 msgid "Choose the dates first."
 msgstr "اختر التواريخ أولًا."
 
@@ -499,11 +540,37 @@ msgstr "المغادرة"
 msgid "Departures"
 msgstr "المغادرة"
 
+msgid "Deposit"
+msgstr "عربون"
+
 msgid "Description"
 msgstr "الوصف"
 
+msgid "Detail"
+msgstr "التفاصيل"
+
 msgid "Details"
 msgstr "التفاصيل"
+
+msgid "Discount granted."
+msgstr "تم منح التخفيض."
+
+msgid "Discount removed."
+msgstr "تم حذف التخفيض."
+
+#, python-format
+msgid "Discount: %(reason)s"
+msgstr "تخفيض: %(reason)s"
+
+msgid "Discounts"
+msgstr "التخفيضات"
+
+msgid "Discounts limited to the maximum allowed"
+msgstr "تخفيضات محدودة بالحد الأقصى المسموح"
+
+#, python-format
+msgid "Discounts would total %(requested)s DT, above the allowed maximum of %(cap)s DT."
+msgstr "سيبلغ مجموع التخفيضات %(requested)s د.ت، وهو أكثر من الحد الأقصى المسموح %(cap)s د.ت."
 
 msgid "Do not rent"
 msgstr "ممنوع الحجز"
@@ -584,6 +651,12 @@ msgstr "أدخل عددًا صحيحًا."
 msgid "Enter an amount above 0 and at most 1,000 DT."
 msgstr "أدخل مبلغاً أكبر من 0 ولا يتجاوز 1,000 د.ت."
 
+msgid "Enter an amount above 0 and at most 1,000,000 DT."
+msgstr "أدخل مبلغاً أكبر من 0 ولا يتجاوز 1,000,000 د.ت."
+
+msgid "Enter an amount above 0."
+msgstr "أدخل مبلغاً أكبر من 0."
+
 msgid "Enter an amount such as 180 or 180.500."
 msgstr "أدخل مبلغًا مثل 180 أو 180.500."
 
@@ -616,6 +689,9 @@ msgstr "أول ليلة مغلقة"
 
 msgid "First name"
 msgstr "الاسم"
+
+msgid "Fixed amount (DT)"
+msgstr "مبلغ ثابت (د.ت)"
 
 msgid "Flags"
 msgstr "العلامات"
@@ -656,6 +732,12 @@ msgstr "مساء الخير"
 
 msgid "Good morning"
 msgstr "صباح الخير"
+
+msgid "Grant"
+msgstr "منح"
+
+msgid "Grant a discount"
+msgstr "منح تخفيض"
 
 msgid "Guest"
 msgstr "النزيل"
@@ -782,6 +864,9 @@ msgstr "حسب النظام"
 msgid "Maximum total discount (%%)"
 msgstr "الحد الأقصى للتخفيض الإجمالي (%%)"
 
+msgid "Method"
+msgstr "الطريقة"
+
 msgid "Name"
 msgstr "الاسم"
 
@@ -858,6 +943,9 @@ msgstr "لا توجد نسخ احتياطية بعد."
 msgid "No departures left today."
 msgstr "لا مغادرات متبقية اليوم."
 
+msgid "No discount."
+msgstr "لا يوجد تخفيض."
+
 msgid "No entries match these filters."
 msgstr "لا توجد إدخالات تطابق هذه المرشحات."
 
@@ -867,6 +955,9 @@ msgstr "لا يوجد نزيل يطابق «%(query)s»."
 
 msgid "No guests registered yet."
 msgstr "لا يوجد نزلاء مسجلون بعد."
+
+msgid "No money received yet."
+msgstr "لم يُستلم أي مبلغ بعد."
 
 msgid "No more arrivals expected today."
 msgstr "لا وصول متوقع بعد اليوم."
@@ -912,6 +1003,9 @@ msgstr "لم تُنظَّف بعد: الغرفة %(rooms)s. تحقق مع قسم
 msgid "Notes"
 msgstr "ملاحظات"
 
+msgid "Nothing to pay."
+msgstr "لا شيء للدفع."
+
 msgid "Occupancy tonight"
 msgstr "نسبة الإشغال الليلة"
 
@@ -940,6 +1034,9 @@ msgstr "الصفحة غير موجودة"
 msgid "Pages"
 msgstr "الصفحات"
 
+msgid "Paid"
+msgstr "المدفوع"
+
 msgid "Passport"
 msgstr "جواز السفر"
 
@@ -948,6 +1045,12 @@ msgstr "كلمة المرور"
 
 msgid "Past"
 msgstr "منقضية"
+
+msgid "Payment"
+msgstr "دفعة"
+
+msgid "Payments"
+msgstr "المدفوعات"
 
 msgid "Percentage"
 msgstr "نسبة مئوية"
@@ -986,6 +1089,10 @@ msgstr "إعادة تفعيل الحساب"
 msgid "Reason"
 msgstr "السبب"
 
+#, python-format
+msgid "Received %(amount)s."
+msgstr "تم استلام %(amount)s."
+
 msgid "Reception and management"
 msgstr "الاستقبال والإدارة"
 
@@ -995,11 +1102,33 @@ msgstr "موظف استقبال"
 msgid "Record"
 msgstr "السجل"
 
+msgid "Record a deposit"
+msgstr "تسجيل عربون"
+
 msgid "Record a no-show"
 msgstr "تسجيل عدم الحضور"
 
+msgid "Record a payment"
+msgstr "تسجيل دفعة"
+
 msgid "Record the no-show"
 msgstr "تأكيد عدم الحضور"
+
+msgid "Reference"
+msgstr "المرجع"
+
+msgid "Refund"
+msgstr "استرداد"
+
+msgid "Refund owed to the guest"
+msgstr "مبلغ مستحق الاسترداد للنزيل"
+
+msgid "Refund the guest"
+msgstr "رد المبلغ للنزيل"
+
+#, python-format
+msgid "Refunded %(amount)s."
+msgstr "تم رد %(amount)s."
 
 msgid "Register a guest"
 msgstr "تسجيل نزيل"
@@ -1013,8 +1142,14 @@ msgstr "تسجيل النزيل"
 msgid "Registered"
 msgstr "تاريخ التسجيل"
 
+msgid "Remove"
+msgstr "حذف"
+
 msgid "Remove this room"
 msgstr "إزالة هذه الغرفة"
+
+msgid "Removed"
+msgstr "محذوف"
 
 msgid "Reopens on"
 msgstr "تُفتح من جديد في"
@@ -1079,6 +1214,10 @@ msgstr "تم وضع علامة للتنظيف على الغرفة %(number)s."
 #, python-format
 msgid "Room %(number)s is ready for the next guest."
 msgstr "الغرفة %(number)s جاهزة للنزيل التالي."
+
+#, python-format
+msgid "Room %(room)s"
+msgstr "الغرفة %(room)s"
 
 #, python-format
 msgid "Room %(room)s can sleep at most %(capacity)s guests (%(occupants)s requested)."
@@ -1205,11 +1344,17 @@ msgstr "الحالة"
 msgid "Stay"
 msgstr "الإقامة"
 
+msgid "Subtotal before discounts and taxes"
+msgstr "المجموع الفرعي قبل التخفيضات والضرائب"
+
 #, python-format
 msgid "Tax rule %(name)s added."
 msgstr "تمت إضافة الضريبة %(name)s."
 
 msgid "Tax rules"
+msgstr "الضرائب"
+
+msgid "Taxes"
 msgstr "الضرائب"
 
 msgid "Temporary password"
@@ -1218,14 +1363,28 @@ msgstr "كلمة مرور مؤقتة"
 msgid "Temporary password set. They must choose a new one at their next sign-in."
 msgstr "تم تعيين كلمة مرور مؤقتة. يجب على صاحب الحساب اختيار كلمة جديدة عند تسجيل الدخول القادم."
 
+#, python-format
+msgid "That is more than the balance due (%(due)s DT)."
+msgstr "هذا أكثر من الرصيد المستحق (%(due)s د.ت)."
+
+#, python-format
+msgid "That is more than the guest overpaid (%(credit)s DT)."
+msgstr "هذا أكثر مما دفعه النزيل زيادةً (%(credit)s د.ت)."
+
 msgid "The arrival date can't be in the past."
 msgstr "لا يمكن أن يكون تاريخ الوصول في الماضي."
 
 msgid "The arrival time has passed: record a no-show instead of a cancellation."
 msgstr "مضى وقت الوصول: سجّل عدم حضور بدلًا من الإلغاء."
 
+msgid "The bill is closed: discounts can no longer change."
+msgstr "الفاتورة مغلقة: لم يعد بالإمكان تغيير التخفيضات."
+
 msgid "The bill is closed: this charge can no longer be changed."
 msgstr "الفاتورة مغلقة: لم يعد بالإمكان تعديل هذا الاحتساب."
+
+msgid "The bill is settled."
+msgstr "تمت تسوية الفاتورة."
 
 msgid "The catalogue is empty."
 msgstr "الكتالوج فارغ."
@@ -1262,6 +1421,9 @@ msgstr "النزيل موجود في الفندق: يمكن تغيير تاري�
 
 msgid "The hotel must keep at least one active manager."
 msgstr "يجب أن يحتفظ الفندق بمدير نشط واحد على الأقل."
+
+msgid "The hotel owes the guest a refund. Ask a manager to record it."
+msgstr "على الفندق رد مبلغ للنزيل. اطلب من المدير تسجيله."
 
 msgid "The nights of this reservation were released when it was cancelled or marked as a no-show."
 msgstr "أُفرج عن ليالي هذا الحجز عند إلغائه أو تسجيل عدم الحضور."
@@ -1310,6 +1472,9 @@ msgstr "انتهت صلاحية هذا النموذج أو أُرسل من مو�
 msgid "This form was already submitted. Check the charges before trying again."
 msgstr "تم إرسال هذا النموذج من قبل. تحقق من الاحتسابات قبل المحاولة مجدداً."
 
+msgid "This form was already submitted. Check the payments before trying again."
+msgstr "تم إرسال هذا النموذج من قبل. تحقق من المدفوعات قبل المحاولة مجدداً."
+
 msgid "This form was already submitted. Check the reservation before trying again."
 msgstr "تم إرسال هذا النموذج من قبل. تحقق من الحجز قبل المحاولة مجددًا."
 
@@ -1324,6 +1489,9 @@ msgstr "هذا النزيل ممنوع من الحجز: سيتم رفض الحج
 
 msgid "This is a different person: register anyway"
 msgstr "هذا شخص مختلف: سجّله على أي حال"
+
+msgid "This is a preview: the invoice is issued at check-out, with the taxes in force at that moment."
+msgstr "هذه معاينة: تصدر الفاتورة عند المغادرة بالضرائب السارية حينها."
 
 msgid "This is recorded in the audit log."
 msgstr "يُسجَّل هذا الإجراء في سجل التدقيق."
@@ -1380,6 +1548,9 @@ msgstr "كبير جدًا"
 msgid "Too many failed sign-in attempts from this computer. Wait a few minutes and try again."
 msgstr "محاولات تسجيل دخول فاشلة كثيرة من هذا الجهاز. انتظر بضع دقائق ثم حاول مرة أخرى."
 
+msgid "Total"
+msgstr "المجموع"
+
 msgid "Type"
 msgstr "النوع"
 
@@ -1434,6 +1605,9 @@ msgstr "شخصية مهمة"
 msgid "VIP guest"
 msgstr "نزيل مهم (VIP)"
 
+msgid "Value"
+msgstr "القيمة"
+
 #, python-format
 msgid "Version %(version)s · database schema %(schema)s · time zone %(tz)s"
 msgstr "الإصدار %(version)s · مخطط قاعدة البيانات %(schema)s · المنطقة الزمنية %(tz)s"
@@ -1486,4 +1660,8 @@ msgstr "سيتم تسجيل خروج جلساتك المفتوحة الأخرى.
 
 msgid "Your password has been changed."
 msgstr "تم تغيير كلمة المرور الخاصة بك."
+
+#, python-format
+msgid "on %(base)s"
+msgstr "على %(base)s"
 

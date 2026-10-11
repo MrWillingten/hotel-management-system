@@ -1,0 +1,70 @@
+{#- The bill as a table: used by the bill preview and by the printed invoice. -#}
+
+{%- macro line_label(line) -%}
+{%- if line.kind == "NIGHTS" -%}
+  {{ _("Room %(room)s", room=line.label) }}
+  <span class="muted">· {{ line.first | dateformat("short") }}{% if line.last != line.first %} → {{ line.last | dateformat("short") }}{% endif %}</span>
+{%- elif line.kind == "EXTRA" -%}
+  {{ line.label }} <span class="muted">· {{ line.first | dateformat("short") }}</span>
+{%- elif line.kind == "FEE" -%}
+  {{ _("No-show fee") if line.label == "NO_SHOW" else _("Cancellation fee") }}
+{%- elif line.kind == "DISCOUNT" -%}
+  {{ _("Discount: %(reason)s", reason=line.label) }}
+{%- elif line.kind == "DISCOUNT_CAP" -%}
+  {{ _("Discounts limited to the maximum allowed") }}
+{%- elif line.kind == "TAX" -%}
+  {{ line.label }}{% if line.rate_bp %} ({{ line.rate_bp | percent }}){% endif %}
+{%- endif -%}
+{%- endmacro %}
+
+{%- macro unit_cell(line) -%}
+{%- if line.kind == "NIGHTS" %}{{ _("%(quantity)s × %(price)s", quantity=line.quantity, price=line.unit | money) }}
+{%- elif line.kind == "EXTRA" %}{{ _("%(quantity)s × %(price)s", quantity=line.quantity, price=line.unit | money) }}
+{%- elif line.kind == "TAX" and line.rate_bp %}{{ _("on %(base)s", base=line.unit | money) }}
+{%- elif line.kind == "TAX" %}{{ _("%(quantity)s × %(price)s", quantity=line.quantity, price=line.unit | money) }}
+{%- endif %}
+{%- endmacro %}
+
+{%- macro bill_table(bill) -%}
+<div class="table-wrap table-wrap--flat">
+  <table class="table bill">
+    <thead><tr>
+      <th scope="col">{{ _("Description") }}</th>
+      <th scope="col" class="num">{{ _("Detail") }}</th>
+      <th scope="col" class="num">{{ _("Amount") }}</th>
+    </tr></thead>
+    <tbody>
+      {%- for line in bill.lines %}
+      <tr class="bill__line bill__line--{{ line.kind | lower }}">
+        <td>{{ line_label(line) }}</td>
+        <td class="num muted">{{ unit_cell(line) }}</td>
+        <td class="num">{{ line.amount | money }}</td>
+      </tr>
+      {%- else %}
+      <tr><td colspan="3" class="table__empty">{{ _("Nothing to pay.") }}</td></tr>
+      {%- endfor %}
+    </tbody>
+    <tfoot>
+      <tr><th scope="row" colspan="2">{{ _("Subtotal before discounts and taxes") }}</th><td class="num">{{ bill.subtotal | money }}</td></tr>
+      {%- if not bill.discount.is_zero() %}
+      <tr><th scope="row" colspan="2">{{ _("Discounts") }}</th><td class="num">−{{ bill.discount | money }}</td></tr>
+      {%- endif %}
+      <tr><th scope="row" colspan="2">{{ _("Taxes") }}</th><td class="num">{{ bill.tax | money }}</td></tr>
+      <tr class="bill__total"><th scope="row" colspan="2">{{ _("Total") }}</th><td class="num">{{ bill.total | money }}</td></tr>
+      <tr><th scope="row" colspan="2">{{ _("Paid") }}</th><td class="num">{{ bill.paid | money }}</td></tr>
+      <tr class="bill__balance{% if bill.balance.is_negative() %} bill__balance--credit{% endif %}">
+        <th scope="row" colspan="2">{{ _("Refund owed to the guest") if bill.balance.is_negative() else _("Balance due") }}</th>
+        <td class="num">{{ (-bill.balance if bill.balance.is_negative() else bill.balance) | money }}</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+{%- endmacro %}
+
+{%- macro payment_kind(kind) -%}
+{{ {"DEPOSIT": _("Deposit"), "PAYMENT": _("Payment"), "REFUND": _("Refund")}.get(kind, kind) }}
+{%- endmacro %}
+
+{%- macro payment_method(method) -%}
+{{ {"CASH": _("Cash"), "CARD": _("Card"), "TRANSFER": _("Bank transfer")}.get(method, method) }}
+{%- endmacro %}
