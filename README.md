@@ -112,6 +112,10 @@ settings and for using the application from several computers over HTTPS.
 workstations behind HTTPS, `docker compose up -d` in `deploy/` (see
 [docs/deployment.md](docs/deployment.md#with-docker)).
 
+**Windows without Python:** download `hotel.exe` (artifact *hotel-windows*
+of a CI run, or a release) and double-click it; see
+[docs/deployment.md](docs/deployment.md#windows-program-no-python-needed).
+
 **JSON API:** other programs can read rooms, availability, reservations and
 report figures with a manager's token; see [docs/api.md](docs/api.md).
 

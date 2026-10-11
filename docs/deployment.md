@@ -31,6 +31,26 @@ Then start the application with:
 
 Each workstation must trust Caddy's local root certificate once.
 
+## Windows program (no Python needed)
+
+Every CI run builds `hotel.exe` with PyInstaller (`packaging/windows/hotel.spec`)
+and keeps it for 30 days as the **hotel-windows** artifact of the "CI"
+workflow (GitHub → Actions → a run → Artifacts); releases attach it too.
+
+* Double-click `hotel.exe`. On the first start the window asks for the
+  manager account, then the browser opens the sign-in page. Closing the
+  window stops the program.
+* Data lives in `%LOCALAPPDATA%\HotelMedina` (set `HOTEL_DATA_DIR` to change it).
+* Every command works with the program's name, e.g. `hotel.exe backup`.
+* The program is **not signed** (a code-signing certificate costs money), so
+  SmartScreen warns once: *More info → Run anyway*. Antivirus software
+  sometimes distrusts PyInstaller programs; the build disables UPX
+  compression, which reduces such false alarms.
+* Build it yourself on Windows:
+  `pip install --require-hashes -r requirements-build.lock`,
+  `pip install --no-deps .`, `pyinstaller packaging/windows/hotel.spec`
+  → `dist\hotel.exe`.
+
 ## With Docker
 
 The image runs the same production server (Waitress) as an unprivileged user

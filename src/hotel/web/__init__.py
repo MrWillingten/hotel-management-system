@@ -14,7 +14,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from hotel import __version__
 from hotel.bootstrap import Services, build_services
-from hotel.config import LANGUAGES, ConfigurationError, Settings
+from hotel.config import LANGUAGES, ConfigurationError, Settings, cli_command
 from hotel.demo import is_demo
 from hotel.secret_key import load_or_create_secret_key
 from hotel.web import errors, security
@@ -144,6 +144,7 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
             "theme": current_theme(),
             "hotel_name": settings.hotel_name,
             "app_version": __version__,
+            "cli_command": cli_command(),
             "languages": [(code, LANGUAGE_NAMES[code]) for code in LANGUAGES],
         }
 

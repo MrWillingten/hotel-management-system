@@ -29,6 +29,9 @@ dev = [
     "pre-commit>=3.7",
 ]
 
+# Only for building the Windows executable (story 6.4); locked in requirements-build.lock.
+build = ["pyinstaller>=6.10,<7"]
+
 [project.scripts]
 hotel = "hotel.cli:main"
 
