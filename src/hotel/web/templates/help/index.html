@@ -1,0 +1,41 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Help") }}{% endblock %}
+{% block page_title %}{{ _("Help") }}{% endblock %}
+{% block content %}
+<div class="help">
+  <nav class="panel help__toc" aria-label="{{ _('Topics') }}">
+    <h2 class="panel__title">{{ _("Topics") }}</h2>
+    <ol>
+      {%- for topic in topics %}
+      <li><a href="#{{ topic.anchor }}">{{ topic.title }}</a></li>
+      {%- endfor %}
+    </ol>
+  </nav>
+  <div class="help__topics stack">
+    <p class="muted">{{ _("What each page is for, its main buttons and an example. Only what your role can use is shown.") }}</p>
+    {%- for topic in topics %}
+    <section class="panel help__topic" id="{{ topic.anchor }}">
+      <div class="panel__head">
+        <h2 class="panel__title">{{ topic.title }}</h2>
+        {%- if topic.manager_only %}<span class="badge badge--accent">{{ _("Managers") }}</span>{% endif %}
+      </div>
+      <p>{{ topic.purpose }}</p>
+      {%- if topic.buttons %}
+      <dl class="help__buttons">
+        {%- for name, text in topic.buttons %}
+        <div><dt>{{ name }}</dt><dd>{{ text }}</dd></div>
+        {%- endfor %}
+      </dl>
+      {%- endif %}
+      {%- if topic.example %}
+      <p class="help__example">{{ icon("info") }}<span><strong>{{ _("Example:") }}</strong> {{ topic.example }}</span></p>
+      {%- endif %}
+      {%- if topic.endpoint %}
+      <p><a class="button button--ghost button--small" href="{{ url_for(topic.endpoint) }}">{{ _("Open this page") }}</a></p>
+      {%- endif %}
+    </section>
+    {%- endfor %}
+  </div>
+</div>
+{% endblock %}

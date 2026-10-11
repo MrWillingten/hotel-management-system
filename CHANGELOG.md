@@ -35,6 +35,10 @@ All notable changes are recorded here. The format follows
   keeps the locked price by default; a manager may charge the new room's
   price. The old room is marked to clean. Audited. Migration 0017.
 
+- User guide (`docs/user-guide.md`): every page and button per role, what it
+  is for and an example; a translated **Help** page in the menu shows each
+  role only the topics it can use (story 6.10).
+
 ### Security (story 6.6)
 - OWASP ASVS 5.0 Level 1 self-assessment (`docs/asvs.md`): 58 requirements
   met, 12 not applicable. Gaps fixed: every cookie is `__Host-` prefixed
