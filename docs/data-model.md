@@ -17,7 +17,7 @@ erDiagram
     RESERVATION ||--o{ ROOM_NIGHT : holds
     MAINTENANCE ||--o{ ROOM_NIGHT : blocks
     RESERVATION ||--o{ SERVICE_CHARGE : accrues
-    SERVICE ||--o{ SERVICE_CHARGE : "is billed as"
+    EXTRA ||--o{ SERVICE_CHARGE : "is billed as"
     RESERVATION ||--o{ PAYMENT : receives
     RESERVATION ||--o{ DISCOUNT : "is granted"
     RESERVATION ||--o| INVOICE : "is closed by"
@@ -62,23 +62,26 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
               rate_mill, PK(room_id, night),
               CK exactly one of reservation_id / maintenance_id is set,
               CK a reserved night has a rate)
-   service(id PK, name UQ, unit_price_mill CK≥0, is_active)
-   service_charge(id PK, reservation_id FK, service_id FK, quantity CK 1..99,
-                  unit_price_mill, charge_date, created_by FK)
+✅ extra(id PK, name UQ, unit_price_mill CK>0, is_active, version)
+              ("extra service"; named so it is never confused with the service layer)
+✅ service_charge(id PK, reservation_id FK, extra_id FK, description, quantity CK 1..99,
+                  unit_price_mill, charge_date, created_by FK, created_at,
+                  voided_at, voided_by FK, void_reason, CK void_reason iff voided)
    payment(id PK, reservation_id FK, amount_mill CK>0,
            kind CK∈{DEPOSIT,PAYMENT,REFUND}, method CK∈{CASH,CARD,TRANSFER},
            paid_at, recorded_by FK)
    discount(id PK, reservation_id FK, kind CK∈{PERCENT,FIXED}, value, reason NOT NULL,
             approved_by FK, created_at)
-   tax_rule(id PK, name, kind CK∈{PERCENT,PER_ADULT_NIGHT}, value,
-            applies_to CK∈{ACCOMMODATION,SERVICES}, is_active, valid_from, valid_to)
+✅ tax_rule(id PK, name, kind CK∈{PERCENT,PER_ADULT_NIGHT}, rate_bp, amount_mill,
+            applies_to CK∈{ACCOMMODATION,SERVICES}, is_active, version,
+            CK exactly the value of its kind; per-night taxes on accommodation only)
    invoice(id PK, number UQ, reservation_id FK UQ, issued_at, issued_by FK,
            subtotal_mill, discount_mill, tax_mill, total_mill, paid_mill, balance_mill)
    invoice_line(id PK, invoice_id FK, line_no, kind, description, quantity,
                 unit_mill, amount_mill, UQ(invoice_id, line_no))
 ✅ audit_log(id PK, at, user_id FK NULL, action, entity, entity_id, details, ip,
              prev_hash, hash)
-✅ setting(key PK, value)
+✅ setting(key PK, value)              hotel.* keys = HotelSettings (story 4.8)
 ✅ counter(name, year, value, PK(name, year))                    gap-free invoice numbers
 ✅ form_token(token_hash PK, user_id FK, created_at) one-time submit tokens
 ```
