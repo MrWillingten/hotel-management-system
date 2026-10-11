@@ -28,13 +28,21 @@ hardening, the report and the demo.
 | 1.7 | Domain foundations: `Money`, `StayPeriod`, `Clock`, error codes | ✅ |
 | 1.8 | Persistence foundations: PRAGMAs, migrations, Unit of Work | ✅ |
 
-### Sprint 2 – Rooms, guests, staff, audit
+### Sprint 2 – Rooms, guests, staff, audit ✅
 
-Room categories and rooms · maintenance ("reopens on") · guests with duplicate
-detection · guest search, pagination and sorting · masked ID numbers · hash-chained
-audit log and viewer · staff management (create, deactivate, reset, change own
-password, last-manager protection) · backup / restore · VIP and "do not rent"
-flags · demo seed v1 · pinned dependency lock file.
+| ID | Story | PR | Status |
+|---|---|---|---|
+| 2.6 | Tamper-evident audit log | #18 | ✅ |
+| 2.7 | Staff account management | #19 | ✅ |
+| 2.1 / 2.2 | Room categories, rooms, maintenance | #20 | ✅ |
+| 2.3 / 2.4 / 2.5 / 2.9 | Guests, search, masked documents, flags | #21 | ✅ |
+| 2.8 | Backups and restore | #22 | ✅ |
+| 2.10 | Demo data, lock files, release | #23 | ✅ |
+
+Retrospective: the secret scanner and CI each caught a real problem before
+merge (an inline test password; a template hidden by a too-broad
+`.gitignore` pattern). Lesson: anchor ignore patterns, and never chain a
+commit with a push.
 
 ### Sprint 3 – Reservations
 
@@ -79,6 +87,9 @@ backups, audit chain, report.
 * An annotated tag and GitHub release per sprint; `CHANGELOG.md` follows *Keep a Changelog*.
 * Sprint 1 was built before the GitHub repository existed, so its stories were
   committed directly on `main`; from Sprint 2 every story goes through a PR.
+* Dependencies are pinned with hashes in `requirements.lock` /
+  `requirements-dev.lock` (generated with `uv pip compile --universal
+  --generate-hashes`); CI installs from them with `--require-hashes`.
 
 ## Definition of Done
 

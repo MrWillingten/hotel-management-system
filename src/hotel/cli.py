@@ -3,6 +3,7 @@
     run              start the web application (Waitress; --dev for Flask's debugger)
     init-db          create or upgrade the database
     create-manager   create the first manager account
+    seed --demo      add fictional demonstration data to an empty hotel
     backup           write a backup now
     restore FILE     replace the database with a backup (application stopped)
     audit verify     check the audit log's hash chain
@@ -121,6 +122,32 @@ def cmd_create_manager(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_seed(args: argparse.Namespace) -> int:
+    from hotel.demo import seed_demo
+
+    if not args.demo:
+        print("Only demo data exists for now: run `hotel seed --demo`.", file=sys.stderr)
+        return 2
+    services = build_services(Settings.from_env())
+    try:
+        result = seed_demo(services)
+    except HotelError as error:
+        if error.code == "demo.not_empty":
+            print(
+                "The hotel already has rooms or guests: demo data is only added to an "
+                "empty database.",
+                file=sys.stderr,
+            )
+            return 1
+        raise
+    print(f"Demo data added: {result.rooms} rooms, {result.guests} fictional guests.")
+    if result.accounts:
+        print("Demo accounts (shown only once, write them down):")
+        for username, password in result.accounts.items():
+            print(f"  {username:<16} {password}")
+    return 0
+
+
 def cmd_backup(_: argparse.Namespace) -> int:
     services = build_services(Settings.from_env())
     path = services.backups.create(Actor.system())
@@ -187,6 +214,10 @@ def build_parser() -> argparse.ArgumentParser:
     manager.add_argument("--username")
     manager.add_argument("--full-name")
     manager.set_defaults(handler=cmd_create_manager)
+
+    seed = commands.add_parser("seed", help="add fictional demonstration data")
+    seed.add_argument("--demo", action="store_true", help="confirm that demo data is wanted")
+    seed.set_defaults(handler=cmd_seed)
 
     commands.add_parser("backup", help="write a backup of the database").set_defaults(
         handler=cmd_backup

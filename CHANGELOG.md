@@ -4,6 +4,32 @@ All notable changes are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] – Sprint 2: Rooms, guests, staff, audit, backups
+
+### Added
+- Tamper-evident audit log: SHA-256 hash chain, append-only triggers,
+  manager viewer with filters, `hotel audit verify`.
+- Staff management: create with temporary password (forced change),
+  edit, deactivate (ends sessions), reset password, unlock; last-manager
+  protection; everyone can change their own password.
+- Room categories and rooms (unique numbers, capacity, nightly rate),
+  out-of-service flag, tonight's status.
+- Maintenance periods stored as one `room_night` row per night with a
+  primary key that makes overlapping blocks impossible.
+- Guests: validated CIN/passport (unique), probable-duplicate warning,
+  accent-insensitive search on name/document/phone/e-mail, pagination,
+  whitelisted sorting, masked document numbers with audited reveal,
+  VIP and do-not-rent flags, localised country list.
+- Backups with SQLite's online backup API: daily rotation, manual
+  backups, automatic backup before upgrades, `hotel restore` with a
+  safety copy.
+- `hotel seed --demo` with fictional data and a DEMO DATA banner.
+- Hash-pinned dependency lock files used by CI.
+
+### Fixed
+- `.gitignore` patterns are anchored to the project root, so folders
+  such as `templates/backups/` are no longer ignored.
+
 ## [0.1.0] – Sprint 1: Foundations
 
 ### Added
