@@ -14,7 +14,12 @@
     <input type="hidden" name="sort" value="{{ sort }}">
     <button class="button button--primary" type="submit">{{ _("Search") }}</button>
   </form>
-  <a class="button button--ghost" href="{{ url_for('guests.create') }}">{{ icon("plus") }}{{ _("Register a guest") }}</a>
+  <div class="page-actions__buttons">
+    <a class="button button--ghost" href="{{ url_for('guests.create') }}">{{ icon("plus") }}{{ _("Register a guest") }}</a>
+    {%- if current_user.is_manager %}
+    <a class="button button--ghost" href="{{ url_for('guests.anonymise') }}">{{ _("Anonymise old guests") }}</a>
+    {%- endif %}
+  </div>
 </div>
 
 <div class="table-wrap">

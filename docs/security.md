@@ -32,7 +32,7 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | W6 | 🟡 | IDOR | Role per object type; services check | ⏳ S2+ |
 | W7 | 🟡 | Stack traces leak | Generic 500 page with incident id | ✅ S1 |
 | W8 | 🟡 | Vulnerable dependencies | pip-audit in CI, Dependabot | ✅ S1 |
-| W9 | ⚪ | Expensive report ranges | 2-year cap | ⏳ S5 |
+| W9 | ⚪ | Expensive report ranges | 2-year cap (731 nights), tested | ✅ S5 |
 | W10 | ⚪ | File uploads | None by design | ✅ |
 
 ## Input validation and injection
@@ -43,7 +43,7 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | I2 | 🟠 | XSS | Jinja autoescaping, no `|safe` on user data, strict CSP; test with a `<script>` name | ✅ S1 |
 | I3 | 🟠 | CSRF | Flask-WTF on every POST; logout and preferences are POST; `SameSite=Lax` | ✅ S1 |
 | I4 | 🟠 | Trusting hidden form fields | Server recomputes prices; whitelisted preference values | ✅ S1 (prices ⏳ S3) |
-| I5 | 🟡 | CSV formula injection | Prefix dangerous cells | ⏳ S5 |
+| I5 | 🟡 | CSV formula injection | Text cells starting with = + - @ tab or line break prefixed with an apostrophe; tested | ✅ S5 |
 | I6 | 🟡 | Open redirect via `?next=` | Only same-site relative paths | ✅ S1 |
 | I7 | 🟡 | Language/theme cookie tampering | Whitelists | ✅ S1 |
 | I8 | ⚪ | Oversized input | `MAX_CONTENT_LENGTH` 1 MB, field length limits, NFKC normalisation | ✅ S1 |
@@ -60,7 +60,7 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | F1–F4 | 🟠 | Float errors, banker's rounding, locale input | Integer millimes, explicit half-up per line, "180,5" and "7,5 %" accepted, no thousands separators | ✅ S1–S4 |
 | F5 | 🟠 | Altered or deleted money records | Payments append-only and issued invoices immutable (triggers); corrections are new entries (refunds, voided charges kept); invoice numbers gap-free in the same transaction | ✅ S4 |
 | F6 | 🟡 | Typing errors become refunds to chase | Payments never above the balance due, refunds never above the overpayment | ✅ S4 |
-| P1–P6 | 🟠 | Guest personal data | Masked ID numbers, audited reveal (never stored in cookies or URLs), no PII in audit details; anonymisation | ✅ S2 (anonymisation ⏳ S5) |
+| P1–P6 | 🟠 | Guest personal data | Masked ID numbers, audited reveal (never stored in cookies or URLs), no PII in audit details or CSV exports; manager-confirmed anonymisation after a configurable time (default 24 months), invoices keep their copy | ✅ S2–S5 |
 | C1 | 🔴 | Double booking race | `BEGIN IMMEDIATE` + recheck + `room_night` primary key; two-thread race test | ✅ S3 |
 | C2 | 🟠 | Lost updates | `version` column, `StaleDataError` | ✅ S1 (users) |
 | C3 | 🟠 | Double submit | One-time form tokens (owner-bound, 8 h, hashed) on booking, change, cancel, charges, payments and refunds; version checks on check-in/out | ✅ S3–S4 |

@@ -164,6 +164,10 @@ MESSAGES = {
     "rate_period.overlap": _l(
         "This category already has a rate on some of these nights (%(name)s)."
     ),
+    "guest.anonymised": _l("This guest was anonymised: the record can no longer be used."),
+    "guest.not_anonymisable": _l(
+        "One of these guests can no longer be anonymised (a new booking?). Reload the list."
+    ),
     "field.not_a_number": _l("Enter a whole number."),
     "field.invalid_date": _l("Enter a valid date."),
     "money.invalid": _l("Enter an amount such as 180 or 180.500."),

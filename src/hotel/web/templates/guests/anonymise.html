@@ -1,0 +1,34 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import checkbox, csrf -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Anonymise old guests") }}{% endblock %}
+{% block page_title %}{{ _("Anonymise old guests") }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <p class="muted">{{ _("Guests with no current or future booking and nothing since %(day)s (last stay, or registration). Their name, identity document, contact details and notes are erased; invoices keep their own copy because they are accounting records. The limit is set in Settings.", day=cutoff | dateformat("medium")) }}</p>
+  <a class="button button--ghost" href="{{ url_for('guests.index') }}">{{ _("All guests") }}</a>
+</div>
+{%- if candidates %}
+<form method="post">
+  {{ csrf() }}
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr><th scope="col">{{ _("Guest") }}</th><th scope="col">{{ _("Registered on") }}</th></tr></thead>
+      <tbody>
+        {%- for g in candidates %}
+        <tr>
+          <td><input type="hidden" name="guest_id" value="{{ g.id }}"><a href="{{ url_for('guests.detail', guest_id=g.id) }}">{{ g.full_name }}</a></td>
+          <td>{{ g.created_at | dateformat("medium") }}</td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="alert alert--warning">{{ icon("alert") }}<p>{{ _("This cannot be undone.") }}</p></div>
+  {{ checkbox("confirm", _("I understand: erase the personal data of these %(count)s guests.", count=candidates | length)) }}
+  <div class="form-actions"><button class="button button--danger" type="submit">{{ _("Anonymise") }}</button></div>
+</form>
+{%- else %}
+<div class="alert alert--success">{{ icon("check") }}<p>{{ _("No guest to anonymise.") }}</p></div>
+{%- endif %}
+{% endblock %}

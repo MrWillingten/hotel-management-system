@@ -10,7 +10,9 @@
   <div class="badge-row">{{ flags(guest) }}</div>
   <div class="page-actions__buttons">
     <a class="button button--ghost" href="{{ url_for('guests.index') }}">{{ _("All guests") }}</a>
+    {%- if not guest.is_anonymised %}
     <a class="button button--primary" href="{{ url_for('guests.edit', guest_id=guest.id) }}">{{ _("Edit guest") }}</a>
+    {%- endif %}
   </div>
 </div>
 
@@ -46,6 +48,7 @@
     {%- if guest.notes %}<p class="notes">{{ guest.notes }}</p>{% endif %}
   </section>
 
+  {%- if not guest.is_anonymised %}
   <section class="panel">
     <h2 class="panel__title">{{ _("Flags") }}</h2>
     {{ form_errors(errors) }}
@@ -63,12 +66,13 @@
       <button class="button button--ghost" type="submit">{{ _("Save flags") }}</button>
     </form>
   </section>
+  {%- endif %}
 </div>
 
 <section class="panel">
   <div class="page-actions">
     <h2 class="panel__title">{{ _("Reservation history") }}</h2>
-    {%- if not guest.do_not_rent %}
+    {%- if not guest.do_not_rent and not guest.is_anonymised %}
     <a class="button button--ghost button--small" href="{{ url_for('reservations.new', guest_id=guest.id) }}">{{ _("New reservation") }}</a>
     {%- endif %}
   </div>

@@ -2,16 +2,18 @@ from __future__ import annotations
 
 import re
 import sqlite3
+from datetime import date
 
 from hotel.domain.errors import StaleDataError
 from hotel.domain.guests import Guest, IdDocType, search_key
 from hotel.domain.paging import Page, PageRequest
-from hotel.persistence.convert import datetime_from_db, datetime_to_db
+from hotel.persistence.convert import date_to_db, datetime_from_db, datetime_to_db
 from hotel.persistence.repositories.base import BaseRepository, escape_like
 
 _SELECT = (
     "SELECT id, first_name, last_name, id_doc_type, id_doc_number, nationality, phone, email, "
-    "notes, is_vip, do_not_rent, do_not_rent_reason, is_active, created_at, version FROM guest"
+    "notes, is_vip, do_not_rent, do_not_rent_reason, is_active, created_at, version, "
+    "anonymised_at FROM guest"
 )
 
 # The only ORDER BY clauses that can ever reach SQL: user input picks a key, never text.
@@ -21,6 +23,17 @@ SORT_ORDERS = {
     "oldest": "created_at, id",
 }
 MAX_SEARCH_TERMS = 5
+
+# Written out in full (no concatenation), so every word of the query is visible.
+_CANDIDATES = (
+    "SELECT id, first_name, last_name, id_doc_type, id_doc_number, nationality, phone, email, "
+    "notes, is_vip, do_not_rent, do_not_rent_reason, is_active, created_at, version, "
+    "anonymised_at FROM guest g WHERE g.anonymised_at IS NULL AND NOT EXISTS ("
+    "SELECT 1 FROM reservation r WHERE r.guest_id = g.id "
+    "AND r.status IN ('CONFIRMED', 'CHECKED_IN')) "
+    "AND COALESCE((SELECT MAX(r.departure) FROM reservation r WHERE r.guest_id = g.id), "
+    "substr(g.created_at, 1, 10)) < ? ORDER BY g.sort_name"
+)
 
 
 def _to_guest(row: sqlite3.Row) -> Guest:
@@ -40,6 +53,7 @@ def _to_guest(row: sqlite3.Row) -> Guest:
         is_active=bool(row["is_active"]),
         created_at=datetime_from_db(row["created_at"]),
         version=row["version"],
+        anonymised_at=datetime_from_db(row["anonymised_at"]),
     )
 
 
@@ -135,3 +149,21 @@ class GuestRepository(BaseRepository):
         page_sql = f"{_SELECT}{where} ORDER BY {order} LIMIT ? OFFSET ?"  # nosec B608
         rows = self._fetch_all(page_sql, [*params, request.per_page, request.offset])
         return Page([_to_guest(r) for r in rows], total, request)
+
+    # ------------------------------------------------------------ anonymisation (5.7)
+    def anonymisation_candidates(self, cutoff: date) -> list[Guest]:
+        """Not anonymised yet, no current or future stay, nothing since `cutoff`.
+
+        "Nothing since" is the last departure, or the registration date for a
+        guest who never stayed.
+        """
+        rows = self._fetch_all(_CANDIDATES, (date_to_db(cutoff),))
+        return [_to_guest(r) for r in rows]
+
+    def mark_anonymised(self, guest: Guest) -> None:
+        self._execute(
+            "UPDATE guest SET anonymised_at = ? WHERE id = ?",
+            (datetime_to_db(guest.anonymised_at), guest.id),
+        )
+        # Booking notes can hold personal details too ("allergic to feathers").
+        self._execute("UPDATE reservation SET notes = '' WHERE guest_id = ?", (guest.id,))

@@ -523,6 +523,8 @@ class ReservationService:
             raise NotFoundError(entity="guest", id=guest_id)
         if guest.do_not_rent:
             raise BusinessRuleViolation("reservation.guest_do_not_rent")
+        if guest.is_anonymised:
+            raise BusinessRuleViolation("guest.anonymised")
 
     def _check_rooms(
         self,

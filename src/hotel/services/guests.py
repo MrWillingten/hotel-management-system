@@ -2,15 +2,24 @@
 
 from __future__ import annotations
 
+from datetime import date
+
 from hotel.domain.actor import Actor
 from hotel.domain.clock import Clock
 from hotel.domain.enums import Role
-from hotel.domain.errors import ConflictError, NotFoundError, StaleDataError, ValidationError
-from hotel.domain.guests import Guest, GuestDetails, IdDocType
+from hotel.domain.errors import (
+    BusinessRuleViolation,
+    ConflictError,
+    NotFoundError,
+    StaleDataError,
+    ValidationError,
+)
+from hotel.domain.guests import Guest, GuestDetails, IdDocType, months_before
 from hotel.domain.paging import Page, PageRequest
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.audit import record
 from hotel.services.authorization import require_role, require_staff
+from hotel.services.hotel_settings import load_settings
 
 MAX_REASON = 200
 
@@ -80,7 +89,7 @@ class GuestService:
         require_staff(actor)
         details = details.cleaned()
         with self._uow() as uow:
-            guest = self._load(uow, guest_id, version)
+            guest = self._load(uow, guest_id, version, for_change=True)
             changed = guest.apply(details)
             self._refuse_same_document(uow, guest)
             uow.guests.update(guest)
@@ -110,7 +119,7 @@ class GuestService:
         require_staff(actor)
         reason = " ".join(reason.split())
         with self._uow() as uow:
-            guest = self._load(uow, guest_id, version)
+            guest = self._load(uow, guest_id, version, for_change=True)
             if do_not_rent != guest.do_not_rent or (
                 do_not_rent and reason != (guest.do_not_rent_reason or "")
             ):
@@ -151,13 +160,52 @@ class GuestService:
             return guest.id_doc_number
 
     # ------------------------------------------------------------ helpers
+    # ------------------------------------------------------------ anonymisation (5.7)
+    def anonymisation_candidates(self, actor: Actor) -> tuple[date, list[Guest]]:
+        """(cut-off date, guests with nothing since then and nothing booked)."""
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            cutoff = self._cutoff(uow)
+            return cutoff, uow.guests.anonymisation_candidates(cutoff)
+
+    def anonymise(self, actor: Actor, guest_ids: list[int]) -> int:
+        """Erase the personal data of these guests; irreversible, audited.
+
+        Eligibility is checked again here, inside the transaction: the list
+        the manager saw may be out of date (a guest may have booked since).
+        """
+        require_role(actor, Role.MANAGER)
+        now = self._clock.now()
+        with self._uow() as uow:
+            eligible = {g.id: g for g in uow.guests.anonymisation_candidates(self._cutoff(uow))}
+            for guest_id in guest_ids:
+                if guest_id not in eligible:
+                    raise BusinessRuleViolation("guest.not_anonymisable")
+            for guest_id in guest_ids:
+                guest = eligible[guest_id]
+                guest.anonymise(now)
+                uow.guests.update(guest)
+                uow.guests.mark_anonymised(guest)
+                # Only the id is logged: the audit log must not keep what was erased.
+                record(
+                    uow, self._clock, actor, "guest.anonymised", entity="guest", entity_id=guest_id
+                )
+            return len(guest_ids)
+
+    def _cutoff(self, uow: UnitOfWork) -> date:
+        return months_before(self._clock.today(), load_settings(uow).anonymise_after_months)
+
     @staticmethod
-    def _load(uow: UnitOfWork, guest_id: int, version: int | None = None) -> Guest:
+    def _load(
+        uow: UnitOfWork, guest_id: int, version: int | None = None, *, for_change: bool = False
+    ) -> Guest:
         guest = uow.guests.get(guest_id)
         if guest is None or not guest.is_active:
             raise NotFoundError(entity="guest", id=guest_id)
         if version is not None and guest.version != version:
             raise StaleDataError(entity="guest", id=guest_id)
+        if for_change and guest.is_anonymised:
+            raise BusinessRuleViolation("guest.anonymised")
         return guest
 
     @staticmethod
