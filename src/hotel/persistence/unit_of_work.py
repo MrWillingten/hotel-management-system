@@ -19,6 +19,7 @@ from types import TracebackType
 
 from hotel.persistence.db import connect
 from hotel.persistence.repositories.audit import AuditRepository
+from hotel.persistence.repositories.extras import ExtraRepository, ServiceChargeRepository
 from hotel.persistence.repositories.form_tokens import FormTokenRepository
 from hotel.persistence.repositories.guests import GuestRepository
 from hotel.persistence.repositories.login_failures import LoginFailureRepository
@@ -30,6 +31,7 @@ from hotel.persistence.repositories.rooms import (
 )
 from hotel.persistence.repositories.sessions import SessionRepository
 from hotel.persistence.repositories.settings import SettingRepository
+from hotel.persistence.repositories.taxes import TaxRuleRepository
 from hotel.persistence.repositories.users import UserRepository
 
 
@@ -46,6 +48,9 @@ class UnitOfWork:
     reservations: ReservationRepository
     counters: CounterRepository
     form_tokens: FormTokenRepository
+    extras: ExtraRepository
+    charges: ServiceChargeRepository
+    tax_rules: TaxRuleRepository
 
     def __init__(self, database_path: Path) -> None:
         self._database_path = database_path
@@ -68,6 +73,9 @@ class UnitOfWork:
         self.reservations = ReservationRepository(self._conn)
         self.counters = CounterRepository(self._conn)
         self.form_tokens = FormTokenRepository(self._conn)
+        self.extras = ExtraRepository(self._conn)
+        self.charges = ServiceChargeRepository(self._conn)
+        self.tax_rules = TaxRuleRepository(self._conn)
         return self
 
     def __exit__(

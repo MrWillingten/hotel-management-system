@@ -14,3 +14,10 @@ class SettingRepository(BaseRepository):
             "ON CONFLICT (key) DO UPDATE SET value = excluded.value",
             (key, value),
         )
+
+    def with_prefix(self, prefix: str) -> dict[str, str]:
+        """Every setting whose key starts with `prefix`, keyed without it."""
+        rows = self._fetch_all(
+            "SELECT key, value FROM setting WHERE substr(key, 1, ?) = ?", (len(prefix), prefix)
+        )
+        return {row["key"][len(prefix) :]: row["value"] for row in rows}

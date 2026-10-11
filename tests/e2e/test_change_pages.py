@@ -62,7 +62,8 @@ def test_change_refused_shows_why(signed_in, services, hotel):
 def test_cancel_flow(signed_in, services, hotel):
     r = book(services, hotel, stay(9, 11), "204")  # arrival tomorrow: fee applies
     page = signed_in.get(f"/reservations/{r.id}/cancel").get_data(as_text=True)
-    assert "less than 48 hours" in page
+    assert "Arrival is close" in page
+    assert "(20\u00a0% of the accommodation)" in page
     assert "72.000" in page  # 20 % of 360 DT
     done = signed_in.post(f"/reservations/{r.id}/cancel", data=_hidden(page))
     assert done.status_code == 302

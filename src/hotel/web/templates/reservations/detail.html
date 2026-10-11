@@ -1,6 +1,6 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/icons.html" import icon -%}
-{%- from "macros/forms.html" import csrf -%}
+{%- from "macros/forms.html" import csrf, field, select -%}
 {%- from "macros/reservations.html" import status_badge, stay -%}
 {% block title %}{{ reservation.code }}{% endblock %}
 {% block page_title %}{{ _("Reservation") }} <span dir="ltr">{{ reservation.code }}</span>{% endblock %}
@@ -65,11 +65,67 @@
     </ul>
     {%- if reservation.status == "CONFIRMED" %}
     <div class="alert alert--info">{{ icon("info") }}
-      <p>{{ _("Free cancellation until %(when)s. After that, cancelling costs 20%% of the accommodation.", when=free_until | datetimeformat("medium")) }}</p>
+      <p>{{ _("Free cancellation until %(when)s. After that, cancelling costs %(rate)s of the accommodation.", when=free_until | datetimeformat("medium"), rate=fee_rate | percent) }}</p>
     </div>
     {%- endif %}
   </section>
 </div>
+
+<section class="panel" id="charges">
+  <h2 class="panel__title">{{ _("Extra services") }}</h2>
+  {%- if charges %}
+  <div class="table-wrap table-wrap--flat">
+    <table class="table">
+      <thead><tr>
+        <th scope="col">{{ _("Date") }}</th><th scope="col">{{ _("Service") }}</th>
+        <th scope="col" class="num">{{ _("Quantity") }}</th><th scope="col" class="num">{{ _("Unit price") }}</th>
+        <th scope="col" class="num">{{ _("Amount") }}</th>
+        {%- if current_user.is_manager and reservation.status == "CHECKED_IN" %}<th scope="col"><span class="visually-hidden">{{ _("Actions") }}</span></th>{% endif %}
+      </tr></thead>
+      <tbody>
+        {%- for c in charges %}
+        <tr{% if c.is_void %} class="row--void"{% endif %}>
+          <td>{{ c.charge_date | dateformat("medium") }}</td>
+          <td>{{ c.description }}{% if c.is_void %} <span class="badge badge--neutral" title="{{ c.void_reason }}">{{ _("Voided") }}</span>{% endif %}</td>
+          <td class="num">{{ c.quantity }}</td>
+          <td class="num">{{ c.unit_price | money }}</td>
+          <td class="num">{{ c.amount | money }}</td>
+          {%- if current_user.is_manager and reservation.status == "CHECKED_IN" %}
+          <td>
+            {%- if not c.is_void %}
+            <form class="inline-form" method="post" action="{{ url_for('reservations.void_charge', charge_id=c.id) }}">
+              {{ csrf() }}
+              <input type="hidden" name="reservation_id" value="{{ reservation.id }}">
+              <label class="visually-hidden" for="void-{{ c.id }}">{{ _("Reason") }}</label>
+              <input class="field__input field__input--small" id="void-{{ c.id }}" name="reason" maxlength="200" required placeholder="{{ _('Reason') }}">
+              <button class="button button--ghost button--small" type="submit">{{ _("Void") }}</button>
+            </form>
+            {%- endif %}
+          </td>
+          {%- endif %}
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+  {%- elif reservation.status != "CHECKED_IN" %}
+  <p class="muted">{{ _("Extra services can be charged once the guest has checked in.") }}</p>
+  {%- endif %}
+  {%- if reservation.status == "CHECKED_IN" %}
+  {%- if extras %}
+  <form class="charge-form" method="post" action="{{ url_for('reservations.add_charge', reservation_id=reservation.id) }}">
+    {{ csrf() }}
+    <input type="hidden" name="form_token" value="{{ form_token }}">
+    {{ select("extra_id", _("Service"), extras | options(label="name")) }}
+    {{ field("quantity", _("Quantity"), type="number", value="1") }}
+    {{ field("charge_date", _("Date"), type="date", value=today.isoformat()) }}
+    <button class="button button--primary" type="submit">{{ icon("plus") }}{{ _("Charge") }}</button>
+  </form>
+  {%- else %}
+  <p class="muted">{{ _("The extra-services catalogue is empty. A manager can add services.") }}</p>
+  {%- endif %}
+  {%- endif %}
+</section>
 
 <section class="panel">
   <h2 class="panel__title">{{ _("Nights and prices") }}</h2>

@@ -36,6 +36,7 @@ from hotel.persistence.repositories.reservations import ReservationFilter
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.audit import record
 from hotel.services.authorization import require_staff
+from hotel.services.hotel_settings import load_settings
 
 MAX_ALTERNATIVES = 5
 MAX_NOTES = 500
@@ -121,26 +122,26 @@ class Calendar:
 
 
 class ReservationService:
-    def __init__(
-        self,
-        uow_factory: UnitOfWorkFactory,
-        clock: Clock,
-        policy: CancellationPolicy | None = None,
-    ) -> None:
+    def __init__(self, uow_factory: UnitOfWorkFactory, clock: Clock) -> None:
         self._uow = uow_factory
         self._clock = clock
-        self.policy = policy or CancellationPolicy()
+
+    @staticmethod
+    def _policy(uow: UnitOfWork) -> CancellationPolicy:
+        """BR11 with the hotel's current settings (fee, window, check-in time)."""
+        return load_settings(uow).cancellation_policy()
 
     def free_cancellation_until(self, period: StayPeriod) -> datetime:
         """The last moment the guest can cancel without the fee."""
-        return (
-            self.policy.arrival_instant(period.arrival, self._clock.hotel_tz) - self.policy.window
-        )
+        with self._uow() as uow:
+            policy = self._policy(uow)
+        return policy.arrival_instant(period.arrival, self._clock.hotel_tz) - policy.window
 
     def arrival_has_passed(self, period: StayPeriod) -> bool:
         """True once the check-in time of the arrival day is over (no-show possible)."""
-        arrival = self.policy.arrival_instant(period.arrival, self._clock.hotel_tz)
-        return self._clock.now() >= arrival
+        with self._uow() as uow:
+            policy = self._policy(uow)
+        return self._clock.now() >= policy.arrival_instant(period.arrival, self._clock.hotel_tz)
 
     # ------------------------------------------------------------ availability
     def find_available_rooms(
@@ -338,7 +339,7 @@ class ReservationService:
         with self._uow() as uow:
             reservation = self._load(uow, reservation_id)
             self._ensure_cancellable(reservation)
-            return self.policy.fee_for(reservation, self._clock.now(), self._clock.hotel_tz)
+            return self._policy(uow).fee_for(reservation, self._clock.now(), self._clock.hotel_tz)
 
     def cancel(self, actor: Actor, reservation_id: int, *, version: int) -> Reservation:
         """Business rule BR11. The rooms are released immediately."""
@@ -349,7 +350,7 @@ class ReservationService:
             if reservation.version != version:
                 raise StaleDataError(entity="reservation", id=reservation_id)
             self._ensure_cancellable(reservation)
-            fee = self.policy.fee_for(reservation, now, self._clock.hotel_tz)
+            fee = self._policy(uow).fee_for(reservation, now, self._clock.hotel_tz)
             reservation.transition(ReservationStatus.CANCELLED)
             reservation.cancellation_fee = fee
             reservation.cancelled_at = now
@@ -404,7 +405,9 @@ class ReservationService:
         with self._uow() as uow:
             reservation = self._load(uow, reservation_id)
             reservation.ensure_can_become(ReservationStatus.NO_SHOW)
-            return self.policy.no_show_fee(reservation, self._clock.now(), self._clock.hotel_tz)
+            return self._policy(uow).no_show_fee(
+                reservation, self._clock.now(), self._clock.hotel_tz
+            )
 
     def record_no_show(self, actor: Actor, reservation_id: int, *, version: int) -> Reservation:
         """Decision F: the guest never came. Charged like a late cancellation."""
@@ -415,7 +418,7 @@ class ReservationService:
             if reservation.version != version:
                 raise StaleDataError(entity="reservation", id=reservation_id)
             reservation.ensure_can_become(ReservationStatus.NO_SHOW)
-            fee = self.policy.no_show_fee(reservation, now, self._clock.hotel_tz)
+            fee = self._policy(uow).no_show_fee(reservation, now, self._clock.hotel_tz)
             reservation.transition(ReservationStatus.NO_SHOW)
             reservation.cancellation_fee = fee
             reservation.no_show_at = now

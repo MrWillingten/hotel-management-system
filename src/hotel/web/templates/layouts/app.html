@@ -25,6 +25,8 @@
       {{ nav_link("rooms.index", _("Rooms"), "bed") }}
       {%- if current_user and current_user.is_manager %}
       <p class="nav__heading">{{ _("Administration") }}</p>
+      {{ nav_link("extras.index", _("Extra services"), "star") }}
+      {{ nav_link("settings.index", _("Settings and taxes"), "key") }}
       {{ nav_link("staff.index", _("Staff"), "users") }}
       {{ nav_link("audit.index", _("Audit log"), "shield") }}
       {{ nav_link("backups.index", _("Backups"), "archive") }}

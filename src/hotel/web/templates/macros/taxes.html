@@ -1,0 +1,17 @@
+{%- from "macros/forms.html" import field, select -%}
+
+{%- macro rate(rule) -%}
+{%- if rule.kind == "PERCENT" %}{{ rule.rate_bp | percent }}
+{%- else %}{{ _("%(amount)s per adult per night", amount=rule.amount_per | money) }}{% endif %}
+{%- endmacro %}
+
+{%- macro base_label(applies_to) -%}
+{{ _("Accommodation") if applies_to == "ACCOMMODATION" else _("Extra services") }}
+{%- endmacro %}
+
+{%- macro rule_fields(v, errors) -%}
+{{ field("name", _("Name"), value=v.get("name", ""), error=errors.name, maxlength=60, hint=_("For example VAT or Tourist tax.")) }}
+{{ select("kind", _("Kind"), [("PERCENT", _("Percentage")), ("PER_ADULT_NIGHT", _("Amount per adult per night"))], v.get("kind", "PERCENT"), errors.kind) }}
+{{ field("rate", _("Rate"), value=v.get("rate", ""), error=errors.rate, hint=_("A percentage (7 or 7.5) or an amount in dinars (3.000), depending on the kind.")) }}
+{{ select("applies_to", _("Applies to"), [("ACCOMMODATION", _("Accommodation")), ("SERVICES", _("Extra services"))], v.get("applies_to", "ACCOMMODATION"), errors.applies_to) }}
+{%- endmacro %}

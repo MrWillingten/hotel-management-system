@@ -124,6 +124,26 @@ MESSAGES = {
     "reservation.no_show_too_early": _l(
         "A no-show can only be recorded after the check-in time on %(arrival)s."
     ),
+    "extra.name_invalid": _l("Enter a name of 1 to 60 characters."),
+    "extra.price_invalid": _l("Enter a price above 0 and at most 10,000 DT."),
+    "extra.name_taken": _l("A service with this name already exists."),
+    "extra.unknown": _l("Choose a service from the catalogue."),
+    "charge.not_in_house": _l("Extra services can only be charged while the guest is checked in."),
+    "charge.quantity_invalid": _l("The quantity must be between 1 and %(max)s."),
+    "charge.date_outside_stay": _l("Choose a date between %(arrival)s and %(last)s."),
+    "charge.bill_closed": _l("The bill is closed: this charge can no longer be changed."),
+    "charge.already_void": _l("This charge was already voided."),
+    "tax.name_invalid": _l("Enter a name of 1 to 60 characters."),
+    "tax.kind_invalid": _l("Choose the kind of tax and what it applies to."),
+    "tax.rate_invalid": _l("Enter a percentage above 0 and at most 100."),
+    "tax.amount_invalid": _l("Enter an amount above 0 and at most 1,000 DT."),
+    "tax.per_night_on_services": _l(
+        "An amount per adult per night can only apply to the accommodation."
+    ),
+    "settings.invalid": _l("Some settings are out of range."),
+    "settings.out_of_range": _l("This value is out of the allowed range."),
+    "field.invalid_percent": _l("Enter a percentage between 0 and 100, for example 20 or 7.5."),
+    "field.invalid_time": _l("Enter a time such as 14:00."),
     "field.not_a_number": _l("Enter a whole number."),
     "field.invalid_date": _l("Enter a valid date."),
     "money.invalid": _l("Enter an amount such as 180 or 180.500."),
