@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 13:38+0100\n"
+"POT-Creation-Date: 2026-10-11 13:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -231,6 +231,18 @@ msgstr ""
 msgid "An unexpected error occurred. It has been logged."
 msgstr ""
 
+msgid "Anonymise"
+msgstr ""
+
+msgid "Anonymise guests after (months without a stay)"
+msgstr ""
+
+msgid "Anonymise old guests"
+msgstr ""
+
+msgid "Anonymised"
+msgstr ""
+
 msgid "Another booking took one of these rooms a moment ago. Search again."
 msgstr ""
 
@@ -332,6 +344,9 @@ msgid "Before a restore"
 msgstr ""
 
 msgid "Before an upgrade"
+msgstr ""
+
+msgid "Between 6 and 120. Only proposed to a manager, never automatic."
 msgstr ""
 
 msgid "Bill"
@@ -877,6 +892,10 @@ msgid "Guests"
 msgstr ""
 
 #, python-format
+msgid "Guests anonymised: %(count)s."
+msgstr ""
+
+#, python-format
 msgid "Guests found: %(total)s"
 msgstr ""
 
@@ -893,10 +912,22 @@ msgid ""
 "application starts."
 msgstr ""
 
+#, python-format
+msgid ""
+"Guests with no current or future booking and nothing since %(day)s (last "
+"stay, or registration). Their name, identity document, contact details "
+"and notes are erased; invoices keep their own copy because they are "
+"accounting records. The limit is set in Settings."
+msgstr ""
+
 msgid "Hotel rules"
 msgstr ""
 
 msgid "Housekeeping"
+msgstr ""
+
+#, python-format
+msgid "I understand: erase the personal data of these %(count)s guests."
 msgstr ""
 
 msgid "Identity and contact"
@@ -1143,6 +1174,9 @@ msgstr ""
 msgid "No guest matches “%(query)s”."
 msgstr ""
 
+msgid "No guest to anonymise."
+msgstr ""
+
 msgid "No guests registered yet."
 msgstr ""
 
@@ -1241,6 +1275,11 @@ msgid "Occupied"
 msgstr ""
 
 msgid "Of the accommodation; also charged for a no-show."
+msgstr ""
+
+msgid ""
+"One of these guests can no longer be anonymised (a new booking?). Reload "
+"the list."
 msgstr ""
 
 msgid "Only a confirmed reservation can be cancelled."
@@ -1397,6 +1436,9 @@ msgid "Register guest"
 msgstr ""
 
 msgid "Registered"
+msgstr ""
+
+msgid "Registered on"
 msgstr ""
 
 msgid "Remove"
@@ -1778,6 +1820,9 @@ msgstr ""
 msgid "This action can't be done this way."
 msgstr ""
 
+msgid "This cannot be undone."
+msgstr ""
+
 #, python-format
 msgid "This category already has a rate on some of these nights (%(name)s)."
 msgstr ""
@@ -1816,6 +1861,9 @@ msgid "This guest is marked do-not-rent: new reservations are refused."
 msgstr ""
 
 msgid "This guest is marked do-not-rent: the booking will be refused."
+msgstr ""
+
+msgid "This guest was anonymised: the record can no longer be used."
 msgstr ""
 
 msgid "This is a different person: register anyway"
@@ -1864,6 +1912,9 @@ msgid "This value is out of the allowed range."
 msgstr ""
 
 msgid "Thursday"
+msgstr ""
+
+msgid "Tick the box to confirm: this cannot be undone."
 msgstr ""
 
 msgid "To"

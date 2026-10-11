@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 13:38+0100\n"
+"POT-Creation-Date: 2026-10-11 13:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -232,6 +232,18 @@ msgstr "Un montant par adulte et par nuit ne peut s'appliquer qu'à l'hébergeme
 msgid "An unexpected error occurred. It has been logged."
 msgstr "Une erreur inattendue s'est produite. Elle a été enregistrée."
 
+msgid "Anonymise"
+msgstr "Anonymiser"
+
+msgid "Anonymise guests after (months without a stay)"
+msgstr "Anonymiser les clients après (mois sans séjour)"
+
+msgid "Anonymise old guests"
+msgstr "Anonymiser les anciens clients"
+
+msgid "Anonymised"
+msgstr "Anonymisé"
+
 msgid "Another booking took one of these rooms a moment ago. Search again."
 msgstr "Une autre réservation vient de prendre l'une de ces chambres. Relancez la recherche."
 
@@ -330,6 +342,9 @@ msgstr "Avant une restauration"
 
 msgid "Before an upgrade"
 msgstr "Avant une mise à jour"
+
+msgid "Between 6 and 120. Only proposed to a manager, never automatic."
+msgstr "Entre 6 et 120. Seulement proposé à un gérant, jamais automatique."
 
 msgid "Bill"
 msgstr "Note"
@@ -872,6 +887,10 @@ msgid "Guests"
 msgstr "Clients"
 
 #, python-format
+msgid "Guests anonymised: %(count)s."
+msgstr "Clients anonymisés : %(count)s."
+
+#, python-format
 msgid "Guests found: %(total)s"
 msgstr "Clients trouvés : %(total)s"
 
@@ -890,11 +909,26 @@ msgstr ""
 "départ prévu sont listés, et les chiffres du jour sont figés. Lancer deux fois ne change rien ; "
 "les journées terminées sont aussi clôturées automatiquement au démarrage de l'application."
 
+#, python-format
+msgid ""
+"Guests with no current or future booking and nothing since %(day)s (last stay, or registration). "
+"Their name, identity document, contact details and notes are erased; invoices keep their own copy"
+" because they are accounting records. The limit is set in Settings."
+msgstr ""
+"Clients sans réservation en cours ou à venir et sans activité depuis le %(day)s (dernier séjour "
+"ou inscription). Leur nom, pièce d'identité, coordonnées et notes sont effacés ; les factures "
+"gardent leur propre copie car ce sont des pièces comptables. La limite se règle dans les "
+"Paramètres."
+
 msgid "Hotel rules"
 msgstr "Règles de l'hôtel"
 
 msgid "Housekeeping"
 msgstr "Ménage"
+
+#, python-format
+msgid "I understand: erase the personal data of these %(count)s guests."
+msgstr "J'ai compris : effacer les données personnelles de ces %(count)s clients."
 
 msgid "Identity and contact"
 msgstr "Identité et coordonnées"
@@ -1140,6 +1174,9 @@ msgstr "Aucune entrée ne correspond à ces filtres."
 msgid "No guest matches “%(query)s”."
 msgstr "Aucun client ne correspond à « %(query)s »."
 
+msgid "No guest to anonymise."
+msgstr "Aucun client à anonymiser."
+
 msgid "No guests registered yet."
 msgstr "Aucun client enregistré pour l'instant."
 
@@ -1241,6 +1278,9 @@ msgstr "Occupée"
 
 msgid "Of the accommodation; also charged for a no-show."
 msgstr "De l'hébergement ; également facturés en cas de non-présentation."
+
+msgid "One of these guests can no longer be anonymised (a new booking?). Reload the list."
+msgstr "L'un de ces clients ne peut plus être anonymisé (nouvelle réservation ?). Rechargez la liste."
 
 msgid "Only a confirmed reservation can be cancelled."
 msgstr "Seule une réservation confirmée peut être annulée."
@@ -1401,6 +1441,9 @@ msgstr "Enregistrer le client"
 
 msgid "Registered"
 msgstr "Enregistré le"
+
+msgid "Registered on"
+msgstr "Inscrit le"
 
 msgid "Remove"
 msgstr "Retirer"
@@ -1775,6 +1818,9 @@ msgstr "La personne devra le remplacer à sa première connexion."
 msgid "This action can't be done this way."
 msgstr "Cette action ne peut pas être effectuée de cette façon."
 
+msgid "This cannot be undone."
+msgstr "Cette action est irréversible."
+
 #, python-format
 msgid "This category already has a rate on some of these nights (%(name)s)."
 msgstr "Cette catégorie a déjà un tarif sur certaines de ces nuits (%(name)s)."
@@ -1808,6 +1854,9 @@ msgstr "Ce client est marqué « ne pas louer » : les nouvelles réservation
 
 msgid "This guest is marked do-not-rent: the booking will be refused."
 msgstr "Ce client est marqué « ne pas louer » : la réservation sera refusée."
+
+msgid "This guest was anonymised: the record can no longer be used."
+msgstr "Ce client a été anonymisé : la fiche ne peut plus être utilisée."
 
 msgid "This is a different person: register anyway"
 msgstr "C'est une autre personne : enregistrer quand même"
@@ -1854,6 +1903,9 @@ msgstr "Cette valeur est hors des limites autorisées."
 
 msgid "Thursday"
 msgstr "Jeudi"
+
+msgid "Tick the box to confirm: this cannot be undone."
+msgstr "Cochez la case pour confirmer : c'est irréversible."
 
 msgid "To"
 msgstr "Au"

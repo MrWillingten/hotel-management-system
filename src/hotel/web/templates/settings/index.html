@@ -27,6 +27,8 @@
       </div>
       {{ field("weekend_surcharge", _("Weekend surcharge (%%)"), value=values.get("weekend_surcharge", pct(settings.weekend_surcharge_bp)), error=errors.weekend_surcharge or errors.weekend_surcharge_bp,
                hint=_("Added to the room's rate on weekend nights, unless a seasonal rate applies. 0 = none.")) }}
+      {{ field("anonymise_after_months", _("Anonymise guests after (months without a stay)"), type="number", value=values.get("anonymise_after_months", settings.anonymise_after_months), error=errors.anonymise_after_months,
+               hint=_("Between 6 and 120. Only proposed to a manager, never automatic.")) }}
       <fieldset class="weekdays">
         <legend class="field__label">{{ _("Weekend nights (the night starting on…)") }}</legend>
         {%- set names = [_("Monday"), _("Tuesday"), _("Wednesday"), _("Thursday"), _("Friday"), _("Saturday"), _("Sunday")] %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 13:38+0100\n"
+"POT-Creation-Date: 2026-10-11 13:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -226,6 +226,18 @@ msgstr "لا يمكن تطبيق مبلغ لكل بالغ في الليلة إل
 msgid "An unexpected error occurred. It has been logged."
 msgstr "حدث خطأ غير متوقع. تم تسجيله."
 
+msgid "Anonymise"
+msgstr "إخفاء الهوية"
+
+msgid "Anonymise guests after (months without a stay)"
+msgstr "إخفاء هوية النزلاء بعد (أشهر دون إقامة)"
+
+msgid "Anonymise old guests"
+msgstr "إخفاء هوية النزلاء القدامى"
+
+msgid "Anonymised"
+msgstr "مجهول الهوية"
+
 msgid "Another booking took one of these rooms a moment ago. Search again."
 msgstr "حجز آخر أخذ إحدى هذه الغرف قبل لحظات. ابحث من جديد."
 
@@ -324,6 +336,9 @@ msgstr "قبل الاستعادة"
 
 msgid "Before an upgrade"
 msgstr "قبل التحديث"
+
+msgid "Between 6 and 120. Only proposed to a manager, never automatic."
+msgstr "بين 6 و120. يُقترح على المدير فقط ولا يتم تلقائياً."
 
 msgid "Bill"
 msgstr "الفاتورة"
@@ -864,6 +879,10 @@ msgid "Guests"
 msgstr "النزلاء"
 
 #, python-format
+msgid "Guests anonymised: %(count)s."
+msgstr "عدد النزلاء الذين أُخفيت هويتهم: %(count)s."
+
+#, python-format
 msgid "Guests found: %(total)s"
 msgstr "عدد النزلاء الذين تم العثور عليهم: %(total)s"
 
@@ -881,11 +900,25 @@ msgstr ""
 "يُسجَّل النزلاء الذين لم يحضروا كعدم حضور، وتُدرج أسماء من بقوا بعد موعد مغادرتهم، وتُجمَّد أرقام"
 " اليوم. التشغيل مرتين لا يغيّر شيئاً، كما تُقفل الأيام المنتهية تلقائياً عند تشغيل التطبيق."
 
+#, python-format
+msgid ""
+"Guests with no current or future booking and nothing since %(day)s (last stay, or registration). "
+"Their name, identity document, contact details and notes are erased; invoices keep their own copy"
+" because they are accounting records. The limit is set in Settings."
+msgstr ""
+"نزلاء بلا حجز حالي أو قادم ولا نشاط منذ %(day)s (آخر إقامة أو التسجيل). تُمحى أسماؤهم ووثائق "
+"هويتهم وبيانات الاتصال والملاحظات، وتحتفظ الفواتير بنسختها لأنها وثائق محاسبية. يُضبط الحد في "
+"الإعدادات."
+
 msgid "Hotel rules"
 msgstr "قواعد الفندق"
 
 msgid "Housekeeping"
 msgstr "التنظيف"
+
+#, python-format
+msgid "I understand: erase the personal data of these %(count)s guests."
+msgstr "فهمت: امحُ البيانات الشخصية لهؤلاء النزلاء (%(count)s)."
 
 msgid "Identity and contact"
 msgstr "الهوية ووسائل الاتصال"
@@ -1129,6 +1162,9 @@ msgstr "لا توجد إدخالات تطابق هذه المرشحات."
 msgid "No guest matches “%(query)s”."
 msgstr "لا يوجد نزيل يطابق «%(query)s»."
 
+msgid "No guest to anonymise."
+msgstr "لا يوجد نزيل لإخفاء هويته."
+
 msgid "No guests registered yet."
 msgstr "لا يوجد نزلاء مسجلون بعد."
 
@@ -1230,6 +1266,9 @@ msgstr "مشغولة"
 
 msgid "Of the accommodation; also charged for a no-show."
 msgstr "من الإقامة؛ وتُحتسب أيضاً عند عدم الحضور."
+
+msgid "One of these guests can no longer be anonymised (a new booking?). Reload the list."
+msgstr "لم يعد ممكناً إخفاء هوية أحد هؤلاء النزلاء (حجز جديد؟). أعد تحميل القائمة."
 
 msgid "Only a confirmed reservation can be cancelled."
 msgstr "لا يمكن إلغاء إلا حجز مؤكد."
@@ -1389,6 +1428,9 @@ msgid "Register guest"
 msgstr "تسجيل النزيل"
 
 msgid "Registered"
+msgstr "تاريخ التسجيل"
+
+msgid "Registered on"
 msgstr "تاريخ التسجيل"
 
 msgid "Remove"
@@ -1760,6 +1802,9 @@ msgstr "سيتعين على صاحب الحساب استبدالها عند أو
 msgid "This action can't be done this way."
 msgstr "لا يمكن تنفيذ هذا الإجراء بهذه الطريقة."
 
+msgid "This cannot be undone."
+msgstr "لا يمكن التراجع عن هذا."
+
 #, python-format
 msgid "This category already has a rate on some of these nights (%(name)s)."
 msgstr "لهذا الصنف سعر محدد مسبقاً في بعض هذه الليالي (%(name)s)."
@@ -1793,6 +1838,9 @@ msgstr "هذا النزيل ممنوع من الحجز: تُرفض الحجوز�
 
 msgid "This guest is marked do-not-rent: the booking will be refused."
 msgstr "هذا النزيل ممنوع من الحجز: سيتم رفض الحجز."
+
+msgid "This guest was anonymised: the record can no longer be used."
+msgstr "أُخفيت هوية هذا النزيل: لم يعد بالإمكان استعمال السجل."
 
 msgid "This is a different person: register anyway"
 msgstr "هذا شخص مختلف: سجّله على أي حال"
@@ -1839,6 +1887,9 @@ msgstr "هذه القيمة خارج النطاق المسموح."
 
 msgid "Thursday"
 msgstr "الخميس"
+
+msgid "Tick the box to confirm: this cannot be undone."
+msgstr "ضع علامة في المربع للتأكيد: لا يمكن التراجع."
 
 msgid "To"
 msgstr "إلى"

@@ -97,3 +97,28 @@ def test_edit_and_flags(signed_in):
 
 def test_unknown_guest_is_404(signed_in):
     assert signed_in.get("/guests/999").status_code == 404
+
+
+def test_anonymise_page_needs_confirmation(signed_in, services, hotel, clock):
+    from datetime import timedelta
+
+    from tests.conftest import csrf_token, login
+
+    clock.advance(timedelta(days=800))
+    login(signed_in)  # the session expired while the clock moved
+    page = signed_in.get("/guests/anonymise").get_data(as_text=True)
+    assert "Karim Haddad" in page
+    data = {"csrf_token": csrf_token(signed_in, "/guests/anonymise"), "guest_id": [hotel.karim.id]}
+    response = signed_in.post("/guests/anonymise", data=data)
+    assert "Tick the box" in signed_in.get(response.headers["Location"]).get_data(as_text=True)
+    data["confirm"] = "on"
+    data["csrf_token"] = csrf_token(signed_in, "/guests/anonymise")
+    response = signed_in.post("/guests/anonymise", data=data)
+    assert "Guests anonymised: 1." in signed_in.get(response.headers["Location"]).get_data(
+        as_text=True
+    )
+    assert services.guests.get(hotel.boss, hotel.karim.id).is_anonymised
+    page = signed_in.get(f"/guests/{hotel.karim.id}").get_data(as_text=True)
+    assert "Anonymised guest" in page
+    assert "Edit guest" not in page
+    assert "Save flags" not in page

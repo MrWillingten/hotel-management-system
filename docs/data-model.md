@@ -52,7 +52,7 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
                CK end_date > start_date)
 ✅ guest(id PK, first_name, last_name, id_doc_type CK∈{CIN,PASSPORT}, id_doc_number,
          nationality, phone, email, is_vip, do_not_rent, notes, is_active, created_at,
-         version, UQ(id_doc_type, id_doc_number))
+         version, anonymised_at, UQ(id_doc_type, id_doc_number))
 ✅ reservation(id PK, code UQ, guest_id FK, arrival, departure,
                status CK∈{CONFIRMED,CHECKED_IN,CHECKED_OUT,CANCELLED,NO_SHOW},
                cancellation_fee_mill, created_by FK, created_at, checked_in_at,

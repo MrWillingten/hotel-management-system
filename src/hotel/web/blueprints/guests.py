@@ -6,6 +6,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_babel import get_locale
 from flask_babel import gettext as _
 
+from hotel.domain.enums import Role
 from hotel.domain.errors import HotelError
 from hotel.domain.guests import GuestDetails
 from hotel.persistence.repositories.guests import SORT_ORDERS
@@ -13,7 +14,7 @@ from hotel.services.guests import ProbableDuplicateError
 from hotel.web import forms
 from hotel.web.context import current_actor, services
 from hotel.web.messages import message_for
-from hotel.web.security import is_safe_redirect_target, login_required
+from hotel.web.security import is_safe_redirect_target, login_required, roles_required
 
 bp = Blueprint("guests", __name__, url_prefix="/guests")
 
@@ -160,3 +161,25 @@ def set_flags(guest_id: int):
         return _detail_page(guest_id, errors=forms.FormErrors.from_error(exc), status=400)
     flash(_("Changes saved."), "success")
     return redirect(url_for("guests.detail", guest_id=guest_id))
+
+
+# ---------------------------------------------------------------- anonymisation (5.7)
+@bp.route("/anonymise", methods=["GET", "POST"])
+@roles_required(Role.MANAGER)
+def anonymise():
+    """Erase the personal data of guests with nothing since the cut-off. Irreversible."""
+    actor = current_actor()
+    if request.method == "POST":
+        if not forms.checkbox(request.form, "confirm"):
+            flash(_("Tick the box to confirm: this cannot be undone."), "warning")
+        else:
+            ids = [int(v) for v in request.form.getlist("guest_id")[:500] if v.isdigit()]
+            try:
+                count = services().guests.anonymise(actor, ids)
+            except HotelError as exc:
+                flash(message_for(exc.code, exc.params), "danger")
+            else:
+                flash(_("Guests anonymised: %(count)s.", count=count), "success")
+        return redirect(url_for("guests.anonymise"))
+    cutoff, candidates = services().guests.anonymisation_candidates(actor)
+    return render_template("guests/anonymise.html", cutoff=cutoff, candidates=candidates)

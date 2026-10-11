@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
+import calendar
 import re
 import unicodedata
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import date, datetime
 from enum import StrEnum
 
 from hotel.domain.errors import ValidationError
@@ -153,6 +154,28 @@ class Guest:
     is_active: bool = True
     created_at: datetime | None = None
     version: int = 1
+    anonymised_at: datetime | None = None
+
+    @property
+    def is_anonymised(self) -> bool:
+        return self.anonymised_at is not None
+
+    def anonymise(self, now: datetime) -> None:
+        """Story 5.7: erase the personal data, keep the record (BR26) and its history.
+
+        The name becomes "Anonymised guest", the identity document a placeholder
+        that stays unique (BR2: type + number), and every contact detail and
+        note is removed. Invoices are untouched: they hold their own copy of the
+        name, as accounting records must. The record stays visible (its past
+        reservations still link to it) but can no longer be booked or edited.
+        """
+        self.first_name, self.last_name = "Anonymised", "guest"
+        self.id_doc_number = f"ANON-{self.id:06d}"
+        self.nationality = self.phone = self.email = None
+        self.notes = ""
+        self.is_vip = self.do_not_rent = False
+        self.do_not_rent_reason = None
+        self.anonymised_at = now
 
     @property
     def full_name(self) -> str:
@@ -191,3 +214,10 @@ class Guest:
         for name, value in new.items():
             setattr(self, name, value)
         return changed
+
+
+def months_before(day: date, months: int) -> date:
+    """The same day `months` earlier, clamped to the end of shorter months (31 May - 3 = 28 Feb)."""
+    year, month_index = divmod(day.year * 12 + (day.month - 1) - months, 12)
+    month = month_index + 1
+    return date(year, month, min(day.day, calendar.monthrange(year, month)[1]))

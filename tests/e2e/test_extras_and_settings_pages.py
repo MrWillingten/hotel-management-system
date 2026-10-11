@@ -99,6 +99,7 @@ def test_settings_page(client, services, hotel):
             "cancellation_window_hours": "72",
             "grace_period_hours": "0",
             "discount_cap": "30",
+            "anonymise_after_months": "24",
             "weekend_surcharge": "15",
             "weekend_4": "on",
             "weekend_5": "on",
@@ -118,6 +119,7 @@ def test_settings_page(client, services, hotel):
             "cancellation_window_hours": "72",
             "grace_period_hours": "0",
             "discount_cap": "30",
+            "anonymise_after_months": "24",
             "weekend_surcharge": "0",
         },
     )

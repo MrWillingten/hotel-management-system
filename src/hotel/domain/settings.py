@@ -22,6 +22,7 @@ class HotelSettings:
     discount_cap_bp: int = 3_000  # 30 %
     weekend_surcharge_bp: int = 0  # story 5.6; 0 = no weekend price
     weekend_nights: str = "5,6"  # date.weekday() numbers: Saturday and Sunday nights
+    anonymise_after_months: int = 24  # story 5.7, decision with the student
 
     # Allowed ranges, checked by validated(): name -> (lowest, highest).
     _LIMITS = {  # noqa: RUF012 - class constant, not a field (no annotation)
@@ -30,6 +31,7 @@ class HotelSettings:
         "grace_period_hours": (0, 72),
         "discount_cap_bp": (0, BASIS_POINTS_PER_UNIT),
         "weekend_surcharge_bp": (0, BASIS_POINTS_PER_UNIT),
+        "anonymise_after_months": (6, 120),
     }
 
     def validated(self) -> HotelSettings:
