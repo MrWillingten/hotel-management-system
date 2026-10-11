@@ -123,7 +123,7 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
    ✅ 6.3 JSON API (PR #78): `web/blueprints/api.py`, `@api_token_required` in
    `web/security.py` (cookie refused, per-app `RateLimiter`), `services/api_tokens.py`,
    Account → API tokens, `docs/api.md`, migration 0016.
-   6.4 Windows exe (PR #80): `packaging/windows/` (launcher, spec, README),
+   ✅ 6.4 Windows exe (PR #80): `packaging/windows/` (launcher, spec, README),
    `requirements-build.lock` (extra `build`), CI job "Windows executable" → artifact.
    6.5 room move: `Reservation.move_room`, `ReservationService.move_room/move_candidates`,
    `reservation_room.moved_out_on` (migration 0017): use `reservation.current_rooms`
