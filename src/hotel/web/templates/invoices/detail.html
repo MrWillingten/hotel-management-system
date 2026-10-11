@@ -6,37 +6,81 @@
 {% block content %}
 <div class="page-actions no-print">
   <a class="button button--ghost" href="{{ url_for('reservations.detail', reservation_id=invoice.reservation_id) }}">{{ _("Back to the reservation") }}</a>
-  <p class="muted">{{ _("To print or save as PDF, use your browser's Print command (Ctrl+P): only the invoice is printed.") }}</p>
+  <p class="muted">{{ _("To print or save as PDF, use your browser's Print command (Ctrl+P): only the invoice is printed, on A4 paper.") }}</p>
 </div>
 
-<article class="panel invoice">
-  <header class="invoice__header">
-    <div>
-      <p class="invoice__hotel">{{ hotel_name }}</p>
-      <p class="muted">{{ _("Check-in from %(in)s · check-out by %(out)s", in=settings.check_in_time.strftime("%H:%M"), out=settings.check_out_time.strftime("%H:%M")) }}</p>
+{#- Story 6.13: a sheet of paper. It always uses the light "paper" palette
+    (see .invoice-doc in app.css), on screen in both themes and when printed. -#}
+{%- set bill = invoice.bill %}
+{%- set nights = (invoice.departure - invoice.arrival).days %}
+<article class="invoice-doc">
+  <header class="invoice-doc__letterhead">
+    <div class="invoice-doc__brand">
+      <p class="invoice-doc__hotel" dir="ltr">{{ hotel_name }}</p>
+      <p class="invoice-doc__tagline">{{ _("Check-in from %(in)s · check-out by %(out)s", in=settings.check_in_time.strftime("%H:%M"), out=settings.check_out_time.strftime("%H:%M")) }}</p>
     </div>
-    <dl class="facts invoice__facts">
-      <div><dt>{{ _("Invoice") }}</dt><dd dir="ltr">{{ invoice.number }}</dd></div>
-      <div><dt>{{ _("Issued on") }}</dt><dd>{{ invoice.issued_at | datetimeformat("medium") }}</dd></div>
-      <div><dt>{{ _("Guest") }}</dt><dd>{{ invoice.guest_name }}</dd></div>
-      <div><dt>{{ _("Reservation") }}</dt><dd dir="ltr">{{ invoice.reservation_code }}</dd></div>
-      <div><dt>{{ _("Stay") }}</dt><dd>{{ invoice.arrival | dateformat("medium") }} → {{ invoice.departure | dateformat("medium") }}</dd></div>
-    </dl>
+    <div class="invoice-doc__title">
+      <h2>{{ _("Invoice") }}</h2>
+      <p class="invoice-doc__number" dir="ltr">{{ invoice.number }}</p>
+      <p>{{ _("Issued on") }} {{ invoice.issued_at | datetimeformat("medium") }}</p>
+    </div>
   </header>
 
-  {{ bill_table(invoice.bill) }}
+  <section class="invoice-doc__parties">
+    <div>
+      <h3>{{ _("Billed to") }}</h3>
+      <p class="invoice-doc__strong">{{ invoice.guest_name }}</p>
+    </div>
+    <div>
+      <h3>{{ _("Stay") }}</h3>
+      <p class="invoice-doc__strong">{{ invoice.arrival | dateformat("long") }} → {{ invoice.departure | dateformat("long") }}</p>
+      <p>{{ _("Nights: %(nights)s", nights=nights) }}</p>
+    </div>
+    <div>
+      <h3>{{ _("Reservation") }}</h3>
+      <p class="invoice-doc__strong" dir="ltr">{{ invoice.reservation_code }}</p>
+    </div>
+  </section>
+
+  {{ bill_table(bill) }}
+
+  <div class="invoice-doc__summary">
+    {%- if bill.balance.is_zero() %}
+    <p class="invoice-doc__stamp invoice-doc__stamp--paid">{{ icon("check") }}{{ _("Paid in full") }}</p>
+    {%- elif bill.balance.is_negative() %}
+    <p class="invoice-doc__stamp">{{ _("Refund owed to the guest") }} · {{ -bill.balance | money }}</p>
+    {%- else %}
+    <p class="invoice-doc__stamp invoice-doc__stamp--due">{{ _("Balance due") }} · {{ bill.balance | money }}</p>
+    {%- endif %}
+  </div>
 
   {%- if invoice.payments %}
-  <h2 class="section-title">{{ _("Payments received") }}</h2>
-  <ul class="pick-list">
-    {%- for p in invoice.payments %}
-    <li><span>{{ payment_kind(p.kind) }} · {{ payment_method(p.method) }} · {{ p.paid_at | dateformat("medium") }}</span><span class="num">{{ p.signed_amount | money }}</span></li>
-    {%- endfor %}
-  </ul>
+  <section class="invoice-doc__payments">
+    <h3>{{ _("Payments received") }}</h3>
+    <table class="table">
+      <thead><tr>
+        <th scope="col">{{ _("Date") }}</th>
+        <th scope="col">{{ _("Type") }}</th>
+        <th scope="col">{{ _("Method") }}</th>
+        <th scope="col" class="num">{{ _("Amount") }}</th>
+      </tr></thead>
+      <tbody>
+        {%- for p in invoice.payments %}
+        <tr>
+          <td>{{ p.paid_at | dateformat("medium") }}</td>
+          <td>{{ payment_kind(p.kind) }}</td>
+          <td>{{ payment_method(p.method) }}</td>
+          <td class="num">{{ p.signed_amount | money }}</td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </section>
   {%- endif %}
 
-  <footer class="invoice__footer muted">
+  <footer class="invoice-doc__footer">
     <p>{{ _("Prices in Tunisian dinars. Issued by %(name)s. This invoice can no longer be changed; later payments appear on the reservation.", name=invoice.issued_by_name or "—") }}</p>
+    <p class="invoice-doc__thanks">{{ _("Thank you for staying with us.") }}</p>
   </footer>
 </article>
 {% endblock %}

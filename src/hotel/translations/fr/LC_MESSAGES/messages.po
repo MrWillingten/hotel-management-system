@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 19:55+0100\n"
+"POT-Creation-Date: 2026-10-11 20:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -453,6 +453,9 @@ msgstr "Note"
 
 msgid "Bill and payments"
 msgstr "Note et paiements"
+
+msgid "Billed to"
+msgstr "Facturé à"
 
 msgid "Blocks a room between two dates; refused over existing bookings."
 msgstr "Bloque une chambre entre deux dates ; refusé s’il y a des réservations."
@@ -1710,6 +1713,9 @@ msgstr "Pages"
 msgid "Paid"
 msgstr "Payé"
 
+msgid "Paid in full"
+msgstr "Payée en totalité"
+
 msgid "Paint 204 from 3 to 6 July: room page → Close for maintenance."
 msgstr "Peindre la 204 du 3 au 6 juillet : page de la chambre → Fermer pour maintenance."
 
@@ -2220,6 +2226,9 @@ msgstr "Mot de passe temporaire"
 msgid "Temporary password set. They must choose a new one at their next sign-in."
 msgstr "Mot de passe temporaire défini. La personne devra en choisir un nouveau à sa prochaine connexion."
 
+msgid "Thank you for staying with us."
+msgstr "Merci de votre séjour parmi nous."
+
 #, python-format
 msgid "That is more than the balance due (%(due)s DT)."
 msgstr "C'est plus que le solde dû (%(due)s DT)."
@@ -2460,10 +2469,12 @@ msgstr "Au"
 msgid "To clean"
 msgstr "À nettoyer"
 
-msgid "To print or save as PDF, use your browser's Print command (Ctrl+P): only the invoice is printed."
+msgid ""
+"To print or save as PDF, use your browser's Print command (Ctrl+P): only the invoice is printed, "
+"on A4 paper."
 msgstr ""
 "Pour imprimer ou enregistrer en PDF, utilisez la commande Imprimer du navigateur (Ctrl+P) : seule"
-" la facture est imprimée."
+" la facture est imprimée, au format A4."
 
 msgid "Today"
 msgstr "Aujourd'hui"
