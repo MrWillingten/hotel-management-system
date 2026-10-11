@@ -7,7 +7,7 @@
 
 # ---------------------------------------------------------------- build stage
 # Wheels are built here, so the final image needs no compiler and no pip cache.
-FROM python:3.13.16-slim-trixie AS build
+FROM python:3.14.7-slim-trixie AS build
 WORKDIR /src
 COPY requirements.lock pyproject.toml README.md ./
 COPY src ./src
@@ -17,7 +17,7 @@ RUN python -m pip wheel --no-cache-dir --require-hashes -r requirements.lock -w 
  && python -m pip wheel --no-cache-dir --no-deps . -w /wheels
 
 # ---------------------------------------------------------------- final image
-FROM python:3.13.16-slim-trixie
+FROM python:3.14.7-slim-trixie
 LABEL org.opencontainers.image.title="Hotel Reservation and Management System" \
       org.opencontainers.image.source="https://github.com/MrWillingten/hotel-management-system" \
       org.opencontainers.image.licenses="MIT"
