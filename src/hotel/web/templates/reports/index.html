@@ -1,0 +1,144 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import field, form_errors -%}
+{%- from "macros/billing.html" import payment_method -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Reports") }}{% endblock %}
+{% block page_title %}{{ _("Reports") }}{% endblock %}
+{% block content %}
+<form class="filters" method="get">
+  {{ field("first", _("First night"), type="date", value=values.first, error=errors.first) }}
+  {{ field("last", _("Last night"), type="date", value=values.last, error=errors.last) }}
+  {{ field("day", _("Availability on"), type="date", value=values.day, error=errors.day) }}
+  <button class="button button--primary" type="submit">{{ _("Show") }}</button>
+</form>
+{{ form_errors(errors) }}
+
+{%- if report %}
+<p class="muted">{{ _("Revenue counts when the invoice is issued; cash received is the money actually taken in the period. Ranges of at most two years.") }}</p>
+
+<div class="grid grid--cards grid--stats">
+  <article class="card">
+    <h3 class="card__title">{{ _("Occupancy") }}</h3>
+    <p class="card__value" dir="ltr">{{ report.occupancy_bp | percent }}</p>
+    <p class="muted">{{ _("Nights sold: %(sold)s of %(sellable)s", sold=report.nights_sold, sellable=report.nights_sellable) }}</p>
+  </article>
+  <article class="card">
+    <h3 class="card__title">{{ _("Average daily rate") }}</h3>
+    <p class="card__value card__value--money">{{ report.adr | money }}</p>
+    <p class="muted">{{ _("Revenue per available room: %(revpar)s", revpar=report.revpar | money) }}</p>
+  </article>
+  <article class="card">
+    <h3 class="card__title">{{ _("Invoiced") }}</h3>
+    <p class="card__value card__value--money">{{ report.revenue | money }}</p>
+    <p class="muted">{{ _("Invoices: %(count)s", count=report.invoices) }}</p>
+  </article>
+  <article class="card">
+    <h3 class="card__title">{{ _("Cash received") }}</h3>
+    <p class="card__value card__value--money">{{ report.cash_received | money }}</p>
+  </article>
+  <article class="card">
+    <h3 class="card__title">{{ _("Reservations made") }}</h3>
+    <p class="card__value">{{ report.reservations_made }}</p>
+    <p class="muted">{{ _("Cancelled: %(c)s · no-shows: %(n)s", c=report.cancellations.count, n=report.no_shows.count) }}</p>
+  </article>
+  <article class="card">
+    <h3 class="card__title">{{ _("Outstanding") }}</h3>
+    <p class="card__value card__value--money">{{ report.outstanding | money }}</p>
+  </article>
+</div>
+
+<div class="grid grid--two">
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Revenue") }}</h2>
+    <dl class="facts">
+      <div><dt>{{ _("Accommodation (after discounts)") }}</dt><dd>{{ report.accommodation | money }}</dd></div>
+      <div><dt>{{ _("Extra services") }}</dt><dd>{{ report.services | money }}</dd></div>
+      <div><dt>{{ _("Cancellation and no-show fees") }}</dt><dd>{{ report.fees | money }}</dd></div>
+      <div><dt>{{ _("Taxes") }}</dt><dd>{{ report.taxes | money }}</dd></div>
+      <div><dt>{{ _("Total") }}</dt><dd>{{ report.revenue | money }}</dd></div>
+    </dl>
+    <h3 class="section-title">{{ _("Cash received") }}</h3>
+    <dl class="facts">
+      {%- for method, amount in report.cash | dictsort %}
+      <div><dt>{{ payment_method(method) }}</dt><dd>{{ amount | money }}</dd></div>
+      {%- else %}
+      <p class="muted">{{ _("No money received in this period.") }}</p>
+      {%- endfor %}
+    </dl>
+  </section>
+
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Cancellations and no-shows") }}</h2>
+    <dl class="facts">
+      <div><dt>{{ _("Cancellations") }}</dt><dd>{{ report.cancellations.count }} · {{ report.cancellations.fees | money }}</dd></div>
+      <div><dt>{{ _("No-shows") }}</dt><dd>{{ report.no_shows.count }} · {{ report.no_shows.fees | money }}</dd></div>
+    </dl>
+    <h3 class="section-title">{{ _("Outstanding balances") }}</h3>
+    <dl class="facts">
+      <div><dt>{{ _("Due from guests in the house") }}</dt><dd>{{ report.in_house_due | money }}</dd></div>
+      {%- for reservation_id, number, guest, due in report.unpaid %}
+      <div><dt><a href="{{ url_for('billing.bill', reservation_id=reservation_id) }}">{{ guest }}</a> <span class="muted" dir="ltr">{{ number }}</span></dt><dd>{{ due | money }}</dd></div>
+      {%- endfor %}
+    </dl>
+  </section>
+</div>
+
+<div class="grid grid--two">
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Categories") }}</h2>
+    <div class="table-wrap table-wrap--flat">
+      <table class="table">
+        <thead><tr><th scope="col">{{ _("Category") }}</th><th scope="col" class="num">{{ _("Nights sold") }}</th><th scope="col" class="num">{{ _("Room value") }}</th></tr></thead>
+        <tbody>
+          {%- for c in report.categories %}
+          <tr><td>{{ c.name }}</td><td class="num">{{ c.nights }}</td><td class="num">{{ c.room_value | money }}</td></tr>
+          {%- else %}
+          <tr><td colspan="3" class="table__empty">{{ _("No nights sold in this period.") }}</td></tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Availability on %(day)s", day=report.availability_day | dateformat("medium")) }}</h2>
+    <div class="table-wrap table-wrap--flat">
+      <table class="table">
+        <thead><tr><th scope="col">{{ _("Category") }}</th><th scope="col" class="num">{{ _("Rooms") }}</th><th scope="col" class="num">{{ _("Maintenance") }}</th><th scope="col" class="num">{{ _("Sold") }}</th><th scope="col" class="num">{{ _("Free") }}</th></tr></thead>
+        <tbody>
+          {%- for a in report.availability %}
+          <tr><td>{{ a.name }}</td><td class="num">{{ a.rooms }}</td><td class="num">{{ a.maintenance }}</td><td class="num">{{ a.sold }}</td><td class="num"><strong>{{ a.free }}</strong></td></tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<section class="panel">
+  <h2 class="panel__title">{{ _("Occupancy per day") if daily else _("Occupancy per month") }}</h2>
+  <div class="table-wrap table-wrap--flat">
+    <table class="table">
+      <thead><tr>
+        <th scope="col">{{ _("Night") if daily else _("Month") }}</th>
+        <th scope="col" class="num">{{ _("Nights sold") }}</th>
+        <th scope="col" class="num">{{ _("Sellable") }}</th>
+        <th scope="col" class="num">{{ _("Occupancy") }}</th>
+        <th scope="col" class="num">{{ _("Room value") }}</th>
+      </tr></thead>
+      <tbody>
+        {%- for row in (report.days if daily else report.months()) %}
+        <tr>
+          <td>{% if daily %}{{ row.night | dateformat("EEE d MMM") }}{% else %}{{ row.month | dateformat("MMMM yyyy") }}{% endif %}</td>
+          <td class="num">{{ row.sold }}</td>
+          <td class="num">{{ row.sellable }}</td>
+          <td class="num" dir="ltr">{{ row.occupancy_bp | percent }}</td>
+          <td class="num">{{ row.room_value | money }}</td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{%- endif %}
+{% endblock %}

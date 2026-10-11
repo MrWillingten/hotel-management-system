@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 10:22+0100\n"
+"POT-Creation-Date: 2026-10-11 13:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -87,6 +87,10 @@ msgstr "Un numéro de passeport comporte de 5 à 20 lettres ou chiffres."
 msgid "A percentage (7 or 7.5) or an amount in dinars (3.000), depending on the kind."
 msgstr "Un pourcentage (7 ou 7,5) ou un montant en dinars (3,000), selon le type."
 
+#, python-format
+msgid "A report covers at most %(max)s nights (two years)."
+msgstr "Un rapport couvre au plus %(max)s nuits (deux ans)."
+
 msgid "A service with this name already exists."
 msgstr "Un service portant ce nom existe déjà."
 
@@ -102,6 +106,9 @@ msgstr "Accès refusé"
 
 msgid "Accommodation"
 msgstr "Hébergement"
+
+msgid "Accommodation (after discounts)"
+msgstr "Hébergement (après remises)"
 
 #, python-format
 msgid "Accommodation only. All discounts together: at most %(cap)s of it."
@@ -245,8 +252,18 @@ msgstr "Journal d'audit"
 msgid "Availability"
 msgstr "Disponibilités"
 
+msgid "Availability on"
+msgstr "Disponibilité le"
+
+#, python-format
+msgid "Availability on %(day)s"
+msgstr "Disponibilité le %(day)s"
+
 msgid "Available"
 msgstr "Disponible"
+
+msgid "Average daily rate"
+msgstr "Prix moyen par nuit"
 
 msgid "Back"
 msgstr "Retour"
@@ -326,6 +343,9 @@ msgstr "Annuler la réservation"
 msgid "Cancel the reservation"
 msgstr "Annuler la réservation"
 
+msgid "Cancellation and no-show fees"
+msgstr "Frais d'annulation et de non-présentation"
+
 msgid "Cancellation fee"
 msgstr "Frais d'annulation"
 
@@ -333,11 +353,21 @@ msgstr "Frais d'annulation"
 msgid "Cancellation fee (%%)"
 msgstr "Frais d'annulation (%%)"
 
+msgid "Cancellations"
+msgstr "Annulations"
+
+msgid "Cancellations and no-shows"
+msgstr "Annulations et non-présentations"
+
 msgid "Cancelled"
 msgstr "Annulée"
 
 msgid "Cancelled on"
 msgstr "Annulée le"
+
+#, python-format
+msgid "Cancelled: %(c)s · no-shows: %(n)s"
+msgstr "Annulées : %(c)s · non-présentations : %(n)s"
 
 #, python-format
 msgid "Cancelling now is free (free until %(when)s)."
@@ -368,6 +398,9 @@ msgstr "Ticket de carte ou numéro de virement, le cas échéant."
 
 msgid "Cash"
 msgstr "Espèces"
+
+msgid "Cash received"
+msgstr "Encaissé"
 
 msgid "Categories"
 msgstr "Catégories"
@@ -729,6 +762,9 @@ msgstr "Première nuit fermée"
 msgid "First name"
 msgstr "Prénom"
 
+msgid "First night"
+msgstr "Première nuit"
+
 msgid "Fixed amount (DT)"
 msgstr "Montant fixe (DT)"
 
@@ -842,8 +878,15 @@ msgstr "Facture"
 msgid "Invoice %(number)s"
 msgstr "Facture %(number)s"
 
+msgid "Invoiced"
+msgstr "Facturé"
+
 msgid "Invoices"
 msgstr "Factures"
+
+#, python-format
+msgid "Invoices: %(count)s"
+msgstr "Factures : %(count)s"
 
 msgid "Is it one of these guests?"
 msgstr "S'agit-il de l'un de ces clients ?"
@@ -868,6 +911,9 @@ msgstr "Dernière nuit fermée"
 
 msgid "Last name"
 msgstr "Nom"
+
+msgid "Last night"
+msgstr "Dernière nuit"
 
 msgid "Late"
 msgstr "En retard"
@@ -899,6 +945,9 @@ msgstr "Maintenance terminée : la chambre est de nouveau disponible dès aujou
 msgid "Maintenance history"
 msgstr "Historique de maintenance"
 
+msgid "Manage categories"
+msgstr "Gérer les catégories"
+
 msgid "Manager"
 msgstr "Gestionnaire"
 
@@ -923,6 +972,9 @@ msgstr "Remise totale maximale (%%)"
 
 msgid "Method"
 msgstr "Moyen"
+
+msgid "Month"
+msgstr "Mois"
 
 msgid "Name"
 msgstr "Nom"
@@ -969,6 +1021,9 @@ msgstr "Page suivante"
 msgid "Next week"
 msgstr "Semaine suivante"
 
+msgid "Night"
+msgstr "Nuit"
+
 msgid "Night of"
 msgstr "Nuit du"
 
@@ -986,6 +1041,13 @@ msgstr "Les nuits déjà réservées gardent leur prix ; les nuits ajoutées so
 
 msgid "Nights and prices"
 msgstr "Nuits et prix"
+
+msgid "Nights sold"
+msgstr "Nuits vendues"
+
+#, python-format
+msgid "Nights sold: %(sold)s of %(sellable)s"
+msgstr "Nuits vendues : %(sold)s sur %(sellable)s"
 
 #, python-format
 msgid "Nights: %(nights)s"
@@ -1016,11 +1078,17 @@ msgstr "Aucun client enregistré pour l'instant."
 msgid "No invoice yet: they are issued at check-out."
 msgstr "Aucune facture pour l'instant : elles sont émises au départ."
 
+msgid "No money received in this period."
+msgstr "Aucun encaissement sur cette période."
+
 msgid "No money received yet."
 msgstr "Aucun encaissement pour l'instant."
 
 msgid "No more arrivals expected today."
 msgstr "Plus aucune arrivée prévue aujourd'hui."
+
+msgid "No nights sold in this period."
+msgstr "Aucune nuit vendue sur cette période."
 
 msgid "No other room is free for these dates."
 msgstr "Aucune autre chambre n'est libre à ces dates."
@@ -1053,6 +1121,9 @@ msgstr "Non-présentation enregistrée"
 msgid "No-show recorded. Fee: %(fee)s."
 msgstr "Non-présentation enregistrée. Frais : %(fee)s."
 
+msgid "No-shows"
+msgstr "Non-présentations"
+
 msgid "Not allowed"
 msgstr "Non autorisé"
 
@@ -1076,6 +1147,15 @@ msgstr "Numéro"
 msgid "Number or guest"
 msgstr "Numéro ou client"
 
+msgid "Occupancy"
+msgstr "Occupation"
+
+msgid "Occupancy per day"
+msgstr "Occupation par jour"
+
+msgid "Occupancy per month"
+msgstr "Occupation par mois"
+
 msgid "Occupancy tonight"
 msgstr "Occupation ce soir"
 
@@ -1090,6 +1170,12 @@ msgstr "Seule une réservation confirmée peut être annulée."
 
 msgid "Out of service"
 msgstr "Hors service"
+
+msgid "Outstanding"
+msgstr "Restant dû"
+
+msgid "Outstanding balances"
+msgstr "Soldes impayés"
 
 msgid "Overdue"
 msgstr "Dépassé"
@@ -1247,6 +1333,9 @@ msgstr "Répétez le nouveau mot de passe"
 msgid "Repeat the temporary password"
 msgstr "Répétez le mot de passe temporaire"
 
+msgid "Reports"
+msgstr "Rapports"
+
 msgid "Reservation"
 msgstr "Réservation"
 
@@ -1267,6 +1356,9 @@ msgstr "Réservation mise à jour."
 msgid "Reservations"
 msgstr "Réservations"
 
+msgid "Reservations made"
+msgstr "Réservations prises"
+
 #, python-format
 msgid "Reservations: %(count)s"
 msgstr "Réservations : %(count)s"
@@ -1276,6 +1368,20 @@ msgstr "Réservée"
 
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
+
+msgid "Revenue"
+msgstr "Chiffre d'affaires"
+
+msgid ""
+"Revenue counts when the invoice is issued; cash received is the money actually taken in the "
+"period. Ranges of at most two years."
+msgstr ""
+"Le chiffre d'affaires compte à l'émission de la facture ; l'encaissé est l'argent réellement reçu"
+" sur la période. Périodes de deux ans au plus."
+
+#, python-format
+msgid "Revenue per available room: %(revpar)s"
+msgstr "Revenu par chambre disponible : %(revpar)s"
 
 msgid "Review the booking"
 msgstr "Vérifier la réservation"
@@ -1336,6 +1442,9 @@ msgstr "Chambre fermée à partir du %(first)s ; réouverture le %(reopens)s."
 msgid "Room number"
 msgstr "Numéro de chambre"
 
+msgid "Room value"
+msgstr "Valeur des chambres"
+
 msgid "Rooms"
 msgstr "Chambres"
 
@@ -1377,6 +1486,9 @@ msgstr "Sélectionnez au moins une chambre."
 msgid "Select one of them below."
 msgstr "Sélectionnez-en une ci-dessous."
 
+msgid "Sellable"
+msgstr "Vendables"
+
 msgid "Service"
 msgstr "Service"
 
@@ -1403,6 +1515,9 @@ msgstr "Taille"
 
 msgid "Skip to content"
 msgstr "Aller au contenu"
+
+msgid "Sold"
+msgstr "Vendues"
 
 #, python-format
 msgid "Some bookings have more guests than this capacity (%(codes)s). Change them first."
@@ -1519,6 +1634,9 @@ msgstr "L'hôtel doit garder au moins un gestionnaire actif."
 
 msgid "The hotel owes the guest a refund. Ask a manager to record it."
 msgstr "L'hôtel doit un remboursement au client. Demandez à un gérant de l'enregistrer."
+
+msgid "The last night must not be before the first night."
+msgstr "La dernière nuit ne peut pas précéder la première."
 
 msgid "The nights of this reservation were released when it was cancelled or marked as a no-show."
 msgstr "Les nuits de cette réservation ont été libérées lors de son annulation ou de la non-présentation."

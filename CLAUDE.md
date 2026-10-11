@@ -110,6 +110,8 @@ copied from the approved Phase 5 plan; Sprint 6 table, risks and cut order
 too). Read it before creating the milestone/issues. Process agreed with the
 student: show the drafted stories for review **before** creating issues.
 Learn first: SQL aggregation, SVG generation, `csv`, gettext/Babel.
+Stories reviewed and approved 11 Oct; decisions recorded under the Sprint 5
+table in the roadmap; issues #50–#58, milestone "Sprint 5" (#4).
 
 ### Known open issues / limitations (not bugs yet fixed)
 - French and Arabic texts are drafts → native-speaker review before demo.

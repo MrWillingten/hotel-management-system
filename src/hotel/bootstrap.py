@@ -27,6 +27,7 @@ from hotel.services.guests import GuestService
 from hotel.services.hotel_settings import HotelSettingsService
 from hotel.services.invoices import InvoiceService
 from hotel.services.passwords import PasswordHasher, ScryptParams
+from hotel.services.reports import ReportService
 from hotel.services.reservations import ReservationService
 from hotel.services.rooms import RoomService
 from hotel.services.users import UserService
@@ -57,6 +58,7 @@ class Services:
     hotel_settings: HotelSettingsService
     billing: BillingService
     invoices: InvoiceService
+    reports: ReportService
 
 
 def build_services(settings: Settings, *, clock: Clock | None = None) -> Services:
@@ -98,4 +100,5 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
         hotel_settings=HotelSettingsService(uow_factory, clock),
         billing=BillingService(uow_factory, clock),
         invoices=InvoiceService(uow_factory, clock),
+        reports=ReportService(uow_factory, clock),
     )

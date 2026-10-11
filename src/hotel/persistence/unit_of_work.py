@@ -25,6 +25,7 @@ from hotel.persistence.repositories.form_tokens import FormTokenRepository
 from hotel.persistence.repositories.guests import GuestRepository
 from hotel.persistence.repositories.invoices import InvoiceRepository
 from hotel.persistence.repositories.login_failures import LoginFailureRepository
+from hotel.persistence.repositories.reports import ReportRepository
 from hotel.persistence.repositories.reservations import CounterRepository, ReservationRepository
 from hotel.persistence.repositories.rooms import (
     CategoryRepository,
@@ -56,6 +57,7 @@ class UnitOfWork:
     discounts: DiscountRepository
     payments: PaymentRepository
     invoices: InvoiceRepository
+    reports: ReportRepository
 
     def __init__(self, database_path: Path) -> None:
         self._database_path = database_path
@@ -84,6 +86,7 @@ class UnitOfWork:
         self.discounts = DiscountRepository(self._conn)
         self.payments = PaymentRepository(self._conn)
         self.invoices = InvoiceRepository(self._conn)
+        self.reports = ReportRepository(self._conn)
         return self
 
     def __exit__(
