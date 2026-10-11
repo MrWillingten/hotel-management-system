@@ -38,6 +38,7 @@ All notable changes are recorded here. The format follows
 - User guide (`docs/user-guide.md`): every page and button per role, what it
   is for and an example; a translated **Help** page in the menu shows each
   role only the topics it can use (story 6.10).
+- Thin scrollbars in the theme's colours, light and dark (story 6.11).
 
 ### Security (story 6.6)
 - OWASP ASVS 5.0 Level 1 self-assessment (`docs/asvs.md`): 58 requirements

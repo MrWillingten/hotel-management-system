@@ -907,3 +907,25 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 .help__example { display: flex; gap: var(--space-2); align-items: flex-start; padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm); background: var(--info-soft); color: var(--info-text); }
 .help__example .icon { flex: none; margin-block-start: 0.15rem; }
+/* Thin scrollbars in the theme's colours (story 6.11), Discord-like: a
+   rounded thumb on an invisible track. The colours are mixed from --text,
+   so they follow the light and dark themes without extra tokens. Chromium
+   and Safari use the ::-webkit-scrollbar rules (which allow the rounded,
+   inset thumb); browsers without them (Firefox) use the standard
+   properties, which give a thin bar in the same colours. */
+:root {
+  --scrollbar-thumb: color-mix(in srgb, var(--text) 22%, transparent);
+  --scrollbar-thumb-hover: color-mix(in srgb, var(--text) 40%, transparent);
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb {
+  min-height: 40px;
+  border: 3px solid transparent;  /* with background-clip: a 4 px bar floating in a 10 px lane */
+  border-radius: 999px;
+  background: var(--scrollbar-thumb) padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background-color: var(--scrollbar-thumb-hover); }
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+}
