@@ -15,6 +15,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from hotel import __version__
 from hotel.bootstrap import Services, build_services
 from hotel.config import LANGUAGES, ConfigurationError, Settings
+from hotel.demo import is_demo
 from hotel.domain.money import Money
 from hotel.secret_key import load_or_create_secret_key
 from hotel.web import errors, security
@@ -114,6 +115,7 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
         locale = str(get_locale() or "en")
         return {
             "current_user": g.get("user"),
+            "demo_mode": is_demo(app.extensions[SERVICES_KEY]),
             "locale": locale,
             "text_dir": text_direction(locale),
             "theme": current_theme(),

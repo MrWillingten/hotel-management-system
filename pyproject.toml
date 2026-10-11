@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hotel"
-version = "0.1.0"
+version = "0.2.0"
 description = "Hotel Reservation and Management System: a secure, multilingual web application for reception staff and managers."
 readme = "README.md"
 requires-python = ">=3.11"

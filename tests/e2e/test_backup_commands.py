@@ -23,3 +23,23 @@ def test_cli_backup_and_restore(tmp_path, monkeypatch, capsys):
     assert "Restored" in capsys.readouterr().out
     assert cli.main(["restore", str(tmp_path / "missing.db"), "--yes"]) == 1
     assert "Restore refused" in capsys.readouterr().err
+
+
+def test_cli_seed(tmp_path, monkeypatch, capsys):
+    monkeypatch.setenv("HOTEL_DATA_DIR", str(tmp_path))
+    monkeypatch.setenv("HOTEL_ENV", "testing")
+    assert cli.main(["seed"]) == 2
+    assert cli.main(["seed", "--demo"]) == 0
+    out = capsys.readouterr().out
+    assert "17 rooms" in out
+    assert "demo.manager" in out
+    assert cli.main(["seed", "--demo"]) == 1
+    assert "already has rooms" in capsys.readouterr().err
+
+
+def test_demo_banner(client, services):
+    from hotel.demo import seed_demo
+
+    assert "DEMO DATA" not in client.get("/login").get_data(as_text=True)
+    seed_demo(services, guests=1)
+    assert "DEMO DATA" in client.get("/login").get_data(as_text=True)

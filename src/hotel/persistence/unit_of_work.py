@@ -27,6 +27,7 @@ from hotel.persistence.repositories.rooms import (
     RoomRepository,
 )
 from hotel.persistence.repositories.sessions import SessionRepository
+from hotel.persistence.repositories.settings import SettingRepository
 from hotel.persistence.repositories.users import UserRepository
 
 
@@ -39,6 +40,7 @@ class UnitOfWork:
     rooms: RoomRepository
     maintenance: MaintenanceRepository
     guests: GuestRepository
+    settings: SettingRepository
 
     def __init__(self, database_path: Path) -> None:
         self._database_path = database_path
@@ -57,6 +59,7 @@ class UnitOfWork:
         self.rooms = RoomRepository(self._conn)
         self.maintenance = MaintenanceRepository(self._conn)
         self.guests = GuestRepository(self._conn)
+        self.settings = SettingRepository(self._conn)
         return self
 
     def __exit__(

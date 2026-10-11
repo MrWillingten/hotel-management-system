@@ -10,6 +10,9 @@
 </head>
 <body class="{% block body_class %}{% endblock %}">
   <a class="skip-link" href="#main">{{ _("Skip to content") }}</a>
+  {%- if demo_mode %}
+  <div class="demo-banner" role="note">{{ _("DEMO DATA: every guest, document and booking shown here is fictional.") }}</div>
+  {%- endif %}
   {% block body %}{% endblock %}
 </body>
 </html>

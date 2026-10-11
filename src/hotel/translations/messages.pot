@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 01:12+0100\n"
+"POT-Creation-Date: 2026-10-11 01:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -235,6 +235,9 @@ msgid "Created"
 msgstr ""
 
 msgid "Current password"
+msgstr ""
+
+msgid "DEMO DATA: every guest, document and booking shown here is fictional."
 msgstr ""
 
 msgid "Daily"

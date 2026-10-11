@@ -42,6 +42,16 @@ Everything the application writes lives in `HOTEL_DATA_DIR` (default
 * Never commit it: it is listed in `.gitignore`.
 * Deleting `secret_key` signs everyone out; deleting `hotel.db` deletes all data.
 
+## Backups
+
+* A backup is written automatically when the application starts, at most
+  once every 24 hours; the 14 most recent daily backups are kept.
+* A backup is also written before every database upgrade, and before a restore.
+* Managers can take one at any time from **Backups**, or run `python -m hotel backup`.
+* For a server that runs for weeks without restarting, schedule
+  `python -m hotel backup` daily (cron on Linux, Task Scheduler on Windows).
+* To restore: stop the application, then run `python -m hotel restore FILE`.
+
 ## Configuration reference
 
 | Variable | Default | Meaning |
