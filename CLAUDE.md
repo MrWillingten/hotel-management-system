@@ -134,9 +134,15 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
    and real-Windows columns are the **student's**; issue #72 stays open until
    then), `tests/unit/test_docs.py` checks cited tests exist. Cookies:
    `web/context.cookie_name()` adds `__Host-` behind HTTPS.
-   **NEXT (student's request, 11 Oct): before drafting the report, the student
-   wants to discuss frontend changes to the app. Ask them what they want; do
-   not start 6.7 first.** Freeze 27 Dec.
+   **NEXT: frontend polish 6.10–6.14 (agreed 11 Oct, details in roadmap):**
+   6.10 user guide (`docs/user-guide.md` + translated in-app Help page) →
+   6.11 thin themed scrollbar → 6.12 login page (diagonal animated background,
+   animated Great Vibes signature, reduced-motion) → 6.13 invoice print/PDF
+   (A4, light, branded) → 6.14 walk-through (role tour at first sign-in +
+   self-ticking dashboard checklist from the audit log). No JavaScript (CSP).
+   Then 6.7 report. Freeze 27 Dec.
+   Running the app: `.venv/bin/python -m hotel run` (the student's `sh` kept
+   /usr/bin/python after activation).
 5. 6.7 report: **English, LaTeX for Overleaf** in `report/`. The assistant
    drafts all technical chapters; **the student writes the General
    Introduction, personal retrospectives, lessons learned, difficulties and
