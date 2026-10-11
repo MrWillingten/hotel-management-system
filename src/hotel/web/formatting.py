@@ -5,6 +5,7 @@ from __future__ import annotations
 from decimal import Decimal
 
 from flask_babel import format_decimal, get_locale
+from markupsafe import Markup, escape
 
 from hotel.domain.money import Money
 
@@ -16,6 +17,17 @@ def money(amount: Money | None) -> str:
     number = format_decimal(amount.to_decimal(), format="#,##0.000")
     symbol = "د.ت" if str(get_locale()).startswith("ar") else "DT"
     return f"{number} {symbol}"
+
+
+def money_html(amount: Money | None) -> Markup:
+    """money() for templates, isolated with <bdi>.
+
+    In an Arabic sentence, "180.500 DT" written right-to-left could have its
+    parts reordered by the browser's bidirectional algorithm; <bdi> keeps the
+    amount in one piece and in reading order. Python messages (flashes) use
+    plain money(), so no tag ever appears as text.
+    """
+    return Markup("<bdi>%s</bdi>") % escape(money(amount))
 
 
 def percent(basis_points: int) -> str:

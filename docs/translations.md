@@ -54,3 +54,28 @@ placeholder such as `%(name)s` is lost, or the compiled `.mo` files are stale.
 
 The French and Arabic texts are first drafts and must be reviewed by a native
 speaker before the final demo.
+
+## Reviewing the translations (story 5.5)
+
+The French and Arabic texts were drafted by AI and must be checked by a
+native speaker before the demo.
+
+```bash
+python scripts/i18n_review.py export translations-review.csv
+```
+
+Open `translations-review.csv` in LibreOffice Calc or Excel (UTF-8,
+comma-separated). Each row is one interface text: English, current French,
+current Arabic. Write a better version in `french_correction` or
+`arabic_correction` only where needed; leave the rest empty. Keep every
+`%(name)s` marker exactly as in the English text (it is replaced by a value),
+and write a percent sign as `%%`. Save as CSV, then:
+
+```bash
+python scripts/i18n_review.py import translations-review.csv
+```
+
+A correction with wrong markers is refused with the line number, and nothing
+is changed until the whole file is correct. The review file is ignored by Git.
+Arabic pages use Western digits (as Tunisian administration does), and every
+amount is wrapped in `<bdi>` so it is never reordered inside right-to-left text.

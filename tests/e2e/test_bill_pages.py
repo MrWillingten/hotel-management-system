@@ -28,7 +28,7 @@ def test_bill_preview_and_deposit(client, services, hotel):
     login(client)
     page = client.get(f"/reservations/{r.id}/bill").get_data(as_text=True)
     assert "Room 204" in page
-    assert f"2 × 180.000{NBSP}DT" in page
+    assert f"2 × <bdi>180.000{NBSP}DT</bdi>" in page
     assert f"VAT (7{NBSP}%)" in page
     assert f"385.200{NBSP}DT" in page  # 360 + 25.200
     assert "Record a deposit" in page

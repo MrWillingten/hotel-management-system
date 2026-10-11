@@ -26,7 +26,7 @@ def test_check_out_flow_and_invoice_page(client, services, hotel, clock):
     assert "360.000 DT" in dashboard  # due from guests in the house (may wrap before "DT")
     page = client.get(f"/reservations/{r.id}/check-out").get_data(as_text=True)
     assert "Early departure" in page
-    assert f"180.000{NBSP}DT is still due" in page
+    assert f"<bdi>180.000{NBSP}DT</bdi> is still due" in page
     response = _post(client, f"/reservations/{r.id}/check-out", {"version": r.version})
     assert response.status_code == 302
     invoice_page = client.get(response.headers["Location"]).get_data(as_text=True)
