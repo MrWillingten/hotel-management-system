@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 01:10+0100\n"
+"POT-Creation-Date: 2026-10-11 01:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -28,6 +28,9 @@ msgstr "من 3 إلى 32 حرفًا: أحرف لاتينية أو أرقام أ�
 
 msgid "A CIN number has exactly 8 digits."
 msgstr "يتكون رقم بطاقة التعريف الوطنية من 8 أرقام بالضبط."
+
+msgid "A backup is taken automatically every day when the application starts, and before every upgrade."
+msgstr "تُؤخذ نسخة احتياطية تلقائيًا كل يوم عند تشغيل التطبيق، وقبل كل تحديث."
 
 msgid "A category with this name already exists."
 msgstr "توجد فئة بهذا الاسم بالفعل."
@@ -130,8 +133,27 @@ msgstr "العودة إلى الموظفين"
 msgid "Back to the dashboard"
 msgstr "العودة إلى لوحة القيادة"
 
+msgid "Back up now"
+msgstr "نسخ احتياطي الآن"
+
+#, python-format
+msgid "Backup %(name)s written."
+msgstr "تم حفظ النسخة الاحتياطية %(name)s."
+
+msgid "Backups"
+msgstr "النسخ الاحتياطية"
+
+msgid "Backups are stored in this folder on the server:"
+msgstr "تُحفظ النسخ الاحتياطية في هذا المجلد على الخادم:"
+
 msgid "Bad request"
 msgstr "طلب غير صالح"
+
+msgid "Before a restore"
+msgstr "قبل الاستعادة"
+
+msgid "Before an upgrade"
+msgstr "قبل التحديث"
 
 msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
 msgstr "بطاقة التعريف: 8 أرقام. جواز السفر: من 5 إلى 20 حرفًا أو رقمًا."
@@ -191,6 +213,9 @@ msgstr "إغلاق الغرفة"
 msgid "Colour theme"
 msgstr "سمة الألوان"
 
+msgid "Copy them regularly to another disk or a USB drive. To restore one, stop the application and run:"
+msgstr "انسخها بانتظام إلى قرص آخر أو ذاكرة USB. لاستعادة نسخة، أوقف التطبيق ثم نفّذ:"
+
 msgid "Create a room category first, then add rooms."
 msgstr "أنشئ فئة غرف أولًا، ثم أضف الغرف."
 
@@ -200,8 +225,14 @@ msgstr "إنشاء الحساب"
 msgid "Create the first manager account from a terminal, in the project folder:"
 msgstr "أنشئ أول حساب مدير من الطرفية، داخل مجلد المشروع:"
 
+msgid "Created"
+msgstr "تاريخ الإنشاء"
+
 msgid "Current password"
 msgstr "كلمة المرور الحالية"
+
+msgid "Daily"
+msgstr "يومية"
 
 msgid "Dark"
 msgstr "داكن"
@@ -281,6 +312,9 @@ msgstr "أدخل مبلغًا مثل 180 أو 180.500."
 
 msgid "Everyone"
 msgstr "الجميع"
+
+msgid "File"
+msgstr "الملف"
 
 msgid "Filter"
 msgstr "تصفية"
@@ -403,6 +437,9 @@ msgstr "سجل الصيانة"
 msgid "Manager"
 msgstr "مدير"
 
+msgid "Manual"
+msgstr "يدوية"
+
 msgid "Match system"
 msgstr "حسب النظام"
 
@@ -441,6 +478,9 @@ msgstr "سعر الليلة (د.ت، قبل الضرائب)"
 
 msgid "No account exists yet."
 msgstr "لا يوجد أي حساب بعد."
+
+msgid "No backups yet."
+msgstr "لا توجد نسخ احتياطية بعد."
 
 msgid "No entries match these filters."
 msgstr "لا توجد إدخالات تطابق هذه المرشحات."
@@ -601,6 +641,9 @@ msgstr "تسجيل الدخول"
 msgid "Sign out"
 msgstr "تسجيل الخروج"
 
+msgid "Size"
+msgstr "الحجم"
+
 msgid "Skip to content"
 msgstr "انتقل إلى المحتوى"
 
@@ -728,6 +771,9 @@ msgstr "كبير جدًا"
 
 msgid "Too many failed sign-in attempts from this computer. Wait a few minutes and try again."
 msgstr "محاولات تسجيل دخول فاشلة كثيرة من هذا الجهاز. انتظر بضع دقائق ثم حاول مرة أخرى."
+
+msgid "Type"
+msgstr "النوع"
 
 msgid "Unlock"
 msgstr "فتح القفل"

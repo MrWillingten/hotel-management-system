@@ -3,6 +3,8 @@
     run              start the web application (Waitress; --dev for Flask's debugger)
     init-db          create or upgrade the database
     create-manager   create the first manager account
+    backup           write a backup now
+    restore FILE     replace the database with a backup (application stopped)
     audit verify     check the audit log's hash chain
     version          print the version
 
@@ -17,12 +19,14 @@ import getpass
 import ipaddress
 import sys
 from collections.abc import Sequence
+from pathlib import Path
 
 from hotel import __version__
 from hotel.bootstrap import build_services
 from hotel.config import ConfigurationError, Settings
 from hotel.domain.actor import Actor
 from hotel.domain.errors import HotelError, ValidationError
+from hotel.persistence.backup import BackupError
 
 # The CLI speaks English; the web interface translates the same codes.
 _CLI_MESSAGES = {
@@ -59,6 +63,9 @@ def cmd_run(args: argparse.Namespace) -> int:
 
     settings = Settings.from_env(environment="development" if args.dev else None)
     app = create_app(settings)
+    backup = app.extensions["hotel.services"].backups.auto_backup_if_due()
+    if backup is not None:
+        print(f"Daily backup written to {backup}")
     if not _is_loopback(args.host):
         print(
             "WARNING: listening on a network address. Without HTTPS, passwords travel in "
@@ -114,6 +121,30 @@ def cmd_create_manager(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_backup(_: argparse.Namespace) -> int:
+    services = build_services(Settings.from_env())
+    path = services.backups.create(Actor.system())
+    print(f"Backup written to {path}")
+    return 0
+
+
+def cmd_restore(args: argparse.Namespace) -> int:
+    services = build_services(Settings.from_env())
+    backup = Path(args.file).expanduser().resolve()
+    print(f"This replaces ALL current data with the contents of {backup.name}.")
+    print("Stop the application (Ctrl+C in its window) before continuing.")
+    if not args.yes and input("Type 'restore' to continue: ").strip() != "restore":
+        print("Cancelled.")
+        return 1
+    try:
+        safety_copy = services.backups.restore(Actor.system(), backup)
+    except BackupError as error:
+        print(f"Restore refused: {error}", file=sys.stderr)
+        return 1
+    print(f"Restored. The replaced data was kept in {safety_copy}")
+    return 0
+
+
 def cmd_audit_verify(_: argparse.Namespace) -> int:
     services = build_services(Settings.from_env())
     check = services.audit.verify(Actor.system())
@@ -156,6 +187,14 @@ def build_parser() -> argparse.ArgumentParser:
     manager.add_argument("--username")
     manager.add_argument("--full-name")
     manager.set_defaults(handler=cmd_create_manager)
+
+    commands.add_parser("backup", help="write a backup of the database").set_defaults(
+        handler=cmd_backup
+    )
+    restore = commands.add_parser("restore", help="replace the database with a backup")
+    restore.add_argument("file", help="backup file (in the data folder's backups/)")
+    restore.add_argument("--yes", action="store_true", help="do not ask for confirmation")
+    restore.set_defaults(handler=cmd_restore)
 
     audit = commands.add_parser("audit", help="audit log tools")
     audit_commands = audit.add_subparsers(dest="audit_command", required=True)

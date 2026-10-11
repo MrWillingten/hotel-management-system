@@ -63,6 +63,10 @@ class Settings:
         return self.data_dir / "hotel.db"
 
     @property
+    def backup_dir(self) -> Path:
+        return self.data_dir / "backups"
+
+    @property
     def secret_key_path(self) -> Path:
         return self.data_dir / "secret_key"
 

@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import sqlite3
+from collections.abc import Callable
 from pathlib import Path
 
-from hotel.persistence.migrate import migrate
+from hotel.persistence.migrate import discover_migrations, migrate, schema_version
 
 # 3.35 brings RETURNING and ALTER TABLE DROP COLUMN. Every supported Python on
 # Windows ships a newer SQLite; very old Linux distributions may not.
@@ -50,8 +51,12 @@ def quick_check(conn: sqlite3.Connection) -> bool:
     return row is not None and row[0] == "ok"
 
 
-def initialise_database(path: Path) -> int:
-    """Create or upgrade the database and verify it. Returns the schema version."""
+def initialise_database(path: Path, *, before_upgrade: Callable[[int], None] | None = None) -> int:
+    """Create or upgrade the database and verify it. Returns the schema version.
+
+    `before_upgrade(current_version)` is called when an existing database is about
+    to be migrated, so a backup can be taken first.
+    """
     check_sqlite_version()
     path.parent.mkdir(parents=True, exist_ok=True)
     conn = connect(path)
@@ -63,7 +68,11 @@ def initialise_database(path: Path) -> int:
             raise DatabaseUnavailableError(
                 f"The database {path} failed its integrity check. Restore it from a backup."
             )
+        current = schema_version(conn)
+        pending = [m for m in discover_migrations() if m.version > current]
+        if current > 0 and pending and before_upgrade is not None:
+            before_upgrade(current)
         migrate(conn)
-        return conn.execute("PRAGMA user_version").fetchone()[0]
+        return schema_version(conn)
     finally:
         conn.close()
