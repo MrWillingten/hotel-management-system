@@ -20,6 +20,7 @@ from hotel.secret_key import load_or_create_secret_key
 from hotel.web import errors, security
 from hotel.web.blueprints import (
     account,
+    api,
     audit,
     auth,
     availability,
@@ -89,6 +90,7 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
     errors.install(app)
     for blueprint in (
         account.bp,
+        api.bp,
         audit.bp,
         auth.bp,
         availability.bp,

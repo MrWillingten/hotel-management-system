@@ -19,6 +19,10 @@ All notable changes are recorded here. The format follows
   the hash-checked lock file. `deploy/compose.yaml` runs it behind Caddy
   (HTTPS with a local certificate authority) with a read-only file system
   and no capabilities. CI builds the image and checks it starts healthy.
+- Read-only JSON API at `/api/v1/` (rooms, availability, reservations,
+  report summary) with personal tokens that managers create and revoke under
+  Account → API tokens: shown once, stored hashed, expiring, rate-limited.
+  Documented in `docs/api.md`. Migration 0016.
 
 ## [0.9.0] – Sprint 5: Reports, operations, languages (code complete)
 

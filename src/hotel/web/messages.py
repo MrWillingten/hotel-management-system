@@ -36,6 +36,9 @@ MESSAGES = {
     "totp.not_enabled": _l("Two-factor sign-in is not on."),
     "totp.already_enabled": _l("Two-factor sign-in is already on."),
     "totp.required_for_managers": _l("Managers must keep two-factor sign-in."),
+    "api_token.name_invalid": _l("Enter a name of 1 to 60 characters."),
+    "api_token.lifetime_invalid": _l("Choose one of the proposed durations."),
+    "api_token.too_many": _l("You already have %(max)s active tokens. Revoke one first."),
     "username.invalid": _l(
         "Use 3 to 32 characters: letters, digits, dots, hyphens or underscores."
     ),

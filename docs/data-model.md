@@ -25,6 +25,7 @@ erDiagram
     APP_USER ||--o{ USER_SESSION : "signs in with"
     APP_USER ||--o{ RECOVERY_CODE : "falls back on"
     APP_USER ||--o{ LOGIN_CHALLENGE : "awaits a code in"
+    APP_USER ||--o{ API_TOKEN : "lets programs read with"
     APP_USER ||--o{ AUDIT_LOG : performs
     APP_USER ||--o{ RESERVATION : creates
 ```
@@ -51,6 +52,8 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
                  UQ(user_id, code_hash))
 ✅ login_challenge(token_hash PK CK len=64, user_id FK ON DELETE CASCADE, expires_at,
                    attempts CK≥0)                   → password accepted, code pending
+✅ api_token(id PK, user_id FK ON DELETE CASCADE, name CK 1..60, token_hash UQ CK len=64,
+             prefix, created_at, expires_at, last_used_at, revoked_at)   → JSON API (6.3)
 
 ✅ room_category(id PK, name UQ, description)
 ✅ room(id PK, number UQ, category_id FK, capacity CK>0, nightly_rate_mill CK≥0,

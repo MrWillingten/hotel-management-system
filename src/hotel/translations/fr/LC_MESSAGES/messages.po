@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 15:05+0100\n"
+"POT-Creation-Date: 2026-10-11 17:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -109,6 +109,18 @@ msgstr "Un service portant ce nom existe déjà."
 #, python-format
 msgid "A stay lasts at most %(max)s nights."
 msgstr "Un séjour dure au plus %(max)s nuits."
+
+msgid ""
+"A token lets another program (a spreadsheet, a dashboard) read rooms, availability, reservations "
+"and report figures through the read-only JSON API. It acts as you, but it can never change "
+"anything."
+msgstr ""
+"Un jeton permet à un autre programme (un tableur, un tableau de bord) de lire les chambres, les "
+"disponibilités, les réservations et les chiffres des rapports via l’API JSON en lecture seule. Il"
+" agit en votre nom, mais ne peut jamais rien modifier."
+
+msgid "API tokens"
+msgstr "Jetons d’API"
 
 msgid "Access"
 msgstr "Accès"
@@ -562,6 +574,9 @@ msgstr "Choisissez un service du catalogue."
 msgid "Choose how the money was paid."
 msgstr "Choisissez le moyen de paiement."
 
+msgid "Choose one of the proposed durations."
+msgstr "Choisissez l’une des durées proposées."
+
 msgid "Choose the dates first."
 msgstr "Choisissez d'abord les dates."
 
@@ -609,6 +624,9 @@ msgstr ""
 "Copiez-les régulièrement sur un autre disque ou une clé USB. Pour en restaurer une, arrêtez "
 "l'application et exécutez :"
 
+msgid "Copy this token now. It will not be shown again."
+msgstr "Copiez ce jeton maintenant. Il ne sera plus affiché."
+
 msgid "Create a room category first, then add rooms."
 msgstr "Créez d'abord une catégorie, puis ajoutez des chambres."
 
@@ -620,6 +638,9 @@ msgstr "Créer de nouveaux codes de secours"
 
 msgid "Create the first manager account from a terminal, in the project folder:"
 msgstr "Créez le premier compte gestionnaire depuis un terminal, dans le dossier du projet :"
+
+msgid "Create the token"
+msgstr "Créer le jeton"
 
 msgid "Created"
 msgstr "Créée le"
@@ -656,6 +677,10 @@ msgstr "Jour"
 
 msgid "Day closed."
 msgstr "Journée clôturée."
+
+#, python-format
+msgid "Days: %(n)s"
+msgstr "Jours : %(n)s"
 
 msgid "Deactivate account"
 msgstr "Désactiver le compte"
@@ -812,6 +837,12 @@ msgstr "Toutes les chambres sont prêtes."
 msgid "Everyone"
 msgstr "Tout le monde"
 
+msgid "Expired"
+msgstr "Expiré"
+
+msgid "Expires"
+msgstr "Expire le"
+
 msgid "Extra services"
 msgstr "Services supplémentaires"
 
@@ -853,6 +884,9 @@ msgstr "Par exemple Été 2026."
 
 msgid "For example VAT or Tourist tax."
 msgstr "Par exemple TVA ou taxe de séjour."
+
+msgid "For example: occupancy dashboard"
+msgstr "Par exemple : tableau de bord d’occupation"
 
 msgid "Form expired"
 msgstr "Formulaire expiré"
@@ -1032,6 +1066,9 @@ msgstr "Nom"
 msgid "Last night"
 msgstr "Dernière nuit"
 
+msgid "Last used"
+msgstr "Dernière utilisation"
+
 msgid "Late"
 msgstr "En retard"
 
@@ -1160,6 +1197,9 @@ msgstr "Nouveau service"
 
 msgid "New tax rule"
 msgstr "Nouvelle taxe"
+
+msgid "New token"
+msgstr "Nouveau jeton"
 
 msgid "Newest arrivals first."
 msgstr "Arrivées les plus récentes en premier."
@@ -1425,6 +1465,13 @@ msgstr ""
 "Prix en dinars tunisiens. Émise par %(name)s. Cette facture ne peut plus être modifiée ; les "
 "paiements ultérieurs figurent sur la réservation."
 
+msgid ""
+"Programs send it in the header “Authorization: Bearer …”. Anyone who has it can read the hotel's "
+"data until it expires or is revoked."
+msgstr ""
+"Les programmes l’envoient dans l’en-tête « Authorization: Bearer … ». Toute personne qui le "
+"détient peut lire les données de l’hôtel jusqu’à son expiration ou sa révocation."
+
 msgid "QR code to scan with the authenticator app"
 msgstr "Code QR à scanner avec l’application d’authentification"
 
@@ -1591,6 +1638,12 @@ msgstr "Revenu par chambre disponible : %(revpar)s"
 
 msgid "Review the booking"
 msgstr "Vérifier la réservation"
+
+msgid "Revoke"
+msgstr "Révoquer"
+
+msgid "Revoked"
+msgstr "Révoqué"
 
 msgid "Role"
 msgstr "Rôle"
@@ -1903,6 +1956,9 @@ msgstr "La connexion a pris trop de temps ou a échoué trop souvent. Recommence
 msgid "The stay is already over: this reservation can no longer be checked in."
 msgstr "Le séjour est déjà terminé : l'arrivée ne peut plus être enregistrée."
 
+msgid "The token was revoked. Programs using it can no longer read data."
+msgstr "Le jeton a été révoqué. Les programmes qui l’utilisent ne peuvent plus lire les données."
+
 msgid "The two passwords are different."
 msgstr "Les deux mots de passe sont différents."
 
@@ -2021,6 +2077,9 @@ msgstr ""
 msgid "Today"
 msgstr "Aujourd'hui"
 
+msgid "Token"
+msgstr "Jeton"
+
 msgid "Tonight"
 msgstr "Ce soir"
 
@@ -2130,6 +2189,9 @@ msgstr "VIP"
 msgid "VIP guest"
 msgstr "Client VIP"
 
+msgid "Valid for"
+msgstr "Valable pendant"
+
 msgid "Value"
 msgstr "Valeur"
 
@@ -2178,6 +2240,9 @@ msgstr ""
 "Ce qui peut être facturé pendant un séjour : petit-déjeuner, transfert aéroport, blanchisserie… "
 "Prix hors taxes."
 
+msgid "What is it for?"
+msgstr "À quoi sert-il ?"
+
 msgid "When"
 msgstr "Date"
 
@@ -2190,6 +2255,10 @@ msgid ""
 msgstr ""
 "Notez ou imprimez ces codes et gardez-les en lieu sûr, loin de votre téléphone. Chacun fonctionne"
 " une seule fois, si le téléphone est perdu. Ils ne seront plus affichés."
+
+#, python-format
+msgid "You already have %(max)s active tokens. Revoke one first."
+msgstr "Vous avez déjà %(max)s jetons actifs. Révoquez-en un d’abord."
 
 msgid "You can't deactivate your own account."
 msgstr "Vous ne pouvez pas désactiver votre propre compte."

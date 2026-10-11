@@ -7,11 +7,13 @@ from flask import Blueprint, flash, g, redirect, render_template, request, url_f
 from flask_babel import gettext as _
 from markupsafe import Markup
 
+from hotel.domain.api_tokens import LIFETIMES
+from hotel.domain.enums import Role
 from hotel.domain.errors import BusinessRuleViolation, ValidationError
 from hotel.web import forms
 from hotel.web.context import current_actor, services, settings
 from hotel.web.messages import message_for
-from hotel.web.security import AUTH_COOKIE, login_required
+from hotel.web.security import AUTH_COOKIE, login_required, roles_required
 
 bp = Blueprint("account", __name__, url_prefix="/account")
 
@@ -120,3 +122,48 @@ def disable_two_factor():
     else:
         flash(_("Two-factor sign-in is off."), "info")
     return redirect(url_for("account.two_factor"))
+
+
+# ---------------------------------------------------------------- API tokens (story 6.3)
+def _api_tokens_page(errors=None, created=None, status_code: int = 200):
+    return render_template(
+        "account/api_tokens.html",
+        tokens=services().api_tokens.list_own(current_actor()),
+        lifetimes=[(str(days), _("Days: %(n)s", n=days)) for days in LIFETIMES],
+        created=created,
+        now=services().clock.now(),
+        errors=errors or forms.FormErrors(),
+    ), status_code
+
+
+@bp.get("/api-tokens")
+@roles_required(Role.MANAGER)
+def api_tokens():
+    return _api_tokens_page()
+
+
+@bp.post("/api-tokens")
+@roles_required(Role.MANAGER)
+def create_api_token():
+    days = request.form.get("days", "")
+    try:
+        created = services().api_tokens.create(
+            current_actor(),
+            name=request.form.get("name", "")[:100],
+            days=int(days) if days.isdigit() else 0,
+        )
+    except ValidationError as exc:
+        return _api_tokens_page(forms.FormErrors.from_error(exc), status_code=400)
+    except BusinessRuleViolation as exc:
+        flash(message_for(exc.code, exc.params), "danger")
+        return redirect(url_for("account.api_tokens"))
+    # Shown in this response only: the database keeps nothing it could be read back from.
+    return _api_tokens_page(created=created)
+
+
+@bp.post("/api-tokens/<int:token_id>/revoke")
+@roles_required(Role.MANAGER)
+def revoke_api_token(token_id: int):
+    services().api_tokens.revoke(current_actor(), token_id)
+    flash(_("The token was revoked. Programs using it can no longer read data."), "info")
+    return redirect(url_for("account.api_tokens"))

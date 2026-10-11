@@ -889,3 +889,5 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
   font-family: var(--font-mono, monospace);
   font-size: var(--text-lg);
 }
+/* A new API token is long: let it wrap on small screens rather than overflow. */
+.token { overflow-wrap: anywhere; user-select: all; }

@@ -112,6 +112,9 @@ settings and for using the application from several computers over HTTPS.
 workstations behind HTTPS, `docker compose up -d` in `deploy/` (see
 [docs/deployment.md](docs/deployment.md#with-docker)).
 
+**JSON API:** other programs can read rooms, availability, reservations and
+report figures with a manager's token; see [docs/api.md](docs/api.md).
+
 ## Tests and quality checks
 
 ```bash
