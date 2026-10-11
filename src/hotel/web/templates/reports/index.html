@@ -1,7 +1,7 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/forms.html" import field, form_errors -%}
 {%- from "macros/billing.html" import payment_method -%}
-{%- from "macros/icons.html" import icon -%}
+{%- from "macros/charts.html" import bar_chart, column_chart -%}
 {% block title %}{{ _("Reports") }}{% endblock %}
 {% block page_title %}{{ _("Reports") }}{% endblock %}
 {% block content %}
@@ -14,6 +14,9 @@
 {{ form_errors(errors) }}
 
 {%- if report %}
+{%- macro csv_link(table) -%}
+<a class="button button--ghost button--small" href="{{ url_for('reports.export', table=table, first=report.first.isoformat(), last=report.last.isoformat()) }}">CSV</a>
+{%- endmacro %}
 <p class="muted">{{ _("Revenue counts when the invoice is issued; cash received is the money actually taken in the period. Ranges of at most two years.") }}</p>
 
 <div class="grid grid--cards grid--stats">
@@ -49,7 +52,8 @@
 
 <div class="grid grid--two">
   <section class="panel">
-    <h2 class="panel__title">{{ _("Revenue") }}</h2>
+    <div class="panel__head"><h2 class="panel__title">{{ _("Revenue") }}</h2>{{ csv_link("revenue") }}</div>
+    {%- if not report.revenue.is_zero() %}{{ bar_chart(charts.revenue, charts.rtl) }}{% endif %}
     <dl class="facts">
       <div><dt>{{ _("Accommodation (after discounts)") }}</dt><dd>{{ report.accommodation | money }}</dd></div>
       <div><dt>{{ _("Extra services") }}</dt><dd>{{ report.services | money }}</dd></div>
@@ -73,7 +77,7 @@
       <div><dt>{{ _("Cancellations") }}</dt><dd>{{ report.cancellations.count }} · {{ report.cancellations.fees | money }}</dd></div>
       <div><dt>{{ _("No-shows") }}</dt><dd>{{ report.no_shows.count }} · {{ report.no_shows.fees | money }}</dd></div>
     </dl>
-    <h3 class="section-title">{{ _("Outstanding balances") }}</h3>
+    <div class="panel__head"><h3 class="section-title">{{ _("Outstanding balances") }}</h3>{{ csv_link("outstanding") }}</div>
     <dl class="facts">
       <div><dt>{{ _("Due from guests in the house") }}</dt><dd>{{ report.in_house_due | money }}</dd></div>
       {%- for reservation_id, number, guest, due in report.unpaid %}
@@ -85,7 +89,8 @@
 
 <div class="grid grid--two">
   <section class="panel">
-    <h2 class="panel__title">{{ _("Categories") }}</h2>
+    <div class="panel__head"><h2 class="panel__title">{{ _("Categories") }}</h2>{{ csv_link("categories") }}</div>
+    {%- if report.categories %}{{ bar_chart(charts.categories, charts.rtl) }}{% endif %}
     <div class="table-wrap table-wrap--flat">
       <table class="table">
         <thead><tr><th scope="col">{{ _("Category") }}</th><th scope="col" class="num">{{ _("Nights sold") }}</th><th scope="col" class="num">{{ _("Room value") }}</th></tr></thead>
@@ -116,7 +121,10 @@
 </div>
 
 <section class="panel">
-  <h2 class="panel__title">{{ _("Occupancy per day") if daily else _("Occupancy per month") }}</h2>
+  <div class="panel__head"><h2 class="panel__title">{{ _("Occupancy per day") if daily else _("Occupancy per month") }}</h2>{{ csv_link("occupancy") }}</div>
+  {{ column_chart(charts.occupancy) }}
+  <details class="figures">
+    <summary>{{ _("Show the figures") }}</summary>
   <div class="table-wrap table-wrap--flat">
     <table class="table">
       <thead><tr>
@@ -139,6 +147,7 @@
       </tbody>
     </table>
   </div>
+  </details>
 </section>
 {%- endif %}
 {% endblock %}

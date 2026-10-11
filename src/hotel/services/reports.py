@@ -16,6 +16,7 @@ from hotel.domain.reports import (
     validate_range,
 )
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
+from hotel.services.audit import record
 from hotel.services.authorization import require_role
 from hotel.services.billing import bill_for
 
@@ -70,6 +71,21 @@ class ReportService:
                 availability=self._availability(uow, availability_day),
                 unpaid=uow.invoices.unpaid(),
                 in_house_due=self._in_house_due(uow),
+            )
+
+    def record_export(self, actor: Actor, table: str, first: date, last: date) -> None:
+        """Exports leave the building, so each one is written to the audit log."""
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            record(
+                uow,
+                self._clock,
+                actor,
+                "report.exported",
+                entity="report",
+                table=table,
+                first=first.isoformat(),
+                last=last.isoformat(),
             )
 
     def _instant(self, day: date) -> datetime:
