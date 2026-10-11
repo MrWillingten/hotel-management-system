@@ -15,24 +15,24 @@ Semester project for the *Python Programming* course (Engineering, Cybersecurity
 |---|---|---|
 | ![Sign-in page](docs/screenshots/sign-in-light.jpg) | ![Dashboard in dark mode](docs/screenshots/dashboard-dark.jpg) | ![Dashboard in Arabic](docs/screenshots/dashboard-arabic-rtl.jpg) |
 
-| Guest search (demo data) | Rooms in Arabic, right-to-left |
-|---|---|
-| ![Guest list with masked document numbers](docs/screenshots/guests-dark.jpg) | ![Room list in Arabic](docs/screenshots/rooms-arabic-rtl.jpg) |
+| Availability grid (demo data) | The same grid in Arabic | Guest search |
+|---|---|---|
+| ![Availability grid](docs/screenshots/availability-grid.jpg) | ![Availability grid in Arabic](docs/screenshots/availability-arabic-rtl.jpg) | ![Guest list with masked document numbers](docs/screenshots/guests-dark.jpg) |
 
 ## Status
 
-**v0.2.0 – Sprint 2** is complete. The application can already:
+**v0.3.0 – Sprint 3** is complete. The application can already:
 
-* **Sign staff in securely**: server-side sessions, account lockout, per-address throttling, scrypt hashing, forced change of temporary passwords
-* **Manage staff accounts** with two roles (receptionist, manager); deactivation ends sessions immediately
-* **Manage rooms**: categories, rates, capacity, out-of-service, maintenance periods that can never overlap (enforced by the database)
-* **Manage guests**: validated identity documents, duplicate detection, fast accent-insensitive search, masked document numbers, VIP and do-not-rent flags
-* **Keep a tamper-evident audit log** of every sensitive action
-* **Back up and restore** the database safely, automatically every day
+* **Take reservations** for one or more rooms, with exact prices locked per night, and explain refusals with free alternatives
+* **Change and cancel reservations**, applying the hotel's 20 % late-cancellation fee automatically
+* **Show availability** as a rooms × 14 nights grid
+* **Never double-book**, even when two receptionists click at the same moment (proved by a race test)
+* **Manage rooms, guests and staff** with duplicate detection, masked ID numbers and role-based access
+* **Keep a tamper-evident audit log** and **back up** the database every day
 * **Speak English, French and Arabic** (right-to-left), in light or dark mode, on any screen size
-* 320+ automated tests, run on Ubuntu and Windows by GitHub Actions
+* 380+ automated tests, run on Ubuntu and Windows by GitHub Actions
 
-Reservations, check-in/out, billing and reports arrive in Sprints 3–5 ([roadmap](docs/roadmap.md)).
+Check-in/out, billing with taxes and reports arrive in Sprints 4–5 ([roadmap](docs/roadmap.md)).
 
 ## Quick start
 

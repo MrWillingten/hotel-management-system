@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 08:20+0100\n"
+"POT-Creation-Date: 2026-10-11 08:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -169,6 +169,9 @@ msgstr "Au moins 12 caractères. Une courte phrase est facile à retenir et diff
 
 msgid "Audit log"
 msgstr "Journal d'audit"
+
+msgid "Availability"
+msgstr "Disponibilités"
 
 msgid "Available"
 msgstr "Disponible"
@@ -494,6 +497,9 @@ msgstr "Formulaire expiré"
 msgid "Foundations: sign-in, themes, languages"
 msgstr "Fondations : connexion, thèmes, langues"
 
+msgid "Free"
+msgstr "Libre"
+
 #, python-format
 msgid "Free cancellation until %(when)s. After that, cancelling costs 20%% of the accommodation."
 msgstr "Annulation gratuite jusqu'au %(when)s. Ensuite, l'annulation coûte 20 %% de l'hébergement."
@@ -582,6 +588,9 @@ msgstr "Dernière nuit fermée"
 msgid "Last name"
 msgstr "Nom"
 
+msgid "Legend"
+msgstr "Légende"
+
 msgid "Light"
 msgstr "Clair"
 
@@ -654,6 +663,9 @@ msgstr "Prochain"
 msgid "Next page"
 msgstr "Page suivante"
 
+msgid "Next week"
+msgstr "Semaine suivante"
+
 msgid "Night of"
 msgstr "Nuit du"
 
@@ -698,6 +710,9 @@ msgstr "Aucune autre chambre n'est libre à ces dates."
 msgid "No reservation matches these filters."
 msgstr "Aucune réservation ne correspond à ces filtres."
 
+msgid "No reservations yet."
+msgstr "Aucune réservation pour l'instant."
+
 msgid "No room is free for every night of this stay."
 msgstr "Aucune chambre n'est libre pour toutes les nuits de ce séjour."
 
@@ -738,6 +753,9 @@ msgstr "Passeport"
 msgid "Password"
 msgstr "Mot de passe"
 
+msgid "Past"
+msgstr "Passé"
+
 msgid "Phone"
 msgstr "Téléphone"
 
@@ -749,6 +767,9 @@ msgstr "Préférences utiles au personnel. Aucune information sensible."
 
 msgid "Previous"
 msgstr "Précédente"
+
+msgid "Previous week"
+msgstr "Semaine précédente"
 
 msgid "Price locked at booking"
 msgstr "Prix fixé à la réservation"
@@ -821,9 +842,6 @@ msgstr "Réservations"
 msgid "Reservations and availability"
 msgstr "Réservations et disponibilités"
 
-msgid "Reservations arrive in the next version of the application."
-msgstr "Les réservations arrivent dans la prochaine version de l'application."
-
 msgid "Reserved"
 msgstr "Réservée"
 
@@ -871,6 +889,10 @@ msgstr "Numéro de chambre"
 
 msgid "Rooms"
 msgstr "Chambres"
+
+#, python-format
+msgid "Rooms and nights from %(start)s"
+msgstr "Chambres et nuits à partir du %(start)s"
 
 msgid "Rooms free for the same dates:"
 msgstr "Chambres libres aux mêmes dates :"
@@ -920,6 +942,12 @@ msgstr "Taille"
 
 msgid "Skip to content"
 msgstr "Aller au contenu"
+
+#, python-format
+msgid "Some bookings have more guests than this capacity (%(codes)s). Change them first."
+msgstr ""
+"Certaines réservations comptent plus de personnes que cette capacité (%(codes)s). Modifiez-les "
+"d'abord."
 
 msgid "Some fields need your attention."
 msgstr "Certains champs doivent être corrigés."
@@ -1003,8 +1031,8 @@ msgid "The request couldn't be understood."
 msgstr "La requête n'a pas pu être comprise."
 
 #, python-format
-msgid "The room is already closed on %(count)s of these nights (%(first)s to %(last)s)."
-msgstr "La chambre est déjà fermée %(count)s de ces nuits (du %(first)s au %(last)s)."
+msgid "The room is already closed or booked on %(count)s of these nights (%(first)s to %(last)s)."
+msgstr "La chambre est déjà fermée ou réservée %(count)s de ces nuits (du %(first)s au %(last)s)."
 
 msgid "The two passwords are different."
 msgstr "Les deux mots de passe sont différents."
@@ -1063,6 +1091,10 @@ msgstr "Cette réservation ne peut plus être modifiée."
 msgid "This room has never been closed for maintenance."
 msgstr "Cette chambre n'a jamais été fermée pour maintenance."
 
+#, python-format
+msgid "This room still has bookings (%(codes)s). Move or cancel them first."
+msgstr "Cette chambre a encore des réservations (%(codes)s). Déplacez-les ou annulez-les d'abord."
+
 msgid "This username is already used."
 msgstr "Ce nom d'utilisateur est déjà utilisé."
 
@@ -1072,6 +1104,9 @@ msgstr "Fuseau horaire : %(tz)s"
 
 msgid "To"
 msgstr "Au"
+
+msgid "Today"
+msgstr "Aujourd'hui"
 
 msgid "Tonight"
 msgstr "Ce soir"
@@ -1137,6 +1172,9 @@ msgstr "L'affichage du numéro complet a été enregistré dans le journal d'aud
 
 msgid "We couldn't find what you were looking for."
 msgstr "Nous n'avons pas trouvé ce que vous cherchez."
+
+msgid "Weeks"
+msgstr "Semaines"
 
 #, python-format
 msgid "Welcome, %(name)s."

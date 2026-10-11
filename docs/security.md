@@ -59,9 +59,9 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | D5 | 🟡 | Undetected corruption | `quick_check` at start-up | ✅ S1 |
 | F1–F4 | 🟠 | Float errors, banker's rounding, locale input | Integer millimes, explicit half-up, locale-aware parsing | ✅ S1 (parsing in forms ⏳ S4) |
 | P1–P6 | 🟠 | Guest personal data | Masked ID numbers, audited reveal (never stored in cookies or URLs), no PII in audit details; anonymisation | ✅ S2 (anonymisation ⏳ S5) |
-| C1 | 🔴 | Double booking race | `BEGIN IMMEDIATE` + recheck + `UNIQUE(room_id, night)` | ⏳ S3 (`BEGIN IMMEDIATE` ✅) |
+| C1 | 🔴 | Double booking race | `BEGIN IMMEDIATE` + recheck + `room_night` primary key; two-thread race test | ✅ S3 |
 | C2 | 🟠 | Lost updates | `version` column, `StaleDataError` | ✅ S1 (users) |
-| C3 | 🟠 | Double submit | One-time form tokens | ⏳ S3 |
+| C3 | 🟠 | Double submit | One-time form tokens (owner-bound, 8 h, hashed) on booking, change and cancel | ✅ S3 |
 
 ## Accepted limitations
 

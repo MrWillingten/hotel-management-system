@@ -11,6 +11,7 @@ def test_demo_data_fills_an_empty_hotel(services):
     result = seed_demo(services, guests=30)
     assert result.rooms == 17
     assert result.guests == 30
+    assert result.reservations >= 15
     assert set(result.accounts) == {"demo.manager", "demo.reception"}
     assert is_demo(services)
     system = Actor.system()

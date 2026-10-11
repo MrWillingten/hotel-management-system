@@ -4,6 +4,36 @@ All notable changes are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] – Sprint 3: Reservations and availability
+
+### Added
+- Reservations for one or more rooms with adults and children per room
+  (capacity rule BR7), prices locked per night, gap-free codes
+  `R-YYYY-NNNNN`, do-not-rent guests refused.
+- Booking flow: dates, guest (search or register and come back), rooms,
+  review with the exact price, confirmation.
+- Conflicts (scenario 4.3) name the room and nights and suggest up to five
+  similar free rooms.
+- Changes (scenario 4.4): dates, rooms and occupants with availability
+  re-checked; kept nights keep their price, added nights use today's
+  rate; old and new price shown before saving.
+- Cancellation with the BR11 fee (20 % if less than 48 h before arrival at
+  14:00, hotel time); rooms released immediately.
+- Availability grid: rooms x 14 nights, colour plus text, links to book or
+  open a reservation; keyboard accessible and right-to-left aware.
+- Rooms show reserved/occupied tonight; guest pages list their bookings;
+  room changes and maintenance that would strand a booking are refused.
+- Concurrency protection: `BEGIN IMMEDIATE`, re-check, `room_night`
+  primary key, a two-thread race test, and one-time form tokens against
+  double submits.
+- Demo data now includes about thirty reservations.
+
+### Fixed
+- Availability ignored maintenance nights when no reservation was being
+  excluded (found by a test; the database key had still prevented any
+  double booking).
+- Screen-reader labels in the grid widened the page in right-to-left mode.
+
 ## [0.2.0] – Sprint 2: Rooms, guests, staff, audit, backups
 
 ### Added

@@ -62,7 +62,13 @@ MESSAGES = {
     "maintenance.in_past": _l("Maintenance can't start in the past."),
     "maintenance.too_long": _l("A maintenance period lasts at most %(max)s nights."),
     "maintenance.conflict": _l(
-        "The room is already closed on %(count)s of these nights (%(first)s to %(last)s)."
+        "The room is already closed or booked on %(count)s of these nights (%(first)s to %(last)s)."
+    ),
+    "room.has_future_bookings": _l(
+        "This room still has bookings (%(codes)s). Move or cancel them first."
+    ),
+    "room.capacity_conflict": _l(
+        "Some bookings have more guests than this capacity (%(codes)s). Change them first."
     ),
     "maintenance.already_over": _l("This maintenance period is already over."),
     "guest.name_invalid": _l("Use 1 to %(max_length)s letters, spaces, hyphens or apostrophes."),

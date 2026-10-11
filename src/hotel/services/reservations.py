@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unicodedata
 from dataclasses import dataclass, field
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from hotel.domain.actor import Actor
 from hotel.domain.clock import Clock
@@ -94,6 +94,30 @@ def _clean_notes(notes: str) -> str:
             "notes.invalid", fields={"notes": "notes.invalid"}, max_length=MAX_NOTES
         )
     return notes
+
+
+@dataclass(frozen=True, slots=True)
+class CalendarCell:
+    night: date
+    kind: str  # FREE, RESERVED, OCCUPIED, MAINTENANCE, OUT_OF_SERVICE, PAST
+    reservation_id: int | None = None
+    code: str | None = None
+    guest_name: str | None = None
+    starts_here: bool = False  # first night shown for this reservation
+
+
+@dataclass(frozen=True, slots=True)
+class CalendarRow:
+    room: Room
+    cells: list[CalendarCell]
+
+
+@dataclass(frozen=True, slots=True)
+class Calendar:
+    start: date
+    days: list[date]
+    rows: list[CalendarRow]
+    today: date
 
 
 class ReservationService:
@@ -344,6 +368,44 @@ class ReservationService:
             raise InvalidStateTransitionError(
                 "reservation.not_cancellable", current=reservation.status.value
             )
+
+    # ------------------------------------------------------------ availability grid
+    def calendar(self, actor: Actor, start: date, *, days: int = 14) -> Calendar:
+        """Rooms x days: what every room is doing on every night (story 3.4)."""
+        require_staff(actor)
+        days = max(1, min(days, 31))
+        period = StayPeriod(start, start + timedelta(days=days))
+        today = self._clock.today()
+        with self._uow() as uow:
+            taken = {(b.room_id, b.night): b for b in uow.reservations.calendar(period)}
+            rooms = uow.rooms.list()
+        nights = list(period.each_night())
+        rows = []
+        for room in rooms:
+            cells = []
+            previous = None
+            for night in nights:
+                blocked = taken.get((room.id, night))
+                if blocked is not None and blocked.maintenance_id is not None:
+                    cell = CalendarCell(night, "MAINTENANCE")
+                elif blocked is not None:
+                    kind = "OCCUPIED" if blocked.status == "CHECKED_IN" else "RESERVED"
+                    cell = CalendarCell(
+                        night,
+                        kind,
+                        blocked.reservation_id,
+                        blocked.code,
+                        blocked.guest_name,
+                        starts_here=previous != blocked.reservation_id,
+                    )
+                elif not room.in_service:
+                    cell = CalendarCell(night, "OUT_OF_SERVICE")
+                else:
+                    cell = CalendarCell(night, "PAST" if night < today else "FREE")
+                previous = cell.reservation_id
+                cells.append(cell)
+            rows.append(CalendarRow(room, cells))
+        return Calendar(start, nights, rows, today)
 
     # ------------------------------------------------------------ reading
     def get(self, actor: Actor, reservation_id: int) -> Reservation:
