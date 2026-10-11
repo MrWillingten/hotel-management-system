@@ -125,12 +125,18 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
    Account → API tokens, `docs/api.md`, migration 0016.
    ✅ 6.4 Windows exe (PR #80): `packaging/windows/` (launcher, spec, README),
    `requirements-build.lock` (extra `build`), CI job "Windows executable" → artifact.
-   6.5 room move: `Reservation.move_room`, `ReservationService.move_room/move_candidates`,
+   ✅ 6.5 room move (PR #81): `Reservation.move_room`, `ReservationService.move_room/move_candidates`,
    `reservation_room.moved_out_on` (migration 0017): use `reservation.current_rooms`
    for anything about *now* (occupancy, housekeeping, edits); `rooms` keeps history.
    Dependabot ignores Python minor bumps of the image (tested versions only).
-4. Freeze 27 Dec. 6.6 hardening (ASVS L1, evidence table, browsers; the
-   student runs the real-Windows checklist).
+4. ✅ 6.6 hardening docs (PR after #81): `docs/asvs.md` (ASVS 5.0 L1, from the
+   official CSV), `docs/test-evidence.md`, `docs/manual-checks.md` (Firefox/Edge
+   and real-Windows columns are the **student's**; issue #72 stays open until
+   then), `tests/unit/test_docs.py` checks cited tests exist. Cookies:
+   `web/context.cookie_name()` adds `__Host-` behind HTTPS.
+   **NEXT (student's request, 11 Oct): before drafting the report, the student
+   wants to discuss frontend changes to the app. Ask them what they want; do
+   not start 6.7 first.** Freeze 27 Dec.
 5. 6.7 report: **English, LaTeX for Overleaf** in `report/`. The assistant
    drafts all technical chapters; **the student writes the General
    Introduction, personal retrospectives, lessons learned, difficulties and
