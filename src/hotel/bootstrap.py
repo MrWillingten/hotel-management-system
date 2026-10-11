@@ -16,6 +16,7 @@ from hotel.domain.passwords import PasswordPolicy
 from hotel.persistence.backup import create_backup
 from hotel.persistence.db import initialise_database
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
+from hotel.services.api_tokens import ApiTokenService
 from hotel.services.audit import AuditService
 from hotel.services.auth import AuthService
 from hotel.services.backups import BackupService
@@ -63,6 +64,7 @@ class Services:
     reports: ReportService
     night_audit: NightAuditService
     two_factor: TwoFactorService
+    api_tokens: ApiTokenService
 
     def is_healthy(self) -> bool:
         """True when the database answers (used by the /health page)."""
@@ -118,4 +120,5 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
         reports=reports,
         night_audit=NightAuditService(uow_factory, clock, reservations, reports),
         two_factor=TwoFactorService(uow_factory, clock),
+        api_tokens=ApiTokenService(uow_factory, clock),
     )

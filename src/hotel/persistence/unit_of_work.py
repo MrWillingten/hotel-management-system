@@ -18,6 +18,7 @@ from pathlib import Path
 from types import TracebackType
 
 from hotel.persistence.db import connect
+from hotel.persistence.repositories.api_tokens import ApiTokenRepository
 from hotel.persistence.repositories.audit import AuditRepository
 from hotel.persistence.repositories.billing import DiscountRepository, PaymentRepository
 from hotel.persistence.repositories.extras import ExtraRepository, ServiceChargeRepository
@@ -68,6 +69,7 @@ class UnitOfWork:
     rate_periods: RatePeriodRepository
     recovery_codes: RecoveryCodeRepository
     login_challenges: LoginChallengeRepository
+    api_tokens: ApiTokenRepository
 
     def __init__(self, database_path: Path) -> None:
         self._database_path = database_path
@@ -101,6 +103,7 @@ class UnitOfWork:
         self.rate_periods = RatePeriodRepository(self._conn)
         self.recovery_codes = RecoveryCodeRepository(self._conn)
         self.login_challenges = LoginChallengeRepository(self._conn)
+        self.api_tokens = ApiTokenRepository(self._conn)
         return self
 
     def __exit__(

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 15:05+0100\n"
+"POT-Creation-Date: 2026-10-11 17:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,6 +105,15 @@ msgstr ""
 
 #, python-format
 msgid "A stay lasts at most %(max)s nights."
+msgstr ""
+
+msgid ""
+"A token lets another program (a spreadsheet, a dashboard) read rooms, "
+"availability, reservations and report figures through the read-only JSON "
+"API. It acts as you, but it can never change anything."
+msgstr ""
+
+msgid "API tokens"
 msgstr ""
 
 msgid "Access"
@@ -562,6 +571,9 @@ msgstr ""
 msgid "Choose how the money was paid."
 msgstr ""
 
+msgid "Choose one of the proposed durations."
+msgstr ""
+
 msgid "Choose the dates first."
 msgstr ""
 
@@ -609,6 +621,9 @@ msgid ""
 "the application and run:"
 msgstr ""
 
+msgid "Copy this token now. It will not be shown again."
+msgstr ""
+
 msgid "Create a room category first, then add rooms."
 msgstr ""
 
@@ -619,6 +634,9 @@ msgid "Create new recovery codes"
 msgstr ""
 
 msgid "Create the first manager account from a terminal, in the project folder:"
+msgstr ""
+
+msgid "Create the token"
 msgstr ""
 
 msgid "Created"
@@ -655,6 +673,10 @@ msgid "Day"
 msgstr ""
 
 msgid "Day closed."
+msgstr ""
+
+#, python-format
+msgid "Days: %(n)s"
 msgstr ""
 
 msgid "Deactivate account"
@@ -812,6 +834,12 @@ msgstr ""
 msgid "Everyone"
 msgstr ""
 
+msgid "Expired"
+msgstr ""
+
+msgid "Expires"
+msgstr ""
+
 msgid "Extra services"
 msgstr ""
 
@@ -852,6 +880,9 @@ msgid "For example Summer 2026."
 msgstr ""
 
 msgid "For example VAT or Tourist tax."
+msgstr ""
+
+msgid "For example: occupancy dashboard"
 msgstr ""
 
 msgid "Form expired"
@@ -1029,6 +1060,9 @@ msgstr ""
 msgid "Last night"
 msgstr ""
 
+msgid "Last used"
+msgstr ""
+
 msgid "Late"
 msgstr ""
 
@@ -1154,6 +1188,9 @@ msgid "New service"
 msgstr ""
 
 msgid "New tax rule"
+msgstr ""
+
+msgid "New token"
 msgstr ""
 
 msgid "Newest arrivals first."
@@ -1416,6 +1453,11 @@ msgid ""
 " be changed; later payments appear on the reservation."
 msgstr ""
 
+msgid ""
+"Programs send it in the header “Authorization: Bearer …”. Anyone who has "
+"it can read the hotel's data until it expires or is revoked."
+msgstr ""
+
 msgid "QR code to scan with the authenticator app"
 msgstr ""
 
@@ -1579,6 +1621,12 @@ msgid "Revenue per available room: %(revpar)s"
 msgstr ""
 
 msgid "Review the booking"
+msgstr ""
+
+msgid "Revoke"
+msgstr ""
+
+msgid "Revoked"
 msgstr ""
 
 msgid "Role"
@@ -1900,6 +1948,9 @@ msgstr ""
 msgid "The stay is already over: this reservation can no longer be checked in."
 msgstr ""
 
+msgid "The token was revoked. Programs using it can no longer read data."
+msgstr ""
+
 msgid "The two passwords are different."
 msgstr ""
 
@@ -2026,6 +2077,9 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
+msgid "Token"
+msgstr ""
+
 msgid "Tonight"
 msgstr ""
 
@@ -2135,6 +2189,9 @@ msgstr ""
 msgid "VIP guest"
 msgstr ""
 
+msgid "Valid for"
+msgstr ""
+
 msgid "Value"
 msgstr ""
 
@@ -2183,6 +2240,9 @@ msgid ""
 "Prices are before tax."
 msgstr ""
 
+msgid "What is it for?"
+msgstr ""
+
 msgid "When"
 msgstr ""
 
@@ -2193,6 +2253,10 @@ msgid ""
 "Write these codes down or print them, and keep them somewhere safe away "
 "from your phone. Each one works once, if the phone is lost. They will not"
 " be shown again."
+msgstr ""
+
+#, python-format
+msgid "You already have %(max)s active tokens. Revoke one first."
 msgstr ""
 
 msgid "You can't deactivate your own account."

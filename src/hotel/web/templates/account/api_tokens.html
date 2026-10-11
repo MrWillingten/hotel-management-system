@@ -1,0 +1,67 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors, select -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("API tokens") }}{% endblock %}
+{% block page_title %}{{ _("API tokens") }}{% endblock %}
+{% block content %}
+{% include "partials/account_nav.html" %}
+
+{%- if created %}
+<div class="alert alert--warning" role="status">{{ icon("key") }}
+  <div>
+    <p><strong>{{ _("Copy this token now. It will not be shown again.") }}</strong></p>
+    <code class="code-block token" dir="ltr">{{ created.secret }}</code>
+    <p>{{ _("Programs send it in the header “Authorization: Bearer …”. Anyone who has it can read the hotel's data until it expires or is revoked.") }}</p>
+  </div>
+</div>
+{%- endif %}
+
+<section class="panel stack">
+  <p class="muted">{{ _("A token lets another program (a spreadsheet, a dashboard) read rooms, availability, reservations and report figures through the read-only JSON API. It acts as you, but it can never change anything.") }}</p>
+  {%- if tokens %}
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">{{ _("Name") }}</th>
+          <th scope="col">{{ _("Token") }}</th>
+          <th scope="col">{{ _("Expires") }}</th>
+          <th scope="col">{{ _("Last used") }}</th>
+          <th scope="col">{{ _("Status") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for token in tokens %}
+        <tr>
+          <td>{{ token.name }}</td>
+          <td dir="ltr"><code>{{ token.prefix }}…</code></td>
+          <td>{{ token.expires_at|dateformat("medium") }}</td>
+          <td>{{ token.last_used_at|datetimeformat("short") if token.last_used_at else "—" }}</td>
+          <td>
+            {%- if token.revoked_at %}<span class="badge badge--neutral">{{ _("Revoked") }}</span>
+            {%- elif not token.is_valid(now) %}<span class="badge badge--neutral">{{ _("Expired") }}</span>
+            {%- else %}
+            <form method="post" action="{{ url_for('account.revoke_api_token', token_id=token.id) }}">
+              {{ csrf() }}
+              <button class="button button--danger button--small" type="submit">{{ _("Revoke") }}</button>
+            </form>
+            {%- endif %}
+          </td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+  {%- endif %}
+
+  <h2 class="panel__title">{{ _("New token") }}</h2>
+  {{ form_errors(errors) }}
+  <form class="stack" method="post" action="{{ url_for('account.create_api_token') }}" novalidate>
+    {{ csrf() }}
+    {{ field("name", _("What is it for?"), error=errors.name, maxlength=60,
+             hint=_("For example: occupancy dashboard")) }}
+    {{ select("days", _("Valid for"), lifetimes, selected="90", error=errors.days) }}
+    <button class="button button--primary" type="submit">{{ _("Create the token") }}</button>
+  </form>
+</section>
+{% endblock %}

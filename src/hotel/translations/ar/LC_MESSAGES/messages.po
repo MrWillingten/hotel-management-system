@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 15:05+0100\n"
+"POT-Creation-Date: 2026-10-11 17:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -105,6 +105,17 @@ msgstr "توجد خدمة بهذا الاسم بالفعل."
 #, python-format
 msgid "A stay lasts at most %(max)s nights."
 msgstr "تستمر الإقامة %(max)s ليلة كحد أقصى."
+
+msgid ""
+"A token lets another program (a spreadsheet, a dashboard) read rooms, availability, reservations "
+"and report figures through the read-only JSON API. It acts as you, but it can never change "
+"anything."
+msgstr ""
+"يتيح الرمز المميّز لبرنامج آخر (جدول بيانات أو لوحة متابعة) قراءة الغرف والتوفّر والحجوزات وأرقام"
+" التقارير عبر واجهة JSON البرمجية للقراءة فقط. يعمل باسمك، لكنه لا يستطيع تغيير أي شيء."
+
+msgid "API tokens"
+msgstr "رموز الواجهة البرمجية"
 
 msgid "Access"
 msgstr "صلاحيات الدخول"
@@ -556,6 +567,9 @@ msgstr "اختر خدمة من الكتالوج."
 msgid "Choose how the money was paid."
 msgstr "اختر طريقة الدفع."
 
+msgid "Choose one of the proposed durations."
+msgstr "اختر إحدى المدد المقترحة."
+
 msgid "Choose the dates first."
 msgstr "اختر التواريخ أولًا."
 
@@ -601,6 +615,9 @@ msgstr "مؤكد"
 msgid "Copy them regularly to another disk or a USB drive. To restore one, stop the application and run:"
 msgstr "انسخها بانتظام إلى قرص آخر أو ذاكرة USB. لاستعادة نسخة، أوقف التطبيق ثم نفّذ:"
 
+msgid "Copy this token now. It will not be shown again."
+msgstr "انسخ هذا الرمز الآن. لن يُعرض مرة أخرى."
+
 msgid "Create a room category first, then add rooms."
 msgstr "أنشئ فئة غرف أولًا، ثم أضف الغرف."
 
@@ -612,6 +629,9 @@ msgstr "إنشاء رموز استرداد جديدة"
 
 msgid "Create the first manager account from a terminal, in the project folder:"
 msgstr "أنشئ أول حساب مدير من الطرفية، داخل مجلد المشروع:"
+
+msgid "Create the token"
+msgstr "إنشاء الرمز"
 
 msgid "Created"
 msgstr "تاريخ الإنشاء"
@@ -648,6 +668,10 @@ msgstr "اليوم"
 
 msgid "Day closed."
 msgstr "تم إقفال اليوم."
+
+#, python-format
+msgid "Days: %(n)s"
+msgstr "الأيام: %(n)s"
 
 msgid "Deactivate account"
 msgstr "تعطيل الحساب"
@@ -804,6 +828,12 @@ msgstr "جميع الغرف جاهزة."
 msgid "Everyone"
 msgstr "الجميع"
 
+msgid "Expired"
+msgstr "منتهي الصلاحية"
+
+msgid "Expires"
+msgstr "ينتهي في"
+
 msgid "Extra services"
 msgstr "الخدمات الإضافية"
 
@@ -845,6 +875,9 @@ msgstr "مثلاً: صيف 2026."
 
 msgid "For example VAT or Tourist tax."
 msgstr "مثلاً: الأداء على القيمة المضافة أو المعلوم السياحي."
+
+msgid "For example: occupancy dashboard"
+msgstr "مثلًا: لوحة متابعة الإشغال"
 
 msgid "Form expired"
 msgstr "انتهت صلاحية النموذج"
@@ -1020,6 +1053,9 @@ msgstr "اللقب"
 msgid "Last night"
 msgstr "الليلة الأخيرة"
 
+msgid "Last used"
+msgstr "آخر استخدام"
+
 msgid "Late"
 msgstr "متأخر"
 
@@ -1148,6 +1184,9 @@ msgstr "خدمة جديدة"
 
 msgid "New tax rule"
 msgstr "ضريبة جديدة"
+
+msgid "New token"
+msgstr "رمز جديد"
 
 msgid "Newest arrivals first."
 msgstr "الأحدث وصولًا أولًا."
@@ -1411,6 +1450,13 @@ msgstr ""
 "الأسعار بالدينار التونسي. أصدرها %(name)s. لا يمكن تعديل هذه الفاتورة؛ وتظهر المدفوعات اللاحقة في"
 " الحجز."
 
+msgid ""
+"Programs send it in the header “Authorization: Bearer …”. Anyone who has it can read the hotel's "
+"data until it expires or is revoked."
+msgstr ""
+"ترسله البرامج في الترويسة «Authorization: Bearer …». كل من يملكه يستطيع قراءة بيانات الفندق حتى "
+"تنتهي صلاحيته أو يُلغى."
+
 msgid "QR code to scan with the authenticator app"
 msgstr "رمز QR للمسح بتطبيق المصادقة"
 
@@ -1577,6 +1623,12 @@ msgstr "الإيراد لكل غرفة متاحة: %(revpar)s"
 
 msgid "Review the booking"
 msgstr "مراجعة الحجز"
+
+msgid "Revoke"
+msgstr "إلغاء"
+
+msgid "Revoked"
+msgstr "ملغى"
 
 msgid "Role"
 msgstr "الدور"
@@ -1883,6 +1935,9 @@ msgstr "استغرق تسجيل الدخول وقتًا طويلًا أو فشل
 msgid "The stay is already over: this reservation can no longer be checked in."
 msgstr "انتهت الإقامة بالفعل: لم يعد ممكناً تسجيل الوصول لهذا الحجز."
 
+msgid "The token was revoked. Programs using it can no longer read data."
+msgstr "تم إلغاء الرمز. لم يعد بإمكان البرامج التي تستخدمه قراءة البيانات."
+
 msgid "The two passwords are different."
 msgstr "كلمتا المرور غير متطابقتين."
 
@@ -1999,6 +2054,9 @@ msgstr "للطباعة أو الحفظ بصيغة PDF استخدم أمر الط
 msgid "Today"
 msgstr "اليوم"
 
+msgid "Token"
+msgstr "الرمز"
+
 msgid "Tonight"
 msgstr "الليلة"
 
@@ -2106,6 +2164,9 @@ msgstr "شخصية مهمة"
 msgid "VIP guest"
 msgstr "نزيل مهم (VIP)"
 
+msgid "Valid for"
+msgstr "صالح لمدة"
+
 msgid "Value"
 msgstr "القيمة"
 
@@ -2152,6 +2213,9 @@ msgstr "مرحبًا، %(name)s."
 msgid "What can be charged to a stay: breakfast, airport transfer, laundry… Prices are before tax."
 msgstr "ما يمكن احتسابه أثناء الإقامة: فطور، نقل إلى المطار، غسيل… الأسعار دون ضرائب."
 
+msgid "What is it for?"
+msgstr "لأي غرض هو؟"
+
 msgid "When"
 msgstr "التاريخ"
 
@@ -2164,6 +2228,10 @@ msgid ""
 msgstr ""
 "دوّن هذه الرموز أو اطبعها واحفظها في مكان آمن بعيدًا عن هاتفك. يصلح كل رمز مرة واحدة إذا فُقد "
 "الهاتف. لن تُعرض مرة أخرى."
+
+#, python-format
+msgid "You already have %(max)s active tokens. Revoke one first."
+msgstr "لديك بالفعل %(max)s رموز نشطة. ألغِ أحدها أولًا."
 
 msgid "You can't deactivate your own account."
 msgstr "لا يمكنك تعطيل حسابك الخاص."

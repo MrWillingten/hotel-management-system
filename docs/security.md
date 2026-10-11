@@ -37,6 +37,7 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | W9 | ⚪ | Expensive report ranges | 2-year cap (731 nights), tested | ✅ S5 |
 | W10 | ⚪ | File uploads | None by design | ✅ |
 | W11 | 🟡 | A compromised container gains root or persists | Image runs as uid 10001; compose: read-only file system, all capabilities dropped, `no-new-privileges`; dependencies installed only from hash-checked wheels; app port reachable only through Caddy (HTTPS) | ✅ S6 |
+| W12 | 🟠 | JSON API used to steal or change data | Read-only (GET only); bearer tokens of 256 bits, shown once, stored as SHA-256, expiring (≤ 365 days), revocable, tied to an active manager; cookie sessions refused on `/api/` (no CSRF); 120 calls/min per manager, 10 wrong tokens/min per address; same service-layer role checks; creation and revocation audited | ✅ S6 |
 
 ## Input validation and injection
 

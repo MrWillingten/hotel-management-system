@@ -10,13 +10,15 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
+from datetime import timedelta
 from typing import TypeVar
 from urllib.parse import urlsplit
 
-from flask import Flask, Response, abort, current_app, g, redirect, request, url_for
+from flask import Flask, Response, abort, current_app, g, jsonify, redirect, request, url_for
 
 from hotel.domain.enums import Role
 from hotel.web.context import services, settings
+from hotel.web.rate_limit import RateLimiter
 
 POLICY_ATTRIBUTE = "_hotel_access_policy"
 AUTH_COOKIE = "hotel_session"
@@ -28,6 +30,7 @@ F = TypeVar("F", bound=Callable[..., object])
 class AccessPolicy:
     public: bool = False
     roles: frozenset[Role] | None = None  # None = any signed-in user
+    api: bool = False  # JSON API: a bearer token instead of the session cookie
 
 
 def _declare(view: F, policy: AccessPolicy) -> F:
@@ -50,6 +53,11 @@ def roles_required(*roles: Role) -> Callable[[F], F]:
         return _declare(view, AccessPolicy(roles=frozenset(roles)))
 
     return decorator
+
+
+def api_token_required(view: F) -> F:
+    """JSON API views: `Authorization: Bearer <token>`, rate-limited (story 6.3)."""
+    return _declare(view, AccessPolicy(api=True))
 
 
 def policy_of(view: Callable[..., object]) -> AccessPolicy | None:
@@ -99,6 +107,8 @@ def enforce_access_policy() -> Response | None:
         abort(403)
     if policy.public:
         return None
+    if policy.api:
+        return _authenticate_api_request()
     if g.user is None:
         target = request.full_path.rstrip("?") if request.method == "GET" else None
         return redirect(url_for("auth.login", next=target))
@@ -110,6 +120,53 @@ def enforce_access_policy() -> Response | None:
         return redirect(url_for("account.two_factor"))
     if policy.roles is not None and g.user.role not in policy.roles:
         abort(403)
+    return None
+
+
+LIMITERS_KEY = "hotel.api_limiters"
+
+
+def _new_limiters() -> dict[str, RateLimiter]:
+    """One set per application: 120 calls a minute per manager is plenty for a
+    dashboard and stops a runaway script; an address presenting wrong tokens
+    gets 10 tries a minute (256-bit tokens cannot be guessed anyway)."""
+    return {
+        "calls": RateLimiter(limit=120, window=timedelta(minutes=1)),
+        "failures": RateLimiter(limit=10, window=timedelta(minutes=1)),
+    }
+
+
+def api_error(status: int, code: str, *, retry_after: int | None = None) -> Response:
+    response = jsonify({"error": code})
+    response.status_code = status
+    if status == 401:
+        response.headers["WWW-Authenticate"] = 'Bearer realm="hotel"'
+    if retry_after is not None:
+        response.headers["Retry-After"] = str(retry_after)
+    return response
+
+
+def _authenticate_api_request() -> Response | None:
+    """The API never uses the browser's cookie: a program must show its token.
+
+    That also means a malicious web page cannot make a signed-in browser call
+    the API on its behalf.
+    """
+    g.user = None
+    now = services().clock.now()
+    address = request.remote_addr or "unknown"
+    scheme, _, secret = request.headers.get("Authorization", "").partition(" ")
+    user = services().api_tokens.authenticate(secret.strip()) if scheme == "Bearer" else None
+    limiters = current_app.extensions[LIMITERS_KEY]
+    if user is None:
+        wait = limiters["failures"].hit(f"ip:{address}", now)
+        if wait:
+            return api_error(429, "too_many_requests", retry_after=wait)
+        return api_error(401, "unauthorized")
+    wait = limiters["calls"].hit(f"user:{user.id}", now)
+    if wait:
+        return api_error(429, "too_many_requests", retry_after=wait)
+    g.api_user = user
     return None
 
 
@@ -148,6 +205,7 @@ def add_security_headers(response: Response) -> Response:
 
 
 def install(app: Flask) -> None:
+    app.extensions[LIMITERS_KEY] = _new_limiters()
     app.before_request(load_current_user)
     app.before_request(enforce_access_policy)
     app.after_request(add_security_headers)
