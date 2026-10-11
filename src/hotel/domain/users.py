@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 
 from hotel.domain.enums import Role
 from hotel.domain.errors import ValidationError
+from hotel.domain.totp import TwoFactor
 
 _USERNAME = re.compile(r"^[a-z0-9._-]{3,32}$")
 
@@ -61,10 +62,15 @@ class User:
     locked_until: datetime | None = None
     created_at: datetime | None = None
     version: int = 1  # optimistic locking: incremented on every update
+    two_factor: TwoFactor = field(default_factory=TwoFactor, repr=False)
 
     @property
     def is_manager(self) -> bool:
         return self.role is Role.MANAGER
+
+    def must_enrol_two_factor(self, now: datetime) -> bool:
+        """Managers without a second factor are blocked once their grace period ends."""
+        return self.is_manager and not self.two_factor.enabled and self.two_factor.grace_over(now)
 
     def is_locked(self, now: datetime) -> bool:
         return self.locked_until is not None and now < self.locked_until

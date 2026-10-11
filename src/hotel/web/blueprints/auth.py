@@ -43,23 +43,13 @@ def login():
             error = message_for(exc.code, exc.params)
             status = 401
         else:
-            # Never keep a session id from before the login (session fixation):
-            # end any previous server session and start a fresh Flask session,
-            # which also gives the user a new CSRF token.
-            auth.logout(request.cookies.get(AUTH_COOKIE))
-            session.clear()
-            g.clear_auth_cookie = False
-            response = redirect(next_target or url_for("dashboard.index"))
-            response.set_cookie(
-                AUTH_COOKIE,
-                result.token,
-                httponly=True,
-                samesite="Lax",
-                secure=settings().https,
-                path="/",
-            )
-            flash(_("Welcome, %(name)s.", name=result.user.full_name), "success")
-            return response
+            if result.needs_code:
+                # Second step: the challenge rides in Flask's signed cookie; it is
+                # useless without the code, and the server forgets it in 5 minutes.
+                session["login_challenge"] = result.challenge
+                session["login_next"] = next_target
+                return redirect(url_for("auth.verify"))
+            return _signed_in(result, next_target)
 
     return (
         render_template(
@@ -71,6 +61,57 @@ def login():
         ),
         status,
     )
+
+
+@bp.route("/login/code", methods=["GET", "POST"])
+@public
+def verify():
+    """The six digits from the authenticator app, or a recovery code (story 6.1)."""
+    challenge = session.get("login_challenge")
+    if not challenge:
+        return redirect(url_for("auth.login"))
+    error = None
+    status = 200
+    if request.method == "POST":
+        try:
+            result = services().auth.complete_login(
+                challenge,
+                request.form.get("code", ""),
+                ip=request.remote_addr or "unknown",
+                user_agent=request.user_agent.string,
+            )
+        except AuthenticationError as exc:
+            if exc.code != "auth.invalid_code":
+                session.pop("login_challenge", None)
+                flash(message_for(exc.code, exc.params), "danger")
+                return redirect(url_for("auth.login"))
+            error = message_for(exc.code, exc.params)
+            status = 401
+        else:
+            return _signed_in(result, session.get("login_next"))
+    return render_template("auth/verify.html", error=error), status
+
+
+def _signed_in(result, next_target: str | None = None):
+    """Hand the browser its new session cookie."""
+    next_target = next_target if is_safe_redirect_target(next_target) else None
+    # Never keep a session id from before the login (session fixation):
+    # end any previous server session and start a fresh Flask session,
+    # which also gives the user a new CSRF token.
+    services().auth.logout(request.cookies.get(AUTH_COOKIE))
+    session.clear()
+    g.clear_auth_cookie = False
+    response = redirect(next_target or url_for("dashboard.index"))
+    response.set_cookie(
+        AUTH_COOKIE,
+        result.token,
+        httponly=True,
+        samesite="Lax",
+        secure=settings().https,
+        path="/",
+    )
+    flash(_("Welcome, %(name)s.", name=result.user.full_name), "success")
+    return response
 
 
 @bp.post("/logout")

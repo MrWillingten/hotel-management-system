@@ -1,0 +1,64 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Two-factor sign-in") }}{% endblock %}
+{% block page_title %}{{ _("Two-factor sign-in") }}{% endblock %}
+{% block content %}
+{%- if not blocked %}{% include "partials/account_nav.html" %}{% endif %}
+<section class="panel panel--narrow stack">
+  {%- if status.enabled %}
+  <p class="badge-row"><span class="badge badge--success">{{ icon("shield") }}{{ _("On") }}</span></p>
+  <p>{{ _("Since %(date)s, signing in asks for a code from your authenticator app after the password.",
+          date=status.enabled_at|datetimeformat("medium")) }}</p>
+  <p>{{ _("Unused recovery codes: %(n)s", n=status.recovery_codes_left) }}</p>
+
+  {{ form_errors(errors) }}
+  <h2 class="panel__title">{{ _("New recovery codes") }}</h2>
+  <p class="muted">{{ _("Your old recovery codes will stop working.") }}</p>
+  <form class="stack" method="post" action="{{ url_for('account.renew_recovery_codes') }}" novalidate>
+    {{ csrf() }}
+    {{ field("code", _("Current code from the app"), error=errors.code, autocomplete="one-time-code", maxlength=20) }}
+    <button class="button" type="submit">{{ _("Create new recovery codes") }}</button>
+  </form>
+
+  {%- if not status.required %}
+  <h2 class="panel__title">{{ _("Turn off") }}</h2>
+  <form class="stack" method="post" action="{{ url_for('account.disable_two_factor') }}" novalidate>
+    {{ csrf() }}
+    {{ field("code", _("Current code from the app"), autocomplete="one-time-code", maxlength=20) }}
+    <button class="button button--danger" type="submit">{{ _("Turn off two-factor sign-in") }}</button>
+  </form>
+  {%- else %}
+  <p class="muted">{{ _("Managers must keep two-factor sign-in. If your phone is lost, use a recovery code, or ask for a reset with the command “hotel reset-totp”.") }}</p>
+  {%- endif %}
+
+  {%- else %}
+  {%- if blocked %}
+  <div class="alert alert--warning">{{ icon("shield") }}
+    <p>{{ _("Managers must use two-factor sign-in. Set it up now to continue.") }}</p>
+  </div>
+  {%- elif status.required and status.grace_until %}
+  <div class="alert alert--info">{{ icon("shield") }}
+    <p>{{ _("Managers must use two-factor sign-in. Set it up before %(date)s.", date=status.grace_until|dateformat("long")) }}</p>
+  </div>
+  {%- endif %}
+  <p>{{ _("After your password, you will also type a six-digit code from an app on your phone (for example Google Authenticator, Microsoft Authenticator, Aegis or FreeOTP). A stolen password alone is then not enough to sign in.") }}</p>
+  <ol class="steps">
+    <li>{{ _("Install an authenticator app on your phone.") }}</li>
+    <li>{{ _("In the app, add an account and scan this code:") }}
+      <div class="qr" role="img" aria-label="{{ _('QR code to scan with the authenticator app') }}">{{ qr_svg }}</div>
+      <p class="muted">{{ _("Cannot scan? Type this key instead:") }}</p>
+      <code class="code-block" dir="ltr">{{ enrolment.grouped_secret }}</code>
+    </li>
+    <li>{{ _("Type the code the app shows to finish:") }}
+      {{ form_errors(errors) }}
+      <form class="stack" method="post" action="{{ url_for('account.confirm_two_factor') }}" novalidate>
+        {{ csrf() }}
+        {{ field("code", _("Code"), error=errors.code, autocomplete="one-time-code", maxlength=20, autofocus=blocked) }}
+        <button class="button button--primary" type="submit">{{ _("Turn on two-factor sign-in") }}</button>
+      </form>
+    </li>
+  </ol>
+  {%- endif %}
+</section>
+{% endblock %}

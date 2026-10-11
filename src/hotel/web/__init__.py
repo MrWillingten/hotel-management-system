@@ -125,8 +125,15 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
     @app.context_processor
     def interface_context():
         locale = str(get_locale() or "en")
+        user = g.get("user")
         return {
-            "current_user": g.get("user"),
+            "current_user": user,
+            # Managers see a reminder until they set up the second factor (story 6.1).
+            "two_factor_due": (
+                user.two_factor.grace_until
+                if user is not None and user.is_manager and not user.two_factor.enabled
+                else None
+            ),
             "demo_mode": is_demo(app.extensions[SERVICES_KEY]),
             "locale": locale,
             "text_dir": text_direction(locale),

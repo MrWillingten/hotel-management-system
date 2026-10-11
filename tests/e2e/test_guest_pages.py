@@ -102,10 +102,12 @@ def test_unknown_guest_is_404(signed_in):
 def test_anonymise_page_needs_confirmation(signed_in, services, hotel, clock):
     from datetime import timedelta
 
-    from tests.conftest import csrf_token, login
+    from tests.conftest import csrf_token, enrol_two_factor, login_with_code
 
+    # Two years later the manager's grace period is long over: they use the second factor.
+    secret = enrol_two_factor(services, hotel.boss.user)
     clock.advance(timedelta(days=800))
-    login(signed_in)  # the session expired while the clock moved
+    login_with_code(signed_in, secret, clock.now())  # the session expired while the clock moved
     page = signed_in.get("/guests/anonymise").get_data(as_text=True)
     assert "Karim Haddad" in page
     data = {"csrf_token": csrf_token(signed_in, "/guests/anonymise"), "guest_id": [hotel.karim.id]}

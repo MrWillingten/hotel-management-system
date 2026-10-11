@@ -12,6 +12,7 @@ from hotel.domain.clock import Clock
 from hotel.domain.enums import Role
 from hotel.domain.errors import AuthenticationError, BusinessRuleViolation
 from hotel.domain.passwords import PasswordPolicy
+from hotel.domain.totp import hash_recovery_code, looks_like_recovery_code
 from hotel.domain.users import (
     LockoutPolicy,
     User,
@@ -38,12 +39,25 @@ class AuthSettings:
     # Recording "last seen" on every request would mean a database write per
     # page; once a minute is precise enough for a 30-minute idle timeout.
     session_touch_interval: timedelta = timedelta(minutes=1)
+    # Time to type the second-factor code after the password, and wrong codes
+    # allowed before the password must be typed again.
+    challenge_lifetime: timedelta = timedelta(minutes=5)
+    challenge_max_attempts: int = 5
 
 
 @dataclass(frozen=True, slots=True)
 class LoginResult:
-    token: str  # goes into the browser cookie, never stored as-is
+    """Either a session (`token`) or, when the account has a second factor, a
+    `challenge` to present with the code. Both go into the browser and are
+    stored only as hashes."""
+
     user: User
+    token: str | None = None
+    challenge: str | None = None
+
+    @property
+    def needs_code(self) -> bool:
+        return self.challenge is not None
 
 
 def hash_token(token: str) -> str:
@@ -147,7 +161,13 @@ class AuthService:
                     password_ok = self._hasher.verify(password, user.password_hash)
                     locked = user.is_locked(now)
                     if password_ok and not locked:
-                        return self._open_session(uow, user, password, ip, user_agent, now)
+                        if self._hasher.needs_rehash(user.password_hash):
+                            user.password_hash = self._hasher.hash(password)
+                        if user.two_factor.enabled:
+                            return self._challenge(uow, user, ip, now)
+                        if user.is_manager:
+                            user.two_factor.start_grace(now)
+                        return self._open_session(uow, user, ip, user_agent, now)
                     actor = Actor(user=user, ip=ip)
                     if not locked:  # attempts while locked do not extend the lock
                         user.register_failed_login(now, settings.lockout)
@@ -181,15 +201,14 @@ class AuthService:
         self,
         uow: UnitOfWork,
         user: User,
-        password: str,
         ip: str,
         user_agent: str,
         now: datetime,
+        *,
+        method: str = "password",
     ) -> LoginResult:
         settings = self._settings
         user.register_successful_login()
-        if self._hasher.needs_rehash(user.password_hash):
-            user.password_hash = self._hasher.hash(password)
         uow.users.update(user)
         uow.sessions.delete_stale(
             expired_before=now, idle_since=now - settings.session_idle_timeout
@@ -213,8 +232,103 @@ class AuthService:
             "auth.login",
             entity="user",
             entity_id=user.id,
+            method=method,
         )
-        return LoginResult(token=token, user=user)
+        return LoginResult(user=user, token=token)
+
+    # ------------------------------------------------------------ second factor
+    def _challenge(self, uow: UnitOfWork, user: User, ip: str, now: datetime) -> LoginResult:
+        """The password was right; the session opens only after the code (story 6.1).
+
+        The failure counters are not reset yet: a stolen password alone must
+        not wipe the lockout progress of someone guessing codes.
+        """
+        uow.users.update(user)  # a rehashed password is kept
+        uow.login_challenges.delete_expired(now)
+        challenge = secrets.token_urlsafe(32)
+        uow.login_challenges.add(
+            hash_token(challenge), user.id, now + self._settings.challenge_lifetime
+        )
+        record(
+            uow,
+            self._clock,
+            Actor(user=user, ip=ip),
+            "auth.password_accepted",
+            entity="user",
+            entity_id=user.id,
+        )
+        return LoginResult(user=user, challenge=challenge)
+
+    def complete_login(
+        self, challenge: str | None, code: str, *, ip: str, user_agent: str = ""
+    ) -> LoginResult:
+        """Second step: a code from the authenticator app or an unused recovery code.
+
+        Wrong codes count like wrong passwords (same account lockout); after
+        `challenge_max_attempts` the challenge is gone and the password must be
+        typed again. "auth.code_expired" means: start again from the password.
+        """
+        if not challenge or len(challenge) > _MAX_TOKEN_LENGTH:
+            raise AuthenticationError("auth.code_expired")
+        settings = self._settings
+        now = self._clock.now()
+        token_hash = hash_token(challenge)
+        code = code[:32]
+        failure = "auth.code_expired"
+        with self._uow() as uow:
+            pending = uow.login_challenges.get(token_hash)
+            user = uow.users.get(pending.user_id) if pending else None
+            if pending is None or user is None:
+                pass
+            elif now >= pending.expires_at or not user.is_active or not user.two_factor.enabled:
+                uow.login_challenges.delete(token_hash)
+            elif user.is_locked(now):
+                uow.login_challenges.delete(token_hash)
+                failure = "auth.invalid_credentials"
+            else:
+                method = self._check_code(uow, user, code, now)
+                actor = Actor(user=user, ip=ip)
+                if method is not None:
+                    uow.login_challenges.delete(token_hash)
+                    if method == "recovery_code":
+                        record(
+                            uow,
+                            self._clock,
+                            actor,
+                            "auth.recovery_code_used",
+                            entity="user",
+                            entity_id=user.id,
+                            remaining=uow.recovery_codes.remaining(user.id),
+                        )
+                    return self._open_session(uow, user, ip, user_agent, now, method=method)
+                user.register_failed_login(now, settings.lockout)
+                uow.users.update(user)
+                record(
+                    uow,
+                    self._clock,
+                    actor,
+                    "auth.code_failed",
+                    entity="user",
+                    entity_id=user.id,
+                )
+                if pending.attempts + 1 >= settings.challenge_max_attempts or user.is_locked(now):
+                    uow.login_challenges.delete(token_hash)
+                else:
+                    uow.login_challenges.count_attempt(token_hash)
+                    failure = "auth.invalid_code"
+                uow.login_failures.add(ip, user.username, now)
+        raise AuthenticationError(failure)  # after the commit, as in login()
+
+    @staticmethod
+    def _check_code(uow: UnitOfWork, user: User, code: str, now: datetime) -> str | None:
+        """How the user proved it ("totp" or "recovery_code"), or None."""
+        if looks_like_recovery_code(code):
+            if uow.recovery_codes.use(user.id, hash_recovery_code(code), now):
+                return "recovery_code"
+            return None
+        if user.two_factor.accept(code, now):
+            return "totp"  # the step is saved with the user by _open_session
+        return None
 
     def authenticate_session(self, token: str | None) -> User | None:
         """Return the signed-in user for a cookie token, or None if it is not valid."""

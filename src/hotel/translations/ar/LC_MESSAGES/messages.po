@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 14:03+0100\n"
+"POT-Creation-Date: 2026-10-11 15:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -189,6 +189,15 @@ msgstr "البالغون: %(adults)s، الأطفال: %(children)s"
 
 msgid "After"
 msgstr "بعد"
+
+msgid ""
+"After your password, you will also type a six-digit code from an app on your phone (for example "
+"Google Authenticator, Microsoft Authenticator, Aegis or FreeOTP). A stolen password alone is then"
+" not enough to sign in."
+msgstr ""
+"بعد كلمة المرور، ستكتب أيضًا رمزًا من ستة أرقام يعرضه تطبيق على هاتفك (مثل Google Authenticator "
+"أو Microsoft Authenticator أو Aegis أو FreeOTP). وبذلك لا تكفي كلمة مرور مسروقة وحدها لتسجيل "
+"الدخول."
 
 msgid "All"
 msgstr "الكل"
@@ -408,6 +417,9 @@ msgstr "الإلغاء الآن مجاني (حتى %(when)s)."
 msgid "Cancelling within this time after booking is always free."
 msgstr "الإلغاء خلال هذه المدة بعد الحجز مجاني دائماً."
 
+msgid "Cannot scan? Type this key instead:"
+msgstr "تعذّر المسح؟ اكتب هذا المفتاح بدلًا من ذلك:"
+
 msgid "Capacity"
 msgstr "السعة"
 
@@ -595,11 +607,17 @@ msgstr "أنشئ فئة غرف أولًا، ثم أضف الغرف."
 msgid "Create account"
 msgstr "إنشاء الحساب"
 
+msgid "Create new recovery codes"
+msgstr "إنشاء رموز استرداد جديدة"
+
 msgid "Create the first manager account from a terminal, in the project folder:"
 msgstr "أنشئ أول حساب مدير من الطرفية، داخل مجلد المشروع:"
 
 msgid "Created"
 msgstr "تاريخ الإنشاء"
+
+msgid "Current code from the app"
+msgstr "الرمز الحالي من التطبيق"
 
 msgid "Current password"
 msgstr "كلمة المرور الحالية"
@@ -916,6 +934,9 @@ msgstr "قواعد الفندق"
 msgid "Housekeeping"
 msgstr "التنظيف"
 
+msgid "I have saved them"
+msgstr "لقد حفظتها"
+
 #, python-format
 msgid "I understand: erase the personal data of these %(count)s guests."
 msgstr "فهمت: امحُ البيانات الشخصية لهؤلاء النزلاء (%(count)s)."
@@ -929,6 +950,9 @@ msgstr "وثيقة الهوية"
 msgid "In service"
 msgstr "في الخدمة"
 
+msgid "In the app, add an account and scan this code:"
+msgstr "في التطبيق، أضف حسابًا وامسح هذا الرمز:"
+
 msgid "Inactive"
 msgstr "غير نشط"
 
@@ -937,6 +961,9 @@ msgstr "لا يمكن احتساب الخدمات غير النشطة بعد ا�
 
 msgid "Incident reference:"
 msgstr "مرجع الحادثة:"
+
+msgid "Install an authenticator app on your phone."
+msgstr "ثبّت تطبيق مصادقة على هاتفك."
 
 #, python-format
 msgid "Integrity check failed at entry #%(id)s: the log was altered or entries were removed."
@@ -1005,6 +1032,9 @@ msgstr "فاتح"
 msgid "Locked"
 msgstr "مقفل"
 
+msgid "Lost your phone? Type one of your recovery codes instead."
+msgstr "فقدت هاتفك؟ اكتب أحد رموز الاسترداد بدلًا من ذلك."
+
 msgid "Main"
 msgstr "القائمة الرئيسية"
 
@@ -1028,6 +1058,23 @@ msgstr "إدارة الفئات"
 
 msgid "Manager"
 msgstr "مدير"
+
+msgid "Managers must keep two-factor sign-in."
+msgstr "يجب على المديرين الإبقاء على تسجيل الدخول بخطوتين."
+
+msgid ""
+"Managers must keep two-factor sign-in. If your phone is lost, use a recovery code, or ask for a "
+"reset with the command “hotel reset-totp”."
+msgstr ""
+"يجب على المديرين الإبقاء على تسجيل الدخول بخطوتين. إذا فُقد هاتفك، فاستخدم رمز استرداد أو اطلب "
+"إعادة التعيين بالأمر «hotel reset-totp»."
+
+#, python-format
+msgid "Managers must use two-factor sign-in. Set it up before %(date)s."
+msgstr "يجب على المديرين استخدام تسجيل الدخول بخطوتين. فعّله قبل %(date)s."
+
+msgid "Managers must use two-factor sign-in. Set it up now to continue."
+msgstr "يجب على المديرين استخدام تسجيل الدخول بخطوتين. فعّله الآن للمتابعة."
 
 msgid "Manual"
 msgstr "يدوية"
@@ -1057,6 +1104,9 @@ msgstr "الاثنين"
 msgid "Month"
 msgstr "الشهر"
 
+msgid "My account"
+msgstr "حسابي"
+
 msgid "Name"
 msgstr "الاسم"
 
@@ -1083,6 +1133,9 @@ msgstr "السعر الجديد"
 
 msgid "New rate period"
 msgstr "فترة تسعير جديدة"
+
+msgid "New recovery codes"
+msgstr "رموز استرداد جديدة"
 
 msgid "New reservation"
 msgstr "حجز جديد"
@@ -1267,6 +1320,9 @@ msgstr "مشغولة"
 msgid "Of the accommodation; also charged for a no-show."
 msgstr "من الإقامة؛ وتُحتسب أيضاً عند عدم الحضور."
 
+msgid "On"
+msgstr "مفعّل"
+
 msgid "One of these guests can no longer be anonymised (a new booking?). Reload the list."
 msgstr "لم يعد ممكناً إخفاء هوية أحد هؤلاء النزلاء (حجز جديد؟). أعد تحميل القائمة."
 
@@ -1275,6 +1331,9 @@ msgstr "لا يمكن إلغاء إلا حجز مؤكد."
 
 msgid "Only a day that is over can be closed."
 msgstr "لا يمكن إقفال إلا يوم منتهٍ."
+
+msgid "Open your authenticator app and type the six-digit code shown for this hotel."
+msgstr "افتح تطبيق المصادقة واكتب الرمز المكوّن من ستة أرقام الظاهر لهذا الفندق."
 
 msgid "Out of service"
 msgstr "خارج الخدمة"
@@ -1352,6 +1411,9 @@ msgstr ""
 "الأسعار بالدينار التونسي. أصدرها %(name)s. لا يمكن تعديل هذه الفاتورة؛ وتظهر المدفوعات اللاحقة في"
 " الحجز."
 
+msgid "QR code to scan with the authenticator app"
+msgstr "رمز QR للمسح بتطبيق المصادقة"
+
 msgid "Quantity"
 msgstr "الكمية"
 
@@ -1408,6 +1470,9 @@ msgstr "تسجيل الدفعة"
 msgid "Record the refund"
 msgstr "تسجيل الاسترداد"
 
+msgid "Recovery codes"
+msgstr "رموز الاسترداد"
+
 msgid "Reference"
 msgstr "المرجع"
 
@@ -1438,6 +1503,9 @@ msgstr "تاريخ التسجيل"
 
 msgid "Registered on"
 msgstr "تاريخ التسجيل"
+
+msgid "Reload the page and scan the new QR code."
+msgstr "أعد تحميل الصفحة وامسح رمز QR الجديد."
 
 msgid "Remove"
 msgstr "حذف"
@@ -1622,6 +1690,9 @@ msgstr "القابلة للبيع"
 msgid "Service"
 msgstr "الخدمة"
 
+msgid "Set it up now"
+msgstr "فعّله الآن"
+
 msgid "Set temporary password"
 msgstr "تعيين كلمة مرور مؤقتة"
 
@@ -1642,6 +1713,13 @@ msgstr "تسجيل الدخول"
 
 msgid "Sign out"
 msgstr "تسجيل الخروج"
+
+msgid "Sign-in code"
+msgstr "رمز تسجيل الدخول"
+
+#, python-format
+msgid "Since %(date)s, signing in asks for a code from your authenticator app after the password."
+msgstr "منذ %(date)s، يطلب تسجيل الدخول رمزًا من تطبيق المصادقة بعد كلمة المرور."
 
 msgid "Size"
 msgstr "الحجم"
@@ -1676,6 +1754,9 @@ msgstr "الموظفون"
 
 msgid "Staff member"
 msgstr "موظف"
+
+msgid "Start again with the password"
+msgstr "البدء من جديد بكلمة المرور"
 
 msgid "Status"
 msgstr "الحالة"
@@ -1796,6 +1877,9 @@ msgstr "تعذّر فهم الطلب."
 msgid "The room is already closed or booked on %(count)s of these nights (%(first)s to %(last)s)."
 msgstr "الغرفة مغلقة أو محجوزة بالفعل في %(count)s من هذه الليالي (من %(first)s إلى %(last)s)."
 
+msgid "The sign-in took too long or failed too often. Start again."
+msgstr "استغرق تسجيل الدخول وقتًا طويلًا أو فشل مرات كثيرة. ابدأ من جديد."
+
 msgid "The stay is already over: this reservation can no longer be checked in."
 msgstr "انتهت الإقامة بالفعل: لم يعد ممكناً تسجيل الوصول لهذا الحجز."
 
@@ -1820,6 +1904,12 @@ msgstr "يتعارض هذا التغيير مع بيانات موجودة."
 
 msgid "This charge was already voided."
 msgstr "تم إلغاء هذا الاحتساب من قبل."
+
+msgid "This code is not correct, or it was already used. Try the next one."
+msgstr "هذا الرمز غير صحيح أو سبق استخدامه. جرّب الرمز التالي."
+
+msgid "This code is not correct. Check the phone's time and try again."
+msgstr "هذا الرمز غير صحيح. تحقّق من ساعة الهاتف وحاول مرة أخرى."
 
 msgid "This day was already closed; nothing changed."
 msgstr "كان هذا اليوم مقفلاً من قبل؛ لم يتغير شيء."
@@ -1924,8 +2014,35 @@ msgstr "المجموع"
 msgid "Tuesday"
 msgstr "الثلاثاء"
 
+msgid "Turn off"
+msgstr "إيقاف"
+
+msgid "Turn off two-factor sign-in"
+msgstr "إيقاف تسجيل الدخول بخطوتين"
+
+msgid "Turn on two-factor sign-in"
+msgstr "تفعيل تسجيل الدخول بخطوتين"
+
+msgid "Two-factor sign-in"
+msgstr "تسجيل الدخول بخطوتين"
+
+msgid "Two-factor sign-in is already on."
+msgstr "تسجيل الدخول بخطوتين مفعّل مسبقًا."
+
+msgid "Two-factor sign-in is not on."
+msgstr "تسجيل الدخول بخطوتين غير مفعّل."
+
+msgid "Two-factor sign-in is off."
+msgstr "تم إيقاف تسجيل الدخول بخطوتين."
+
+msgid "Two-factor sign-in is on."
+msgstr "تم تفعيل تسجيل الدخول بخطوتين."
+
 msgid "Type"
 msgstr "النوع"
+
+msgid "Type the code the app shows to finish:"
+msgstr "اكتب الرمز الذي يعرضه التطبيق للإنهاء:"
 
 #, python-format
 msgid "Under maintenance: %(rooms)s"
@@ -1945,6 +2062,10 @@ msgstr "غير مسدد بعد المغادرة"
 
 msgid "Untick to take the room out of service (it can no longer be booked)."
 msgstr "أزل التحديد لإخراج الغرفة من الخدمة (لن يمكن حجزها بعد ذلك)."
+
+#, python-format
+msgid "Unused recovery codes: %(n)s"
+msgstr "رموز الاسترداد غير المستخدمة: %(n)s"
 
 msgid "Up to 3 decimals, for example 15 or 12.500."
 msgstr "حتى 3 أرقام عشرية، مثلاً 15 أو 12.500."
@@ -2037,6 +2158,13 @@ msgstr "التاريخ"
 msgid "With the country code for foreign numbers, e.g. +33 6 12 34 56 78."
 msgstr "مع رمز البلد للأرقام الأجنبية، مثل ‎+33 6 12 34 56 78."
 
+msgid ""
+"Write these codes down or print them, and keep them somewhere safe away from your phone. Each one"
+" works once, if the phone is lost. They will not be shown again."
+msgstr ""
+"دوّن هذه الرموز أو اطبعها واحفظها في مكان آمن بعيدًا عن هاتفك. يصلح كل رمز مرة واحدة إذا فُقد "
+"الهاتف. لن تُعرض مرة أخرى."
+
 msgid "You can't deactivate your own account."
 msgstr "لا يمكنك تعطيل حسابك الخاص."
 
@@ -2051,6 +2179,9 @@ msgstr "تم تسجيل خروجك."
 
 msgid "You're using a temporary password. Choose your own password to continue."
 msgstr "أنت تستخدم كلمة مرور مؤقتة. اختر كلمة مرور خاصة بك للمتابعة."
+
+msgid "Your old recovery codes will stop working."
+msgstr "ستتوقف رموز الاسترداد القديمة عن العمل."
 
 msgid "Your other open sessions will be signed out."
 msgstr "سيتم تسجيل خروج جلساتك المفتوحة الأخرى."

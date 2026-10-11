@@ -23,6 +23,8 @@ erDiagram
     RESERVATION ||--o| INVOICE : "is closed by"
     INVOICE ||--|{ INVOICE_LINE : contains
     APP_USER ||--o{ USER_SESSION : "signs in with"
+    APP_USER ||--o{ RECOVERY_CODE : "falls back on"
+    APP_USER ||--o{ LOGIN_CHALLENGE : "awaits a code in"
     APP_USER ||--o{ AUDIT_LOG : performs
     APP_USER ||--o{ RESERVATION : creates
 ```
@@ -39,10 +41,16 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
 ```
 ✅ app_user(id PK, username UQ CK 3..32, full_name CK 1..100, password_hash,
             role CK∈{RECEPTIONIST,MANAGER}, is_active, must_change_password,
-            failed_attempts CK≥0, locked_until, created_at, version)
+            failed_attempts CK≥0, locked_until, created_at, version,
+            totp_secret, totp_pending_secret, totp_last_step, totp_enabled_at,
+            totp_grace_until)                       → second factor (story 6.1)
 ✅ user_session(token_hash PK CK len=64, user_id FK→app_user ON DELETE CASCADE,
                 created_at, last_seen_at, expires_at, ip, user_agent)
 ✅ login_failure(id PK, ip, username, at)          INDEX (ip, at)
+✅ recovery_code(id PK, user_id FK ON DELETE CASCADE, code_hash CK len=64, used_at,
+                 UQ(user_id, code_hash))
+✅ login_challenge(token_hash PK CK len=64, user_id FK ON DELETE CASCADE, expires_at,
+                   attempts CK≥0)                   → password accepted, code pending
 
 ✅ room_category(id PK, name UQ, description)
 ✅ room(id PK, number UQ, category_id FK, capacity CK>0, nightly_rate_mill CK≥0,

@@ -1,0 +1,39 @@
+{%- extends "base.html" -%}
+{%- from "macros/forms.html" import csrf, field -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Sign-in code") }}{% endblock %}
+{% block body_class %}auth{% endblock %}
+{% block body %}
+<div class="auth-layout">
+  <section class="auth-hero" aria-hidden="true">
+    <div class="auth-hero__inner">
+      <span class="brand__mark brand__mark--large">{{ hotel_name[:1] }}</span>
+      <p class="auth-hero__name">{{ hotel_name }}</p>
+      <p class="auth-hero__tagline">{{ _("Reception and management") }}</p>
+    </div>
+  </section>
+
+  <main class="auth-panel" id="main" tabindex="-1">
+    <div class="auth-panel__prefs">{% include "partials/preferences.html" %}</div>
+
+    <div class="auth-card">
+      <h1 class="auth-card__title">{{ _("Sign-in code") }}</h1>
+      <p class="muted">{{ _("Open your authenticator app and type the six-digit code shown for this hotel.") }}</p>
+
+      {%- if error %}
+      <div class="alert alert--danger" role="alert">{{ icon("alert") }}<p>{{ error }}</p></div>
+      {%- endif %}
+
+      <form class="stack" method="post" action="{{ url_for('auth.verify') }}" novalidate>
+        {{ csrf() }}
+        {{ field("code", _("Code"), autocomplete="one-time-code", autofocus=true, maxlength=20,
+                 hint=_("Lost your phone? Type one of your recovery codes instead.")) }}
+        <button class="button button--primary button--block" type="submit">{{ _("Sign in") }}</button>
+      </form>
+      <p><a href="{{ url_for('auth.login') }}">{{ _("Start again with the password") }}</a></p>
+    </div>
+
+    <p class="auth-panel__footer muted">{{ hotel_name }} · v{{ app_version }}</p>
+  </main>
+</div>
+{% endblock %}
