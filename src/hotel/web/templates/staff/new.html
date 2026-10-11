@@ -1,0 +1,24 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors, role_select -%}
+{% block title %}{{ _("Add a staff member") }}{% endblock %}
+{% block page_title %}{{ _("Add a staff member") }}{% endblock %}
+{% block content %}
+<section class="panel panel--narrow">
+  {{ form_errors(errors) }}
+  <form class="stack" method="post" novalidate>
+    {{ csrf() }}
+    {{ field("username", _("Username"), value=values.username, error=errors.username, autocomplete="off",
+             autofocus=true, maxlength=32, hint=_("3 to 32 characters: letters, digits, dots, hyphens or underscores.")) }}
+    {{ field("full_name", _("Full name"), value=values.full_name, error=errors.full_name, maxlength=100) }}
+    {{ role_select(values.role or "RECEPTIONIST", errors.role) }}
+    {{ field("password", _("Temporary password"), type="password", error=errors.password, autocomplete="new-password",
+             maxlength=128, hint=_("They will have to replace it at their first sign-in.")) }}
+    {{ field("confirm", _("Repeat the temporary password"), type="password", error=errors.confirm,
+             autocomplete="new-password", maxlength=128) }}
+    <div class="form-actions">
+      <button class="button button--primary" type="submit">{{ _("Create account") }}</button>
+      <a class="button button--ghost" href="{{ url_for('staff.index') }}">{{ _("Cancel") }}</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

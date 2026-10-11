@@ -741,3 +741,14 @@ textarea.field__input { min-height: 5rem; resize: vertical; font: inherit; }
 .badge--danger { background: var(--danger-soft); color: var(--danger-text); }
 .badge--warning { background: var(--warning-soft); color: var(--warning-text); }
 .badge--info { background: var(--info-soft); color: var(--info-text); }
+
+.panel--narrow { max-width: 32rem; }
+.grid--two { grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); align-items: start; }
+.form-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+.section-title { font-family: var(--font-serif); font-size: var(--text-xl); margin-block-end: var(--space-1); }
+.badge-row { display: inline-flex; flex-wrap: wrap; gap: var(--space-1); }
+a.user-chip { color: var(--text); padding: var(--space-1) var(--space-2); border-radius: var(--radius); transition: background-color var(--dur-fast) var(--ease); }
+a.user-chip:hover { background: var(--surface-hover); }
+.check { display: flex; align-items: flex-start; gap: var(--space-2); cursor: pointer; }
+.check input { width: 1.1rem; height: 1.1rem; margin-block-start: 0.2rem; accent-color: var(--accent); }
+.check .field__hint { display: block; }

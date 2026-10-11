@@ -53,6 +53,12 @@ class SessionRepository(BaseRepository):
     def delete_for_user(self, user_id: int) -> int:
         return self._execute("DELETE FROM user_session WHERE user_id = ?", (user_id,)).rowcount
 
+    def delete_for_user_except(self, user_id: int, keep_token_hash: str) -> int:
+        return self._execute(
+            "DELETE FROM user_session WHERE user_id = ? AND token_hash <> ?",
+            (user_id, keep_token_hash),
+        ).rowcount
+
     def delete_stale(self, *, expired_before: datetime, idle_since: datetime) -> int:
         return self._execute(
             "DELETE FROM user_session WHERE expires_at <= ? OR last_seen_at <= ?",

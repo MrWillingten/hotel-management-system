@@ -1,0 +1,8 @@
+{%- macro status_badges(user, now) -%}
+<span class="badge-row">
+  {%- if not user.is_active %}<span class="badge badge--neutral">{{ _("Deactivated") }}</span>
+  {%- else %}<span class="badge badge--success">{{ _("Active") }}</span>{% endif %}
+  {%- if user.is_locked(now) %}<span class="badge badge--danger">{{ _("Locked") }}</span>{% endif %}
+  {%- if user.must_change_password %}<span class="badge badge--warning">{{ _("Temporary password") }}</span>{% endif %}
+</span>
+{%- endmacro %}

@@ -10,13 +10,14 @@ from datetime import datetime, timedelta
 from hotel.domain.actor import Actor
 from hotel.domain.clock import Clock
 from hotel.domain.enums import Role
-from hotel.domain.errors import AuthenticationError, BusinessRuleViolation, ValidationError
+from hotel.domain.errors import AuthenticationError, BusinessRuleViolation
 from hotel.domain.passwords import PasswordPolicy
 from hotel.domain.users import (
     LockoutPolicy,
     User,
     UserSession,
     normalize_username,
+    validate_full_name,
     validate_username,
 )
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
@@ -80,9 +81,7 @@ class AuthService:
     def create_first_manager(self, username: str, full_name: str, password: str) -> User:
         """Create the very first account. Refused once any account exists."""
         username = validate_username(username)
-        full_name = full_name.strip()
-        if not 1 <= len(full_name) <= 100:
-            raise ValidationError("full_name.invalid", fields={"full_name": "full_name.invalid"})
+        full_name = validate_full_name(full_name)
         self._password_policy.check(password, username=username)
         with self._uow() as uow:
             if uow.users.count() > 0:

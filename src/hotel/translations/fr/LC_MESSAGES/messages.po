@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 00:55+0100\n"
+"POT-Creation-Date: 2026-10-11 00:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -22,11 +22,39 @@ msgstr ""
 msgid "%(greeting)s, %(name)s"
 msgstr "%(greeting)s, %(name)s"
 
+msgid "3 to 32 characters: letters, digits, dots, hyphens or underscores."
+msgstr "3 à 32 caractères : lettres, chiffres, points, tirets ou tirets bas."
+
+msgid "Access"
+msgstr "Accès"
+
 msgid "Access denied"
 msgstr "Accès refusé"
 
+#, python-format
+msgid "Account %(username)s created. Give them the temporary password in person."
+msgstr "Compte %(username)s créé. Remettez-lui le mot de passe temporaire en personne."
+
+msgid "Account deactivated and signed out."
+msgstr "Compte désactivé et déconnecté."
+
+msgid "Account reactivated."
+msgstr "Compte réactivé."
+
+msgid "Account unlocked."
+msgstr "Compte déverrouillé."
+
+msgid "Accounts are deactivated, never deleted, so the audit log keeps its meaning."
+msgstr "Les comptes sont désactivés, jamais supprimés, pour que le journal d'audit garde son sens."
+
 msgid "Action"
 msgstr "Action"
+
+msgid "Active"
+msgstr "Actif"
+
+msgid "Add a staff member"
+msgstr "Ajouter un membre du personnel"
 
 msgid "Address"
 msgstr "Adresse"
@@ -43,8 +71,14 @@ msgstr "Les montants ont au plus 3 décimales (millimes)."
 msgid "An unexpected error occurred. It has been logged."
 msgstr "Une erreur inattendue s'est produite. Elle a été enregistrée."
 
+msgid "At least 12 characters. A short sentence is easy to remember and hard to guess."
+msgstr "Au moins 12 caractères. Une courte phrase est facile à retenir et difficile à deviner."
+
 msgid "Audit log"
 msgstr "Journal d'audit"
+
+msgid "Back to staff"
+msgstr "Retour au personnel"
 
 msgid "Back to the dashboard"
 msgstr "Retour au tableau de bord"
@@ -52,11 +86,32 @@ msgstr "Retour au tableau de bord"
 msgid "Bad request"
 msgstr "Requête invalide"
 
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Change password"
+msgstr "Changer le mot de passe"
+
+msgid "Changes saved."
+msgstr "Modifications enregistrées."
+
+msgid "Choose a password different from the current one."
+msgstr "Choisissez un mot de passe différent de l'actuel."
+
+msgid "Choose a role."
+msgstr "Choisissez un rôle."
+
 msgid "Colour theme"
 msgstr "Thème de couleurs"
 
+msgid "Create account"
+msgstr "Créer le compte"
+
 msgid "Create the first manager account from a terminal, in the project folder:"
 msgstr "Créez le premier compte gestionnaire depuis un terminal, dans le dossier du projet :"
+
+msgid "Current password"
+msgstr "Mot de passe actuel"
 
 msgid "Dark"
 msgstr "Sombre"
@@ -66,6 +121,15 @@ msgstr "Tableau de bord"
 
 msgid "Database schema"
 msgstr "Schéma de la base"
+
+msgid "Deactivate account"
+msgstr "Désactiver le compte"
+
+msgid "Deactivated"
+msgstr "Désactivé"
+
+msgid "Deactivating signs the person out everywhere, immediately."
+msgstr "La désactivation déconnecte immédiatement la personne partout."
 
 msgid "Details"
 msgstr "Détails"
@@ -102,6 +166,9 @@ msgstr "Du"
 
 msgid "Front desk and billing"
 msgstr "Réception et facturation"
+
+msgid "Full name"
+msgstr "Nom complet"
 
 msgid "Good afternoon"
 msgstr "Bon après-midi"
@@ -140,6 +207,9 @@ msgstr "Langue"
 msgid "Light"
 msgstr "Clair"
 
+msgid "Locked"
+msgstr "Verrouillé"
+
 msgid "Main"
 msgstr "Principal"
 
@@ -148,6 +218,9 @@ msgstr "Gestionnaire"
 
 msgid "Match system"
 msgstr "Selon le système"
+
+msgid "New password"
+msgstr "Nouveau mot de passe"
 
 msgid "Next"
 msgstr "Prochain"
@@ -186,6 +259,9 @@ msgstr "Précédente"
 msgid "Project roadmap"
 msgstr "Feuille de route du projet"
 
+msgid "Reactivate account"
+msgstr "Réactiver le compte"
+
 msgid "Reception and management"
 msgstr "Réception et gestion"
 
@@ -195,14 +271,32 @@ msgstr "Réceptionniste"
 msgid "Record"
 msgstr "Enregistrement"
 
+msgid "Repeat the new password"
+msgstr "Répétez le nouveau mot de passe"
+
+msgid "Repeat the temporary password"
+msgstr "Répétez le mot de passe temporaire"
+
 msgid "Reports, operations and translations"
 msgstr "Rapports, exploitation et traductions"
 
 msgid "Reservations and availability"
 msgstr "Réservations et disponibilités"
 
+msgid "Reset password"
+msgstr "Réinitialiser le mot de passe"
+
+msgid "Role"
+msgstr "Rôle"
+
 msgid "Rooms, guests, staff and audit log"
 msgstr "Chambres, clients, personnel et journal d'audit"
+
+msgid "Save changes"
+msgstr "Enregistrer"
+
+msgid "Set temporary password"
+msgstr "Définir un mot de passe temporaire"
 
 msgid "Sign in"
 msgstr "Se connecter"
@@ -225,8 +319,26 @@ msgstr "Un problème est survenu"
 msgid "Something went wrong. Try again."
 msgstr "Un problème est survenu. Réessayez."
 
+msgid "Staff"
+msgstr "Personnel"
+
+msgid "Staff member"
+msgstr "Membre du personnel"
+
+msgid "Status"
+msgstr "Statut"
+
 msgid "System"
 msgstr "Système"
+
+msgid "Temporary password"
+msgstr "Mot de passe temporaire"
+
+msgid "Temporary password set. They must choose a new one at their next sign-in."
+msgstr "Mot de passe temporaire défini. La personne devra en choisir un nouveau à sa prochaine connexion."
+
+msgid "The current password is not correct."
+msgstr "Le mot de passe actuel est incorrect."
 
 msgid "The data sent was too large."
 msgstr "Les données envoyées sont trop volumineuses."
@@ -240,6 +352,9 @@ msgstr "Le premier compte gestionnaire existe déjà."
 msgid "The front desk figures will appear here once reservations are available."
 msgstr "Les indicateurs de la réception apparaîtront ici dès que les réservations seront disponibles."
 
+msgid "The hotel must keep at least one active manager."
+msgstr "L'hôtel doit garder au moins un gestionnaire actif."
+
 msgid "The page you asked for doesn't exist."
 msgstr "La page demandée n'existe pas."
 
@@ -248,6 +363,12 @@ msgstr "Le mot de passe ne doit pas contenir le nom d'utilisateur."
 
 msgid "The request couldn't be understood."
 msgstr "La requête n'a pas pu être comprise."
+
+msgid "The two passwords are different."
+msgstr "Les deux mots de passe sont différents."
+
+msgid "They will have to replace it at their first sign-in."
+msgstr "La personne devra le remplacer à sa première connexion."
 
 msgid "This action can't be done this way."
 msgstr "Cette action ne peut pas être effectuée de cette façon."
@@ -270,6 +391,9 @@ msgstr "Ce mot de passe est trop courant. Choisissez-en un moins prévisible."
 msgid "This password repeats the same characters too much."
 msgstr "Ce mot de passe répète trop les mêmes caractères."
 
+msgid "This username is already used."
+msgstr "Ce nom d'utilisateur est déjà utilisé."
+
 #, python-format
 msgid "Time zone: %(tz)s"
 msgstr "Fuseau horaire : %(tz)s"
@@ -284,6 +408,9 @@ msgid "Too many failed sign-in attempts from this computer. Wait a few minutes a
 msgstr ""
 "Trop de tentatives de connexion échouées depuis cet ordinateur. Patientez quelques minutes, puis "
 "réessayez."
+
+msgid "Unlock"
+msgstr "Déverrouiller"
 
 msgid "Use 3 to 32 characters: letters, digits, dots, hyphens or underscores."
 msgstr "Utilisez 3 à 32 caractères : lettres, chiffres, points, tirets ou tirets bas."
@@ -318,6 +445,9 @@ msgstr "Bienvenue, %(name)s."
 msgid "When"
 msgstr "Date"
 
+msgid "You can't deactivate your own account."
+msgstr "Vous ne pouvez pas désactiver votre propre compte."
+
 msgid "You don't have permission to do that."
 msgstr "Vous n'avez pas l'autorisation d'effectuer cette action."
 
@@ -330,6 +460,15 @@ msgstr "Vous avez été déconnecté."
 #, python-format
 msgid "You'll be signed out after %(minutes)s minutes without activity."
 msgstr "Vous serez déconnecté après %(minutes)s minutes d'inactivité."
+
+msgid "You're using a temporary password. Choose your own password to continue."
+msgstr "Vous utilisez un mot de passe temporaire. Choisissez votre propre mot de passe pour continuer."
+
+msgid "Your other open sessions will be signed out."
+msgstr "Vos autres sessions ouvertes seront déconnectées."
+
+msgid "Your password has been changed."
+msgstr "Votre mot de passe a été modifié."
 
 msgid "Your session"
 msgstr "Votre session"

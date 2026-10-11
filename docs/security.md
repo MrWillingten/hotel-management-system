@@ -15,8 +15,8 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | A5 | 🟠 | A route forgets its role check | Deny by default; every view declares `@public`, `@login_required` or `@roles_required`; a test walks every route; services re-check roles | ✅ S1 (services ⏳ S2+) |
 | A6 | 🟠 | Receptionist grants own discounts or large refunds | Manager-only, audited | ⏳ S4 |
 | A7 | 🟡 | Session fixation | New token at every login, previous one destroyed | ✅ S1 |
-| A8 | 🟡 | Last manager deactivated | Refused | ⏳ S2 |
-| A9 | 🟡 | Manager knows a reset password | `must_change_password` forces a change | ⏳ S2 |
+| A8 | 🟡 | Last manager deactivated or demoted; manager deactivating self | Refused | ✅ S2 |
+| A9 | 🟡 | Manager knows a reset password | `must_change_password` blocks every page until changed; reset ends sessions | ✅ S2 |
 | A10 | 🟡 | Missing traceability | Hash-chained, append-only audit log (triggers + SHA-256 chain); `hotel audit verify`; manager viewer | ✅ S2 |
 | A11 | ⚪ | TOTP replay | Remember last used time step | ⏳ stretch |
 

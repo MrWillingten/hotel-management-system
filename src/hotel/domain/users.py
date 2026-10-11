@@ -25,6 +25,13 @@ def validate_username(raw: str) -> str:
     return username
 
 
+def validate_full_name(raw: str) -> str:
+    full_name = " ".join(unicodedata.normalize("NFC", raw).split())
+    if not 1 <= len(full_name) <= 100:
+        raise ValidationError("full_name.invalid", fields={"full_name": "full_name.invalid"})
+    return full_name
+
+
 @dataclass(frozen=True, slots=True)
 class LockoutPolicy:
     """After every `max_attempts` wrong passwords the account is locked.
