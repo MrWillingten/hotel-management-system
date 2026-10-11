@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import random
 import secrets
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime, time, timedelta
 
 from hotel.bootstrap import Services, build_services
@@ -106,7 +106,7 @@ EXTRAS = (
     ("Minibar", 8),
     ("Spa access", 60),
 )
-HISTORY_DAYS = 7  # the demo replays the last week, so it has stays, bills and invoices
+HISTORY_DAYS = 120  # about four months of replayed activity, so reports and charts have data
 MAINTENANCE_ROOM = "105"
 
 
@@ -123,7 +123,9 @@ def _demo_password() -> str:
     return "demo-" + secrets.token_urlsafe(9)
 
 
-def seed_demo(services: Services, *, guests: int = 40, seed: int = 2026) -> DemoResult:
+def seed_demo(
+    services: Services, *, guests: int = 40, seed: int = 2026, history_days: int = HISTORY_DAYS
+) -> DemoResult:
     """Fill an empty hotel with fictional data. Refuses if rooms or guests already exist."""
     system = Actor.system("seed")
     with services.uow_factory() as uow:
@@ -135,9 +137,13 @@ def seed_demo(services: Services, *, guests: int = 40, seed: int = 2026) -> Demo
     rng = random.Random(seed)  # noqa: S311  # nosec B311
 
     # Everything goes through the normal services, but with a clock that starts
-    # a week ago and is moved forward day by day ("replaying" the week).
+    # `history_days` ago and is moved forward day by day ("replaying" them).
+    # The replay starts at 07:00 on its first day and ends yesterday evening, so
+    # no record is ever dated after the real present.
     real_now = services.clock.now()
-    clock = FixedClock(real_now - timedelta(days=HISTORY_DAYS), services.clock.hotel_tz)
+    tz = services.clock.hotel_tz
+    first_day = services.clock.today() - timedelta(days=history_days)
+    clock = FixedClock(datetime.combine(first_day, time(7), tzinfo=tz), tz)
     services = build_services(services.settings, clock=clock)
 
     manager = _demo_account(services, system, result, "demo.manager", "Demo Manager", Role.MANAGER)
@@ -159,6 +165,7 @@ def seed_demo(services: Services, *, guests: int = 40, seed: int = 2026) -> Demo
             )
             result.rooms += 1
     _demo_catalogue(services, boss)
+    _demo_prices(services, boss, history_days)
 
     used_documents: set[str] = set()
     for i in range(guests):
@@ -179,8 +186,9 @@ def seed_demo(services: Services, *, guests: int = 40, seed: int = 2026) -> Demo
             )
         result.guests += 1
 
-    _demo_history(services, clock, boss, rng, result)
+    _demo_history(services, clock, boss, rng, result, history_days)
     clock.advance(real_now - clock.now())  # back to the present
+    services.night_audit.catch_up(boss)
     today = services.clock.today()
     room_105 = next(o.room for o in rooms.list_rooms(boss) if o.room.number == MAINTENANCE_ROOM)
     rooms.schedule_maintenance(
@@ -219,10 +227,34 @@ def _at(clock: FixedClock, hour: int) -> None:
     clock.advance(local - clock.now())
 
 
+def _demo_prices(services: Services, boss: Actor, history_days: int) -> None:
+    """A 10 % weekend surcharge and a high season in the middle of the replayed months."""
+    settings = services.hotel_settings.get(boss)
+    services.hotel_settings.update(boss, replace(settings, weekend_surcharge_bp=1_000))
+    start = services.clock.today()
+    first = start + timedelta(days=history_days // 4)
+    last = start + timedelta(days=history_days // 2)
+    for category in services.rooms.list_categories(boss):
+        base = next(rate for name, _, _, rate, _ in CATEGORIES if name == category.name)
+        services.rooms.add_rate_period(
+            boss,
+            category_id=category.id,
+            name="High season",
+            first_night=first,
+            last_night=last,
+            nightly_rate=Money.from_dinars(base * 13 // 10),
+        )
+
+
 def _demo_history(
-    services: Services, clock: FixedClock, boss: Actor, rng: random.Random, result: DemoResult
+    services: Services,
+    clock: FixedClock,
+    boss: Actor,
+    rng: random.Random,
+    result: DemoResult,
+    history_days: int,
 ) -> None:
-    """Replay the last week: walk-ins check in, charge extras, pay and check out."""
+    """Replay the past days: bookings, check-ins, extras, payments, check-outs."""
     desk = Actor.system("seed")
     extras = {e.name: e for e in services.extras.catalogue(desk)}
     guests = [
@@ -232,7 +264,9 @@ def _demo_history(
     ]
     if not guests:
         return
-    for day in range(HISTORY_DAYS):
+    for day in range(history_days):
+        if day:
+            services.night_audit.run(boss)  # 08:00: close yesterday
         _at(clock, 11)  # morning: departures
         for stay in services.front_desk.day(desk).departures:
             bill = services.billing.bill(desk, stay.id)
@@ -242,61 +276,92 @@ def _demo_history(
                 services.billing.record_payment(desk, stay.id, amount=bill.balance, method=method)
             services.invoices.check_out(desk, stay.id, version=stay.version)
             result.invoices += 1
-        if day < HISTORY_DAYS - 1:  # today's rooms stay "to clean" for the demo
+        if day < history_days - 1:  # today's rooms stay "to clean" for the demo
             for room in services.front_desk.day(desk).to_clean:
                 services.rooms.set_housekeeping(desk, room.id, Housekeeping.INSPECTED)
 
-        _at(clock, 15)  # afternoon: arrivals
+        _at(clock, 12)  # the phone rings: bookings for later, some cancelled
         today = clock.today()
+        if rng.random() < 0.5:
+            _advance_booking(services, desk, rng, guests, today, result)
+
+        _at(clock, 15)  # afternoon: arrivals (booked earlier, plus walk-ins)
         no_show = None
-        for arrival in range(rng.randint(2, 4)):
+        for expected in services.front_desk.day(desk).arrivals:
+            _arrive(services, desk, boss, rng, extras, expected, result, discount=False)
+        weekend = today.weekday() in (4, 5)  # Friday and Saturday arrivals are busier
+        for walk_in in range(rng.randint(2, 4) if weekend else rng.randint(0, 2)):
             period = StayPeriod(today, today + timedelta(days=rng.randint(1, 4)))
-            free = [
-                r
-                for r in services.reservations.find_available_rooms(desk, period)
-                if r.number != MAINTENANCE_ROOM
-            ]
-            if not free:
+            reservation = _book(services, desk, rng, guests, period)
+            if reservation is None:
                 break
-            room = rng.choice(free)
-            adults = rng.randint(1, min(2, room.capacity))
-            reservation = services.reservations.create(
-                desk,
-                guest_id=rng.choice(guests).id,
-                period=period,
-                rooms=[RoomRequest(room.id, adults)],
-            )
             result.reservations += 1
-            if day == 2 and arrival == 0:  # one guest never comes (recorded tonight)
+            if day == 2 and walk_in == 0 and no_show is None:  # one guest never comes
                 no_show = reservation
                 continue
-            if rng.random() < 0.4:  # a 30 % deposit paid by transfer before arriving
-                deposit = reservation.accommodation_total.percent(3_000)
-                services.billing.record_payment(
-                    desk, reservation.id, amount=deposit, method=PaymentMethod.TRANSFER
-                )
-            reservation = services.reservations.check_in(
-                desk, reservation.id, version=reservation.version
-            )
-            if day == 4 and arrival == 0:
-                services.billing.grant_discount(
-                    boss,
-                    PercentDiscount(
-                        reservation_id=reservation.id, reason="Returning guest", rate_bp=1000
-                    ),
-                )
-            services.extras.charge(
-                desk, reservation.id, extra_id=extras["Breakfast"].id, quantity=adults
-            )
-            extra = rng.choice(["Dinner", "Airport transfer", "Laundry", "Minibar", "Spa access"])
-            services.extras.charge(
-                desk, reservation.id, extra_id=extras[extra].id, quantity=rng.randint(1, 2)
-            )
+            _arrive(services, desk, boss, rng, extras, reservation, result, discount=day == 4)
         if no_show is not None:
             _at(clock, 22)
             services.reservations.record_no_show(desk, no_show.id, version=no_show.version)
             result.invoices += 1
-        _at(clock, 8)  # the next morning
+        if day < history_days - 1:
+            _at(clock, 8)  # the next morning
+
+
+def _book(services, desk, rng, guests, period):
+    free = [
+        r
+        for r in services.reservations.find_available_rooms(desk, period)
+        if r.number != MAINTENANCE_ROOM
+    ]
+    if not free:
+        return None
+    room = rng.choice(free)
+    return services.reservations.create(
+        desk,
+        guest_id=rng.choice(guests).id,
+        period=period,
+        rooms=[RoomRequest(room.id, rng.randint(1, min(2, room.capacity)))],
+    )
+
+
+def _advance_booking(services, desk, rng, guests, today, result) -> None:
+    arrival = today + timedelta(days=rng.randint(3, 20))
+    reservation = _book(
+        services,
+        desk,
+        rng,
+        guests,
+        StayPeriod(arrival, arrival + timedelta(days=rng.randint(2, 5))),
+    )
+    if reservation is None:
+        return
+    result.reservations += 1
+    if rng.random() < 0.4:  # a 30 % deposit paid by transfer
+        services.billing.record_payment(
+            desk,
+            reservation.id,
+            amount=reservation.accommodation_total.percent(3_000),
+            method=PaymentMethod.TRANSFER,
+        )
+    if rng.random() < 0.15:  # a change of plans, early enough to be free
+        services.reservations.cancel(desk, reservation.id, version=reservation.version)
+
+
+def _arrive(services, desk, boss, rng, extras, reservation, result, *, discount: bool) -> None:
+    """Check the guest in and charge a breakfast and one other extra."""
+    reservation = services.reservations.check_in(desk, reservation.id, version=reservation.version)
+    if discount:
+        services.billing.grant_discount(
+            boss,
+            PercentDiscount(reservation_id=reservation.id, reason="Returning guest", rate_bp=1000),
+        )
+    adults = reservation.rooms[0].adults
+    services.extras.charge(desk, reservation.id, extra_id=extras["Breakfast"].id, quantity=adults)
+    extra = rng.choice(["Dinner", "Airport transfer", "Laundry", "Minibar", "Spa access"])
+    services.extras.charge(
+        desk, reservation.id, extra_id=extras[extra].id, quantity=rng.randint(1, 2)
+    )
 
 
 def _demo_reservations(services: Services, system: Actor, rng: random.Random) -> int:
