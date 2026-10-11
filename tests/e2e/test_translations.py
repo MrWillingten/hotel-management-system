@@ -105,3 +105,16 @@ def test_compiled_files_match_the_sources(language):
     assert compiled == expected.getvalue(), (
         f"Run: pybabel compile -d {TRANSLATIONS.relative_to(ROOT)}"
     )
+
+
+def test_arabic_pages_use_western_digits_and_isolate_amounts(client, services, hotel):
+    from tests.conftest import login
+    from tests.integration.test_booking import book, stay
+
+    r = book(services, hotel, stay(9, 11), "204")
+    login(client)
+    client.set_cookie("hotel_lang", "ar")
+    page = client.get(f"/reservations/{r.id}/bill").get_data(as_text=True)
+    assert 'dir="rtl"' in page
+    assert "<bdi>360.000 د.ت</bdi>" in page
+    assert not any("٠" <= ch <= "٩" for ch in page)  # no Arabic-Indic digits

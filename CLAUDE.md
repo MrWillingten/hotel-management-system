@@ -92,7 +92,12 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
 
 ### Done
 - Phases 1–5 (analysis, architecture, growth, security review, agile plan).
-- Sprints 1–4 → v0.1.0 … v0.4.0. Details: `CHANGELOG.md`, `docs/roadmap.md`.
+- Sprints 1–5 → v0.1.0 … v0.9.0 (code complete). Details: `CHANGELOG.md`, `docs/roadmap.md`.
+- Sprint 5 map: reports `domain/reports.py` + `repositories/reports.py` + `services/reports.py`;
+  charts `web/charts.py` + `macros/charts.html`; CSV `web/csv_export.py`; night audit
+  `domain|services/night_audit.py` (catch-up in `cli.cmd_run`); prices `domain/pricing.py`;
+  anonymisation `Guest.anonymise` + `GuestService.anonymise`; demo replay `demo.py`
+  (`history_days`). Migrations 0012–0014.
 - Accounts: passwords are only stored as scrypt hashes (unrecoverable). First
   manager: `hotel create-manager`; staff: Staff page (temporary password);
   forgotten password (even the last manager): `hotel reset-password USERNAME`.
@@ -104,17 +109,21 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
   invoices `domain|services/invoices.py` (`issue_invoice` also used by cancel/no-show).
   Migrations 0007–0010. Web: blueprints `billing`, `extras`, `hotel_settings`, `invoices`.
 
-### Next: Sprint 5 – Reports, operations, languages (7 – 20 Dec) → v0.9.0, code complete
-**The full backlog with acceptance criteria is in `docs/roadmap.md`** (5.1–5.8,
-copied from the approved Phase 5 plan; Sprint 6 table, risks and cut order
-too). Read it before creating the milestone/issues. Process agreed with the
-student: show the drafted stories for review **before** creating issues.
-Learn first: SQL aggregation, SVG generation, `csv`, gettext/Babel.
-Stories reviewed and approved 11 Oct; decisions recorded under the Sprint 5
-table in the roadmap; issues #50–#58, milestone "Sprint 5" (#4).
+### Next: Sprint 6 – Stretch, freeze, delivery (21 Dec – 3 Jan) → v1.0.0
+Plan in `docs/roadmap.md` (Sprint 6 table). Stretch order: TOTP 2FA for
+managers → Docker image → read-only JSON API → Windows executable → moving
+a guest between rooms. Feature freeze 27 Dec, then manual Windows + three
+browsers checklist, OWASP ASVS L1 self-assessment, test evidence table,
+report (40–50 pages), screenshots in both themes and three languages,
+demo script and two rehearsals. As agreed: draft the Sprint 6 stories and
+show them to the student **before** creating issues.
+Sprint 5 translation review done by the assistant at the student's request
+(34 corrections, see docs/translations.md); a native-speaker read before the
+demo is still advised.
 
 ### Known open issues / limitations (not bugs yet fixed)
-- French and Arabic texts are drafts → native-speaker review before demo.
+- French and Arabic texts reviewed once (AI) → a native-speaker read before the
+  demo with `scripts/i18n_review.py`.
 - Shortening a stay within 48 h charges no fee; early departure charges no
   fee either (decision F, documented).
 - Check-out is allowed with a balance due (shown under "Unpaid after
@@ -137,4 +146,9 @@ table in the roadmap; issues #50–#58, milestone "Sprint 5" (#4).
 - A nested Unit of Work inside another waits on its own write lock → pass
   the open `uow` to helpers (`load_settings(uow)`, `bill_for(uow, r)`).
 - Blueprint module named `settings` was shadowed by `create_app(settings)` → `hotel_settings`.
-- Amounts/percentages render with a non-breaking space (`\u00a0`) → tests must use it.
+- Amounts/percentages render with a non-breaking space (`\u00a0`) → tests must use it;
+  in templates amounts are also wrapped in `<bdi>`.
+- Chained commit+push happened again (formatter hook changed a file) → PR showed
+  no change; always commit, check, then push separately.
+- Demo replay clock jumped past "now" when started in the afternoon → start at
+  07:00 on day one and stop the evening before today.

@@ -146,7 +146,7 @@ def test_tax_rules_pages(client, services, hotel):
     )
     page = client.get("/settings/").get_data(as_text=True)
     assert "7\u00a0%" in page
-    assert "3.000\u00a0DT per adult per night" in page
+    assert "<bdi>3.000\u00a0DT</bdi> per adult per night" in page
     bad = _post(client, "/settings/taxes", {"name": "X", "kind": "NOPE", "rate": "1"})
     assert bad.status_code == 400
     vat = services.hotel_settings.tax_rules(hotel.boss)[0]

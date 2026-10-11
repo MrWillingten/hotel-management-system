@@ -83,7 +83,7 @@ settings are read through the caller's transaction (`load_settings(uow)`);
 and Jinja's `gettext` always applies `%` formatting, so a literal percent
 sign in a translatable string must be written `%%`.
 
-### Sprint 5 – Reports, operations, languages (7 – 20 Dec) → code complete
+### Sprint 5 – Reports, operations, languages (7 – 20 Dec) → code complete ✅
 
 **Learn first:** SQL aggregation (`GROUP BY`, date ranges) · generating SVG · `csv` ·
 gettext and Babel catalogues.
@@ -98,6 +98,25 @@ gettext and Babel catalogues.
 | 5.6 | As a manager, I set seasonal and weekend rates | Rate periods per category. Locked prices on existing reservations unaffected (`domain/pricing.Pricing`, used by `ReservationService._pricing`). |
 | 5.7 | As a manager, I anonymise old guests | Personal data replaced, invoices keep their own copy of the name, action audited. |
 | 5.8 | Seed v2 | Several months of realistic history, so the reports and charts look alive in the demo. |
+
+| IDs | PR | Status |
+|---|---|---|
+| 5.0 / 5.1 | #59 | ✅ |
+| 5.2 / 5.3 | #60 | ✅ |
+| 5.4 | #61 | ✅ |
+| 5.6 | #62 | ✅ |
+| 5.7 | #63 | ✅ |
+| 5.8 | #64 | ✅ |
+| 5.5 | #65 | ✅ – review done by the assistant at the student's request (34 corrections) |
+
+Retrospective: SQL `GROUP BY` kept every report a handful of queries,
+and keeping the arithmetic (rates, averages) in the domain made the
+figures checkable by hand in tests. Two lessons: the demo's time machine
+first produced records dated after the present (the replay started in the
+afternoon and its "never backwards" clock jumped a day); checking the
+latest timestamps caught it. And a commit blocked by the formatter hook
+was pushed anyway because commit and push were chained: rule 4 of
+CLAUDE.md exists for exactly this.
 
 Decisions taken with the student before the sprint (11 Oct): revenue counts
 **when invoiced**, with cash received shown separately · the night audit runs

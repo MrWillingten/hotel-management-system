@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 13:44+0100\n"
+"POT-Creation-Date: 2026-10-11 14:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1408,6 +1408,12 @@ msgid "Record a payment first"
 msgstr ""
 
 msgid "Record the no-show"
+msgstr ""
+
+msgid "Record the payment"
+msgstr ""
+
+msgid "Record the refund"
 msgstr ""
 
 msgid "Reference"

@@ -4,6 +4,33 @@ All notable changes are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.9.0] – Sprint 5: Reports, operations, languages (code complete)
+
+### Added
+- Reports page (managers) for any range of up to two years: occupancy
+  per day or month (rooms under maintenance excluded), nights sold, room
+  value, average daily rate, revenue per available room, revenue counted
+  when invoiced (accommodation, services, fees, taxes), cash received
+  per method, reservations made, cancellations and no-shows, nights per
+  category, availability by category, outstanding balances.
+- Server-side SVG charts (no JavaScript): occupancy over time, revenue by
+  type, nights per category; themed, mirrored in right-to-left languages.
+- CSV export of the report tables, protected against formula injection,
+  without identity documents or contact details, audited.
+- Night audit: closes each finished day (no-shows, overdue departures
+  flagged, frozen daily snapshot); `hotel night-audit`, a manager page
+  and an automatic catch-up at start-up; safe to run twice.
+- Seasonal rate periods per category and a weekend surcharge on chosen
+  nights (default Saturday and Sunday); period > weekend > base rate;
+  booked nights keep their prices.
+- Guest anonymisation after a configurable time without a stay (default
+  24 months), confirmed by a manager; invoices keep their copy.
+- Translation review workflow (`scripts/i18n_review.py`), amounts
+  isolated with `<bdi>`, test for Western digits in Arabic.
+- Demo data v2: about four months of replayed history with seasonal
+  prices and a night audit every day.
+- A link from the room form to the categories page.
+
 ## [0.4.0] – Sprint 4: Front desk and billing
 
 ### Added

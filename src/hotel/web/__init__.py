@@ -38,7 +38,7 @@ from hotel.web.blueprints import (
     staff,
 )
 from hotel.web.context import SERVICES_KEY
-from hotel.web.formatting import money, percent
+from hotel.web.formatting import money_html, percent
 from hotel.web.preferences import current_theme, select_locale, text_direction
 
 TRANSLATIONS_DIR = Path(__file__).resolve().parent.parent / "translations"
@@ -107,7 +107,7 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
     ):
         app.register_blueprint(blueprint)
 
-    app.add_template_filter(money, "money")
+    app.add_template_filter(money_html, "money")
     app.add_template_filter(percent, "percent")
 
     @app.template_filter("options")

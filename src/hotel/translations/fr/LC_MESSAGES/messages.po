@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 13:44+0100\n"
+"POT-Creation-Date: 2026-10-11 14:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr "%(name)s ajouté au catalogue."
 
 #, python-format
 msgid "%(name)s is checked in."
-msgstr "%(name)s est enregistré(e) à l'arrivée."
+msgstr "Arrivée de %(name)s enregistrée."
 
 #, python-format
 msgid "%(quantity)s × %(price)s"
@@ -344,7 +344,7 @@ msgid "Before an upgrade"
 msgstr "Avant une mise à jour"
 
 msgid "Between 6 and 120. Only proposed to a manager, never automatic."
-msgstr "Entre 6 et 120. Seulement proposé à un gérant, jamais automatique."
+msgstr "Entre 6 et 120. Seulement proposé à un gestionnaire, jamais automatique."
 
 msgid "Bill"
 msgstr "Note"
@@ -507,10 +507,10 @@ msgid "Check-out time"
 msgstr "Heure de départ"
 
 msgid "Checked in"
-msgstr "Arrivé"
+msgstr "En séjour"
 
 msgid "Checked out"
-msgstr "Parti"
+msgstr "Départ effectué"
 
 #, python-format
 msgid "Checked out. Invoice %(number)s issued."
@@ -1220,7 +1220,7 @@ msgid "No weekend surcharge is set."
 msgstr "Aucun supplément de week-end n'est défini."
 
 msgid "No-show"
-msgstr "Non présenté"
+msgstr "Non-présentation"
 
 msgid "No-show fee"
 msgstr "Frais de non-présentation"
@@ -1298,7 +1298,7 @@ msgid "Outstanding balances"
 msgstr "Soldes impayés"
 
 msgid "Overdue"
-msgstr "Dépassé"
+msgstr "Départ dépassé"
 
 #, python-format
 msgid "Page %(page)s of %(pages)s"
@@ -1397,7 +1397,7 @@ msgid "Receptionist"
 msgstr "Réceptionniste"
 
 msgid "Record"
-msgstr "Enregistrement"
+msgstr "Objet"
 
 msgid "Record a deposit"
 msgstr "Enregistrer un acompte"
@@ -1414,11 +1414,17 @@ msgstr "Enregistrer d'abord un paiement"
 msgid "Record the no-show"
 msgstr "Enregistrer la non-présentation"
 
+msgid "Record the payment"
+msgstr "Enregistrer le paiement"
+
+msgid "Record the refund"
+msgstr "Enregistrer le remboursement"
+
 msgid "Reference"
 msgstr "Référence"
 
 msgid "Refund"
-msgstr "Rembourser"
+msgstr "Remboursement"
 
 msgid "Refund owed to the guest"
 msgstr "Remboursement dû au client"
@@ -1586,7 +1592,7 @@ msgid "Rooms free for the same dates:"
 msgstr "Chambres libres aux mêmes dates :"
 
 msgid "Rooms not ready"
-msgstr "Chambres pas prêtes"
+msgstr "Chambres non prêtes"
 
 #, python-format
 msgid "Rooms: %(count)s"
@@ -1734,7 +1740,7 @@ msgid "The bill is closed: discounts can no longer change."
 msgstr "La note est clôturée : les remises ne peuvent plus changer."
 
 msgid "The bill is closed: this charge can no longer be changed."
-msgstr "La facture est clôturée : cette prestation ne peut plus être modifiée."
+msgstr "La note est clôturée : cette prestation ne peut plus être modifiée."
 
 msgid "The bill is settled."
 msgstr "La note est réglée."
@@ -1755,7 +1761,7 @@ msgid "The departure date must be after today."
 msgstr "La date de départ doit être postérieure à aujourd'hui."
 
 msgid "The extra-services catalogue is empty. A manager can add services."
-msgstr "Le catalogue des services est vide. Un gérant peut ajouter des services."
+msgstr "Le catalogue des services est vide. Un gestionnaire peut ajouter des services."
 
 msgid "The first day guests can stay again."
 msgstr "Le premier jour où des clients peuvent de nouveau séjourner."
@@ -1778,7 +1784,7 @@ msgid "The hotel must keep at least one active manager."
 msgstr "L'hôtel doit garder au moins un gestionnaire actif."
 
 msgid "The hotel owes the guest a refund. Ask a manager to record it."
-msgstr "L'hôtel doit un remboursement au client. Demandez à un gérant de l'enregistrer."
+msgstr "L'hôtel doit un remboursement au client. Demandez à un gestionnaire de l'enregistrer."
 
 msgid "The last night must not be before the first night."
 msgstr "La dernière nuit ne peut pas précéder la première."
