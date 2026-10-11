@@ -61,6 +61,10 @@ class TaxRule(ABC):
         """The tax for this stay, rounded half-up to the millime."""
 
     @abstractmethod
+    def basis(self, stay: TaxableStay) -> tuple[int, Money]:
+        """(quantity, unit) shown on the bill line, so the reader can check the sum."""
+
+    @abstractmethod
     def validate(self) -> None:
         """Raise ValidationError if the rule's own values are out of range."""
 
@@ -82,8 +86,13 @@ class PercentTax(TaxRule):
         return TaxKind.PERCENT
 
     def amount(self, stay: TaxableStay) -> Money:
-        base = stay.accommodation if self.applies_to is TaxBase.ACCOMMODATION else stay.services
-        return base.percent(self.rate_bp)
+        return self._base(stay).percent(self.rate_bp)
+
+    def basis(self, stay: TaxableStay) -> tuple[int, Money]:
+        return 1, self._base(stay)
+
+    def _base(self, stay: TaxableStay) -> Money:
+        return stay.accommodation if self.applies_to is TaxBase.ACCOMMODATION else stay.services
 
     def validate(self) -> None:
         self._validate_name()
@@ -103,6 +112,9 @@ class PerAdultNightTax(TaxRule):
 
     def amount(self, stay: TaxableStay) -> Money:
         return self.amount_per.times(stay.adult_nights)
+
+    def basis(self, stay: TaxableStay) -> tuple[int, Money]:
+        return stay.adult_nights, self.amount_per
 
     def validate(self) -> None:
         self._validate_name()

@@ -207,6 +207,7 @@ def detail(reservation_id: int):
         "reservations/detail.html",
         reservation=reservation,
         charges=services().extras.charges_for(actor, reservation_id),
+        bill=services().billing.bill(actor, reservation_id),
         extras=services().extras.catalogue(actor, active_only=True) if in_house else [],
         form_token=services().form_tokens.issue(actor) if in_house else "",
         free_until=services().reservations.free_cancellation_until(reservation.period),

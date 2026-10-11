@@ -9,6 +9,7 @@
   <div class="badge-row">{{ status_badge(reservation.status) }}</div>
   <div class="page-actions__buttons">
     <a class="button button--ghost" href="{{ url_for('reservations.index') }}">{{ _("All reservations") }}</a>
+    <a class="button button--ghost" href="{{ url_for('billing.bill', reservation_id=reservation.id) }}">{{ _("Bill and payments") }}</a>
     {%- if reservation.status == "CONFIRMED" and reservation.period.arrival <= today < reservation.period.departure %}
     <form method="post" action="{{ url_for('reservations.check_in', reservation_id=reservation.id) }}">
       {{ csrf() }}
@@ -63,6 +64,12 @@
         <span class="muted">{{ _("Adults: %(adults)s, children: %(children)s", adults=room.adults, children=room.children) }}</span></li>
       {%- endfor %}
     </ul>
+    <dl class="facts facts--money">
+      <div><dt>{{ _("Total") }}</dt><dd>{{ bill.total | money }}</dd></div>
+      <div><dt>{{ _("Paid") }}</dt><dd>{{ bill.paid | money }}</dd></div>
+      <div><dt>{{ _("Refund owed to the guest") if bill.balance.is_negative() else _("Balance due") }}</dt>
+        <dd><a href="{{ url_for('billing.bill', reservation_id=reservation.id) }}">{{ (-bill.balance if bill.balance.is_negative() else bill.balance) | money }}</a></dd></div>
+    </dl>
     {%- if reservation.status == "CONFIRMED" %}
     <div class="alert alert--info">{{ icon("info") }}
       <p>{{ _("Free cancellation until %(when)s. After that, cancelling costs %(rate)s of the accommodation.", when=free_until | datetimeformat("medium"), rate=fee_rate | percent) }}</p>

@@ -821,3 +821,11 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 .field__input--small { min-height: 2.25rem; padding-block: var(--space-1); max-width: 12rem; }
 .row--void td { color: var(--text-muted); text-decoration: line-through; }
 .row--void td .badge { text-decoration: none; }
+/* Bill */
+.grid--bill { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: start; }
+@media (max-width: 900px) { .grid--bill { grid-template-columns: minmax(0, 1fr); } }
+.bill__total th, .bill__total td { font-family: var(--font-serif); font-size: var(--text-lg); font-weight: 600; }
+.bill__balance th, .bill__balance td { color: var(--accent); font-weight: 600; }
+.bill__balance--credit th, .bill__balance--credit td { color: var(--warning-text); }
+.bill__line--discount td, .bill__line--discount_cap td { color: var(--success-text); }
+.facts--money { margin-block: var(--space-3); padding-block-start: var(--space-3); border-block-start: 1px solid var(--border); }

@@ -1,0 +1,114 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, select -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/billing.html" import bill_table, payment_kind, payment_method -%}
+{%- from "macros/reservations.html" import status_badge, stay -%}
+{%- set method_options = [("CASH", _("Cash")), ("CARD", _("Card")), ("TRANSFER", _("Bank transfer"))] -%}
+{%- set open_bill = reservation.status in ("CONFIRMED", "CHECKED_IN") -%}
+{% block title %}{{ _("Bill") }} {{ reservation.code }}{% endblock %}
+{% block page_title %}{{ _("Bill") }} <span dir="ltr">{{ reservation.code }}</span>{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <div class="badge-row">{{ status_badge(reservation.status) }}
+    <span class="muted">{{ reservation.guest_name }} · {{ stay(reservation.period) }}</span></div>
+  <div class="page-actions__buttons">
+    <a class="button button--ghost" href="{{ url_for('reservations.detail', reservation_id=reservation.id) }}">{{ _("Back to the reservation") }}</a>
+  </div>
+</div>
+{%- if open_bill %}
+<div class="alert alert--info">{{ icon("info") }}<p>{{ _("This is a preview: the invoice is issued at check-out, with the taxes in force at that moment.") }}</p></div>
+{%- endif %}
+
+<div class="grid grid--bill">
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Bill") }}</h2>
+    {{ bill_table(bill) }}
+  </section>
+
+  <div class="stack">
+    {%- if bill.balance.millimes > 0 %}
+    <section class="panel panel--accent">
+      <h2 class="panel__title">{{ _("Record a deposit") if reservation.status == "CONFIRMED" else _("Record a payment") }}</h2>
+      <form class="stack" method="post" action="{{ url_for('billing.pay', reservation_id=reservation.id) }}" novalidate>
+        {{ csrf() }}
+        <input type="hidden" name="form_token" value="{{ form_token }}">
+        {{ field("amount", _("Amount (DT)"), value=bill.balance, hint=_("At most the balance due.")) }}
+        {{ select("method", _("Method"), method_options, "CASH") }}
+        {{ field("reference", _("Reference"), required=False, maxlength=60, hint=_("Card slip or transfer number, if any.")) }}
+        <button class="button button--primary" type="submit">{{ _("Record") }}</button>
+      </form>
+    </section>
+    {%- elif bill.balance.is_negative() and current_user.is_manager %}
+    <section class="panel panel--accent">
+      <h2 class="panel__title">{{ _("Refund the guest") }}</h2>
+      <form class="stack" method="post" action="{{ url_for('billing.refund', reservation_id=reservation.id) }}" novalidate>
+        {{ csrf() }}
+        <input type="hidden" name="form_token" value="{{ form_token }}">
+        {{ field("amount", _("Amount (DT)"), value=-bill.balance) }}
+        {{ select("method", _("Method"), method_options, "CASH") }}
+        {{ field("reference", _("Reference"), required=False, maxlength=60) }}
+        <button class="button button--primary" type="submit">{{ _("Refund") }}</button>
+      </form>
+    </section>
+    {%- elif bill.balance.is_negative() %}
+    <div class="alert alert--warning">{{ icon("alert") }}<p>{{ _("The hotel owes the guest a refund. Ask a manager to record it.") }}</p></div>
+    {%- else %}
+    <div class="alert alert--success">{{ icon("check") }}<p>{{ _("The bill is settled.") }}</p></div>
+    {%- endif %}
+
+    {%- if current_user.is_manager and open_bill and not reservation.accommodation_total.is_zero() %}
+    <section class="panel">
+      <h2 class="panel__title">{{ _("Grant a discount") }}</h2>
+      <form class="stack" method="post" action="{{ url_for('billing.grant_discount', reservation_id=reservation.id) }}" novalidate>
+        {{ csrf() }}
+        {{ select("kind", _("Kind"), [("PERCENT", _("Percentage")), ("FIXED", _("Fixed amount (DT)"))], "PERCENT") }}
+        {{ field("value", _("Value"), hint=_("Accommodation only. All discounts together: at most %(cap)s of it.", cap=settings.discount_cap_bp | percent)) }}
+        {{ field("reason", _("Reason"), maxlength=200) }}
+        <button class="button button--ghost" type="submit">{{ _("Grant") }}</button>
+      </form>
+    </section>
+    {%- endif %}
+  </div>
+</div>
+
+<div class="grid grid--two">
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Payments") }}</h2>
+    {%- if bill.payments %}
+    <ul class="pick-list">
+      {%- for p in bill.payments %}
+      <li>
+        <span><strong>{{ payment_kind(p.kind) }}</strong> · {{ payment_method(p.method) }}{% if p.reference %} · <span dir="ltr">{{ p.reference }}</span>{% endif %}
+          <span class="muted">· {{ p.paid_at | datetimeformat("short") }} · {{ p.recorded_by_name }}</span></span>
+        <span class="num">{{ p.signed_amount | money }}</span>
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- else %}
+    <p class="muted">{{ _("No money received yet.") }}</p>
+    {%- endif %}
+  </section>
+
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Discounts") }}</h2>
+    {%- if discounts %}
+    <ul class="pick-list">
+      {%- for d in discounts %}
+      <li{% if not d.is_active %} class="row--void"{% endif %}>
+        <span>{{ d.reason }} <span class="muted">· {{ d.rate_bp | percent if d.rate_bp is defined else d.value | money }} · {{ d.approved_by_name }}</span></span>
+        {%- if d.is_active and current_user.is_manager and open_bill %}
+        <form method="post" action="{{ url_for('billing.remove_discount', discount_id=d.id) }}">
+          {{ csrf() }}
+          <input type="hidden" name="reservation_id" value="{{ reservation.id }}">
+          <button class="button button--ghost button--small" type="submit">{{ _("Remove") }}</button>
+        </form>
+        {%- elif not d.is_active %}<span class="badge badge--neutral">{{ _("Removed") }}</span>{% endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- else %}
+    <p class="muted">{{ _("No discount.") }}</p>
+    {%- endif %}
+  </section>
+</div>
+{% endblock %}

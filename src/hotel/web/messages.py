@@ -144,6 +144,17 @@ MESSAGES = {
     "settings.out_of_range": _l("This value is out of the allowed range."),
     "field.invalid_percent": _l("Enter a percentage between 0 and 100, for example 20 or 7.5."),
     "field.invalid_time": _l("Enter a time such as 14:00."),
+    "discount.rate_invalid": _l("Enter a percentage above 0 and at most 100."),
+    "discount.amount_invalid": _l("Enter an amount above 0."),
+    "discount.over_cap": _l(
+        "Discounts would total %(requested)s DT, above the allowed maximum of %(cap)s DT."
+    ),
+    "discount.bill_closed": _l("The bill is closed: discounts can no longer change."),
+    "payment.amount_invalid": _l("Enter an amount above 0 and at most 1,000,000 DT."),
+    "payment.method_invalid": _l("Choose how the money was paid."),
+    "payment.more_than_due": _l("That is more than the balance due (%(due)s DT)."),
+    "payment.refund_too_large": _l("That is more than the guest overpaid (%(credit)s DT)."),
+    "reference.invalid": _l("Use at most %(max_length)s characters."),
     "field.not_a_number": _l("Enter a whole number."),
     "field.invalid_date": _l("Enter a valid date."),
     "money.invalid": _l("Enter an amount such as 180 or 180.500."),

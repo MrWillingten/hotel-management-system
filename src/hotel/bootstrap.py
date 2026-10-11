@@ -19,6 +19,7 @@ from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.audit import AuditService
 from hotel.services.auth import AuthService
 from hotel.services.backups import BackupService
+from hotel.services.billing import BillingService
 from hotel.services.extras import ExtrasService
 from hotel.services.form_tokens import FormTokenService
 from hotel.services.front_desk import FrontDeskService
@@ -53,6 +54,7 @@ class Services:
     front_desk: FrontDeskService
     extras: ExtrasService
     hotel_settings: HotelSettingsService
+    billing: BillingService
 
 
 def build_services(settings: Settings, *, clock: Clock | None = None) -> Services:
@@ -92,4 +94,5 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
         front_desk=FrontDeskService(uow_factory, clock),
         extras=ExtrasService(uow_factory, clock),
         hotel_settings=HotelSettingsService(uow_factory, clock),
+        billing=BillingService(uow_factory, clock),
     )

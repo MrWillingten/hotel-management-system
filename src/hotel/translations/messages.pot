@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 09:11+0100\n"
+"POT-Creation-Date: 2026-10-11 09:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,6 +31,10 @@ msgstr ""
 
 #, python-format
 msgid "%(name)s is checked in."
+msgstr ""
+
+#, python-format
+msgid "%(quantity)s × %(price)s"
 msgstr ""
 
 #, python-format
@@ -90,6 +94,10 @@ msgid "Access denied"
 msgstr ""
 
 msgid "Accommodation"
+msgstr ""
+
+#, python-format
+msgid "Accommodation only. All discounts together: at most %(cap)s of it."
 msgstr ""
 
 msgid "Accommodation total (before tax)"
@@ -177,6 +185,9 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
+msgid "Amount (DT)"
+msgstr ""
+
 msgid "Amount per adult per night"
 msgstr ""
 
@@ -224,6 +235,9 @@ msgid ""
 "guess."
 msgstr ""
 
+msgid "At most the balance due."
+msgstr ""
+
 msgid "Audit log"
 msgstr ""
 
@@ -242,6 +256,9 @@ msgstr ""
 msgid "Back to the dashboard"
 msgstr ""
 
+msgid "Back to the reservation"
+msgstr ""
+
 msgid "Back up now"
 msgstr ""
 
@@ -258,6 +275,12 @@ msgstr ""
 msgid "Bad request"
 msgstr ""
 
+msgid "Balance due"
+msgstr ""
+
+msgid "Bank transfer"
+msgstr ""
+
 msgid "Before"
 msgstr ""
 
@@ -265,6 +288,12 @@ msgid "Before a restore"
 msgstr ""
 
 msgid "Before an upgrade"
+msgstr ""
+
+msgid "Bill"
+msgstr ""
+
+msgid "Bill and payments"
 msgstr ""
 
 msgid "Book"
@@ -328,6 +357,15 @@ msgstr ""
 
 #, python-format
 msgid "Capacity: %(count)s"
+msgstr ""
+
+msgid "Card"
+msgstr ""
+
+msgid "Card slip or transfer number, if any."
+msgstr ""
+
+msgid "Cash"
 msgstr ""
 
 msgid "Categories"
@@ -423,6 +461,9 @@ msgstr ""
 msgid "Choose a service from the catalogue."
 msgstr ""
 
+msgid "Choose how the money was paid."
+msgstr ""
+
 msgid "Choose the dates first."
 msgstr ""
 
@@ -509,10 +550,38 @@ msgstr ""
 msgid "Departures"
 msgstr ""
 
+msgid "Deposit"
+msgstr ""
+
 msgid "Description"
 msgstr ""
 
+msgid "Detail"
+msgstr ""
+
 msgid "Details"
+msgstr ""
+
+msgid "Discount granted."
+msgstr ""
+
+msgid "Discount removed."
+msgstr ""
+
+#, python-format
+msgid "Discount: %(reason)s"
+msgstr ""
+
+msgid "Discounts"
+msgstr ""
+
+msgid "Discounts limited to the maximum allowed"
+msgstr ""
+
+#, python-format
+msgid ""
+"Discounts would total %(requested)s DT, above the allowed maximum of "
+"%(cap)s DT."
 msgstr ""
 
 msgid "Do not rent"
@@ -594,6 +663,12 @@ msgstr ""
 msgid "Enter an amount above 0 and at most 1,000 DT."
 msgstr ""
 
+msgid "Enter an amount above 0 and at most 1,000,000 DT."
+msgstr ""
+
+msgid "Enter an amount above 0."
+msgstr ""
+
 msgid "Enter an amount such as 180 or 180.500."
 msgstr ""
 
@@ -625,6 +700,9 @@ msgid "First closed night"
 msgstr ""
 
 msgid "First name"
+msgstr ""
+
+msgid "Fixed amount (DT)"
 msgstr ""
 
 msgid "Flags"
@@ -667,6 +745,12 @@ msgid "Good evening"
 msgstr ""
 
 msgid "Good morning"
+msgstr ""
+
+msgid "Grant"
+msgstr ""
+
+msgid "Grant a discount"
 msgstr ""
 
 msgid "Guest"
@@ -796,6 +880,9 @@ msgstr ""
 msgid "Maximum total discount (%%)"
 msgstr ""
 
+msgid "Method"
+msgstr ""
+
 msgid "Name"
 msgstr ""
 
@@ -872,6 +959,9 @@ msgstr ""
 msgid "No departures left today."
 msgstr ""
 
+msgid "No discount."
+msgstr ""
+
 msgid "No entries match these filters."
 msgstr ""
 
@@ -880,6 +970,9 @@ msgid "No guest matches “%(query)s”."
 msgstr ""
 
 msgid "No guests registered yet."
+msgstr ""
+
+msgid "No money received yet."
 msgstr ""
 
 msgid "No more arrivals expected today."
@@ -928,6 +1021,9 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
+msgid "Nothing to pay."
+msgstr ""
+
 msgid "Occupancy tonight"
 msgstr ""
 
@@ -956,6 +1052,9 @@ msgstr ""
 msgid "Pages"
 msgstr ""
 
+msgid "Paid"
+msgstr ""
+
 msgid "Passport"
 msgstr ""
 
@@ -963,6 +1062,12 @@ msgid "Password"
 msgstr ""
 
 msgid "Past"
+msgstr ""
+
+msgid "Payment"
+msgstr ""
+
+msgid "Payments"
 msgstr ""
 
 msgid "Percentage"
@@ -1000,6 +1105,10 @@ msgstr ""
 msgid "Reason"
 msgstr ""
 
+#, python-format
+msgid "Received %(amount)s."
+msgstr ""
+
 msgid "Reception and management"
 msgstr ""
 
@@ -1009,10 +1118,32 @@ msgstr ""
 msgid "Record"
 msgstr ""
 
+msgid "Record a deposit"
+msgstr ""
+
 msgid "Record a no-show"
 msgstr ""
 
+msgid "Record a payment"
+msgstr ""
+
 msgid "Record the no-show"
+msgstr ""
+
+msgid "Reference"
+msgstr ""
+
+msgid "Refund"
+msgstr ""
+
+msgid "Refund owed to the guest"
+msgstr ""
+
+msgid "Refund the guest"
+msgstr ""
+
+#, python-format
+msgid "Refunded %(amount)s."
 msgstr ""
 
 msgid "Register a guest"
@@ -1027,7 +1158,13 @@ msgstr ""
 msgid "Registered"
 msgstr ""
 
+msgid "Remove"
+msgstr ""
+
 msgid "Remove this room"
+msgstr ""
+
+msgid "Removed"
 msgstr ""
 
 msgid "Reopens on"
@@ -1092,6 +1229,10 @@ msgstr ""
 
 #, python-format
 msgid "Room %(number)s is ready for the next guest."
+msgstr ""
+
+#, python-format
+msgid "Room %(room)s"
 msgstr ""
 
 #, python-format
@@ -1225,11 +1366,17 @@ msgstr ""
 msgid "Stay"
 msgstr ""
 
+msgid "Subtotal before discounts and taxes"
+msgstr ""
+
 #, python-format
 msgid "Tax rule %(name)s added."
 msgstr ""
 
 msgid "Tax rules"
+msgstr ""
+
+msgid "Taxes"
 msgstr ""
 
 msgid "Temporary password"
@@ -1238,13 +1385,27 @@ msgstr ""
 msgid "Temporary password set. They must choose a new one at their next sign-in."
 msgstr ""
 
+#, python-format
+msgid "That is more than the balance due (%(due)s DT)."
+msgstr ""
+
+#, python-format
+msgid "That is more than the guest overpaid (%(credit)s DT)."
+msgstr ""
+
 msgid "The arrival date can't be in the past."
 msgstr ""
 
 msgid "The arrival time has passed: record a no-show instead of a cancellation."
 msgstr ""
 
+msgid "The bill is closed: discounts can no longer change."
+msgstr ""
+
 msgid "The bill is closed: this charge can no longer be changed."
+msgstr ""
+
+msgid "The bill is settled."
 msgstr ""
 
 msgid "The catalogue is empty."
@@ -1283,6 +1444,9 @@ msgid ""
 msgstr ""
 
 msgid "The hotel must keep at least one active manager."
+msgstr ""
+
+msgid "The hotel owes the guest a refund. Ask a manager to record it."
 msgstr ""
 
 msgid ""
@@ -1338,6 +1502,9 @@ msgstr ""
 msgid "This form was already submitted. Check the charges before trying again."
 msgstr ""
 
+msgid "This form was already submitted. Check the payments before trying again."
+msgstr ""
+
 msgid ""
 "This form was already submitted. Check the reservation before trying "
 "again."
@@ -1355,6 +1522,11 @@ msgid "This guest is marked do-not-rent: the booking will be refused."
 msgstr ""
 
 msgid "This is a different person: register anyway"
+msgstr ""
+
+msgid ""
+"This is a preview: the invoice is issued at check-out, with the taxes in "
+"force at that moment."
 msgstr ""
 
 msgid "This is recorded in the audit log."
@@ -1414,6 +1586,9 @@ msgid ""
 "and try again."
 msgstr ""
 
+msgid "Total"
+msgstr ""
+
 msgid "Type"
 msgstr ""
 
@@ -1466,6 +1641,9 @@ msgid "VIP"
 msgstr ""
 
 msgid "VIP guest"
+msgstr ""
+
+msgid "Value"
 msgstr ""
 
 #, python-format
@@ -1521,5 +1699,9 @@ msgid "Your other open sessions will be signed out."
 msgstr ""
 
 msgid "Your password has been changed."
+msgstr ""
+
+#, python-format
+msgid "on %(base)s"
 msgstr ""
 
