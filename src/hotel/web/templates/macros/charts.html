@@ -1,0 +1,26 @@
+{#- SVG charts built by hotel.web.charts. Colours come from app.css (theme variables). -#}
+
+{%- macro column_chart(chart) -%}
+<svg class="chart" viewBox="0 0 {{ chart.width }} {{ chart.height }}" role="img" aria-label="{{ chart.title }}">
+  <title>{{ chart.title }}</title>
+  <line class="chart__grid" x1="0" x2="{{ chart.width }}" y1="10" y2="10"/>
+  <line class="chart__grid" x1="0" x2="{{ chart.width }}" y1="100" y2="100"/>
+  <line class="chart__axis" x1="0" x2="{{ chart.width }}" y1="190" y2="190"/>
+  {%- for bar in chart.bars %}
+  <rect class="chart__bar" x="{{ bar.x }}" y="{{ bar.y }}" width="{{ bar.width }}" height="{{ bar.height }}"><title>{{ bar.title }}</title></rect>
+  {%- if bar.label %}
+  <text class="chart__label" x="{{ bar.x + bar.width / 2 }}" y="{{ chart.label_y }}" text-anchor="middle">{{ bar.label }}</text>
+  {%- endif %}
+  {%- endfor %}
+</svg>
+{%- endmacro %}
+
+{%- macro bar_chart(chart, rtl=False) -%}
+<svg class="chart" viewBox="0 0 {{ chart.width }} {{ chart.height }}" role="img" aria-label="{{ chart.title }}">
+  <title>{{ chart.title }}</title>
+  {%- for bar in chart.bars %}
+  <text class="chart__label" x="{{ chart.width if rtl else 0 }}" y="{{ bar.y - 4 }}" text-anchor="{{ 'end' if rtl else 'start' }}">{{ bar.label }} · {{ bar.title }}</text>
+  <rect class="chart__bar chart__bar--{{ loop.index0 % 4 }}" x="{{ bar.x }}" y="{{ bar.y }}" width="{{ bar.width }}" height="{{ bar.height }}" rx="3"><title>{{ bar.label }}: {{ bar.title }}</title></rect>
+  {%- endfor %}
+</svg>
+{%- endmacro %}
