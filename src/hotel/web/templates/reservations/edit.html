@@ -30,7 +30,7 @@
       <table class="table">
         <thead><tr><th scope="col">{{ _("Room") }}</th><th scope="col">{{ _("Adults") }}</th><th scope="col">{{ _("Children") }}</th></tr></thead>
         <tbody>
-          {%- for booked in reservation.rooms %}
+          {%- for booked in reservation.current_rooms %}
           {%- set i = loop.index0 %}
           {%- set chosen = v.get("room_" ~ i, booked.room_id | string) %}
           <tr>
@@ -39,7 +39,7 @@
               <input type="hidden" name="room_{{ i }}" value="{{ booked.room_id }}"><strong dir="ltr">{{ booked.number }}</strong>
               {%- else %}
               <select class="field__input" name="room_{{ i }}" aria-label="{{ _('Room') }}">
-                {%- if reservation.rooms | length > 1 %}<option value="">{{ _("Remove this room") }}</option>{% endif %}
+                {%- if reservation.current_rooms | length > 1 %}<option value="">{{ _("Remove this room") }}</option>{% endif %}
                 {%- for room in rooms %}
                 <option value="{{ room.id }}" {%- if chosen == room.id | string %} selected{% endif %}>{{ room.number }} · {{ room.category_name }} · {{ room.capacity }} · {{ room.nightly_rate | money }}</option>
                 {%- endfor %}

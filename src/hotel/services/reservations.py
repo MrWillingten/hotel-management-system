@@ -8,6 +8,7 @@ from datetime import date, datetime, timedelta
 
 from hotel.domain.actor import Actor
 from hotel.domain.clock import Clock
+from hotel.domain.enums import Role
 from hotel.domain.errors import (
     BusinessRuleViolation,
     ConflictError,
@@ -32,11 +33,11 @@ from hotel.domain.reservations import (
     validate_room_requests,
     validate_stay,
 )
-from hotel.domain.rooms import Room
+from hotel.domain.rooms import Housekeeping, Room
 from hotel.persistence.repositories.reservations import ReservationFilter
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.audit import record
-from hotel.services.authorization import require_staff
+from hotel.services.authorization import require_role, require_staff
 from hotel.services.hotel_settings import load_settings
 from hotel.services.invoices import issue_invoice
 
@@ -264,8 +265,14 @@ class ReservationService:
             before_period, before_total = reservation.period, reservation.accommodation_total
             quote = self._plan_change(uow, reservation, period, rooms)
             reservation.period = period
+            moved_out = {r.room_id: r.moved_out_on for r in reservation.rooms}
             reservation.rooms = [
-                BookedRoom(line.room.id, line.request.adults, line.request.children)
+                BookedRoom(
+                    line.room.id,
+                    line.request.adults,
+                    line.request.children,
+                    moved_out_on=moved_out.get(line.room.id),
+                )
                 for line in quote.lines
             ]
             reservation.nights = [night for line in quote.lines for night in line.nights]
@@ -294,11 +301,15 @@ class ReservationService:
     ) -> Quote:
         today = self._clock.today()
         validate_room_requests(rooms)
+        check_period = period
         if reservation.status is ReservationStatus.CHECKED_IN:
             # The guest is in the house: only the departure (and who sleeps where
             # in the same rooms) can change. Moving rooms is a separate operation.
-            same_rooms = {r.room_id for r in rooms} == {r.room_id for r in reservation.rooms}
-            if period.arrival != reservation.period.arrival or not same_rooms:
+            current = {r.room_id for r in reservation.current_rooms}
+            if (
+                period.arrival != reservation.period.arrival
+                or {r.room_id for r in rooms} != current
+            ):
                 raise BusinessRuleViolation("reservation.checked_in_limits")
             if period.departure <= today:
                 raise ValidationError(
@@ -307,16 +318,20 @@ class ReservationService:
                 )
             if period.nights > MAX_NIGHTS:
                 raise ValidationError("reservation.too_long", max=MAX_NIGHTS)
+            # Nights already spent are history: only tonight onwards must be free.
+            check_period = StayPeriod(max(today, period.arrival), period.departure)
         elif reservation.status is ReservationStatus.CONFIRMED:
             validate_stay(period, today)
         else:
             raise InvalidStateTransitionError(
                 "reservation.not_modifiable", current=reservation.status.value
             )
-        checked = self._check_rooms(uow, period, rooms, exclude_reservation_id=reservation.id)
+        checked = self._check_rooms(uow, check_period, rooms, exclude_reservation_id=reservation.id)
         locked = {(n.room_id, n.night): n.rate for n in reservation.nights}
         pricing = self._pricing(uow)
         # A night that was already booked keeps its price; a new night costs today's.
+        # Before the check period, only nights the room really held are kept (after
+        # a move, the new room has no nights before the move).
         lines = [
             QuoteLine(
                 room,
@@ -330,11 +345,129 @@ class ReservationService:
                         else pricing.rate_for(room, night),
                     )
                     for night in period.each_night()
+                    if night >= check_period.arrival or (room.id, night) in locked
                 ],
             )
             for room, request in checked
         ]
+        # Rooms the guest moved out of keep their nights on the bill (story 6.5).
+        for booked in reservation.rooms:
+            if not booked.is_current:
+                lines.append(
+                    QuoteLine(
+                        uow.rooms.get(booked.room_id),
+                        RoomRequest(booked.room_id, booked.adults, booked.children),
+                        reservation.nights_of(booked.room_id),
+                    )
+                )
         return Quote(period, lines)
+
+    # ------------------------------------------------------------ moving rooms
+    def move_candidates(self, actor: Actor, reservation_id: int, from_room_id: int) -> list[Room]:
+        """Rooms the guests of `from_room_id` could move to, closest first.
+
+        Free from tonight (or the arrival) to the departure, big enough, in
+        service and not already part of the stay; the same category comes
+        first, then the closest price.
+        """
+        require_staff(actor)
+        today = self._clock.today()
+        with self._uow() as uow:
+            reservation = self._load(uow, reservation_id)
+            booked = next((r for r in reservation.current_rooms if r.room_id == from_room_id), None)
+            first = max(today, reservation.period.arrival)
+            if booked is None or first >= reservation.period.departure:
+                return []
+            blocked = uow.reservations.blocked_nights(
+                StayPeriod(first, reservation.period.departure)
+            )
+            used = {r.room_id for r in reservation.rooms}
+            current = uow.rooms.get(from_room_id)
+            candidates = [
+                room
+                for room in uow.rooms.list()
+                if room.in_service
+                and room.capacity >= booked.occupants
+                and room.id not in blocked
+                and room.id not in used
+            ]
+            return sorted(
+                candidates,
+                key=lambda room: (
+                    room.category_id != current.category_id,
+                    abs(room.nightly_rate.millimes - current.nightly_rate.millimes),
+                    room.number,
+                ),
+            )
+
+    def move_room(
+        self,
+        actor: Actor,
+        reservation_id: int,
+        *,
+        version: int,
+        from_room_id: int,
+        to_room_id: int,
+        charge_new_rate: bool = False,
+    ) -> Reservation:
+        """Story 6.5: move the guests of one room to another, from tonight on.
+
+        By default each night keeps its locked price (the hotel's courtesy, e.g.
+        after a broken air conditioner). Only a manager may charge the new
+        room's price instead (an upgrade the guest asked for). The new room is
+        checked exactly like a booking: in service, big enough, free.
+        """
+        require_staff(actor)
+        if charge_new_rate:
+            require_role(actor, Role.MANAGER)
+        today = self._clock.today()
+        with self._uow() as uow:
+            reservation = self._load(uow, reservation_id)
+            if reservation.version != version:
+                raise StaleDataError(entity="reservation", id=reservation_id)
+            old = next((r for r in reservation.current_rooms if r.room_id == from_room_id), None)
+            to_room = uow.rooms.get(to_room_id)
+            if to_room is None:
+                raise NotFoundError(entity="room", id=to_room_id)
+            before_total = reservation.accommodation_total
+            pricing = self._pricing(uow)
+            moved = reservation.move_room(
+                from_room_id,
+                to_room_id,
+                today=today,
+                number=to_room.number,
+                category_name=to_room.category_name or "",
+                rate_for=(lambda night: pricing.rate_for(to_room, night))
+                if charge_new_rate
+                else None,
+            )
+            self._check_rooms(
+                uow,
+                StayPeriod(moved[0], moved[-1] + timedelta(days=1)),
+                [RoomRequest(to_room_id, old.adults, old.children)],
+                exclude_reservation_id=reservation.id,
+            )
+            uow.reservations.update(reservation)
+            uow.reservations.replace_rooms_and_nights(reservation)
+            if reservation.status is ReservationStatus.CHECKED_IN:
+                # The guests used the old room: it must be cleaned before anyone else.
+                uow.rooms.set_housekeeping([from_room_id], Housekeeping.DIRTY)
+            from_number = uow.rooms.get(from_room_id).number
+            record(
+                uow,
+                self._clock,
+                actor,
+                "reservation.room_moved",
+                entity="reservation",
+                entity_id=reservation.id,
+                from_room=from_number,
+                to_room=to_room.number,
+                nights=len(moved),
+                price="new_rate" if charge_new_rate else "kept",
+                total_before=str(before_total),
+                total_after=str(reservation.accommodation_total),
+            )
+            return uow.reservations.get(reservation.id)
 
     # ------------------------------------------------------------ cancelling
     def cancellation_fee(self, actor: Actor, reservation_id: int) -> Money:

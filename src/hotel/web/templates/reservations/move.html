@@ -1,0 +1,41 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, select, checkbox -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/reservations.html" import stay -%}
+{% block title %}{{ _("Move to another room") }}{% endblock %}
+{% block page_title %}{{ _("Move to another room") }} <span dir="ltr">{{ reservation.code }}</span>{% endblock %}
+{% block content %}
+<section class="panel panel--narrow stack">
+  <dl class="facts">
+    <div><dt>{{ _("Guest") }}</dt><dd>{{ reservation.guest_name }}</dd></div>
+    <div><dt>{{ _("Stay") }}</dt><dd>{{ stay(reservation.period) }}</dd></div>
+    <div><dt>{{ _("Current room") }}</dt><dd><strong dir="ltr">{{ booked.number }}</strong> · {{ booked.category_name }}</dd></div>
+    <div><dt>{{ _("Nights that move") }}</dt><dd>{{ _("From %(date)s to the departure", date=first_night | dateformat("medium")) }}</dd></div>
+  </dl>
+  {%- if candidates %}
+  <form class="stack" method="post">
+    {{ csrf() }}
+    <input type="hidden" name="form_token" value="{{ form_token }}">
+    <input type="hidden" name="version" value="{{ reservation.version }}">
+    <input type="hidden" name="room" value="{{ booked.room_id }}">
+    {%- set options = [] %}
+    {%- for room in candidates %}{% if options.append((room.id, room.number ~ " · " ~ room.category_name ~ " · " ~ _("Rate: %(rate)s", rate=room.nightly_rate|money|striptags) ~ " · " ~ _("Capacity: %(n)s", n=room.capacity))) %}{% endif %}{% endfor %}
+    {{ select("to_room", _("New room"), options) }}
+    <p class="muted">{{ _("By default the guest keeps the price of every remaining night: the hotel offers the move.") }}</p>
+    {%- if current_user.is_manager %}
+    {{ checkbox("charge_new_rate", _("Charge the new room's price for the remaining nights (an upgrade the guest asked for)")) }}
+    {%- endif %}
+    {%- if reservation.status == "CHECKED_IN" %}
+    <p class="muted">{{ _("Room %(room)s will be marked to clean.", room=booked.number) }}</p>
+    {%- endif %}
+    <div class="form-actions">
+      <button class="button button--primary" type="submit">{{ _("Move the guests") }}</button>
+      <a class="button button--ghost" href="{{ url_for('reservations.detail', reservation_id=reservation.id) }}">{{ _("Back") }}</a>
+    </div>
+  </form>
+  {%- else %}
+  <div class="alert alert--warning">{{ icon("alert") }}<p>{{ _("No other room is free and large enough for the rest of the stay.") }}</p></div>
+  <a class="button button--ghost" href="{{ url_for('reservations.detail', reservation_id=reservation.id) }}">{{ _("Back") }}</a>
+  {%- endif %}
+</section>
+{% endblock %}

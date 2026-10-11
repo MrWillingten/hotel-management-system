@@ -118,9 +118,17 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
    `web/security.py`, migration 0015, ADR 0006. Test helpers in conftest:
    `enrol_two_factor`, `login_with_code` (advance the clock 30 s after enrolling).
    Tests that jump > 7 days with a manager must enrol (grace gate).
-3. 6.2 Docker (`Dockerfile`, `deploy/`, `/health`, CI job "Docker image"; no
-   Docker on the dev machine → CI is the test) → 6.3 JSON API (hashed manager-issued tokens) → 6.4 Windows exe
-   (PyInstaller, CI artifact) → 6.5 room move (courtesy price by default).
+3. ✅ 6.2 Docker (PR #77): `Dockerfile`, `deploy/compose.yaml` + `Caddyfile`, public
+   `/health`, CI job "Docker image" (no Docker locally → CI is the test).
+   ✅ 6.3 JSON API (PR #78): `web/blueprints/api.py`, `@api_token_required` in
+   `web/security.py` (cookie refused, per-app `RateLimiter`), `services/api_tokens.py`,
+   Account → API tokens, `docs/api.md`, migration 0016.
+   ✅ 6.4 Windows exe (PR #80): `packaging/windows/` (launcher, spec, README),
+   `requirements-build.lock` (extra `build`), CI job "Windows executable" → artifact.
+   6.5 room move: `Reservation.move_room`, `ReservationService.move_room/move_candidates`,
+   `reservation_room.moved_out_on` (migration 0017): use `reservation.current_rooms`
+   for anything about *now* (occupancy, housekeeping, edits); `rooms` keeps history.
+   Dependabot ignores Python minor bumps of the image (tested versions only).
 4. Freeze 27 Dec. 6.6 hardening (ASVS L1, evidence table, browsers; the
    student runs the real-Windows checklist).
 5. 6.7 report: **English, LaTeX for Overleaf** in `report/`. The assistant

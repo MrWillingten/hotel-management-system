@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from collections.abc import Callable
+from dataclasses import dataclass, field, replace
 from datetime import date, datetime, time, timedelta, tzinfo
 from enum import StrEnum
 
@@ -64,6 +65,13 @@ class BookedRoom:
     children: int = 0
     number: str = ""  # filled when read, for display
     category_name: str = ""
+    # Set when the guest moved to another room (story 6.5): the first night
+    # no longer spent here. The room stays listed because its nights are billed.
+    moved_out_on: date | None = None
+
+    @property
+    def is_current(self) -> bool:
+        return self.moved_out_on is None
 
     @property
     def occupants(self) -> int:
@@ -137,8 +145,13 @@ class Reservation:
         return total
 
     @property
+    def current_rooms(self) -> list[BookedRoom]:
+        """The rooms the guests use now (rooms they moved out of are left out)."""
+        return [room for room in self.rooms if room.is_current]
+
+    @property
     def occupants(self) -> int:
-        return sum(room.occupants for room in self.rooms)
+        return sum(room.occupants for room in self.current_rooms)
 
     def nights_of(self, room_id: int) -> list[RoomNight]:
         return [n for n in self.nights if n.room_id == room_id]
@@ -186,6 +199,54 @@ class Reservation:
         self.transition(ReservationStatus.CHECKED_OUT)
         self.checked_out_at = now
         return early
+
+    def move_room(
+        self,
+        from_room_id: int,
+        to_room_id: int,
+        *,
+        today: date,
+        number: str = "",
+        category_name: str = "",
+        rate_for: Callable[[date], Money] | None = None,
+    ) -> list[date]:
+        """Story 6.5: the nights from today on move to another room.
+
+        Nights already spent stay where they were (and stay on the bill); the
+        same people sleep in the new room. Each moved night keeps its locked
+        price (a courtesy move) unless `rate_for` gives the new room's price
+        (an upgrade the guest pays for). Returns the nights that moved; the
+        caller checks the new room is free on them.
+        """
+        if self.status not in (ReservationStatus.CONFIRMED, ReservationStatus.CHECKED_IN):
+            raise InvalidStateTransitionError(
+                "reservation.not_modifiable", current=self.status.value
+            )
+        booked = next((r for r in self.current_rooms if r.room_id == from_room_id), None)
+        if booked is None:
+            raise ValidationError("reservation.move_unknown_room")
+        if any(r.room_id == to_room_id for r in self.rooms):
+            # Also a room left earlier: one line per room keeps the bill readable.
+            raise BusinessRuleViolation("reservation.move_room_already_used")
+        moving = [n for n in self.nights_of(from_room_id) if n.night >= today]
+        if not moving:
+            raise BusinessRuleViolation("reservation.move_nothing_left")
+        stayed = len(self.nights_of(from_room_id)) > len(moving)
+        moved_nights = {n.night for n in moving}
+        self.nights = [
+            n for n in self.nights if not (n.room_id == from_room_id and n.night in moved_nights)
+        ] + [
+            RoomNight(to_room_id, n.night, rate_for(n.night) if rate_for else n.rate)
+            for n in moving
+        ]
+        new_room = BookedRoom(to_room_id, booked.adults, booked.children, number, category_name)
+        position = self.rooms.index(booked)
+        if stayed:
+            self.rooms[position] = replace(booked, moved_out_on=moving[0].night)
+            self.rooms.append(new_room)
+        else:  # not a night spent there yet: the old room simply disappears
+            self.rooms[position] = new_room
+        return [n.night for n in moving]
 
 
 @dataclass(frozen=True, slots=True)

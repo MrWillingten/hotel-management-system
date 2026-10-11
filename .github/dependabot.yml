@@ -16,3 +16,8 @@ updates:
     directories: ["/", "/deploy"]
     schedule:
       interval: weekly
+    ignore:
+      # The image must run a Python version the test matrix covers (3.11, 3.13);
+      # patch releases of 3.13 are still proposed.
+      - dependency-name: python
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]

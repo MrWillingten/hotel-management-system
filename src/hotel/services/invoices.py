@@ -92,7 +92,9 @@ class InvoiceService:
                 uow.reservations.release_nights(
                     reservation.id, from_night=reservation.period.departure
                 )
-            uow.rooms.set_housekeeping([r.room_id for r in reservation.rooms], Housekeeping.DIRTY)
+            uow.rooms.set_housekeeping(
+                [r.room_id for r in reservation.current_rooms], Housekeeping.DIRTY
+            )
             record(
                 uow,
                 self._clock,

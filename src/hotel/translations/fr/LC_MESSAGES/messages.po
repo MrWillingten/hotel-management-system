@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 17:00+0100\n"
+"POT-Creation-Date: 2026-10-11 17:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -390,6 +390,9 @@ msgstr "Réservé le"
 msgid "Bookings open at most two years ahead."
 msgstr "Les réservations sont ouvertes au plus deux ans à l'avance."
 
+msgid "By default the guest keeps the price of every remaining night: the hotel offers the move."
+msgstr "Par défaut, le client garde le prix de chaque nuit restante : l’hôtel offre le changement."
+
 msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
 msgstr "CIN : 8 chiffres. Passeport : 5 à 20 lettres ou chiffres."
 
@@ -452,6 +455,10 @@ msgstr "La capacité doit être comprise entre 1 et %(max)s personnes."
 msgid "Capacity: %(count)s"
 msgstr "Capacité : %(count)s"
 
+#, python-format
+msgid "Capacity: %(n)s"
+msgstr "Capacité : %(n)s"
+
 msgid "Card"
 msgstr "Carte"
 
@@ -496,6 +503,11 @@ msgstr "Modifications enregistrées."
 
 msgid "Charge"
 msgstr "Facturer"
+
+msgid "Charge the new room's price for the remaining nights (an upgrade the guest asked for)"
+msgstr ""
+"Facturer le prix de la nouvelle chambre pour les nuits restantes (surclassement demandé par le "
+"client)"
 
 msgid "Charge voided."
 msgstr "Prestation annulée."
@@ -650,6 +662,9 @@ msgstr "Code actuel de l’application"
 
 msgid "Current password"
 msgstr "Mot de passe actuel"
+
+msgid "Current room"
+msgstr "Chambre actuelle"
 
 msgid "Currently:"
 msgstr "Actuellement :"
@@ -907,6 +922,10 @@ msgstr "Vendredi"
 msgid "From"
 msgstr "Du"
 
+#, python-format
+msgid "From %(date)s to the departure"
+msgstr "Du %(date)s jusqu’au départ"
+
 msgid "Full name"
 msgstr "Nom complet"
 
@@ -1072,6 +1091,10 @@ msgstr "Dernière utilisation"
 msgid "Late"
 msgstr "En retard"
 
+#, python-format
+msgid "Left on %(date)s"
+msgstr "Quittée le %(date)s"
+
 msgid "Legend"
 msgstr "Légende"
 
@@ -1153,6 +1176,19 @@ msgstr "Lundi"
 msgid "Month"
 msgstr "Mois"
 
+msgid "Move"
+msgstr "Changer"
+
+msgid "Move the guests"
+msgstr "Changer les clients de chambre"
+
+msgid "Move to another room"
+msgstr "Changer de chambre"
+
+#, python-format
+msgid "Moved from room %(old)s to room %(new)s."
+msgstr "Changement de la chambre %(old)s vers la chambre %(new)s effectué."
+
 msgid "My account"
 msgstr "Mon compte"
 
@@ -1191,6 +1227,9 @@ msgstr "Nouvelle réservation"
 
 msgid "New reservations will be refused. Managers only."
 msgstr "Les nouvelles réservations seront refusées. Réservé aux gestionnaires."
+
+msgid "New room"
+msgstr "Nouvelle chambre"
 
 msgid "New service"
 msgstr "Nouveau service"
@@ -1241,6 +1280,9 @@ msgstr "Nuits vendues"
 msgid "Nights sold: %(sold)s of %(sellable)s"
 msgstr "Nuits vendues : %(sold)s sur %(sellable)s"
 
+msgid "Nights that move"
+msgstr "Nuits concernées"
+
 #, python-format
 msgid "Nights: %(nights)s"
 msgstr "Nuits : %(nights)s"
@@ -1285,8 +1327,14 @@ msgstr "Aucun encaissement pour l'instant."
 msgid "No more arrivals expected today."
 msgstr "Plus aucune arrivée prévue aujourd'hui."
 
+msgid "No night is left to move in this room."
+msgstr "Il ne reste aucune nuit à déplacer dans cette chambre."
+
 msgid "No nights sold in this period."
 msgstr "Aucune nuit vendue sur cette période."
+
+msgid "No other room is free and large enough for the rest of the stay."
+msgstr "Aucune autre chambre n’est libre et assez grande pour le reste du séjour."
 
 msgid "No other room is free for these dates."
 msgstr "Aucune autre chambre n'est libre à ces dates."
@@ -1487,6 +1535,10 @@ msgstr "Période tarifaire %(name)s ajoutée."
 
 msgid "Rate period removed. Existing bookings keep their prices."
 msgstr "Période tarifaire supprimée. Les réservations existantes gardent leurs prix."
+
+#, python-format
+msgid "Rate: %(rate)s"
+msgstr "Tarif : %(rate)s"
 
 msgid "Reactivate account"
 msgstr "Réactiver le compte"
@@ -1690,6 +1742,10 @@ msgstr "La chambre %(room)s est hors service."
 #, python-format
 msgid "Room %(room)s is still occupied (%(code)s). Check that guest out first."
 msgstr "La chambre %(room)s est encore occupée (%(code)s). Enregistrez d'abord le départ de ce client."
+
+#, python-format
+msgid "Room %(room)s will be marked to clean."
+msgstr "La chambre %(room)s sera marquée à nettoyer."
 
 msgid "Room categories"
 msgstr "Catégories de chambres"
@@ -1918,6 +1974,9 @@ msgstr ""
 msgid "The guest is in the house: only the departure date and the occupants can change."
 msgstr "Le client est à l'hôtel : seuls la date de départ et les occupants peuvent changer."
 
+msgid "The guests already used that room during this stay. Choose another one."
+msgstr "Les clients ont déjà utilisé cette chambre pendant ce séjour. Choisissez-en une autre."
+
 msgid "The hotel must keep at least one active manager."
 msgstr "L'hôtel doit garder au moins un gestionnaire actif."
 
@@ -2046,6 +2105,9 @@ msgstr "Cette réservation ne peut plus être modifiée."
 
 msgid "This room has never been closed for maintenance."
 msgstr "Cette chambre n'a jamais été fermée pour maintenance."
+
+msgid "This room is not part of the stay any more."
+msgstr "Cette chambre ne fait plus partie du séjour."
 
 #, python-format
 msgid "This room still has bookings (%(codes)s). Move or cancel them first."
