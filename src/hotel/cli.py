@@ -3,6 +3,7 @@
     run              start the web application (Waitress; --dev for Flask's debugger)
     init-db          create or upgrade the database
     create-manager   create the first manager account
+    reset-password   give any account a temporary password (forgotten password)
     seed --demo      add fictional demonstration data to an empty hotel
     backup           write a backup now
     restore FILE     replace the database with a backup (application stopped)
@@ -122,6 +123,30 @@ def cmd_create_manager(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_reset_password(args: argparse.Namespace) -> int:
+    """The way back in when the only manager forgets their password.
+
+    Running a command on the server already means full control of the data
+    (the same trust as create-manager), so no web-side check is bypassed.
+    The new password is temporary: it must be replaced at the next sign-in.
+    The account is unlocked, its sessions are ended, and the reset is audited.
+    """
+    services = build_services(Settings.from_env())
+    system = Actor.system()
+    username = args.username.strip().lower()
+    user = next((u for u in services.users.list_users(system) if u.username == username), None)
+    if user is None:
+        print(f"No account named '{username}'.", file=sys.stderr)
+        return 1
+    print(f"New temporary password for '{user.username}' ({user.full_name}).")
+    password = _ask_password(user.username, services.auth.check_password)
+    services.users.reset_password(system, user.id, temporary_password=password)
+    print(f"Password reset. '{user.username}' must choose a new one at the next sign-in.")
+    if not user.is_active:
+        print("Note: this account is deactivated; a manager must reactivate it.")
+    return 0
+
+
 def cmd_seed(args: argparse.Namespace) -> int:
     from hotel.demo import seed_demo
 
@@ -217,6 +242,12 @@ def build_parser() -> argparse.ArgumentParser:
     manager.add_argument("--username")
     manager.add_argument("--full-name")
     manager.set_defaults(handler=cmd_create_manager)
+
+    reset = commands.add_parser(
+        "reset-password", help="give an account a temporary password (forgotten password)"
+    )
+    reset.add_argument("username")
+    reset.set_defaults(handler=cmd_reset_password)
 
     seed = commands.add_parser("seed", help="add fictional demonstration data")
     seed.add_argument("--demo", action="store_true", help="confirm that demo data is wanted")

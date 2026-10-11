@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 09:23+0100\n"
+"POT-Creation-Date: 2026-10-11 10:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -485,8 +485,8 @@ msgstr "Choisissez d'abord les dates."
 msgid "Choose the kind of tax and what it applies to."
 msgstr "Choisissez le type de taxe et ce à quoi elle s'applique."
 
-msgid "Clean"
-msgstr "Propre"
+msgid "Cleaned, to inspect"
+msgstr "Nettoyée, à contrôler"
 
 msgid "Close for maintenance"
 msgstr "Fermer pour maintenance"
@@ -699,8 +699,8 @@ msgstr "Saisissez un montant comme 180 ou 180.500."
 msgid "Every invoice is paid."
 msgstr "Toutes les factures sont payées."
 
-msgid "Every room is clean."
-msgstr "Toutes les chambres sont propres."
+msgid "Every room is ready."
+msgstr "Toutes les chambres sont prêtes."
 
 msgid "Everyone"
 msgstr "Tout le monde"
@@ -905,8 +905,11 @@ msgstr "Gestionnaire"
 msgid "Manual"
 msgstr "Manuelle"
 
-msgid "Mark clean"
-msgstr "Marquer propre"
+msgid "Mark cleaned"
+msgstr "Marquer nettoyée"
+
+msgid "Mark inspected"
+msgstr "Marquer contrôlée"
 
 msgid "Mark to clean"
 msgstr "Marquer à nettoyer"
@@ -1054,8 +1057,12 @@ msgid "Not allowed"
 msgstr "Non autorisé"
 
 #, python-format
-msgid "Not cleaned yet: room %(rooms)s. Check with housekeeping before handing over the key."
-msgstr "Pas encore nettoyée : chambre %(rooms)s. Vérifiez avec le ménage avant de remettre la clé."
+msgid ""
+"Not ready yet (cleaning or inspection pending): room %(rooms)s. Check with housekeeping before "
+"handing over the key."
+msgstr ""
+"Pas encore prête (nettoyage ou contrôle en attente) : chambre %(rooms)s. Vérifiez avec le ménage "
+"avant de remettre la clé."
 
 msgid "Notes"
 msgstr "Remarques"
@@ -1159,6 +1166,9 @@ msgstr "Taux"
 
 msgid "Reactivate account"
 msgstr "Réactiver le compte"
+
+msgid "Ready"
+msgstr "Prête"
 
 msgid "Reason"
 msgstr "Motif"
@@ -1285,6 +1295,10 @@ msgid "Room %(number)s added."
 msgstr "Chambre %(number)s ajoutée."
 
 #, python-format
+msgid "Room %(number)s is cleaned and waits for its inspection."
+msgstr "La chambre %(number)s est nettoyée et attend son contrôle."
+
+#, python-format
 msgid "Room %(number)s is marked to be cleaned."
 msgstr "La chambre %(number)s est marquée à nettoyer."
 
@@ -1332,8 +1346,8 @@ msgstr "Chambres et nuits à partir du %(start)s"
 msgid "Rooms free for the same dates:"
 msgstr "Chambres libres aux mêmes dates :"
 
-msgid "Rooms to clean"
-msgstr "Chambres à nettoyer"
+msgid "Rooms not ready"
+msgstr "Chambres pas prêtes"
 
 #, python-format
 msgid "Rooms: %(count)s"
@@ -1641,6 +1655,10 @@ msgstr "Total"
 
 msgid "Type"
 msgstr "Type"
+
+#, python-format
+msgid "Under maintenance: %(rooms)s"
+msgstr "En maintenance : %(rooms)s"
 
 msgid "Unit price"
 msgstr "Prix unitaire"

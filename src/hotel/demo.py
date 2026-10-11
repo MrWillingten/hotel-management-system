@@ -244,7 +244,7 @@ def _demo_history(
             result.invoices += 1
         if day < HISTORY_DAYS - 1:  # today's rooms stay "to clean" for the demo
             for room in services.front_desk.day(desk).to_clean:
-                services.rooms.set_housekeeping(desk, room.id, Housekeeping.CLEAN)
+                services.rooms.set_housekeeping(desk, room.id, Housekeeping.INSPECTED)
 
         _at(clock, 15)  # afternoon: arrivals
         today = clock.today()

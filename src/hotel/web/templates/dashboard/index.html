@@ -1,7 +1,7 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/icons.html" import icon -%}
 {%- from "macros/forms.html" import csrf -%}
-{%- from "macros/rooms.html" import housekeeping_button -%}
+{%- from "macros/rooms.html" import housekeeping_badge, housekeeping_button -%}
 {% block title %}{{ _("Dashboard") }}{% endblock %}
 {% block page_title %}{{ _("Dashboard") }}{% endblock %}
 {% block content %}
@@ -35,6 +35,9 @@
     <h3 class="card__title">{{ _("Occupancy tonight") }}</h3>
     <p class="card__value" dir="ltr">{{ "%.1f" | format(day.occupancy.basis_points / 100) }} %</p>
     <p class="muted">{{ _("%(sold)s of %(sellable)s rooms", sold=day.occupancy.sold, sellable=day.occupancy.sellable) }}</p>
+    {%- if day.under_maintenance %}
+    <p class="muted">{{ _("Under maintenance: %(rooms)s", rooms=day.under_maintenance | map(attribute="number") | join(", ")) }}</p>
+    {%- endif %}
   </article>
   <a class="card card--interactive card--link" href="#balances">
     <div class="card__icon">{{ icon("database") }}</div>
@@ -44,7 +47,7 @@
   </a>
   <a class="card card--interactive card--link" href="#housekeeping">
     <div class="card__icon">{{ icon("star") }}</div>
-    <h3 class="card__title">{{ _("Rooms to clean") }}</h3>
+    <h3 class="card__title">{{ _("Rooms not ready") }}</h3>
     <p class="card__value">{{ day.to_clean | length }}</p>
   </a>
 </div>
@@ -119,13 +122,13 @@
   <ul class="pick-list">
     {%- for room in day.to_clean %}
     <li>
-      <span><a href="{{ url_for('rooms.detail', room_id=room.id) }}"><strong dir="ltr">{{ room.number }}</strong></a> · {{ room.category_name }}</span>
+      <span><a href="{{ url_for('rooms.detail', room_id=room.id) }}"><strong dir="ltr">{{ room.number }}</strong></a> · {{ room.category_name }} {{ housekeeping_badge(room.housekeeping) }}</span>
       {{ housekeeping_button(room, next=url_for('dashboard.index')) }}
     </li>
     {%- endfor %}
   </ul>
   {%- else %}
-  <p class="muted">{{ _("Every room is clean.") }}</p>
+  <p class="muted">{{ _("Every room is ready.") }}</p>
   {%- endif %}
 </section>
 </div>

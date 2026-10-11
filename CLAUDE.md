@@ -93,6 +93,9 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
 ### Done
 - Phases 1–5 (analysis, architecture, growth, security review, agile plan).
 - Sprints 1–4 → v0.1.0 … v0.4.0. Details: `CHANGELOG.md`, `docs/roadmap.md`.
+- Accounts: passwords are only stored as scrypt hashes (unrecoverable). First
+  manager: `hotel create-manager`; staff: Staff page (temporary password);
+  forgotten password (even the last manager): `hotel reset-password USERNAME`.
 - Sprint 4 map (to find things fast): front desk `services/front_desk.py`;
   check-in/no-show in `services/reservations.py`; extras `domain|services/extras.py`
   (named "extras" to avoid clashing with the service layer); settings
@@ -102,16 +105,11 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
   Migrations 0007–0010. Web: blueprints `billing`, `extras`, `hotel_settings`, `invoices`.
 
 ### Next: Sprint 5 – Reports, operations, languages (7 – 20 Dec) → v0.9.0, code complete
-Stories to create (milestone "Sprint 5"): all §4.8 statistics (reservations,
-occupancy per day/period and per category, revenue by accommodation /
-services / taxes, cancellations and no-shows, outstanding balances,
-availability) with a 2-year range cap (threat W9) · SVG charts rendered
-server-side (no JS) · CSV export with formula-injection protection (I5) ·
-night audit (close the day: no-shows, overdue departures, totals) ·
-seasonal rates (only `ReservationService._rate_for` changes) · guest
-anonymisation (P-controls, keep invoices: they copy the name) · full
-French/Arabic review · seed v2 if needed. Then Sprint 6 (TOTP, Docker, JSON
-API, Windows exe, room moves, freeze 27 Dec, report, demo).
+**The full backlog with acceptance criteria is in `docs/roadmap.md`** (5.1–5.8,
+copied from the approved Phase 5 plan; Sprint 6 table, risks and cut order
+too). Read it before creating the milestone/issues. Process agreed with the
+student: show the drafted stories for review **before** creating issues.
+Learn first: SQL aggregation, SVG generation, `csv`, gettext/Babel.
 
 ### Known open issues / limitations (not bugs yet fixed)
 - French and Arabic texts are drafts → native-speaker review before demo.

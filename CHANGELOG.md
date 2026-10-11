@@ -14,7 +14,11 @@ All notable changes are recorded here. The format follows
   of a room is still checked in; warning for rooms not yet cleaned.
 - No-show after the arrival time, charged like a late cancellation;
   the nights are released.
-- Housekeeping status per room; check-out marks rooms to clean.
+- Housekeeping per room: dirty → cleaned → inspected (ready); check-out
+  marks rooms dirty; the dashboard lists rooms not ready and rooms under
+  maintenance.
+- `hotel reset-password USERNAME`: a way back in when the only manager
+  forgets their password (temporary password, sessions ended, audited).
 - Extra-services catalogue (manager) and charges to a stay (BR19):
   only while checked in, dated within the stay, price copied (BR20);
   managers void a wrong charge with a reason.

@@ -17,6 +17,8 @@ hardening, the report and the demo.
 
 ### Sprint 1 – Foundations ✅
 
+**Learn first:** Flask app factory and blueprints · Jinja templates · `sqlite3` and transactions · `@dataclass(frozen=True)` · decorators · context managers · password hashing.
+
 | ID | Story | Status |
 |---|---|---|
 | 1.1 | Repository, CI on Ubuntu and Windows, linters, security scanners | ✅ |
@@ -29,6 +31,8 @@ hardening, the report and the demo.
 | 1.8 | Persistence foundations: PRAGMAs, migrations, Unit of Work | ✅ |
 
 ### Sprint 2 – Rooms, guests, staff, audit ✅
+
+**Learn first:** ABCs and the repository pattern · SQL `LIKE … ESCAPE` · `hashlib` · Unicode normalisation · the SQLite backup API.
 
 | ID | Story | PR | Status |
 |---|---|---|---|
@@ -46,6 +50,8 @@ commit with a push.
 
 ### Sprint 3 – Reservations ✅
 
+**Learn first:** transaction isolation and `BEGIN IMMEDIATE` · `UNIQUE` constraints as guards · threads in tests · optimistic locking.
+
 | ID | Story | PR | Status |
 |---|---|---|---|
 | 3.1 / 3.2 / 3.3 / 3.7 | Availability, booking, alternatives, concurrency | #33 | ✅ |
@@ -60,12 +66,14 @@ test every query with *both* kinds of blocked night.
 
 ### Sprint 4 – Front desk and billing ✅
 
+**Learn first:** Strategy pattern and polymorphism · `Decimal.quantize` and rounding modes · print CSS.
+
 | ID | Story | PR | Status |
 |---|---|---|---|
 | 4.2 / 4.9 / 4.1 | Check-in, no-show, housekeeping, front-desk dashboard | #46 | ✅ |
 | 4.3 / 4.8 | Extra services and charges, hotel settings, tax rules | #47 | ✅ |
 | 4.4 / 4.5 / 4.6 | Bill preview, discounts, payments and refunds | #48 | ✅ |
-| 4.7 / 4.1 | Check-out, invoices, print styles, balances on the dashboard | #49 | ✅ |
+| 4.7 / 4.1 / 4.9 | Check-out, invoices, print styles, balances and maintenance on the dashboard, housekeeping dirty → cleaned → inspected, `hotel reset-password` | #49 | ✅ |
 
 Retrospective: making the bill one pure function (`build_bill`) paid off at
 once: the preview, the desk balance, the check-out preview and the invoice
@@ -75,16 +83,34 @@ settings are read through the caller's transaction (`load_settings(uow)`);
 and Jinja's `gettext` always applies `%` formatting, so a literal percent
 sign in a translatable string must be written `%%`.
 
-### Sprint 5 – Reports, operations, languages
+### Sprint 5 – Reports, operations, languages (7 – 20 Dec) → code complete
 
-All §4.8 statistics · SVG charts · CSV export · night audit · full French and
-Arabic review · seasonal rates · guest anonymisation · seed v2.
+**Learn first:** SQL aggregation (`GROUP BY`, date ranges) · generating SVG · `csv` ·
+gettext and Babel catalogues.
 
-### Sprint 6 – Stretch, freeze, delivery
+| ID | Story | Acceptance criteria |
+|---|---|---|
+| 5.1 | As a manager, I consult every §4.8 statistic | Reservation count, occupancy rate (decision H), top categories, accommodation, service and tax revenue, cancellations, outstanding balances, availability, for any date range. Range capped at 2 years (threat W9). |
+| 5.2 | As a manager, I see charts | Server-generated SVG charts (no JavaScript) that follow the theme and work in both themes and in RTL. |
+| 5.3 | As a manager, I export reports to CSV | Formula injection escaped (test, threat I5). ID numbers excluded. |
+| 5.4 | As the hotel, the night audit closes each day | Marks no-shows, flags guests who should have left, saves a daily snapshot. Safe to run twice. |
+| 5.5 | As a French- or Arabic-speaking user, the interface speaks my language | FR and AR catalogues complete (test). Locale-aware money input. Western digits in Arabic, `<bdi>` around codes and amounts. **The student reviews the translations.** |
+| 5.6 | As a manager, I set seasonal and weekend rates | Rate periods per category. Locked prices on existing reservations unaffected (only `ReservationService._rate_for` changes). |
+| 5.7 | As a manager, I anonymise old guests | Personal data replaced, invoices keep their own copy of the name, action audited. |
+| 5.8 | Seed v2 | Several months of realistic history, so the reports and charts look alive in the demo. |
 
-Stretch order: TOTP for managers → Docker image → read-only JSON API → Windows
-executable → moving a guest between rooms. Then freeze, manual checks on real
-Windows and three browsers, OWASP ASVS level 1 self-assessment, report, demo.
+### Sprint 6 – Stretch, freeze, delivery (21 Dec – 3 Jan)
+
+| When | Work |
+|---|---|
+| 21 – 26 Dec | **Stretch, in this order:** TOTP 2FA for managers → Docker image → read-only JSON API → Windows executable → moving a guest between rooms |
+| **27 Dec** | **Feature freeze** (moved earlier if the deadline is earlier). After this, bug fixes only. |
+| 27 Dec – 2 Jan | Manual checklist on real Windows plus three browsers · security self-assessment against OWASP ASVS Level 1 · test evidence table · report final assembly (Times New Roman 12 pt, 1.5 spacing, numbered figures) · screenshots in both themes and three languages · demo script plus **two full rehearsals** |
+| 3 Jan | `v1.0.0` tagged, release notes, PDF of the report |
+
+**The report is written along the way:** each sprint's Definition of Done
+includes updating its report section; leaving 40–50 pages for the last week
+would fail.
 
 ## Cut order if late
 
@@ -94,11 +120,27 @@ Windows and three browsers, OWASP ASVS level 1 self-assessment, report, demo.
 **Never cut:** the brief's requirements, critical/high security controls, tests,
 backups, audit chain, report.
 
+## Top risks
+
+| Risk | Mitigation |
+|---|---|
+| Sprint 3 (reservations) slips | Hardest logic scheduled early; checkpoint at the end of Sprint 3; Sprint 6 acts as a buffer (passed: Sprint 3 finished on time) |
+| Exams or the deadline land earlier than expected | Code complete on 20 Dec; ask the professor for the exact dates |
+| Can't explain AI-written code | The "explain every line" item in the Definition of Done; "Learn first" per sprint |
+| Windows-only bugs found late | Windows CI from day 1; one real Windows test per sprint, not only at the end |
+| Burnout | A sustainable ~25 h/week plan; stretch goals are optional by design |
+
+The cut list above is applied **at the end of a sprint**, never in a panic in December.
+
 ## Git workflow
 
 * `main` is always green and protected: changes arrive through pull requests with passing CI.
 * One short-lived branch per story: `feat/2.3-guest-registration`, `fix/...`, `docs/...`.
 * Squash-merge; the PR closes its issue (`Closes #12`).
+* GitHub Issues per story (acceptance criteria as a checklist), a Milestone per sprint,
+  a PR template with the Definition of Done as a self-review checklist.
+* ADRs in `docs/adr/`: one short page per important decision (they become the
+  report's "justification of design choices").
 * [Conventional Commits](https://www.conventionalcommits.org/): `feat`, `fix`, `test`, `docs`, `refactor`, `perf`, `ci`, `chore`, `sec`.
 * An annotated tag and GitHub release per sprint; `CHANGELOG.md` follows *Keep a Changelog*.
 * Sprint 1 was built before the GitHub repository existed, so its stories were
@@ -120,4 +162,6 @@ backups, audit chain, report.
 - [ ] **I can explain every changed line without notes**
 - [ ] Merged through a PR; issue closed
 
-**Sprint**: all stories done → tag and release → demo script → three-point retrospective.
+**Sprint**: all stories done → tag and release → demo script for the professor's
+check-in → three-point retrospective (what went well, what didn't, what to
+change), which feeds the report's "difficulties and solutions" section.

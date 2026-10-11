@@ -106,16 +106,23 @@ def detail(room_id: int):
 @bp.post("/<int:room_id>/housekeeping")
 @login_required
 def housekeeping(room_id: int):
-    """Story 4.9: mark a room clean, or to be cleaned."""
+    """Story 4.9: dirty -> cleaned -> inspected (ready), or back to dirty."""
     try:
         state = Housekeeping(request.form.get("state", ""))
     except ValueError:
-        state = Housekeeping.CLEAN
-    room = services().rooms.set_housekeeping(current_actor(), room_id, state)
-    if state is Housekeeping.CLEAN:
-        flash(_("Room %(number)s is ready for the next guest.", number=room.number), "success")
-    else:
-        flash(_("Room %(number)s is marked to be cleaned.", number=room.number), "success")
+        state = None  # an unknown value changes nothing
+    if state is not None:
+        room = services().rooms.set_housekeeping(current_actor(), room_id, state)
+        messages = {
+            Housekeeping.DIRTY: _("Room %(number)s is marked to be cleaned.", number=room.number),
+            Housekeeping.CLEAN: _(
+                "Room %(number)s is cleaned and waits for its inspection.", number=room.number
+            ),
+            Housekeeping.INSPECTED: _(
+                "Room %(number)s is ready for the next guest.", number=room.number
+            ),
+        }
+        flash(messages[state], "success")
     target = request.form.get("next")
     if is_safe_redirect_target(target):
         return redirect(target)

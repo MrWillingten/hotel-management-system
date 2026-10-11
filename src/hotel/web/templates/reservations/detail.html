@@ -36,7 +36,7 @@
 </div>
 {%- if reservation.status == "CONFIRMED" and to_clean %}
 <div class="alert alert--warning">{{ icon("alert") }}
-  <p>{{ _("Not cleaned yet: room %(rooms)s. Check with housekeeping before handing over the key.", rooms=to_clean | join(", ")) }}</p>
+  <p>{{ _("Not ready yet (cleaning or inspection pending): room %(rooms)s. Check with housekeeping before handing over the key.", rooms=to_clean | join(", ")) }}</p>
 </div>
 {%- endif %}
 

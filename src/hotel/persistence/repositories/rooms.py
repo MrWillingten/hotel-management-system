@@ -12,7 +12,7 @@ from hotel.persistence.repositories.base import BaseRepository
 
 _ROOM_SELECT = (
     "SELECT r.id, r.number, r.category_id, r.capacity, r.nightly_rate_mill, r.in_service, "
-    "r.notes, r.version, r.housekeeping, c.name AS category_name "
+    "r.notes, r.version, r.housekeeping, r.awaiting_inspection, c.name AS category_name "
     "FROM room r JOIN room_category c ON c.id = r.category_id"
 )
 _MAINTENANCE_SELECT = (
@@ -31,8 +31,15 @@ def _to_room(row: sqlite3.Row) -> Room:
         notes=row["notes"],
         version=row["version"],
         category_name=row["category_name"],
-        housekeeping=Housekeeping(row["housekeeping"]),
+        housekeeping=_housekeeping(row["housekeeping"], row["awaiting_inspection"]),
     )
+
+
+def _housekeeping(stored: str, awaiting_inspection: int) -> Housekeeping:
+    """Two columns -> one state (see migration 0011)."""
+    if stored == "DIRTY":
+        return Housekeeping.DIRTY
+    return Housekeeping.CLEAN if awaiting_inspection else Housekeeping.INSPECTED
 
 
 def _to_maintenance(row: sqlite3.Row) -> MaintenancePeriod:
@@ -151,9 +158,11 @@ class RoomRepository(BaseRepository):
         room.version += 1
 
     def set_housekeeping(self, room_ids: list[int], state: Housekeeping) -> None:
+        stored = "DIRTY" if state is Housekeeping.DIRTY else "CLEAN"
+        awaiting = int(state is Housekeeping.CLEAN)
         self._conn.executemany(
-            "UPDATE room SET housekeeping = ? WHERE id = ?",
-            [(state.value, room_id) for room_id in room_ids],
+            "UPDATE room SET housekeeping = ?, awaiting_inspection = ? WHERE id = ?",
+            [(stored, awaiting, room_id) for room_id in room_ids],
         )
 
 

@@ -46,7 +46,8 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
 
 ✅ room_category(id PK, name UQ, description)
 ✅ room(id PK, number UQ, category_id FK, capacity CK>0, nightly_rate_mill CK≥0,
-        in_service, notes, version, housekeeping CK∈{CLEAN,DIRTY})
+        in_service, notes, version, housekeeping CK∈{CLEAN,DIRTY},
+        awaiting_inspection CK only when CLEAN)   → dirty / cleaned / inspected
 ✅ maintenance(id PK, room_id FK, start_date, end_date, reason, created_by FK,
                CK end_date > start_date)
 ✅ guest(id PK, first_name, last_name, id_doc_type CK∈{CIN,PASSPORT}, id_doc_number,

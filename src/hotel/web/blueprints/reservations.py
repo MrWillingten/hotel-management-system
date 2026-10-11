@@ -213,7 +213,9 @@ def detail(reservation_id: int):
         form_token=services().form_tokens.issue(actor) if in_house else "",
         free_until=services().reservations.free_cancellation_until(reservation.period),
         fee_rate=_fee_rate(),
-        to_clean=[r.number for r in reservation.rooms if rooms[r.room_id].housekeeping == "DIRTY"],
+        to_clean=[
+            r.number for r in reservation.rooms if not rooms[r.room_id].housekeeping.is_ready
+        ],
         today=services().clock.today(),
         arrival_passed=services().reservations.arrival_has_passed(reservation.period),
     )

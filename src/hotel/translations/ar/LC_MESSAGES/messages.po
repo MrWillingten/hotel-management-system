@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 09:23+0100\n"
+"POT-Creation-Date: 2026-10-11 10:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -482,8 +482,8 @@ msgstr "اختر التواريخ أولًا."
 msgid "Choose the kind of tax and what it applies to."
 msgstr "اختر نوع الضريبة وما تُطبَّق عليه."
 
-msgid "Clean"
-msgstr "نظيفة"
+msgid "Cleaned, to inspect"
+msgstr "نُظِّفت، بانتظار المعاينة"
 
 msgid "Close for maintenance"
 msgstr "إغلاق للصيانة"
@@ -694,8 +694,8 @@ msgstr "أدخل مبلغًا مثل 180 أو 180.500."
 msgid "Every invoice is paid."
 msgstr "جميع الفواتير مسددة."
 
-msgid "Every room is clean."
-msgstr "جميع الغرف نظيفة."
+msgid "Every room is ready."
+msgstr "جميع الغرف جاهزة."
 
 msgid "Everyone"
 msgstr "الجميع"
@@ -898,8 +898,11 @@ msgstr "مدير"
 msgid "Manual"
 msgstr "يدوية"
 
-msgid "Mark clean"
-msgstr "وضع علامة نظيفة"
+msgid "Mark cleaned"
+msgstr "وضع علامة: نُظِّفت"
+
+msgid "Mark inspected"
+msgstr "وضع علامة: عوينت"
 
 msgid "Mark to clean"
 msgstr "وضع علامة للتنظيف"
@@ -1047,8 +1050,12 @@ msgid "Not allowed"
 msgstr "غير مسموح"
 
 #, python-format
-msgid "Not cleaned yet: room %(rooms)s. Check with housekeeping before handing over the key."
-msgstr "لم تُنظَّف بعد: الغرفة %(rooms)s. تحقق مع قسم التنظيف قبل تسليم المفتاح."
+msgid ""
+"Not ready yet (cleaning or inspection pending): room %(rooms)s. Check with housekeeping before "
+"handing over the key."
+msgstr ""
+"غير جاهزة بعد (التنظيف أو المعاينة قيد الانتظار): الغرفة %(rooms)s. تحقق مع قسم التنظيف قبل تسليم"
+" المفتاح."
 
 msgid "Notes"
 msgstr "ملاحظات"
@@ -1152,6 +1159,9 @@ msgstr "النسبة"
 
 msgid "Reactivate account"
 msgstr "إعادة تفعيل الحساب"
+
+msgid "Ready"
+msgstr "جاهزة"
 
 msgid "Reason"
 msgstr "السبب"
@@ -1278,6 +1288,10 @@ msgid "Room %(number)s added."
 msgstr "تمت إضافة الغرفة %(number)s."
 
 #, python-format
+msgid "Room %(number)s is cleaned and waits for its inspection."
+msgstr "الغرفة %(number)s نُظِّفت وتنتظر المعاينة."
+
+#, python-format
 msgid "Room %(number)s is marked to be cleaned."
 msgstr "تم وضع علامة للتنظيف على الغرفة %(number)s."
 
@@ -1325,8 +1339,8 @@ msgstr "الغرف والليالي ابتداءً من %(start)s"
 msgid "Rooms free for the same dates:"
 msgstr "غرف متاحة في التواريخ نفسها:"
 
-msgid "Rooms to clean"
-msgstr "غرف للتنظيف"
+msgid "Rooms not ready"
+msgstr "غرف غير جاهزة"
 
 #, python-format
 msgid "Rooms: %(count)s"
@@ -1626,6 +1640,10 @@ msgstr "المجموع"
 
 msgid "Type"
 msgstr "النوع"
+
+#, python-format
+msgid "Under maintenance: %(rooms)s"
+msgstr "قيد الصيانة: %(rooms)s"
 
 msgid "Unit price"
 msgstr "سعر الوحدة"

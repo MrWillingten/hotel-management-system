@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 09:23+0100\n"
+"POT-Creation-Date: 2026-10-11 10:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -490,7 +490,7 @@ msgstr ""
 msgid "Choose the kind of tax and what it applies to."
 msgstr ""
 
-msgid "Clean"
+msgid "Cleaned, to inspect"
 msgstr ""
 
 msgid "Close for maintenance"
@@ -704,7 +704,7 @@ msgstr ""
 msgid "Every invoice is paid."
 msgstr ""
 
-msgid "Every room is clean."
+msgid "Every room is ready."
 msgstr ""
 
 msgid "Everyone"
@@ -912,7 +912,10 @@ msgstr ""
 msgid "Manual"
 msgstr ""
 
-msgid "Mark clean"
+msgid "Mark cleaned"
+msgstr ""
+
+msgid "Mark inspected"
 msgstr ""
 
 msgid "Mark to clean"
@@ -1062,8 +1065,8 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Not cleaned yet: room %(rooms)s. Check with housekeeping before handing "
-"over the key."
+"Not ready yet (cleaning or inspection pending): room %(rooms)s. Check "
+"with housekeeping before handing over the key."
 msgstr ""
 
 msgid "Notes"
@@ -1163,6 +1166,9 @@ msgid "Rate"
 msgstr ""
 
 msgid "Reactivate account"
+msgstr ""
+
+msgid "Ready"
 msgstr ""
 
 msgid "Reason"
@@ -1290,6 +1296,10 @@ msgid "Room %(number)s added."
 msgstr ""
 
 #, python-format
+msgid "Room %(number)s is cleaned and waits for its inspection."
+msgstr ""
+
+#, python-format
 msgid "Room %(number)s is marked to be cleaned."
 msgstr ""
 
@@ -1341,7 +1351,7 @@ msgstr ""
 msgid "Rooms free for the same dates:"
 msgstr ""
 
-msgid "Rooms to clean"
+msgid "Rooms not ready"
 msgstr ""
 
 #, python-format
@@ -1661,6 +1671,10 @@ msgid "Total"
 msgstr ""
 
 msgid "Type"
+msgstr ""
+
+#, python-format
+msgid "Under maintenance: %(rooms)s"
 msgstr ""
 
 msgid "Unit price"
