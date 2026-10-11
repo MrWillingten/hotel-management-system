@@ -1,4 +1,5 @@
 {%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf -%}
 {%- from "macros/icons.html" import icon -%}
 {% block title %}{{ _("Help") }}{% endblock %}
 {% block page_title %}{{ _("Help") }}{% endblock %}
@@ -13,7 +14,13 @@
     </ol>
   </nav>
   <div class="help__topics stack">
-    <p class="muted">{{ _("What each page is for, its main buttons and an example. Only what your role can use is shown.") }}</p>
+    <div class="panel__head">
+      <p class="muted">{{ _("What each page is for, its main buttons and an example. Only what your role can use is shown.") }}</p>
+      <form method="post" action="{{ url_for('welcome.restart') }}">
+        {{ csrf() }}
+        <button class="button button--ghost button--small" type="submit">{{ icon("star") }}{{ _("Restart the tour") }}</button>
+      </form>
+    </div>
     {%- for topic in topics %}
     <section class="panel help__topic" id="{{ topic.anchor }}">
       <div class="panel__head">

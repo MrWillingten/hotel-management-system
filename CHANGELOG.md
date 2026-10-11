@@ -50,6 +50,12 @@ All notable changes are recorded here. The format follows
   reservation blocks, the bill, a "Paid in full" or "Balance due" stamp,
   the payments table, and a thank-you line. Ctrl+P prints only the sheet on
   A4 with page numbers ("Save as PDF" for a PDF).
+- Walk-through for new accounts (story 6.14): the dashboard invites new
+  staff to a short tour (6 steps for receptionists, 8 for managers; Back,
+  Next, Skip; reopen from Help) and shows a "Getting started" checklist
+  that ticks itself from the audit log as each task is done for the first
+  time (register a guest, book, check in, take a payment, check out; for
+  managers also add a room, add staff, two-factor, backup). Migration 0018.
 
 ### Security (story 6.6)
 - OWASP ASVS 5.0 Level 1 self-assessment (`docs/asvs.md`): 58 requirements

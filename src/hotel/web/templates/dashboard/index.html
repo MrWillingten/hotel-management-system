@@ -13,6 +13,8 @@
   <a class="button button--primary" href="{{ url_for('reservations.new') }}">{{ icon("plus") }}{{ _("New reservation") }}</a>
 </section>
 
+{% include "partials/onboarding.html" %}
+
 <div class="grid grid--cards grid--stats">
   <a class="card card--interactive card--link" href="#arrivals">
     <div class="card__icon">{{ icon("calendar") }}</div>
