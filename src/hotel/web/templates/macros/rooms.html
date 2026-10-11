@@ -1,0 +1,6 @@
+{%- from "macros/icons.html" import icon -%}
+{%- macro status_badge(status) -%}
+{%- if status == "AVAILABLE" %}<span class="badge badge--success">{{ _("Available") }}</span>
+{%- elif status == "MAINTENANCE" %}<span class="badge badge--warning">{{ icon("tools") }}{{ _("Maintenance") }}</span>
+{%- else %}<span class="badge badge--neutral">{{ _("Out of service") }}</span>{% endif %}
+{%- endmacro %}

@@ -20,6 +20,11 @@ from types import TracebackType
 from hotel.persistence.db import connect
 from hotel.persistence.repositories.audit import AuditRepository
 from hotel.persistence.repositories.login_failures import LoginFailureRepository
+from hotel.persistence.repositories.rooms import (
+    CategoryRepository,
+    MaintenanceRepository,
+    RoomRepository,
+)
 from hotel.persistence.repositories.sessions import SessionRepository
 from hotel.persistence.repositories.users import UserRepository
 
@@ -29,6 +34,9 @@ class UnitOfWork:
     users: UserRepository
     sessions: SessionRepository
     login_failures: LoginFailureRepository
+    categories: CategoryRepository
+    rooms: RoomRepository
+    maintenance: MaintenanceRepository
 
     def __init__(self, database_path: Path) -> None:
         self._database_path = database_path
@@ -43,6 +51,9 @@ class UnitOfWork:
         self.users = UserRepository(self._conn)
         self.sessions = SessionRepository(self._conn)
         self.login_failures = LoginFailureRepository(self._conn)
+        self.categories = CategoryRepository(self._conn)
+        self.rooms = RoomRepository(self._conn)
+        self.maintenance = MaintenanceRepository(self._conn)
         return self
 
     def __exit__(

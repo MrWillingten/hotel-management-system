@@ -46,6 +46,25 @@ MESSAGES = {
     "password.mismatch": _l("The two passwords are different."),
     "password.current_wrong": _l("The current password is not correct."),
     "password.same_as_current": _l("Choose a password different from the current one."),
+    "room.number_invalid": _l("Use 1 to 10 letters, digits or hyphens, for example 204 or B-12."),
+    "room.number_taken": _l("Another room already has this number."),
+    "room.capacity_invalid": _l("Capacity must be between 1 and %(max)s guests."),
+    "room.rate_invalid": _l("Enter a nightly rate above 0 and at most 100,000 DT."),
+    "room.category_unknown": _l("Choose a category."),
+    "category.name_invalid": _l("Enter a name of 1 to 50 characters."),
+    "category.name_taken": _l("A category with this name already exists."),
+    "description.invalid": _l("Use at most %(max_length)s characters."),
+    "notes.invalid": _l("Use at most %(max_length)s characters."),
+    "reason.invalid": _l("Enter a reason of at most %(max_length)s characters."),
+    "maintenance.reopen_not_after_start": _l(
+        "The reopening day must be after the first closed night."
+    ),
+    "maintenance.in_past": _l("Maintenance can't start in the past."),
+    "maintenance.too_long": _l("A maintenance period lasts at most %(max)s nights."),
+    "maintenance.conflict": _l(
+        "The room is already closed on %(count)s of these nights (%(first)s to %(last)s)."
+    ),
+    "maintenance.already_over": _l("This maintenance period is already over."),
     "field.not_a_number": _l("Enter a whole number."),
     "field.invalid_date": _l("Enter a valid date."),
     "money.invalid": _l("Enter an amount such as 180 or 180.500."),

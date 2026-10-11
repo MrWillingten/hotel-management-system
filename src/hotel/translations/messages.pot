@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 00:59+0100\n"
+"POT-Creation-Date: 2026-10-11 01:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +22,13 @@ msgid "%(greeting)s, %(name)s"
 msgstr ""
 
 msgid "3 to 32 characters: letters, digits, dots, hyphens or underscores."
+msgstr ""
+
+msgid "A category with this name already exists."
+msgstr ""
+
+#, python-format
+msgid "A maintenance period lasts at most %(max)s nights."
 msgstr ""
 
 msgid "Access"
@@ -51,10 +58,22 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
+msgid "Actions"
+msgstr ""
+
 msgid "Active"
 msgstr ""
 
+msgid "Add a room"
+msgstr ""
+
 msgid "Add a staff member"
+msgstr ""
+
+msgid "Add category"
+msgstr ""
+
+msgid "Add room"
 msgstr ""
 
 msgid "Address"
@@ -66,10 +85,19 @@ msgstr ""
 msgid "All actions"
 msgstr ""
 
+msgid "All categories"
+msgstr ""
+
+msgid "All rooms"
+msgstr ""
+
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr ""
 
 msgid "An unexpected error occurred. It has been logged."
+msgstr ""
+
+msgid "Another room already has this number."
 msgstr ""
 
 msgid ""
@@ -78,6 +106,9 @@ msgid ""
 msgstr ""
 
 msgid "Audit log"
+msgstr ""
+
+msgid "Available"
 msgstr ""
 
 msgid "Back to staff"
@@ -92,10 +123,35 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+msgid "Capacity"
+msgstr ""
+
+msgid "Capacity (guests)"
+msgstr ""
+
+#, python-format
+msgid "Capacity must be between 1 and %(max)s guests."
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "Categories group rooms such as Standard, Deluxe or Suite."
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Category saved."
+msgstr ""
+
 msgid "Change password"
 msgstr ""
 
 msgid "Changes saved."
+msgstr ""
+
+msgid "Choose a category."
 msgstr ""
 
 msgid "Choose a password different from the current one."
@@ -104,7 +160,16 @@ msgstr ""
 msgid "Choose a role."
 msgstr ""
 
+msgid "Close for maintenance"
+msgstr ""
+
+msgid "Close the room"
+msgstr ""
+
 msgid "Colour theme"
+msgstr ""
+
+msgid "Create a room category first, then add rooms."
 msgstr ""
 
 msgid "Create account"
@@ -134,13 +199,32 @@ msgstr ""
 msgid "Deactivating signs the person out everywhere, immediately."
 msgstr ""
 
+msgid "Description"
+msgstr ""
+
 msgid "Details"
 msgstr ""
 
 msgid "Done"
 msgstr ""
 
+msgid "Edit room"
+msgstr ""
+
+msgid "End now"
+msgstr ""
+
 msgid "Enter a name of 1 to 100 characters."
+msgstr ""
+
+msgid "Enter a name of 1 to 50 characters."
+msgstr ""
+
+msgid "Enter a nightly rate above 0 and at most 100,000 DT."
+msgstr ""
+
+#, python-format
+msgid "Enter a reason of at most %(max_length)s characters."
 msgstr ""
 
 msgid "Enter a valid date."
@@ -156,6 +240,12 @@ msgid "Everyone"
 msgstr ""
 
 msgid "Filter"
+msgstr ""
+
+msgid "First closed night"
+msgstr ""
+
+msgid "For example 204 or B-12."
 msgstr ""
 
 msgid "Form expired"
@@ -188,6 +278,9 @@ msgstr ""
 msgid "Hotel time"
 msgstr ""
 
+msgid "In service"
+msgstr ""
+
 msgid "Incident reference:"
 msgstr ""
 
@@ -207,6 +300,9 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
+msgid "Last closed night"
+msgstr ""
+
 msgid "Light"
 msgstr ""
 
@@ -216,10 +312,31 @@ msgstr ""
 msgid "Main"
 msgstr ""
 
+msgid "Maintenance"
+msgstr ""
+
+msgid "Maintenance can't start in the past."
+msgstr ""
+
+msgid "Maintenance cancelled."
+msgstr ""
+
+msgid "Maintenance ended: the room is available again from today."
+msgstr ""
+
+msgid "Maintenance history"
+msgstr ""
+
 msgid "Manager"
 msgstr ""
 
 msgid "Match system"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "New category"
 msgstr ""
 
 msgid "New password"
@@ -231,13 +348,28 @@ msgstr ""
 msgid "Next page"
 msgstr ""
 
+msgid "Nightly rate"
+msgstr ""
+
+msgid "Nightly rate (DT, before tax)"
+msgstr ""
+
 msgid "No account exists yet."
 msgstr ""
 
 msgid "No entries match these filters."
 msgstr ""
 
+msgid "No rooms yet."
+msgstr ""
+
 msgid "Not allowed"
+msgstr ""
+
+msgid "Notes"
+msgstr ""
+
+msgid "Out of service"
 msgstr ""
 
 #, python-format
@@ -265,6 +397,9 @@ msgstr ""
 msgid "Reactivate account"
 msgstr ""
 
+msgid "Reason"
+msgstr ""
+
 msgid "Reception and management"
 msgstr ""
 
@@ -272,6 +407,9 @@ msgid "Receptionist"
 msgstr ""
 
 msgid "Record"
+msgstr ""
+
+msgid "Reopens on"
 msgstr ""
 
 msgid "Repeat the new password"
@@ -292,7 +430,35 @@ msgstr ""
 msgid "Role"
 msgstr ""
 
+msgid "Room"
+msgstr ""
+
+#, python-format
+msgid "Room %(number)s"
+msgstr ""
+
+#, python-format
+msgid "Room %(number)s added."
+msgstr ""
+
+msgid "Room categories"
+msgstr ""
+
+#, python-format
+msgid "Room closed from %(first)s; it reopens on %(reopens)s."
+msgstr ""
+
+msgid "Room number"
+msgstr ""
+
+msgid "Rooms"
+msgstr ""
+
 msgid "Rooms, guests, staff and audit log"
+msgstr ""
+
+#, python-format
+msgid "Rooms: %(count)s"
 msgstr ""
 
 msgid "Save changes"
@@ -349,6 +515,9 @@ msgstr ""
 msgid "The departure date must be after the arrival date."
 msgstr ""
 
+msgid "The first day guests can stay again."
+msgstr ""
+
 msgid "The first manager account already exists."
 msgstr ""
 
@@ -364,7 +533,16 @@ msgstr ""
 msgid "The password must not contain the username."
 msgstr ""
 
+msgid "The reopening day must be after the first closed night."
+msgstr ""
+
 msgid "The request couldn't be understood."
+msgstr ""
+
+#, python-format
+msgid ""
+"The room is already closed on %(count)s of these nights (%(first)s to "
+"%(last)s)."
 msgstr ""
 
 msgid "The two passwords are different."
@@ -384,6 +562,9 @@ msgid ""
 "again."
 msgstr ""
 
+msgid "This maintenance period is already over."
+msgstr ""
+
 msgid "This operation isn't allowed."
 msgstr ""
 
@@ -396,6 +577,9 @@ msgstr ""
 msgid "This password repeats the same characters too much."
 msgstr ""
 
+msgid "This room has never been closed for maintenance."
+msgstr ""
+
 msgid "This username is already used."
 msgstr ""
 
@@ -404,6 +588,9 @@ msgid "Time zone: %(tz)s"
 msgstr ""
 
 msgid "To"
+msgstr ""
+
+msgid "Tonight"
 msgstr ""
 
 msgid "Too large"
@@ -415,6 +602,15 @@ msgid ""
 msgstr ""
 
 msgid "Unlock"
+msgstr ""
+
+msgid "Untick to take the room out of service (it can no longer be booked)."
+msgstr ""
+
+msgid "Up to 3 decimals, for example 180 or 180.500."
+msgstr ""
+
+msgid "Use 1 to 10 letters, digits or hyphens, for example 204 or B-12."
 msgstr ""
 
 msgid "Use 3 to 32 characters: letters, digits, dots, hyphens or underscores."

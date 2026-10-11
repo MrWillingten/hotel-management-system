@@ -1,0 +1,91 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors -%}
+{%- from "macros/rooms.html" import status_badge -%}
+{%- set room = overview.room -%}
+{% block title %}{{ _("Room %(number)s", number=room.number) }}{% endblock %}
+{% block page_title %}{{ _("Room %(number)s", number=room.number) }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <div>{{ status_badge(overview.status) }}</div>
+  <div class="page-actions__buttons">
+    <a class="button button--ghost" href="{{ url_for('rooms.index') }}">{{ _("All rooms") }}</a>
+    {%- if current_user.is_manager %}
+    <a class="button button--primary" href="{{ url_for('rooms.edit', room_id=room.id) }}">{{ _("Edit room") }}</a>
+    {%- endif %}
+  </div>
+</div>
+
+<div class="grid grid--two">
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Details") }}</h2>
+    <dl class="facts">
+      <div><dt>{{ _("Category") }}</dt><dd>{{ room.category_name }}</dd></div>
+      <div><dt>{{ _("Capacity (guests)") }}</dt><dd>{{ room.capacity }}</dd></div>
+      <div><dt>{{ _("Nightly rate (DT, before tax)") }}</dt><dd>{{ room.nightly_rate | money }}</dd></div>
+    </dl>
+    {%- if room.notes %}<p class="muted">{{ room.notes }}</p>{% endif %}
+  </section>
+
+  {%- if current_user.is_manager %}
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Close for maintenance") }}</h2>
+    {{ form_errors(errors) }}
+    <form class="stack" method="post" action="{{ url_for('rooms.schedule_maintenance', room_id=room.id) }}" novalidate>
+      {{ csrf() }}
+      <div class="grid grid--fields">
+        {{ field("first_night", _("First closed night"), type="date", value=values.get("first_night", today.isoformat()),
+                 error=errors.first_night) }}
+        {{ field("reopens_on", _("Reopens on"), type="date", value=values.get("reopens_on", ""), error=errors.reopens_on,
+                 hint=_("The first day guests can stay again.")) }}
+      </div>
+      {{ field("reason", _("Reason"), value=values.get("reason", ""), error=errors.reason, maxlength=200) }}
+      <button class="button button--primary" type="submit">{{ _("Close the room") }}</button>
+    </form>
+  </section>
+  {%- endif %}
+</div>
+
+<section class="panel">
+  <h2 class="panel__title">{{ _("Maintenance history") }}</h2>
+  {%- if maintenance %}
+  <div class="table-wrap table-wrap--flat">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">{{ _("First closed night") }}</th>
+          <th scope="col">{{ _("Last closed night") }}</th>
+          <th scope="col">{{ _("Reopens on") }}</th>
+          <th scope="col">{{ _("Reason") }}</th>
+          {%- if current_user.is_manager %}<th scope="col"><span class="visually-hidden">{{ _("Actions") }}</span></th>{% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {%- for m in maintenance %}
+        <tr>
+          <td>{{ m.first_night | dateformat("medium") }}</td>
+          <td>{{ m.last_night | dateformat("medium") }}</td>
+          <td>{{ m.reopens_on | dateformat("medium") }}</td>
+          <td>{{ m.reason }}</td>
+          {%- if current_user.is_manager %}
+          <td>
+            {%- if m.reopens_on > today %}
+            <form method="post" action="{{ url_for('rooms.cancel_maintenance', maintenance_id=m.id) }}">
+              {{ csrf() }}
+              <input type="hidden" name="room_id" value="{{ room.id }}">
+              <button class="button button--ghost button--small" type="submit">
+                {{- _("End now") if m.first_night < today else _("Cancel") -}}
+              </button>
+            </form>
+            {%- endif %}
+          </td>
+          {%- endif %}
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+  {%- else %}
+  <p class="muted">{{ _("This room has never been closed for maintenance.") }}</p>
+  {%- endif %}
+</section>
+{% endblock %}
