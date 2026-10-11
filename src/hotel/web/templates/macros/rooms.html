@@ -6,3 +6,22 @@
 {%- elif status == "MAINTENANCE" %}<span class="badge badge--warning">{{ icon("tools") }}{{ _("Maintenance") }}</span>
 {%- else %}<span class="badge badge--neutral">{{ _("Out of service") }}</span>{% endif %}
 {%- endmacro %}
+
+{%- macro housekeeping_badge(state) -%}
+{%- if state == "DIRTY" %}<span class="badge badge--warning">{{ _("To clean") }}</span>
+{%- else %}<span class="badge badge--success">{{ _("Clean") }}</span>{% endif %}
+{%- endmacro %}
+
+{%- macro housekeeping_button(room, next=None) -%}
+<form method="post" action="{{ url_for('rooms.housekeeping', room_id=room.id) }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  {%- if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+  {%- if room.housekeeping == "DIRTY" %}
+  <input type="hidden" name="state" value="CLEAN">
+  <button class="button button--ghost button--small" type="submit">{{ icon("check") }}{{ _("Mark clean") }}</button>
+  {%- else %}
+  <input type="hidden" name="state" value="DIRTY">
+  <button class="button button--ghost button--small" type="submit">{{ _("Mark to clean") }}</button>
+  {%- endif %}
+</form>
+{%- endmacro %}

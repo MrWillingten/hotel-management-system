@@ -2,6 +2,7 @@ from datetime import UTC, date, datetime, timedelta
 
 import pytest
 
+from hotel.domain.actor import Actor
 from hotel.domain.errors import (
     BusinessRuleViolation,
     InvalidStateTransitionError,
@@ -118,13 +119,10 @@ def test_shortening_and_capacity_and_versions(services, hotel):
 
 
 def _check_in(services, reservation):
-    """Sprint 4 adds check-in; until then the status is set directly for these tests."""
-    with services.uow_factory() as uow:
-        stored = uow.reservations.get(reservation.id)
-        stored.transition(ReservationStatus.CHECKED_IN)
-        stored.checked_in_at = services.clock.now()
-        uow.reservations.update(stored)
-        return stored
+    """Check the guest in through the real service (the stay must have started)."""
+    return services.reservations.check_in(
+        Actor.system(), reservation.id, version=reservation.version
+    )
 
 
 def test_checked_in_guests_can_only_change_departure_and_occupants(services, hotel, clock):

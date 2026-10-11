@@ -6,13 +6,13 @@ from datetime import date
 from hotel.domain.errors import StaleDataError
 from hotel.domain.money import Money
 from hotel.domain.period import StayPeriod
-from hotel.domain.rooms import MaintenancePeriod, Room, RoomCategory
+from hotel.domain.rooms import Housekeeping, MaintenancePeriod, Room, RoomCategory
 from hotel.persistence.convert import date_from_db, date_to_db, datetime_from_db, datetime_to_db
 from hotel.persistence.repositories.base import BaseRepository
 
 _ROOM_SELECT = (
     "SELECT r.id, r.number, r.category_id, r.capacity, r.nightly_rate_mill, r.in_service, "
-    "r.notes, r.version, c.name AS category_name "
+    "r.notes, r.version, r.housekeeping, c.name AS category_name "
     "FROM room r JOIN room_category c ON c.id = r.category_id"
 )
 _MAINTENANCE_SELECT = (
@@ -31,6 +31,7 @@ def _to_room(row: sqlite3.Row) -> Room:
         notes=row["notes"],
         version=row["version"],
         category_name=row["category_name"],
+        housekeeping=Housekeeping(row["housekeeping"]),
     )
 
 
@@ -148,6 +149,12 @@ class RoomRepository(BaseRepository):
         if cursor.rowcount != 1:
             raise StaleDataError(entity="room", id=room.id)
         room.version += 1
+
+    def set_housekeeping(self, room_ids: list[int], state: Housekeeping) -> None:
+        self._conn.executemany(
+            "UPDATE room SET housekeeping = ? WHERE id = ?",
+            [(state.value, room_id) for room_id in room_ids],
+        )
 
 
 class MaintenanceRepository(BaseRepository):

@@ -124,6 +124,7 @@ class Reservation:
     cancelled_at: datetime | None = None
     checked_in_at: datetime | None = None
     checked_out_at: datetime | None = None
+    no_show_at: datetime | None = None
     version: int = 1
     guest_name: str = ""  # filled when read, for display
 
@@ -142,12 +143,32 @@ class Reservation:
     def nights_of(self, room_id: int) -> list[RoomNight]:
         return [n for n in self.nights if n.room_id == room_id]
 
-    def transition(self, to: ReservationStatus) -> None:
+    def ensure_can_become(self, to: ReservationStatus) -> None:
         if to not in ALLOWED_TRANSITIONS[self.status]:
             raise InvalidStateTransitionError(
                 "reservation.invalid_transition", current=self.status.value, requested=to.value
             )
+
+    def transition(self, to: ReservationStatus) -> None:
+        self.ensure_can_become(to)
         self.status = to
+
+    def check_in(self, now: datetime, today: date) -> None:
+        """Business rule BR17: on the arrival day, or later during the stay.
+
+        A guest who arrives a day late keeps the booking (the missed night is
+        still charged); checking in before the arrival day is refused because
+        the room may still belong to someone else tonight.
+        """
+        self.ensure_can_become(ReservationStatus.CHECKED_IN)
+        if today < self.period.arrival:
+            raise BusinessRuleViolation(
+                "reservation.check_in_too_early", arrival=self.period.arrival.isoformat()
+            )
+        if today >= self.period.departure:
+            raise BusinessRuleViolation("reservation.check_in_too_late")
+        self.transition(ReservationStatus.CHECKED_IN)
+        self.checked_in_at = now
 
 
 @dataclass(frozen=True, slots=True)
@@ -181,3 +202,15 @@ class CancellationPolicy:
         if arrival - now < self.window and not within_grace:
             return reservation.accommodation_total.percent(self.fee_basis_points)
         return Money.zero()
+
+    def no_show_fee(self, reservation: Reservation, now: datetime, tz: tzinfo) -> Money:
+        """Decision F: a no-show is charged like a late cancellation.
+
+        It can only be recorded once the arrival time has passed; before that
+        the guest may still come (or cancel).
+        """
+        if now < self.arrival_instant(reservation.period.arrival, tz):
+            raise BusinessRuleViolation(
+                "reservation.no_show_too_early", arrival=reservation.period.arrival.isoformat()
+            )
+        return reservation.accommodation_total.percent(self.fee_basis_points)

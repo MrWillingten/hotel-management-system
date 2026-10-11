@@ -108,15 +108,12 @@ Windows exe, room moves, freeze, report, demo).
 
 ### Known open issues / limitations (not bugs yet fixed)
 - French and Arabic texts are drafts → native-speaker review before demo.
-- Tests set `CHECKED_IN` directly (`_check_in` helper in
-  `tests/integration/test_change_and_cancel.py`) until Sprint 4 adds check-in.
 - A cancelled reservation shows an accommodation total of 0 (its nights are
   released); the fee is stored. Revisit when invoices exist (Sprint 4).
 - Shortening a stay within 48 h charges no fee (documented decision).
 - Phone numbers are stored normalised and shown unformatted.
 - Daily automatic backup runs at start-up only; long-running servers need a
   scheduled `hotel backup` (documented in `docs/deployment.md`).
-- Dashboard still shows placeholders + roadmap (real figures in Sprint 4).
 
 ### Bugs found and fixed (lessons)
 - `.gitignore` `backups/` hid `templates/backups/` → anchor root patterns.

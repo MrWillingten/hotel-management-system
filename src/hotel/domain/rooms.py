@@ -33,6 +33,13 @@ class RoomStatus(StrEnum):
     OUT_OF_SERVICE = "OUT_OF_SERVICE"
 
 
+class Housekeeping(StrEnum):
+    """Is the room ready for the next guest? Check-out makes it DIRTY (story 4.9)."""
+
+    CLEAN = "CLEAN"
+    DIRTY = "DIRTY"
+
+
 def _clean(raw: str) -> str:
     return " ".join(unicodedata.normalize("NFC", raw).split())
 
@@ -93,6 +100,7 @@ class Room:
     notes: str = ""
     version: int = 1
     category_name: str | None = None  # filled when read from the database
+    housekeeping: Housekeeping = Housekeeping.CLEAN
 
     def can_host(self, occupants: int) -> bool:
         return 1 <= occupants <= self.capacity  # business rule BR7

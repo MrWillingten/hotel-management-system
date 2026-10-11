@@ -1,14 +1,15 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/forms.html" import csrf, field, form_errors -%}
-{%- from "macros/rooms.html" import status_badge -%}
+{%- from "macros/rooms.html" import housekeeping_badge, housekeeping_button, status_badge -%}
 {%- set room = overview.room -%}
 {% block title %}{{ _("Room %(number)s", number=room.number) }}{% endblock %}
 {% block page_title %}{{ _("Room %(number)s", number=room.number) }}{% endblock %}
 {% block content %}
 <div class="page-actions">
-  <div>{{ status_badge(overview.status) }}</div>
+  <div class="badge-row">{{ status_badge(overview.status) }} {{ housekeeping_badge(room.housekeeping) }}</div>
   <div class="page-actions__buttons">
     <a class="button button--ghost" href="{{ url_for('rooms.index') }}">{{ _("All rooms") }}</a>
+    {{ housekeeping_button(room) }}
     {%- if current_user.is_manager %}
     <a class="button button--primary" href="{{ url_for('rooms.edit', room_id=room.id) }}">{{ _("Edit room") }}</a>
     {%- endif %}

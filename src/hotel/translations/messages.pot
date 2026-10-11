@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 08:23+0100\n"
+"POT-Creation-Date: 2026-10-11 09:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,14 @@ msgstr ""
 
 #, python-format
 msgid "%(greeting)s, %(name)s"
+msgstr ""
+
+#, python-format
+msgid "%(name)s is checked in."
+msgstr ""
+
+#, python-format
+msgid "%(sold)s of %(sellable)s rooms"
 msgstr ""
 
 msgid "3 to 32 characters: letters, digits, dots, hyphens or underscores."
@@ -43,6 +51,10 @@ msgstr ""
 
 #, python-format
 msgid "A maintenance period lasts at most %(max)s nights."
+msgstr ""
+
+#, python-format
+msgid "A no-show can only be recorded after the check-in time on %(arrival)s."
 msgstr ""
 
 msgid "A passport number has 5 to 20 letters or digits."
@@ -159,6 +171,9 @@ msgid ""
 msgstr ""
 
 msgid "Arrival time, special requests..."
+msgstr ""
+
+msgid "Arrivals"
 msgstr ""
 
 msgid "Arriving from"
@@ -301,6 +316,13 @@ msgstr ""
 msgid "Check availability and price"
 msgstr ""
 
+msgid "Check in"
+msgstr ""
+
+#, python-format
+msgid "Check-in opens on the arrival day (%(arrival)s)."
+msgstr ""
+
 msgid "Checked in"
 msgstr ""
 
@@ -332,6 +354,9 @@ msgid "Choose a role."
 msgstr ""
 
 msgid "Choose the dates first."
+msgstr ""
+
+msgid "Clean"
 msgstr ""
 
 msgid "Close for maintenance"
@@ -390,9 +415,6 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-msgid "Database schema"
-msgstr ""
-
 msgid "Dates"
 msgstr ""
 
@@ -408,6 +430,9 @@ msgstr ""
 msgid "Departure"
 msgstr ""
 
+msgid "Departures"
+msgstr ""
+
 msgid "Description"
 msgstr ""
 
@@ -421,9 +446,6 @@ msgid "Document"
 msgstr ""
 
 msgid "Document number"
-msgstr ""
-
-msgid "Done"
 msgstr ""
 
 msgid "E-mail"
@@ -472,6 +494,9 @@ msgstr ""
 msgid "Enter an amount such as 180 or 180.500."
 msgstr ""
 
+msgid "Every room is clean."
+msgstr ""
+
 msgid "Everyone"
 msgstr ""
 
@@ -499,9 +524,6 @@ msgstr ""
 msgid "Form expired"
 msgstr ""
 
-msgid "Foundations: sign-in, themes, languages"
-msgstr ""
-
 msgid "Free"
 msgstr ""
 
@@ -512,9 +534,6 @@ msgid ""
 msgstr ""
 
 msgid "From"
-msgstr ""
-
-msgid "Front desk and billing"
 msgstr ""
 
 msgid "Full name"
@@ -549,10 +568,10 @@ msgstr ""
 msgid "Guests in one room"
 msgstr ""
 
-msgid "Hardening, report and demo"
+msgid "Guests in the house"
 msgstr ""
 
-msgid "Hotel time"
+msgid "Housekeeping"
 msgstr ""
 
 msgid "Identity and contact"
@@ -595,6 +614,9 @@ msgstr ""
 msgid "Last name"
 msgstr ""
 
+msgid "Late"
+msgstr ""
+
 msgid "Legend"
 msgstr ""
 
@@ -626,6 +648,12 @@ msgid "Manager"
 msgstr ""
 
 msgid "Manual"
+msgstr ""
+
+msgid "Mark clean"
+msgstr ""
+
+msgid "Mark to clean"
 msgstr ""
 
 msgid "Match system"
@@ -664,9 +692,6 @@ msgstr ""
 msgid "Newest arrivals first."
 msgstr ""
 
-msgid "Next"
-msgstr ""
-
 msgid "Next page"
 msgstr ""
 
@@ -701,6 +726,9 @@ msgstr ""
 msgid "No backups yet."
 msgstr ""
 
+msgid "No departures left today."
+msgstr ""
+
 msgid "No entries match these filters."
 msgstr ""
 
@@ -709,6 +737,9 @@ msgid "No guest matches “%(query)s”."
 msgstr ""
 
 msgid "No guests registered yet."
+msgstr ""
+
+msgid "No more arrivals expected today."
 msgstr ""
 
 msgid "No other room is free for these dates."
@@ -729,10 +760,29 @@ msgstr ""
 msgid "No-show"
 msgstr ""
 
+msgid "No-show fee"
+msgstr ""
+
+msgid "No-show recorded"
+msgstr ""
+
+#, python-format
+msgid "No-show recorded. Fee: %(fee)s."
+msgstr ""
+
 msgid "Not allowed"
 msgstr ""
 
+#, python-format
+msgid ""
+"Not cleaned yet: room %(rooms)s. Check with housekeeping before handing "
+"over the key."
+msgstr ""
+
 msgid "Notes"
+msgstr ""
+
+msgid "Occupancy tonight"
 msgstr ""
 
 msgid "Occupied"
@@ -742,6 +792,9 @@ msgid "Only a confirmed reservation can be cancelled."
 msgstr ""
 
 msgid "Out of service"
+msgstr ""
+
+msgid "Overdue"
 msgstr ""
 
 #, python-format
@@ -766,9 +819,6 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
-msgid "Planned"
-msgstr ""
-
 msgid "Preferences useful to the staff. No sensitive information."
 msgstr ""
 
@@ -779,9 +829,6 @@ msgid "Previous week"
 msgstr ""
 
 msgid "Price locked at booking"
-msgstr ""
-
-msgid "Project roadmap"
 msgstr ""
 
 msgid "Reactivate account"
@@ -797,6 +844,12 @@ msgid "Receptionist"
 msgstr ""
 
 msgid "Record"
+msgstr ""
+
+msgid "Record a no-show"
+msgstr ""
+
+msgid "Record the no-show"
 msgstr ""
 
 msgid "Register a guest"
@@ -823,9 +876,6 @@ msgstr ""
 msgid "Repeat the temporary password"
 msgstr ""
 
-msgid "Reports, operations and translations"
-msgstr ""
-
 msgid "Reservation"
 msgstr ""
 
@@ -846,7 +896,8 @@ msgstr ""
 msgid "Reservations"
 msgstr ""
 
-msgid "Reservations and availability"
+#, python-format
+msgid "Reservations: %(count)s"
 msgstr ""
 
 msgid "Reserved"
@@ -873,6 +924,14 @@ msgid "Room %(number)s added."
 msgstr ""
 
 #, python-format
+msgid "Room %(number)s is marked to be cleaned."
+msgstr ""
+
+#, python-format
+msgid "Room %(number)s is ready for the next guest."
+msgstr ""
+
+#, python-format
 msgid ""
 "Room %(room)s can sleep at most %(capacity)s guests (%(occupants)s "
 "requested)."
@@ -886,6 +945,10 @@ msgstr ""
 
 #, python-format
 msgid "Room %(room)s is out of service."
+msgstr ""
+
+#, python-format
+msgid "Room %(room)s is still occupied (%(code)s). Check that guest out first."
 msgstr ""
 
 msgid "Room categories"
@@ -908,7 +971,7 @@ msgstr ""
 msgid "Rooms free for the same dates:"
 msgstr ""
 
-msgid "Rooms, guests, staff and audit log"
+msgid "Rooms to clean"
 msgstr ""
 
 #, python-format
@@ -984,9 +1047,6 @@ msgstr ""
 msgid "Stay"
 msgstr ""
 
-msgid "System"
-msgstr ""
-
 msgid "Temporary password"
 msgstr ""
 
@@ -1017,7 +1077,10 @@ msgstr ""
 msgid "The first manager account already exists."
 msgstr ""
 
-msgid "The front desk figures will appear here once reservations are available."
+#, python-format
+msgid ""
+"The guest did not arrive. A no-show is charged like a late cancellation: "
+"%(fee)s. The rooms become free again."
 msgstr ""
 
 msgid ""
@@ -1028,7 +1091,9 @@ msgstr ""
 msgid "The hotel must keep at least one active manager."
 msgstr ""
 
-msgid "The nights of this reservation were released when it was cancelled."
+msgid ""
+"The nights of this reservation were released when it was cancelled or "
+"marked as a no-show."
 msgstr ""
 
 msgid "The page you asked for doesn't exist."
@@ -1047,6 +1112,9 @@ msgstr ""
 msgid ""
 "The room is already closed or booked on %(count)s of these nights "
 "(%(first)s to %(last)s)."
+msgstr ""
+
+msgid "The stay is already over: this reservation can no longer be checked in."
 msgstr ""
 
 msgid "The two passwords are different."
@@ -1119,11 +1187,10 @@ msgstr ""
 msgid "This username is already used."
 msgstr ""
 
-#, python-format
-msgid "Time zone: %(tz)s"
+msgid "To"
 msgstr ""
 
-msgid "To"
+msgid "To clean"
 msgstr ""
 
 msgid "Today"
@@ -1185,7 +1252,8 @@ msgstr ""
 msgid "VIP guest"
 msgstr ""
 
-msgid "Version"
+#, python-format
+msgid "Version %(version)s · database schema %(schema)s · time zone %(tz)s"
 msgstr ""
 
 msgid "Viewing the full number was recorded in the audit log."
@@ -1219,10 +1287,6 @@ msgstr ""
 msgid "You have been signed out."
 msgstr ""
 
-#, python-format
-msgid "You'll be signed out after %(minutes)s minutes without activity."
-msgstr ""
-
 msgid "You're using a temporary password. Choose your own password to continue."
 msgstr ""
 
@@ -1230,8 +1294,5 @@ msgid "Your other open sessions will be signed out."
 msgstr ""
 
 msgid "Your password has been changed."
-msgstr ""
-
-msgid "Your session"
 msgstr ""
 

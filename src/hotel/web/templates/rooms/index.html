@@ -1,5 +1,5 @@
 {%- extends "layouts/app.html" -%}
-{%- from "macros/rooms.html" import status_badge -%}
+{%- from "macros/rooms.html" import housekeeping_badge, status_badge -%}
 {% block title %}{{ _("Rooms") }}{% endblock %}
 {% block page_title %}{{ _("Rooms") }}{% endblock %}
 {% block content %}
@@ -31,6 +31,7 @@
         <th scope="col" class="num">{{ _("Capacity") }}</th>
         <th scope="col" class="num">{{ _("Nightly rate") }}</th>
         <th scope="col">{{ _("Tonight") }}</th>
+        <th scope="col">{{ _("Housekeeping") }}</th>
       </tr>
     </thead>
     <tbody>
@@ -41,9 +42,10 @@
         <td class="num">{{ item.room.capacity }}</td>
         <td class="num">{{ item.room.nightly_rate | money }}</td>
         <td>{{ status_badge(item.status) }}</td>
+        <td>{{ housekeeping_badge(item.room.housekeeping) }}</td>
       </tr>
       {%- else %}
-      <tr><td colspan="5" class="table__empty">
+      <tr><td colspan="6" class="table__empty">
         {%- if categories %}{{ _("No rooms yet.") }}{% else %}{{ _("Create a room category first, then add rooms.") }}{% endif -%}
       </td></tr>
       {%- endfor %}

@@ -12,6 +12,7 @@ from hotel.domain.money import Money
 from hotel.domain.period import StayPeriod
 from hotel.domain.rooms import (
     MAX_MAINTENANCE_NIGHTS,
+    Housekeeping,
     MaintenancePeriod,
     Room,
     RoomCategory,
@@ -88,7 +89,7 @@ class RoomService:
         """Every room with what it is doing tonight."""
         require_staff(actor)
         with self._uow() as uow:
-            states = uow.maintenance.states_on(self._clock.today())
+            states = self._states(uow)
             return [
                 RoomOverview(room, self._status(room, states))
                 for room in uow.rooms.list(category_id=category_id)
@@ -98,8 +99,25 @@ class RoomService:
         require_staff(actor)
         with self._uow() as uow:
             room = self._load(uow, room_id)
-            states = uow.maintenance.states_on(self._clock.today())
-            return RoomOverview(room, self._status(room, states))
+            return RoomOverview(room, self._status(room, self._states(uow)))
+
+    def set_housekeeping(self, actor: Actor, room_id: int, state: Housekeeping) -> Room:
+        """Story 4.9: any staff member can mark a room clean (or to clean)."""
+        require_staff(actor)
+        with self._uow() as uow:
+            room = self._load(uow, room_id)
+            uow.rooms.set_housekeeping([room.id], state)
+            record(
+                uow,
+                self._clock,
+                actor,
+                "room.housekeeping",
+                entity="room",
+                entity_id=room.id,
+                state=state.value,
+            )
+            room.housekeeping = state
+            return room
 
     def create_room(
         self,
@@ -267,6 +285,15 @@ class RoomService:
             return result
 
     # ------------------------------------------------------------ helpers
+    def _states(self, uow: UnitOfWork) -> dict[int, str]:
+        states = uow.maintenance.states_on(self._clock.today())
+        # A guest still in the room on their departure day holds no night any
+        # more, but the room is certainly not free until they check out.
+        for room_id in uow.reservations.in_house_rooms():
+            if states.get(room_id) != "MAINTENANCE":
+                states[room_id] = "CHECKED_IN"
+        return states
+
     @staticmethod
     def _status(room: Room, states: dict[int, str]) -> RoomStatus:
         if not room.in_service:

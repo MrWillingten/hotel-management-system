@@ -137,6 +137,11 @@ class ReservationService:
             self.policy.arrival_instant(period.arrival, self._clock.hotel_tz) - self.policy.window
         )
 
+    def arrival_has_passed(self, period: StayPeriod) -> bool:
+        """True once the check-in time of the arrival day is over (no-show possible)."""
+        arrival = self.policy.arrival_instant(period.arrival, self._clock.hotel_tz)
+        return self._clock.now() >= arrival
+
     # ------------------------------------------------------------ availability
     def find_available_rooms(
         self,
@@ -355,6 +360,73 @@ class ReservationService:
                 self._clock,
                 actor,
                 "reservation.cancelled",
+                entity="reservation",
+                entity_id=reservation.id,
+                fee=str(fee),
+                total=str(reservation.accommodation_total),
+            )
+            return uow.reservations.get(reservation.id)
+
+    # ------------------------------------------------------------ front desk
+    def check_in(self, actor: Actor, reservation_id: int, *, version: int) -> Reservation:
+        """Scenario §4.5, business rule BR17: the guest has arrived."""
+        require_staff(actor)
+        with self._uow() as uow:
+            reservation = self._load(uow, reservation_id)
+            if reservation.version != version:
+                raise StaleDataError(entity="reservation", id=reservation_id)
+            reservation.check_in(self._clock.now(), self._clock.today())
+            # The previous guest of a room may leave late on our arrival day:
+            # nobody moves in before they have checked out.
+            in_house = uow.reservations.in_house_rooms()
+            for room in reservation.rooms:
+                if room.room_id in in_house and in_house[room.room_id] != reservation.code:
+                    raise BusinessRuleViolation(
+                        "reservation.room_still_occupied",
+                        room=room.number,
+                        code=in_house[room.room_id],
+                    )
+            uow.reservations.update(reservation)
+            record(
+                uow,
+                self._clock,
+                actor,
+                "reservation.checked_in",
+                entity="reservation",
+                entity_id=reservation.id,
+                code=reservation.code,
+            )
+            return uow.reservations.get(reservation.id)
+
+    def no_show_fee(self, actor: Actor, reservation_id: int) -> Money:
+        """What recording a no-show now would charge (raises if not possible yet)."""
+        require_staff(actor)
+        with self._uow() as uow:
+            reservation = self._load(uow, reservation_id)
+            reservation.ensure_can_become(ReservationStatus.NO_SHOW)
+            return self.policy.no_show_fee(reservation, self._clock.now(), self._clock.hotel_tz)
+
+    def record_no_show(self, actor: Actor, reservation_id: int, *, version: int) -> Reservation:
+        """Decision F: the guest never came. Charged like a late cancellation."""
+        require_staff(actor)
+        now = self._clock.now()
+        with self._uow() as uow:
+            reservation = self._load(uow, reservation_id)
+            if reservation.version != version:
+                raise StaleDataError(entity="reservation", id=reservation_id)
+            reservation.ensure_can_become(ReservationStatus.NO_SHOW)
+            fee = self.policy.no_show_fee(reservation, now, self._clock.hotel_tz)
+            reservation.transition(ReservationStatus.NO_SHOW)
+            reservation.cancellation_fee = fee
+            reservation.no_show_at = now
+            uow.reservations.update(reservation)
+            # The remaining nights can be sold again to walk-in guests.
+            uow.reservations.release_nights(reservation.id)
+            record(
+                uow,
+                self._clock,
+                actor,
+                "reservation.no_show",
                 entity="reservation",
                 entity_id=reservation.id,
                 fee=str(fee),
