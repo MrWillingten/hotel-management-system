@@ -1,0 +1,43 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Tour") }} · {{ step.title }}{% endblock %}
+{% block page_title %}{{ _("Tour") }}{% endblock %}
+{% block content %}
+<section class="panel tour">
+  <p class="tour__progress">{{ _("Step %(number)s of %(total)s", number=number, total=total) }}</p>
+  <ol class="tour__dots" aria-hidden="true">
+    {%- for i in range(1, total + 1) %}
+    <li class="tour__dot{% if i == number %} tour__dot--current{% elif i < number %} tour__dot--done{% endif %}"></li>
+    {%- endfor %}
+  </ol>
+  <div class="tour__icon">{{ icon(step.icon) }}</div>
+  <h2 class="tour__title">{{ step.title }}</h2>
+  <p class="tour__text">{{ step.text }}</p>
+  <ul class="tour__points">
+    {%- for point in step.points %}
+    <li>{{ icon("check") }}<span>{{ point }}</span></li>
+    {%- endfor %}
+  </ul>
+  {%- if step.endpoint %}
+  <p><a class="button button--ghost button--small" href="{{ url_for(step.endpoint) }}">{{ _("Open this page") }}</a></p>
+  {%- endif %}
+  <div class="tour__nav">
+    {%- if number > 1 %}
+    <a class="button button--ghost" href="{{ url_for('welcome.tour', step=number - 1) }}">{{ _("Back") }}</a>
+    {%- endif %}
+    {%- if number < total %}
+    <a class="button button--primary" href="{{ url_for('welcome.tour', step=number + 1) }}">{{ _("Next") }}</a>
+    <form method="post" action="{{ url_for('welcome.done') }}" class="tour__skip">
+      {{ csrf() }}
+      <button class="button button--ghost" type="submit">{{ _("Skip the tour") }}</button>
+    </form>
+    {%- else %}
+    <form method="post" action="{{ url_for('welcome.done') }}">
+      {{ csrf() }}
+      <button class="button button--primary" type="submit">{{ icon("check") }}{{ _("Finish the tour") }}</button>
+    </form>
+    {%- endif %}
+  </div>
+</section>
+{% endblock %}

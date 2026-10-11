@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 20:05+0100\n"
+"POT-Creation-Date: 2026-10-11 20:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -28,6 +28,10 @@ msgstr "ما زال %(amount)s مستحقاً. سجّل الدفعة قبل ال
 #, python-format
 msgid "%(amount)s per adult per night"
 msgstr "%(amount)s لكل بالغ في الليلة"
+
+#, python-format
+msgid "%(done)s of %(total)s done"
+msgstr "أُنجز %(done)s من %(total)s"
 
 #, python-format
 msgid "%(greeting)s, %(name)s"
@@ -208,6 +212,9 @@ msgstr "إضافة موظف"
 msgid "Add category"
 msgstr "إضافة الفئة"
 
+msgid "Add extra services such as breakfasts while the guest is checked in."
+msgstr "أضف خدمات إضافية مثل وجبات الفطور أثناء إقامة النزيل."
+
 msgid "Add rate period"
 msgstr "إضافة الفترة"
 
@@ -356,6 +363,9 @@ msgstr "الوصول ابتداءً من"
 msgid "Arriving until"
 msgstr "الوصول حتى"
 
+msgid "As a manager you set up what the hotel sells and who works with you."
+msgstr "بصفتك مديرًا، تُعدّ ما يبيعه الفندق ومن يعمل معك."
+
 msgid "At least 12 characters. A short sentence is easy to remember and hard to guess."
 msgstr "12 حرفًا على الأقل. الجملة القصيرة سهلة التذكر وصعبة التخمين."
 
@@ -380,6 +390,11 @@ msgstr "التوفر يوم"
 #, python-format
 msgid "Availability on %(day)s"
 msgstr "التوفر يوم %(day)s"
+
+msgid ""
+"Availability shows rooms and nights as a grid. New reservation books in three steps: dates, "
+"guest, rooms."
+msgstr "تعرض صفحة «التوفر» الغرف والليالي في شبكة. ويتم «حجز جديد» في ثلاث خطوات: التواريخ، النزيل، الغرف."
 
 msgid "Available"
 msgstr "متاحة"
@@ -411,6 +426,9 @@ msgstr "النسخ الاحتياطية"
 
 msgid "Backups are stored in this folder on the server:"
 msgstr "تُحفظ النسخ الاحتياطية في هذا المجلد على الخادم:"
+
+msgid "Backups: copy them regularly to another device."
+msgstr "النسخ الاحتياطية: انسخها بانتظام إلى جهاز آخر."
 
 msgid "Bad request"
 msgstr "طلب غير صالح"
@@ -476,6 +494,9 @@ msgstr "CSV"
 
 msgid "Cancel"
 msgstr "إلغاء"
+
+msgid "Cancel before arrival (a fee applies within 48 hours) or record a no-show."
+msgstr "ألغِ قبل الوصول (تُطبَّق رسوم خلال 48 ساعة) أو سجّل عدم الحضور."
 
 msgid "Cancel reservation"
 msgstr "إلغاء الحجز"
@@ -564,6 +585,9 @@ msgstr "تم حفظ الفئة."
 msgid "Change"
 msgstr "تعديل"
 
+msgid "Change dates or rooms; Move guests to another room from tonight on."
+msgstr "عدّل التواريخ أو الغرف؛ وانقل النزلاء إلى غرفة أخرى ابتداءً من الليلة."
+
 msgid "Change guest"
 msgstr "تغيير النزيل"
 
@@ -592,11 +616,20 @@ msgstr "تم إلغاء الاحتساب."
 msgid "Charged: %(quantity)s × %(name)s."
 msgstr "تم احتساب: %(quantity)s × %(name)s."
 
+msgid "Check a guest in"
+msgstr "تسجيل وصول نزيل"
+
+msgid "Check a guest out"
+msgstr "تسجيل مغادرة نزيل"
+
 msgid "Check availability and price"
 msgstr "التحقق من التوفر والسعر"
 
 msgid "Check in"
 msgstr "تسجيل الوصول"
+
+msgid "Check in and Check out are right next to each guest."
+msgstr "زرّا «تسجيل الوصول» و«تسجيل المغادرة» بجانب كل نزيل."
 
 msgid "Check out"
 msgstr "تسجيل المغادرة"
@@ -851,11 +884,20 @@ msgstr "ينزّل جدولًا لبرنامج Excel أو LibreOffice؛ وتُس
 msgid "Due from guests in the house"
 msgstr "المستحق على النزلاء المقيمين"
 
+msgid "During the stay"
+msgstr "أثناء الإقامة"
+
 msgid "E-mail"
 msgstr "البريد الإلكتروني"
 
+msgid "EN, FR and ع change the language; the sun and moon change the theme."
+msgstr "تغيّر EN وFR وع اللغة؛ ويغيّر زرّا الشمس والقمر المظهر."
+
 msgid "EN, FR, ع and the sun/moon buttons in the top bar; remembered on this computer."
 msgstr "EN وFR وع وزرا الشمس/القمر في الشريط العلوي؛ ويُحفظ الاختيار على هذا الحاسوب."
+
+msgid "Each night's price is locked when you book."
+msgstr "يُثبَّت سعر كل ليلة عند الحجز."
 
 msgid "Each room can only be selected once."
 msgstr "يمكن اختيار كل غرفة مرة واحدة فقط."
@@ -955,6 +997,11 @@ msgstr ""
 msgid "Every invoice is paid."
 msgstr "جميع الفواتير مسددة."
 
+msgid ""
+"Every morning starts here: who arrives, who leaves, who is in the house, and which rooms are not "
+"ready."
+msgstr "يبدأ كل صباح من هنا: من يصل، ومن يغادر، ومن يقيم، وأي الغرف غير جاهزة."
+
 msgid "Every morning, check that yesterday is in the list of closed days."
 msgstr "كل صباح، تحقق من أن يوم أمس ضمن قائمة الأيام المُقفلة."
 
@@ -995,6 +1042,9 @@ msgstr "لا يمكن احتساب الخدمات الإضافية إلا أثن
 msgid "Extra services, settings and taxes"
 msgstr "الخدمات الإضافية والإعدادات والضرائب"
 
+msgid "Figures and safety"
+msgstr "الأرقام والأمان"
+
 msgid "File"
 msgstr "الملف"
 
@@ -1003,6 +1053,12 @@ msgstr "تصفية"
 
 msgid "Find rooms"
 msgstr "البحث عن غرف"
+
+msgid "Finding a room and booking it"
+msgstr "إيجاد غرفة وحجزها"
+
+msgid "Finish the tour"
+msgstr "إنهاء الجولة"
 
 msgid "First closed night"
 msgstr "أول ليلة مغلقة"
@@ -1064,6 +1120,9 @@ msgstr "من %(date)s حتى المغادرة"
 
 msgid "Full name"
 msgstr "الاسم الكامل"
+
+msgid "Getting started"
+msgstr "البداية"
 
 msgid "Give a reason (at most 200 characters)."
 msgstr "اذكر السبب (200 حرف كحد أقصى)."
@@ -1131,11 +1190,20 @@ msgstr ""
 msgid "Help"
 msgstr "المساعدة"
 
+msgid "Help, in the menu, explains every page with an example."
+msgstr "تشرح «المساعدة» في القائمة كل صفحة مع مثال."
+
+msgid "Hide this list"
+msgstr "إخفاء هذه القائمة"
+
 msgid "Hotel rules"
 msgstr "قواعد الفندق"
 
 msgid "Housekeeping"
 msgstr "التنظيف"
+
+msgid "Housekeeping moves rooms from To clean to Ready."
+msgstr "ينقل قسم التنظيف الغرف من «للتنظيف» إلى «جاهزة»."
 
 msgid "I have saved them"
 msgstr "لقد حفظتها"
@@ -1288,6 +1356,12 @@ msgstr "انتهت الصيانة: الغرفة متاحة مجددًا ابتد
 msgid "Maintenance history"
 msgstr "سجل الصيانة"
 
+msgid "Make a backup"
+msgstr "إنشاء نسخة احتياطية"
+
+msgid "Make a reservation"
+msgstr "إنشاء حجز"
+
 msgid "Manage categories"
 msgstr "إدارة الفئات"
 
@@ -1348,8 +1422,14 @@ msgstr "الحد الأقصى للتخفيض الإجمالي (%%)"
 msgid "Method"
 msgstr "الطريقة"
 
+msgid "Mistakes are corrected with refunds, never by editing."
+msgstr "تُصحَّح الأخطاء بردّ المبالغ، لا بالتعديل أبدًا."
+
 msgid "Monday"
 msgstr "الاثنين"
+
+msgid "Money and invoices"
+msgstr "المال والفواتير"
 
 msgid "Month"
 msgstr "الشهر"
@@ -1406,6 +1486,9 @@ msgid ""
 "keep their price."
 msgstr "تواريخ أو غرف أو نزلاء جدد؛ ويُعاد التحقق من التوفر والسعر. تحتفظ الليالي المحجوزة سابقًا بسعرها."
 
+msgid "New here? A two-minute tour shows where everything is."
+msgstr "جديد هنا؟ جولة من دقيقتين تريك مكان كل شيء."
+
 msgid "New password"
 msgstr "كلمة المرور الجديدة"
 
@@ -1439,6 +1522,9 @@ msgstr "رمز جديد"
 msgid "Newest arrivals first."
 msgstr "الأحدث وصولًا أولًا."
 
+msgid "Next"
+msgstr "التالي"
+
 msgid "Next page"
 msgstr "الصفحة التالية"
 
@@ -1456,6 +1542,9 @@ msgstr "الليلة"
 
 msgid "Night audit"
 msgstr "التدقيق الليلي"
+
+msgid "Night audit closes each day; the audit log shows who did what."
+msgstr "يُقفل التدقيق الليلي كل يوم؛ ويعرض سجل التدقيق من فعل ماذا."
 
 msgid "Night of"
 msgstr "ليلة"
@@ -1584,6 +1673,9 @@ msgstr "حالات عدم الحضور المسجلة"
 msgid "Not allowed"
 msgstr "غير مسموح"
 
+msgid "Not now"
+msgstr "ليس الآن"
+
 #, python-format
 msgid ""
 "Not ready yet (cleaning or inspection pending): room %(rooms)s. Check with housekeeping before "
@@ -1643,6 +1735,9 @@ msgstr "لا يمكن إلغاء إلا حجز مؤكد."
 
 msgid "Only a day that is over can be closed."
 msgstr "لا يمكن إقفال إلا يوم منتهٍ."
+
+msgid "Open an invoice and press Ctrl+P to print it or save it as PDF."
+msgstr "افتح فاتورة واضغط Ctrl+P لطباعتها أو حفظها بصيغة PDF."
 
 msgid "Open an invoice and press Ctrl+P."
 msgstr "افتح فاتورة واضغط Ctrl+P."
@@ -1799,6 +1894,12 @@ msgstr "تسجيل عربون"
 msgid "Record a deposit / payment"
 msgstr "تسجيل عربون / دفعة"
 
+msgid "Record a deposit or a payment"
+msgstr "تسجيل عربون أو دفعة"
+
+msgid "Record a deposit or a payment with its method and reference."
+msgstr "سجّل عربونًا أو دفعة مع طريقتها ومرجعها."
+
 msgid "Record a no-show"
 msgstr "تسجيل عدم الحضور"
 
@@ -1875,6 +1976,9 @@ msgstr "أعد كتابة كلمة المرور المؤقتة"
 msgid "Reports"
 msgstr "التقارير"
 
+msgid "Reports: occupancy, average rate, revenue and balances, with CSV exports."
+msgstr "التقارير: الإشغال ومتوسط السعر والإيرادات والأرصدة، مع تصدير CSV."
+
 msgid "Reservation"
 msgstr "الحجز"
 
@@ -1908,6 +2012,9 @@ msgstr "محجوزة"
 msgid "Reset password"
 msgstr "إعادة تعيين كلمة المرور"
 
+msgid "Restart the tour"
+msgstr "إعادة الجولة"
+
 msgid "Reveals a masked document number; the reveal is audited."
 msgstr "يكشف رقم وثيقة مخفيًا؛ ويُسجَّل الكشف."
 
@@ -1927,6 +2034,9 @@ msgstr "الإيراد لكل غرفة متاحة: %(revpar)s"
 
 msgid "Review the booking"
 msgstr "مراجعة الحجز"
+
+msgid "Review the booking, then confirm it once."
+msgstr "راجع الحجز ثم أكّده مرة واحدة."
 
 msgid "Revoke"
 msgstr "إلغاء"
@@ -2019,9 +2129,15 @@ msgstr "الغرف غير الجاهزة، مع زر لنقل كل منها إل
 msgid "Rooms, prices and maintenance"
 msgstr "الغرف والأسعار والصيانة"
 
+msgid "Rooms, prices and staff"
+msgstr "الغرف والأسعار والموظفون"
+
 #, python-format
 msgid "Rooms: %(count)s"
 msgstr "عدد الغرف: %(count)s"
+
+msgid "Rooms: categories, rooms, seasonal rates and maintenance."
+msgstr "الغرف: الفئات والغرف والأسعار الموسمية والصيانة."
 
 msgid "Saturday"
 msgstr "السبت"
@@ -2040,6 +2156,9 @@ msgstr "حفظ التعديل"
 
 msgid "Search"
 msgstr "بحث"
+
+msgid "Search for the guest before registering them, so nobody is registered twice."
+msgstr "ابحث عن النزيل قبل تسجيله، حتى لا يُسجَّل أحد مرتين."
 
 msgid "Search guests"
 msgstr "البحث عن نزلاء"
@@ -2074,11 +2193,17 @@ msgstr "تعيين كلمة مرور مؤقتة"
 msgid "Set temporary password / Unlock"
 msgstr "كلمة مرور مؤقتة / فتح القفل"
 
+msgid "Set up two-factor sign-in"
+msgstr "إعداد تسجيل الدخول بخطوتين"
+
 msgid "Settings"
 msgstr "الإعدادات"
 
 msgid "Settings and taxes"
 msgstr "الإعدادات والضرائب"
+
+msgid "Settings and taxes: cancellation fee, check-in time, VAT and tourist tax."
+msgstr "الإعدادات والضرائب: رسوم الإلغاء، موعد الوصول، ضريبة القيمة المضافة وضريبة الإقامة."
 
 msgid "Settings saved."
 msgstr "تم حفظ الإعدادات."
@@ -2114,6 +2239,9 @@ msgstr "منذ %(date)s، يطلب تسجيل الدخول رمزًا من تط�
 msgid "Size"
 msgstr "الحجم"
 
+msgid "Skip the tour"
+msgstr "تخطي الجولة"
+
 msgid "Skip to content"
 msgstr "انتقل إلى المحتوى"
 
@@ -2145,6 +2273,9 @@ msgstr "الموظفون"
 msgid "Staff member"
 msgstr "موظف"
 
+msgid "Staff: create accounts with a temporary password; deactivate, never delete."
+msgstr "الموظفون: أنشئ حسابات بكلمة مرور مؤقتة؛ عطّل ولا تحذف أبدًا."
+
 msgid "Start again with the password"
 msgstr "البدء من جديد بكلمة المرور"
 
@@ -2157,6 +2288,10 @@ msgstr "الحالة"
 msgid "Stay"
 msgstr "الإقامة"
 
+#, python-format
+msgid "Step %(number)s of %(total)s"
+msgstr "الخطوة %(number)s من %(total)s"
+
 msgid "Still checked in after departure"
 msgstr "ما زالوا مقيمين بعد موعد المغادرة"
 
@@ -2168,6 +2303,9 @@ msgstr "الأحد"
 
 msgid "Take a 100 DT deposit by card with the slip number as reference."
 msgstr "خذ عربونًا بقيمة 100 د.ت بالبطاقة مع رقم الإيصال كمرجع."
+
+msgid "Take the tour"
+msgstr "ابدأ الجولة"
 
 #, python-format
 msgid "Tax rule %(name)s added."
@@ -2196,6 +2334,12 @@ msgstr "هذا أكثر من الرصيد المستحق (%(due)s د.ت)."
 msgid "That is more than the guest overpaid (%(credit)s DT)."
 msgstr "هذا أكثر مما دفعه النزيل زيادةً (%(credit)s د.ت)."
 
+msgid "The Getting started list on the dashboard ticks itself as you do each task for the first time."
+msgstr "تُعلَّم قائمة «البداية» في لوحة القيادة تلقائيًا عندما تنجز كل مهمة لأول مرة."
+
+msgid "The administration pages keep the hotel's numbers and data in good shape."
+msgstr "تحافظ صفحات الإدارة على سلامة أرقام الفندق وبياناته."
+
 msgid "The air conditioning breaks in 204: press Move, choose 205, keep the price."
 msgstr "تعطّل المكيّف في الغرفة 204: اضغط «نقل» واختر 205 واحتفظ بالسعر."
 
@@ -2214,6 +2358,9 @@ msgstr "كشف الحساب مغلق: لم يعد بالإمكان تعديل ه
 msgid "The bill is settled."
 msgstr "تمت تسوية كشف الحساب."
 
+msgid "The bill shows what the guest owes; check-out issues the invoice, which can never be changed."
+msgstr "يعرض كشف الحساب ما يدين به النزيل؛ وتصدر الفاتورة عند المغادرة ولا يمكن تعديلها أبدًا."
+
 msgid "The catalogue is empty."
 msgstr "الكتالوج فارغ."
 
@@ -2225,6 +2372,9 @@ msgstr "انتهى عامل التنظيف."
 
 msgid "The current password is not correct."
 msgstr "كلمة المرور الحالية غير صحيحة."
+
+msgid "The dashboard: today at a glance"
+msgstr "لوحة القيادة: اليوم بنظرة واحدة"
 
 msgid "The data sent was too large."
 msgstr "البيانات المرسلة كبيرة جدًا."
@@ -2265,6 +2415,9 @@ msgstr "على الفندق رد مبلغ للنزيل. اطلب من المدي
 msgid "The last night must not be before the first night."
 msgstr "لا يمكن أن تسبق الليلة الأخيرة الليلة الأولى."
 
+msgid "The menu on the side opens every page; Help explains each one."
+msgstr "تفتح القائمة الجانبية كل صفحة؛ وتشرحها «المساعدة» كلها."
+
 msgid "The nights of this reservation were released when it was cancelled or marked as a no-show."
 msgstr "أُفرج عن ليالي هذا الحجز عند إلغائه أو تسجيل عدم الحضور."
 
@@ -2283,6 +2436,9 @@ msgstr "يجب أن يكون يوم إعادة الفتح بعد أول ليلة
 
 msgid "The request couldn't be understood."
 msgstr "تعذّر فهم الطلب."
+
+msgid "The reservation page holds every action on a stay."
+msgstr "تضم صفحة الحجز كل الإجراءات على الإقامة."
 
 #, python-format
 msgid "The room is already closed or booked on %(count)s of these nights (%(first)s to %(last)s)."
@@ -2398,6 +2554,11 @@ msgstr "هذه الغرفة لم تعد جزءًا من الإقامة."
 msgid "This room still has bookings (%(codes)s). Move or cancel them first."
 msgstr "لا تزال لهذه الغرفة حجوزات (%(codes)s). انقلها أو ألغها أولًا."
 
+msgid ""
+"This short tour shows where everything is. It takes about two minutes; you can skip it and reopen"
+" it from Help."
+msgstr "تريك هذه الجولة القصيرة مكان كل شيء. تستغرق نحو دقيقتين؛ ويمكنك تخطيها وإعادة فتحها من «المساعدة»."
+
 msgid "This username is already used."
 msgstr "اسم المستخدم هذا مستخدم بالفعل."
 
@@ -2451,6 +2612,9 @@ msgstr "المواضيع"
 msgid "Total"
 msgstr "المجموع"
 
+msgid "Tour"
+msgstr "جولة تعريفية"
+
 msgid "Tuesday"
 msgstr "الثلاثاء"
 
@@ -2499,6 +2663,9 @@ msgstr "فتح القفل"
 
 msgid "Unpaid after departure"
 msgstr "غير مسدد بعد المغادرة"
+
+msgid "Unpaid after departure lists invoices that still owe money."
+msgstr "تعرض «غير مسدد بعد المغادرة» الفواتير التي ما زال عليها مبالغ."
 
 msgid "Untick to take the room out of service (it can no longer be booked)."
 msgstr "أزل التحديد لإخراج الغرفة من الخدمة (لن يمكن حجزها بعد ذلك)."
@@ -2591,6 +2758,13 @@ msgstr "زيادة نهاية الأسبوع (%%)"
 msgid "Weeks"
 msgstr "الأسابيع"
 
+msgid "Welcome to the front desk"
+msgstr "مرحبًا بك في الاستقبال"
+
+#, python-format
+msgid "Welcome, %(name)s!"
+msgstr "مرحبًا، %(name)s!"
+
 #, python-format
 msgid "Welcome, %(name)s."
 msgstr "مرحبًا، %(name)s."
@@ -2636,6 +2810,12 @@ msgstr "يوم أمس افتراضيًا؛ ولا يغيّر تشغيله مرت
 msgid "You already have %(max)s active tokens. Revoke one first."
 msgstr "لديك بالفعل %(max)s رموز نشطة. ألغِ أحدها أولًا."
 
+msgid "You are ready"
+msgstr "أنت جاهز"
+
+msgid "You can reopen this tour from Help at any time."
+msgstr "يمكنك إعادة فتح هذه الجولة من «المساعدة» في أي وقت."
+
 msgid "You can't deactivate your own account."
 msgstr "لا يمكنك تعطيل حسابك الخاص."
 
@@ -2651,6 +2831,9 @@ msgstr "تم تسجيل خروجك."
 msgid "You're using a temporary password. Choose your own password to continue."
 msgstr "أنت تستخدم كلمة مرور مؤقتة. اختر كلمة مرور خاصة بك للمتابعة."
 
+msgid "Your name, top right, opens your account: password and two-factor sign-in."
+msgstr "يفتح اسمك في الأعلى حسابك: كلمة المرور وتسجيل الدخول بخطوتين."
+
 msgid "Your old recovery codes will stop working."
 msgstr "ستتوقف رموز الاسترداد القديمة عن العمل."
 
@@ -2659,6 +2842,9 @@ msgstr "سيتم تسجيل خروج جلساتك المفتوحة الأخرى.
 
 msgid "Your password has been changed."
 msgstr "تم تغيير كلمة المرور الخاصة بك."
+
+msgid "done"
+msgstr "مُنجز"
 
 #, python-format
 msgid "on %(base)s"

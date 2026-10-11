@@ -64,6 +64,19 @@ A new manager sees the reminder "Managers must use two-factor sign-in. Set
 it up before …" for 7 days. After that, every page leads to the set-up page
 until it is done. See [Two-factor sign-in](#two-factor-sign-in) for how.
 
+### The tour and "Getting started"
+
+A new account sees two cards at the top of the **Dashboard**:
+
+* **Welcome:** **Take the tour** opens a short guided tour, with 6 steps for
+  receptionists and 8 for managers (**Back**, **Next**, **Skip the tour**,
+  **Finish the tour**). **Not now** hides the invitation. **Help → Restart
+  the tour** brings it back at any time.
+* **Getting started:** the first tasks to try. Each one ticks itself the
+  first time you really do it, because the application reads its own audit
+  log. The list disappears when everything is done, or with **Hide this
+  list**.
+
 ### Language and theme (top bar, on every page)
 
 * **EN / FR / ع:** switches the whole interface to English, French or Arabic.

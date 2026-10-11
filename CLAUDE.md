@@ -134,13 +134,14 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
    and real-Windows columns are the **student's**; issue #72 stays open until
    then), `tests/unit/test_docs.py` checks cited tests exist. Cookies:
    `web/context.cookie_name()` adds `__Host-` behind HTTPS.
-   **NEXT: frontend polish 6.10–6.14 (agreed 11 Oct, details in roadmap):**
-   6.10 user guide (`docs/user-guide.md` + translated in-app Help page) →
-   6.11 thin themed scrollbar → 6.12 login page (diagonal animated background,
-   animated Great Vibes signature, reduced-motion) → 6.13 invoice print/PDF
-   (A4, light, branded) → 6.14 walk-through (role tour at first sign-in +
-   self-ticking dashboard checklist from the audit log). No JavaScript (CSP).
-   Then 6.7 report. Freeze 27 Dec.
+   ✅ Frontend polish 6.10–6.14 (student's requests, 11 Oct): 6.10 user guide
+   (`docs/user-guide.md`) + Help page (`web/help.py`); 6.11 scrollbar; 6.12 sign-in
+   (`partials/auth_hero.html`, Great Vibes, CSS/SVG animation, reduced motion);
+   6.13 invoice sheet (`.invoice-doc` redefines tokens locally = always light;
+   `@page` A4); 6.14 walk-through (`web/tour.py`, `blueprints/welcome.py`,
+   `domain|services/onboarding.py`, checklist ticks from `audit.actions_of`,
+   migration 0018). PRs #88 (6.10–6.12) and the 6.13–6.14 PR.
+   **NEXT:** ask the student to try the new UI; then 6.7 report. Freeze 27 Dec.
    Running the app: `.venv/bin/python -m hotel run` (the student's `sh` kept
    /usr/bin/python after activation).
 5. 6.7 report: **English, LaTeX for Overleaf** in `report/`. The assistant

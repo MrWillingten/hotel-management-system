@@ -1127,3 +1127,42 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
   .invoice-doc__letterhead, .invoice-doc__parties, .invoice-doc__summary { break-inside: avoid; }
   .invoice-doc__payments, .invoice-doc__footer { break-inside: avoid; }
 }
+/* Walk-through for new accounts (story 6.14). */
+.tour { max-inline-size: 40rem; margin-inline: auto; display: grid; gap: var(--space-4); justify-items: start; animation: rise var(--dur-slow) var(--ease) both; }
+.tour__progress { color: var(--text-muted); font-size: var(--text-sm); }
+.tour__dots { display: flex; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.tour__dot { inline-size: 0.6rem; block-size: 0.6rem; border-radius: 999px; background: var(--border-strong); }
+.tour__dot--done { background: color-mix(in srgb, var(--accent) 45%, transparent); }
+.tour__dot--current { inline-size: 1.6rem; background: var(--accent); }
+.tour__icon { display: grid; place-items: center; inline-size: 3.5rem; block-size: 3.5rem; border-radius: var(--radius-lg);
+  background: var(--accent-soft); color: var(--accent-soft-text); }
+.tour__icon .icon { inline-size: 1.75rem; block-size: 1.75rem; }
+.tour__title { font-family: var(--font-serif); font-size: var(--text-2xl); }
+.tour__text { font-size: var(--text-lg); color: var(--text-muted); }
+.tour__points { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.tour__points li { display: flex; gap: var(--space-2); align-items: flex-start; }
+.tour__points .icon { flex: none; margin-block-start: 0.2rem; color: var(--success); }
+.tour__nav { display: flex; flex-wrap: wrap; gap: var(--space-2); inline-size: 100%; padding-block-start: var(--space-3); border-block-start: 1px solid var(--border); }
+.tour__skip { margin-inline-start: auto; }
+
+.onboarding { display: grid; gap: var(--space-4); margin-block-end: var(--space-5); }
+@media (min-width: 1000px) { .onboarding { grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr)); } }
+.onboarding__welcome { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4);
+  background: linear-gradient(135deg, var(--accent-soft), var(--surface)); }
+.onboarding__icon { display: grid; place-items: center; inline-size: 3rem; block-size: 3rem; border-radius: 999px;
+  background: var(--accent); color: var(--on-accent); }
+.onboarding__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-inline-start: auto; }
+.onboarding__checklist { display: grid; gap: var(--space-3); }
+.onboarding__bar { inline-size: 100%; block-size: 0.5rem; appearance: none; border: 0; border-radius: 999px;
+  background: var(--surface-sunken); overflow: hidden; accent-color: var(--accent); }
+.onboarding__bar::-webkit-progress-bar { background: var(--surface-sunken); }
+.onboarding__bar::-webkit-progress-value { background: var(--accent); border-radius: 999px; }
+.onboarding__bar::-moz-progress-bar { background: var(--accent); border-radius: 999px; }
+.onboarding__items { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+@media (min-width: 640px) { .onboarding__items { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.onboarding__items li { display: flex; gap: var(--space-2); align-items: center; }
+.onboarding__tick { display: grid; place-items: center; flex: none; inline-size: 1.25rem; block-size: 1.25rem;
+  border: 2px solid var(--border-strong); border-radius: 999px; color: var(--on-accent); }
+.onboarding__item--done .onboarding__tick { border-color: var(--success); background: var(--success); }
+.onboarding__item--done .onboarding__tick .icon { inline-size: 0.8rem; block-size: 0.8rem; }
+.onboarding__item--done span { color: var(--text-muted); text-decoration: line-through; }
