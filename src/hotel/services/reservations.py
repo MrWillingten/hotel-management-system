@@ -19,6 +19,7 @@ from hotel.domain.errors import (
 from hotel.domain.money import Money
 from hotel.domain.paging import Page, PageRequest
 from hotel.domain.period import StayPeriod
+from hotel.domain.pricing import Pricing
 from hotel.domain.reservations import (
     MAX_NIGHTS,
     BookedRoom,
@@ -314,24 +315,26 @@ class ReservationService:
             )
         checked = self._check_rooms(uow, period, rooms, exclude_reservation_id=reservation.id)
         locked = {(n.room_id, n.night): n.rate for n in reservation.nights}
+        pricing = self._pricing(uow)
+        # A night that was already booked keeps its price; a new night costs today's.
         lines = [
             QuoteLine(
                 room,
                 request,
                 [
-                    RoomNight(room.id, night, self._kept_or_current(locked, room, night))
+                    RoomNight(
+                        room.id,
+                        night,
+                        locked[(room.id, night)]
+                        if (room.id, night) in locked
+                        else pricing.rate_for(room, night),
+                    )
                     for night in period.each_night()
                 ],
             )
             for room, request in checked
         ]
         return Quote(period, lines)
-
-    def _kept_or_current(self, locked: dict, room: Room, night: date) -> Money:
-        """A night that was already booked keeps its price; a new night costs today's rate."""
-        if (room.id, night) in locked:
-            return locked[(room.id, night)]
-        return self._rate_for(room, night)
 
     # ------------------------------------------------------------ cancelling
     def cancellation_fee(self, actor: Actor, reservation_id: int) -> Money:
@@ -581,12 +584,13 @@ class ReservationService:
     def _price(
         self, uow: UnitOfWork, period: StayPeriod, rooms: list[tuple[Room, RoomRequest]]
     ) -> Quote:
+        pricing = self._pricing(uow)
         lines = [
             QuoteLine(
                 room,
                 request,
                 [
-                    RoomNight(room.id, night, self._rate_for(room, night))
+                    RoomNight(room.id, night, pricing.rate_for(room, night))
                     for night in period.each_night()
                 ],
             )
@@ -595,6 +599,15 @@ class ReservationService:
         return Quote(period, lines)
 
     @staticmethod
-    def _rate_for(room: Room, night: date) -> Money:
-        """Today one rate per room; seasonal rates (Sprint 5) only change this method."""
-        return room.nightly_rate
+    def _pricing(uow: UnitOfWork) -> Pricing:
+        """Story 5.6: rate periods and the weekend rule, read in the caller's transaction.
+
+        A night that was already booked keeps its locked price (BR20); only new
+        nights are priced with this.
+        """
+        settings = load_settings(uow)
+        return Pricing(
+            periods=tuple(uow.rate_periods.list()),
+            weekend_nights=settings.weekend_days,
+            weekend_surcharge_bp=settings.weekend_surcharge_bp,
+        )

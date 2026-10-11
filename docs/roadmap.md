@@ -95,7 +95,7 @@ gettext and Babel catalogues.
 | 5.3 | As a manager, I export reports to CSV | Formula injection escaped (test, threat I5). ID numbers excluded. |
 | 5.4 | As the hotel, the night audit closes each day | Marks no-shows, flags guests who should have left, saves a daily snapshot. Safe to run twice. |
 | 5.5 | As a French- or Arabic-speaking user, the interface speaks my language | FR and AR catalogues complete (test). Locale-aware money input. Western digits in Arabic, `<bdi>` around codes and amounts. **The student reviews the translations.** |
-| 5.6 | As a manager, I set seasonal and weekend rates | Rate periods per category. Locked prices on existing reservations unaffected (only `ReservationService._rate_for` changes). |
+| 5.6 | As a manager, I set seasonal and weekend rates | Rate periods per category. Locked prices on existing reservations unaffected (`domain/pricing.Pricing`, used by `ReservationService._pricing`). |
 | 5.7 | As a manager, I anonymise old guests | Personal data replaced, invoices keep their own copy of the name, action audited. |
 | 5.8 | Seed v2 | Several months of realistic history, so the reports and charts look alive in the demo. |
 

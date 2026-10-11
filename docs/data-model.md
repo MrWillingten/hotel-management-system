@@ -87,6 +87,8 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
 ✅ setting(key PK, value)              hotel.* keys = HotelSettings (story 4.8)
 ✅ counter(name, year, value, PK(name, year))                    gap-free invoice numbers
 ✅ form_token(token_hash PK, user_id FK, created_at) one-time submit tokens
+✅ rate_period(id PK, category_id FK, name, start_date, end_date, rate_mill CK>0, created_at,
+               CK end_date > start_date)       seasonal prices; no overlap per category (service)
 ✅ daily_snapshot(day PK, nights_sold, nights_sellable, room_value_mill, invoiced_mill,
                   cash_mill, reservations_made, cancellations, no_shows,
                   overdue_departures, created_at, created_by FK)   night audit (PK = run once)

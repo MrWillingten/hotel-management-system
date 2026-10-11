@@ -1,0 +1,61 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors, select -%}
+{% block title %}{{ _("Seasonal rates") }}{% endblock %}
+{% block page_title %}{{ _("Seasonal rates") }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <p class="muted">{{ _("A rate period replaces the nightly rate of every room in its category. Without one, the weekend rule applies, then the room's own rate. Existing bookings always keep their prices.") }}</p>
+  <div class="page-actions__buttons">
+    <a class="button button--ghost" href="{{ url_for('rooms.index') }}">{{ _("All rooms") }}</a>
+    <a class="button button--ghost" href="{{ url_for('settings.index') }}">{{ _("Weekend rule") }}</a>
+  </div>
+</div>
+<p class="muted">
+  {%- if settings.weekend_surcharge_bp %}{{ _("Weekend nights cost %(rate)s more.", rate=settings.weekend_surcharge_bp | percent) }}
+  {%- else %}{{ _("No weekend surcharge is set.") }}{% endif %}
+</p>
+<div class="grid grid--two">
+  <div class="table-wrap">
+    <table class="table">
+      <thead><tr>
+        <th scope="col">{{ _("Name") }}</th><th scope="col">{{ _("Category") }}</th>
+        <th scope="col">{{ _("Nights") }}</th><th scope="col" class="num">{{ _("Nightly rate") }}</th>
+        <th scope="col"><span class="visually-hidden">{{ _("Actions") }}</span></th>
+      </tr></thead>
+      <tbody>
+        {%- for p in periods %}
+        <tr>
+          <td>{{ p.name }}</td>
+          <td>{{ p.category_name }}</td>
+          <td>{{ p.period.arrival | dateformat("medium") }} → {{ p.last_night | dateformat("medium") }}</td>
+          <td class="num">{{ p.nightly_rate | money }}</td>
+          <td>
+            <form method="post" action="{{ url_for('rooms.delete_rate', period_id=p.id) }}">
+              {{ csrf() }}
+              <button class="button button--ghost button--small" type="submit">{{ _("Remove") }}</button>
+            </form>
+          </td>
+        </tr>
+        {%- else %}
+        <tr><td colspan="5" class="table__empty">{{ _("No rate period: rooms use their own rate.") }}</td></tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+  <section class="panel panel--accent">
+    <h2 class="panel__title">{{ _("New rate period") }}</h2>
+    {{ form_errors(errors) }}
+    <form class="stack" method="post" novalidate>
+      {{ csrf() }}
+      {{ field("name", _("Name"), value=values.get("name", ""), error=errors.name, maxlength=60, hint=_("For example Summer 2026.")) }}
+      {{ select("category_id", _("Category"), categories | options, values.get("category_id"), errors.category_id) }}
+      <div class="grid grid--fields">
+        {{ field("first_night", _("First night"), type="date", value=values.get("first_night", ""), error=errors.first_night) }}
+        {{ field("last_night", _("Last night"), type="date", value=values.get("last_night", ""), error=errors.last_night) }}
+      </div>
+      {{ field("nightly_rate", _("Nightly rate (DT, before tax)"), value=values.get("nightly_rate", ""), error=errors.nightly_rate) }}
+      <button class="button button--primary" type="submit">{{ _("Add rate period") }}</button>
+    </form>
+  </section>
+</div>
+{% endblock %}

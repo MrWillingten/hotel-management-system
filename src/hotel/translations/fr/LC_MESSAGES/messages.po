@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 13:35+0100\n"
+"POT-Creation-Date: 2026-10-11 13:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -88,6 +88,18 @@ msgid "A percentage (7 or 7.5) or an amount in dinars (3.000), depending on the 
 msgstr "Un pourcentage (7 ou 7,5) ou un montant en dinars (3,000), selon le type."
 
 #, python-format
+msgid "A rate period lasts at most %(max)s nights."
+msgstr "Une période tarifaire dure au plus %(max)s nuits."
+
+msgid ""
+"A rate period replaces the nightly rate of every room in its category. Without one, the weekend "
+"rule applies, then the room's own rate. Existing bookings always keep their prices."
+msgstr ""
+"Une période tarifaire remplace le prix par nuit de toutes les chambres de sa catégorie. Sans "
+"période, la règle du week-end s'applique, puis le prix de la chambre. Les réservations existantes"
+" gardent toujours leurs prix."
+
+#, python-format
 msgid "A report covers at most %(max)s nights (two years)."
 msgstr "Un rapport couvre au plus %(max)s nuits (deux ans)."
 
@@ -151,6 +163,9 @@ msgstr "Ajouter un membre du personnel"
 msgid "Add category"
 msgstr "Ajouter la catégorie"
 
+msgid "Add rate period"
+msgstr "Ajouter la période"
+
 msgid "Add room"
 msgstr "Ajouter la chambre"
 
@@ -159,6 +174,11 @@ msgstr "Ajouter la taxe"
 
 msgid "Add to the catalogue"
 msgstr "Ajouter au catalogue"
+
+msgid "Added to the room's rate on weekend nights, unless a seasonal rate applies. 0 = none."
+msgstr ""
+"Ajouté au prix de la chambre les nuits de week-end, sauf si un tarif saisonnier s'applique. 0 = "
+"aucun."
 
 msgid "Address"
 msgstr "Adresse"
@@ -795,6 +815,9 @@ msgstr "Indicateurs"
 msgid "For example 204 or B-12."
 msgstr "Par exemple 204 ou B-12."
 
+msgid "For example Summer 2026."
+msgstr "Par exemple Été 2026."
+
 msgid "For example VAT or Tourist tax."
 msgstr "Par exemple TVA ou taxe de séjour."
 
@@ -810,6 +833,9 @@ msgstr "Annulation gratuite jusqu'au %(when)s. Ensuite, annuler coûte %(rate)s 
 
 msgid "Free cancellation until (hours before arrival)"
 msgstr "Annulation gratuite jusqu'à (heures avant l'arrivée)"
+
+msgid "Friday"
+msgstr "Vendredi"
 
 msgid "From"
 msgstr "Du"
@@ -1003,6 +1029,9 @@ msgstr "Remise totale maximale (%%)"
 msgid "Method"
 msgstr "Moyen"
 
+msgid "Monday"
+msgstr "Lundi"
+
 msgid "Month"
 msgstr "Mois"
 
@@ -1029,6 +1058,9 @@ msgstr "Nouveau mot de passe"
 
 msgid "New price"
 msgstr "Nouveau prix"
+
+msgid "New rate period"
+msgstr "Nouvelle période tarifaire"
 
 msgid "New reservation"
 msgstr "Nouvelle réservation"
@@ -1129,6 +1161,9 @@ msgstr "Aucune nuit vendue sur cette période."
 msgid "No other room is free for these dates."
 msgstr "Aucune autre chambre n'est libre à ces dates."
 
+msgid "No rate period: rooms use their own rate."
+msgstr "Aucune période tarifaire : les chambres utilisent leur propre prix."
+
 msgid "No reservation matches these filters."
 msgstr "Aucune réservation ne correspond à ces filtres."
 
@@ -1143,6 +1178,9 @@ msgstr "Aucune chambre pour l'instant."
 
 msgid "No tax rules: bills will show no tax."
 msgstr "Aucune taxe : les factures n'afficheront aucune taxe."
+
+msgid "No weekend surcharge is set."
+msgstr "Aucun supplément de week-end n'est défini."
 
 msgid "No-show"
 msgstr "Non présenté"
@@ -1291,6 +1329,13 @@ msgstr "Quantité"
 
 msgid "Rate"
 msgstr "Taux"
+
+#, python-format
+msgid "Rate period %(name)s added."
+msgstr "Période tarifaire %(name)s ajoutée."
+
+msgid "Rate period removed. Existing bookings keep their prices."
+msgstr "Période tarifaire supprimée. Les réservations existantes gardent leurs prix."
 
 msgid "Reactivate account"
 msgstr "Réactiver le compte"
@@ -1504,6 +1549,9 @@ msgstr "Chambres pas prêtes"
 msgid "Rooms: %(count)s"
 msgstr "Chambres : %(count)s"
 
+msgid "Saturday"
+msgstr "Samedi"
+
 msgid "Save changes"
 msgstr "Enregistrer"
 
@@ -1521,6 +1569,9 @@ msgstr "Rechercher"
 
 msgid "Search guests"
 msgstr "Rechercher des clients"
+
+msgid "Seasonal rates"
+msgstr "Tarifs saisonniers"
 
 msgid "Select at least one room."
 msgstr "Sélectionnez au moins une chambre."
@@ -1602,6 +1653,9 @@ msgstr "Encore présents après le départ prévu"
 
 msgid "Subtotal before discounts and taxes"
 msgstr "Sous-total avant remises et taxes"
+
+msgid "Sunday"
+msgstr "Dimanche"
 
 #, python-format
 msgid "Tax rule %(name)s added."
@@ -1721,6 +1775,10 @@ msgstr "La personne devra le remplacer à sa première connexion."
 msgid "This action can't be done this way."
 msgstr "Cette action ne peut pas être effectuée de cette façon."
 
+#, python-format
+msgid "This category already has a rate on some of these nights (%(name)s)."
+msgstr "Cette catégorie a déjà un tarif sur certaines de ces nuits (%(name)s)."
+
 msgid "This change conflicts with existing data."
 msgstr "Cette modification est en conflit avec des données existantes."
 
@@ -1794,6 +1852,9 @@ msgstr "Ce nom d'utilisateur est déjà utilisé."
 msgid "This value is out of the allowed range."
 msgstr "Cette valeur est hors des limites autorisées."
 
+msgid "Thursday"
+msgstr "Jeudi"
+
 msgid "To"
 msgstr "Au"
 
@@ -1821,6 +1882,9 @@ msgstr ""
 
 msgid "Total"
 msgstr "Total"
+
+msgid "Tuesday"
+msgstr "Mardi"
 
 msgid "Type"
 msgstr "Type"
@@ -1901,6 +1965,23 @@ msgstr "Annulé"
 
 msgid "We couldn't find what you were looking for."
 msgstr "Nous n'avons pas trouvé ce que vous cherchez."
+
+msgid "Wednesday"
+msgstr "Mercredi"
+
+msgid "Weekend nights (the night starting on…)"
+msgstr "Nuits de week-end (la nuit qui commence le…)"
+
+#, python-format
+msgid "Weekend nights cost %(rate)s more."
+msgstr "Les nuits de week-end coûtent %(rate)s de plus."
+
+msgid "Weekend rule"
+msgstr "Règle du week-end"
+
+#, python-format
+msgid "Weekend surcharge (%%)"
+msgstr "Supplément week-end (%%)"
 
 msgid "Weeks"
 msgstr "Semaines"

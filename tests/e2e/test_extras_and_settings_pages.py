@@ -99,11 +99,15 @@ def test_settings_page(client, services, hotel):
             "cancellation_window_hours": "72",
             "grace_period_hours": "0",
             "discount_cap": "30",
+            "weekend_surcharge": "15",
+            "weekend_4": "on",
+            "weekend_5": "on",
         },
     )
     assert response.status_code == 302
     settings = services.hotel_settings.get(hotel.boss)
     assert (settings.cancellation_fee_bp, settings.cancellation_window_hours) == (2550, 72)
+    assert (settings.weekend_surcharge_bp, settings.weekend_days) == (1500, {4, 5})
     bad = _post(
         client,
         "/settings/",
@@ -114,6 +118,7 @@ def test_settings_page(client, services, hotel):
             "cancellation_window_hours": "72",
             "grace_period_hours": "0",
             "discount_cap": "30",
+            "weekend_surcharge": "0",
         },
     )
     assert bad.status_code == 400
