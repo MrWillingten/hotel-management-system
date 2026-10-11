@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 09:00+0100\n"
+"POT-Creation-Date: 2026-10-11 09:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -20,8 +20,16 @@ msgstr ""
 "Generated-By: Babel 2.18.0\n"
 
 #, python-format
+msgid "%(amount)s per adult per night"
+msgstr "%(amount)s لكل بالغ في الليلة"
+
+#, python-format
 msgid "%(greeting)s, %(name)s"
 msgstr "%(greeting)s، %(name)s"
+
+#, python-format
+msgid "%(name)s added to the catalogue."
+msgstr "تمت إضافة %(name)s إلى الكتالوج."
 
 #, python-format
 msgid "%(name)s is checked in."
@@ -53,12 +61,21 @@ msgstr "يوجد نزيل مسجل بوثيقة الهوية هذه بالفعل
 msgid "A maintenance period lasts at most %(max)s nights."
 msgstr "تستمر فترة الصيانة %(max)s ليلة كحد أقصى."
 
+msgid "A new price only applies to future charges."
+msgstr "السعر الجديد يُطبَّق على الاحتسابات القادمة فقط."
+
 #, python-format
 msgid "A no-show can only be recorded after the check-in time on %(arrival)s."
 msgstr "لا يمكن تسجيل عدم الحضور إلا بعد موعد الوصول يوم %(arrival)s."
 
 msgid "A passport number has 5 to 20 letters or digits."
 msgstr "يتكون رقم جواز السفر من 5 إلى 20 حرفًا أو رقمًا."
+
+msgid "A percentage (7 or 7.5) or an amount in dinars (3.000), depending on the kind."
+msgstr "نسبة مئوية (7 أو 7.5) أو مبلغ بالدينار (3.000) حسب النوع."
+
+msgid "A service with this name already exists."
+msgstr "توجد خدمة بهذا الاسم بالفعل."
 
 #, python-format
 msgid "A stay lasts at most %(max)s nights."
@@ -69,6 +86,9 @@ msgstr "الوصول"
 
 msgid "Access denied"
 msgstr "تم رفض الوصول"
+
+msgid "Accommodation"
+msgstr "الإقامة"
 
 msgid "Accommodation total (before tax)"
 msgstr "مجموع الإقامة (قبل الضرائب)"
@@ -110,6 +130,12 @@ msgstr "إضافة الفئة"
 msgid "Add room"
 msgstr "إضافة الغرفة"
 
+msgid "Add tax rule"
+msgstr "إضافة الضريبة"
+
+msgid "Add to the catalogue"
+msgstr "إضافة إلى الكتالوج"
+
 msgid "Address"
 msgstr "العنوان"
 
@@ -147,8 +173,14 @@ msgstr "كل الغرف"
 msgid "Amount"
 msgstr "المبلغ"
 
+msgid "Amount per adult per night"
+msgstr "مبلغ لكل بالغ في الليلة"
+
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr "تحتوي المبالغ على 3 أرقام عشرية كحد أقصى (المليمات)."
+
+msgid "An amount per adult per night can only apply to the accommodation."
+msgstr "لا يمكن تطبيق مبلغ لكل بالغ في الليلة إلا على الإقامة."
 
 msgid "An unexpected error occurred. It has been logged."
 msgstr "حدث خطأ غير متوقع. تم تسجيله."
@@ -159,12 +191,15 @@ msgstr "حجز آخر أخذ إحدى هذه الغرف قبل لحظات. اب�
 msgid "Another room already has this number."
 msgstr "توجد غرفة أخرى بهذا الرقم بالفعل."
 
+msgid "Applies to"
+msgstr "تُطبَّق على"
+
 msgid "Arrival"
 msgstr "الوصول"
 
 #, python-format
-msgid "Arrival is less than 48 hours away: cancelling now costs %(fee)s (20%% of the accommodation)."
-msgstr "الوصول بعد أقل من 48 ساعة: الإلغاء الآن يكلف %(fee)s (20%% من ثمن الإقامة)."
+msgid "Arrival is close: cancelling now costs %(fee)s (%(rate)s of the accommodation)."
+msgstr "موعد الوصول قريب: الإلغاء الآن يكلّف %(fee)s (%(rate)s من الإقامة)."
 
 msgid "Arrival time, special requests..."
 msgstr "وقت الوصول، طلبات خاصة…"
@@ -256,6 +291,10 @@ msgstr "إلغاء الحجز"
 msgid "Cancellation fee"
 msgstr "رسوم الإلغاء"
 
+#, python-format
+msgid "Cancellation fee (%%)"
+msgstr "رسوم الإلغاء (%%)"
+
 msgid "Cancelled"
 msgstr "ملغى"
 
@@ -265,6 +304,9 @@ msgstr "تاريخ الإلغاء"
 #, python-format
 msgid "Cancelling now is free (free until %(when)s)."
 msgstr "الإلغاء الآن مجاني (حتى %(when)s)."
+
+msgid "Cancelling within this time after booking is always free."
+msgstr "الإلغاء خلال هذه المدة بعد الحجز مجاني دائماً."
 
 msgid "Capacity"
 msgstr "السعة"
@@ -298,6 +340,9 @@ msgstr "تعديل"
 msgid "Change guest"
 msgstr "تغيير النزيل"
 
+msgid "Change of mind after booking (hours)"
+msgstr "مهلة التراجع بعد الحجز (ساعات)"
+
 msgid "Change password"
 msgstr "تغيير كلمة المرور"
 
@@ -306,6 +351,16 @@ msgstr "تعديل الحجز"
 
 msgid "Changes saved."
 msgstr "تم حفظ التغييرات."
+
+msgid "Charge"
+msgstr "احتساب"
+
+msgid "Charge voided."
+msgstr "تم إلغاء الاحتساب."
+
+#, python-format
+msgid "Charged: %(quantity)s × %(name)s."
+msgstr "تم احتساب: %(quantity)s × %(name)s."
 
 msgid "Check availability and price"
 msgstr "التحقق من التوفر والسعر"
@@ -316,6 +371,12 @@ msgstr "تسجيل الوصول"
 #, python-format
 msgid "Check-in opens on the arrival day (%(arrival)s)."
 msgstr "يبدأ تسجيل الوصول يوم الوصول (%(arrival)s)."
+
+msgid "Check-in time"
+msgstr "موعد الوصول"
+
+msgid "Check-out time"
+msgstr "موعد المغادرة"
 
 msgid "Checked in"
 msgstr "تم تسجيل الوصول"
@@ -335,6 +396,10 @@ msgstr "اختر فئة."
 msgid "Choose a country from the list."
 msgstr "اختر بلدًا من القائمة."
 
+#, python-format
+msgid "Choose a date between %(arrival)s and %(last)s."
+msgstr "اختر تاريخاً بين %(arrival)s و%(last)s."
+
 msgid "Choose a document type."
 msgstr "اختر نوع الوثيقة."
 
@@ -347,8 +412,14 @@ msgstr "اختر كلمة مرور مختلفة عن الحالية."
 msgid "Choose a role."
 msgstr "اختر دورًا."
 
+msgid "Choose a service from the catalogue."
+msgstr "اختر خدمة من الكتالوج."
+
 msgid "Choose the dates first."
 msgstr "اختر التواريخ أولًا."
+
+msgid "Choose the kind of tax and what it applies to."
+msgstr "اختر نوع الضريبة وما تُطبَّق عليه."
 
 msgid "Clean"
 msgstr "نظيفة"
@@ -407,6 +478,9 @@ msgstr "داكن"
 msgid "Dashboard"
 msgstr "لوحة القيادة"
 
+msgid "Date"
+msgstr "التاريخ"
+
 msgid "Dates"
 msgstr "التواريخ"
 
@@ -449,11 +523,20 @@ msgstr "يمكن اختيار كل غرفة مرة واحدة فقط."
 msgid "Each room needs at least one adult."
 msgstr "تحتاج كل غرفة إلى شخص بالغ واحد على الأقل."
 
+msgid "Edit"
+msgstr "تعديل"
+
 msgid "Edit guest"
 msgstr "تعديل النزيل"
 
 msgid "Edit room"
 msgstr "تعديل الغرفة"
+
+msgid "Edit service"
+msgstr "تعديل الخدمة"
+
+msgid "Edit tax rule"
+msgstr "تعديل الضريبة"
 
 msgid "End now"
 msgstr "إنهاء الآن"
@@ -464,15 +547,30 @@ msgstr "أدخل اسمًا من 1 إلى 100 حرف."
 msgid "Enter a name of 1 to 50 characters."
 msgstr "أدخل اسمًا من 1 إلى 50 حرفًا."
 
+msgid "Enter a name of 1 to 60 characters."
+msgstr "أدخل اسماً من 1 إلى 60 حرفاً."
+
 msgid "Enter a nightly rate above 0 and at most 100,000 DT."
 msgstr "أدخل سعرًا لليلة أكبر من 0 ولا يتجاوز 100,000 د.ت."
+
+msgid "Enter a percentage above 0 and at most 100."
+msgstr "أدخل نسبة أكبر من 0 ولا تتجاوز 100."
+
+msgid "Enter a percentage between 0 and 100, for example 20 or 7.5."
+msgstr "أدخل نسبة بين 0 و100، مثلاً 20 أو 7.5."
 
 msgid "Enter a phone number of 8 to 15 digits."
 msgstr "أدخل رقم هاتف من 8 إلى 15 رقمًا."
 
+msgid "Enter a price above 0 and at most 10,000 DT."
+msgstr "أدخل سعراً أكبر من 0 ولا يتجاوز 10,000 د.ت."
+
 #, python-format
 msgid "Enter a reason of at most %(max_length)s characters."
 msgstr "أدخل سببًا لا يتجاوز %(max_length)s حرفًا."
+
+msgid "Enter a time such as 14:00."
+msgstr "أدخل وقتاً مثل 14:00."
 
 msgid "Enter a valid date."
 msgstr "أدخل تاريخًا صالحًا."
@@ -483,6 +581,9 @@ msgstr "أدخل بريدًا إلكترونيًا صالحًا."
 msgid "Enter a whole number."
 msgstr "أدخل عددًا صحيحًا."
 
+msgid "Enter an amount above 0 and at most 1,000 DT."
+msgstr "أدخل مبلغاً أكبر من 0 ولا يتجاوز 1,000 د.ت."
+
 msgid "Enter an amount such as 180 or 180.500."
 msgstr "أدخل مبلغًا مثل 180 أو 180.500."
 
@@ -491,6 +592,15 @@ msgstr "جميع الغرف نظيفة."
 
 msgid "Everyone"
 msgstr "الجميع"
+
+msgid "Extra services"
+msgstr "الخدمات الإضافية"
+
+msgid "Extra services can be charged once the guest has checked in."
+msgstr "يمكن احتساب الخدمات الإضافية بعد تسجيل وصول النزيل."
+
+msgid "Extra services can only be charged while the guest is checked in."
+msgstr "لا يمكن احتساب الخدمات الإضافية إلا أثناء إقامة النزيل."
 
 msgid "File"
 msgstr "الملف"
@@ -513,6 +623,9 @@ msgstr "العلامات"
 msgid "For example 204 or B-12."
 msgstr "مثل 204 أو B-12."
 
+msgid "For example VAT or Tourist tax."
+msgstr "مثلاً: الأداء على القيمة المضافة أو المعلوم السياحي."
+
 msgid "Form expired"
 msgstr "انتهت صلاحية النموذج"
 
@@ -520,8 +633,11 @@ msgid "Free"
 msgstr "متاحة"
 
 #, python-format
-msgid "Free cancellation until %(when)s. After that, cancelling costs 20%% of the accommodation."
-msgstr "الإلغاء مجاني حتى %(when)s. بعد ذلك، يكلف الإلغاء 20%% من ثمن الإقامة."
+msgid "Free cancellation until %(when)s. After that, cancelling costs %(rate)s of the accommodation."
+msgstr "الإلغاء مجاني حتى %(when)s. بعد ذلك يكلّف الإلغاء %(rate)s من الإقامة."
+
+msgid "Free cancellation until (hours before arrival)"
+msgstr "الإلغاء المجاني حتى (ساعات قبل الوصول)"
 
 msgid "From"
 msgstr "من"
@@ -561,6 +677,9 @@ msgstr "عدد الأشخاص في الغرفة"
 msgid "Guests in the house"
 msgstr "النزلاء المقيمون"
 
+msgid "Hotel rules"
+msgstr "قواعد الفندق"
+
 msgid "Housekeeping"
 msgstr "التنظيف"
 
@@ -572,6 +691,12 @@ msgstr "وثيقة الهوية"
 
 msgid "In service"
 msgstr "في الخدمة"
+
+msgid "Inactive"
+msgstr "غير نشط"
+
+msgid "Inactive services can no longer be charged; past charges keep them."
+msgstr "لا يمكن احتساب الخدمات غير النشطة بعد الآن؛ وتبقى في الاحتسابات السابقة."
 
 msgid "Incident reference:"
 msgstr "مرجع الحادثة:"
@@ -590,8 +715,14 @@ msgstr "اسم المستخدم أو كلمة المرور غير صحيحة، �
 msgid "Is it one of these guests?"
 msgstr "هل هو أحد هؤلاء النزلاء؟"
 
+msgid "Issued invoices keep the tax they were issued with."
+msgstr "تحتفظ الفواتير الصادرة بالضريبة التي صدرت بها."
+
 msgid "Keep it"
 msgstr "الإبقاء عليه"
+
+msgid "Kind"
+msgstr "النوع"
 
 msgid "Language"
 msgstr "اللغة"
@@ -647,6 +778,10 @@ msgstr "وضع علامة للتنظيف"
 msgid "Match system"
 msgstr "حسب النظام"
 
+#, python-format
+msgid "Maximum total discount (%%)"
+msgstr "الحد الأقصى للتخفيض الإجمالي (%%)"
+
 msgid "Name"
 msgstr "الاسم"
 
@@ -676,6 +811,12 @@ msgstr "حجز جديد"
 
 msgid "New reservations will be refused. Managers only."
 msgstr "سيتم رفض الحجوزات الجديدة. للمديرين فقط."
+
+msgid "New service"
+msgstr "خدمة جديدة"
+
+msgid "New tax rule"
+msgstr "ضريبة جديدة"
 
 msgid "Newest arrivals first."
 msgstr "الأحدث وصولًا أولًا."
@@ -745,6 +886,9 @@ msgstr "لا توجد غرفة متاحة طوال ليالي هذه الإقا�
 msgid "No rooms yet."
 msgstr "لا توجد غرف بعد."
 
+msgid "No tax rules: bills will show no tax."
+msgstr "لا توجد ضرائب: لن تظهر أي ضريبة في الفواتير."
+
 msgid "No-show"
 msgstr "لم يحضر"
 
@@ -774,6 +918,9 @@ msgstr "نسبة الإشغال الليلة"
 msgid "Occupied"
 msgstr "مشغولة"
 
+msgid "Of the accommodation; also charged for a no-show."
+msgstr "من الإقامة؛ وتُحتسب أيضاً عند عدم الحضور."
+
 msgid "Only a confirmed reservation can be cancelled."
 msgstr "لا يمكن إلغاء إلا حجز مؤكد."
 
@@ -802,6 +949,9 @@ msgstr "كلمة المرور"
 msgid "Past"
 msgstr "منقضية"
 
+msgid "Percentage"
+msgstr "نسبة مئوية"
+
 msgid "Phone"
 msgstr "الهاتف"
 
@@ -816,6 +966,19 @@ msgstr "الأسبوع السابق"
 
 msgid "Price locked at booking"
 msgstr "السعر المثبت عند الحجز"
+
+msgid ""
+"Prices are entered before tax; each active rule becomes its own line on the bill. Check the rates"
+" against current regulations."
+msgstr ""
+"تُدخل الأسعار دون ضرائب؛ وتصبح كل ضريبة نشطة سطراً مستقلاً في الفاتورة. تحقق من النسب وفق "
+"التشريعات السارية."
+
+msgid "Quantity"
+msgstr "الكمية"
+
+msgid "Rate"
+msgstr "النسبة"
 
 msgid "Reactivate account"
 msgstr "إعادة تفعيل الحساب"
@@ -966,6 +1129,9 @@ msgstr "حفظ التغييرات"
 msgid "Save flags"
 msgstr "حفظ العلامات"
 
+msgid "Save settings"
+msgstr "حفظ الإعدادات"
+
 msgid "Save the change"
 msgstr "حفظ التعديل"
 
@@ -981,8 +1147,17 @@ msgstr "اختر غرفة واحدة على الأقل."
 msgid "Select one of them below."
 msgstr "اختر إحداها أدناه."
 
+msgid "Service"
+msgstr "الخدمة"
+
 msgid "Set temporary password"
 msgstr "تعيين كلمة مرور مؤقتة"
+
+msgid "Settings and taxes"
+msgstr "الإعدادات والضرائب"
+
+msgid "Settings saved."
+msgstr "تم حفظ الإعدادات."
 
 msgid "Show"
 msgstr "إظهار"
@@ -1006,6 +1181,9 @@ msgstr "بعض الحجوزات تضم أشخاصًا أكثر من هذه ال�
 msgid "Some fields need your attention."
 msgstr "بعض الحقول تحتاج إلى مراجعة."
 
+msgid "Some settings are out of range."
+msgstr "بعض الإعدادات خارج النطاق المسموح."
+
 msgid "Someone else changed this record. Reload the page to see their changes."
 msgstr "قام شخص آخر بتعديل هذا السجل. أعد تحميل الصفحة لرؤية التعديلات."
 
@@ -1027,6 +1205,13 @@ msgstr "الحالة"
 msgid "Stay"
 msgstr "الإقامة"
 
+#, python-format
+msgid "Tax rule %(name)s added."
+msgstr "تمت إضافة الضريبة %(name)s."
+
+msgid "Tax rules"
+msgstr "الضرائب"
+
 msgid "Temporary password"
 msgstr "كلمة مرور مؤقتة"
 
@@ -1039,6 +1224,12 @@ msgstr "لا يمكن أن يكون تاريخ الوصول في الماضي."
 msgid "The arrival time has passed: record a no-show instead of a cancellation."
 msgstr "مضى وقت الوصول: سجّل عدم حضور بدلًا من الإلغاء."
 
+msgid "The bill is closed: this charge can no longer be changed."
+msgstr "الفاتورة مغلقة: لم يعد بالإمكان تعديل هذا الاحتساب."
+
+msgid "The catalogue is empty."
+msgstr "الكتالوج فارغ."
+
 msgid "The current password is not correct."
 msgstr "كلمة المرور الحالية غير صحيحة."
 
@@ -1050,6 +1241,9 @@ msgstr "يجب أن يكون تاريخ المغادرة بعد تاريخ ال�
 
 msgid "The departure date must be after today."
 msgstr "يجب أن يكون تاريخ المغادرة بعد اليوم."
+
+msgid "The extra-services catalogue is empty. A manager can add services."
+msgstr "كتالوج الخدمات الإضافية فارغ. يمكن للمدير إضافة خدمات."
 
 msgid "The first day guests can stay again."
 msgstr "أول يوم يمكن فيه للنزلاء الإقامة مجددًا."
@@ -1078,6 +1272,10 @@ msgstr "الصفحة المطلوبة غير موجودة."
 msgid "The password must not contain the username."
 msgstr "يجب ألا تحتوي كلمة المرور على اسم المستخدم."
 
+#, python-format
+msgid "The quantity must be between 1 and %(max)s."
+msgstr "يجب أن تكون الكمية بين 1 و%(max)s."
+
 msgid "The reopening day must be after the first closed night."
 msgstr "يجب أن يكون يوم إعادة الفتح بعد أول ليلة مغلقة."
 
@@ -1103,8 +1301,14 @@ msgstr "لا يمكن تنفيذ هذا الإجراء بهذه الطريقة."
 msgid "This change conflicts with existing data."
 msgstr "يتعارض هذا التغيير مع بيانات موجودة."
 
+msgid "This charge was already voided."
+msgstr "تم إلغاء هذا الاحتساب من قبل."
+
 msgid "This form expired or was sent from another site. Reload the page and try again."
 msgstr "انتهت صلاحية هذا النموذج أو أُرسل من موقع آخر. أعد تحميل الصفحة وحاول مرة أخرى."
+
+msgid "This form was already submitted. Check the charges before trying again."
+msgstr "تم إرسال هذا النموذج من قبل. تحقق من الاحتسابات قبل المحاولة مجدداً."
 
 msgid "This form was already submitted. Check the reservation before trying again."
 msgstr "تم إرسال هذا النموذج من قبل. تحقق من الحجز قبل المحاولة مجددًا."
@@ -1155,6 +1359,9 @@ msgstr "لا تزال لهذه الغرفة حجوزات (%(codes)s). انقله
 msgid "This username is already used."
 msgstr "اسم المستخدم هذا مستخدم بالفعل."
 
+msgid "This value is out of the allowed range."
+msgstr "هذه القيمة خارج النطاق المسموح."
+
 msgid "To"
 msgstr "إلى"
 
@@ -1176,11 +1383,20 @@ msgstr "محاولات تسجيل دخول فاشلة كثيرة من هذا ا�
 msgid "Type"
 msgstr "النوع"
 
+msgid "Unit price"
+msgstr "سعر الوحدة"
+
+msgid "Unit price (DT, before tax)"
+msgstr "سعر الوحدة (د.ت، دون ضرائب)"
+
 msgid "Unlock"
 msgstr "فتح القفل"
 
 msgid "Untick to take the room out of service (it can no longer be booked)."
 msgstr "أزل التحديد لإخراج الغرفة من الخدمة (لن يمكن حجزها بعد ذلك)."
+
+msgid "Up to 3 decimals, for example 15 or 12.500."
+msgstr "حتى 3 أرقام عشرية، مثلاً 15 أو 12.500."
 
 msgid "Up to 3 decimals, for example 180 or 180.500."
 msgstr "حتى 3 أرقام عشرية، مثل 180 أو 180.500."
@@ -1225,6 +1441,12 @@ msgstr "الإصدار %(version)s · مخطط قاعدة البيانات %(sch
 msgid "Viewing the full number was recorded in the audit log."
 msgstr "تم تسجيل الاطلاع على الرقم الكامل في سجل التدقيق."
 
+msgid "Void"
+msgstr "إلغاء"
+
+msgid "Voided"
+msgstr "ملغى"
+
 msgid "We couldn't find what you were looking for."
 msgstr "لم نعثر على ما تبحث عنه."
 
@@ -1234,6 +1456,9 @@ msgstr "الأسابيع"
 #, python-format
 msgid "Welcome, %(name)s."
 msgstr "مرحبًا، %(name)s."
+
+msgid "What can be charged to a stay: breakfast, airport transfer, laundry… Prices are before tax."
+msgstr "ما يمكن احتسابه أثناء الإقامة: فطور، نقل إلى المطار، غسيل… الأسعار دون ضرائب."
 
 msgid "When"
 msgstr "التاريخ"

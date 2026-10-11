@@ -1,0 +1,46 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors -%}
+{% block title %}{{ _("Extra services") }}{% endblock %}
+{% block page_title %}{{ _("Extra services") }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <p class="muted">{{ _("What can be charged to a stay: breakfast, airport transfer, laundry… Prices are before tax.") }}</p>
+</div>
+<div class="grid grid--two">
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">{{ _("Service") }}</th>
+          <th scope="col" class="num">{{ _("Unit price") }}</th>
+          <th scope="col">{{ _("Status") }}</th>
+          <th scope="col"><span class="visually-hidden">{{ _("Actions") }}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for extra in extras %}
+        <tr>
+          <td>{{ extra.name }}</td>
+          <td class="num">{{ extra.unit_price | money }}</td>
+          <td>{% if extra.is_active %}<span class="badge badge--success">{{ _("Active") }}</span>{% else %}<span class="badge badge--neutral">{{ _("Inactive") }}</span>{% endif %}</td>
+          <td><a class="button button--ghost button--small" href="{{ url_for('extras.edit', extra_id=extra.id) }}">{{ _("Edit") }}</a></td>
+        </tr>
+        {%- else %}
+        <tr><td colspan="4" class="table__empty">{{ _("The catalogue is empty.") }}</td></tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+  <section class="panel panel--accent">
+    <h2 class="panel__title">{{ _("New service") }}</h2>
+    {{ form_errors(errors) }}
+    <form class="stack" method="post" novalidate>
+      {{ csrf() }}
+      {{ field("name", _("Name"), value=values.get("name", ""), error=errors.name, maxlength=60) }}
+      {{ field("unit_price", _("Unit price (DT, before tax)"), value=values.get("unit_price", ""), error=errors.unit_price,
+               hint=_("Up to 3 decimals, for example 15 or 12.500.")) }}
+      <button class="button button--primary" type="submit">{{ _("Add to the catalogue") }}</button>
+    </form>
+  </section>
+</div>
+{% endblock %}

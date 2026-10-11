@@ -815,3 +815,9 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 /* Dashboard (Sprint 4) */
 .grid--stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr)); }
 .dashboard-footer { font-size: var(--text-sm); text-align: center; }
+.charge-form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-3); margin-block-start: var(--space-3); }
+.charge-form .field { flex: 1 1 9rem; }
+.inline-form { display: flex; gap: var(--space-2); align-items: center; }
+.field__input--small { min-height: 2.25rem; padding-block: var(--space-1); max-width: 12rem; }
+.row--void td { color: var(--text-muted); text-decoration: line-through; }
+.row--void td .badge { text-decoration: none; }

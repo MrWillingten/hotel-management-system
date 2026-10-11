@@ -1,0 +1,73 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors -%}
+{%- from "macros/taxes.html" import base_label, rate, rule_fields -%}
+{%- macro pct(bp) %}{{ "%g" | format(bp / 100) }}{% endmacro -%}
+{% block title %}{{ _("Settings and taxes") }}{% endblock %}
+{% block page_title %}{{ _("Settings and taxes") }}{% endblock %}
+{% block content %}
+<div class="grid grid--two">
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Hotel rules") }}</h2>
+    {{ form_errors(errors) }}
+    <form class="stack" method="post" action="{{ url_for('settings.update') }}" novalidate>
+      {{ csrf() }}
+      <div class="grid grid--fields">
+        {{ field("check_in_time", _("Check-in time"), type="time", value=values.get("check_in_time", settings.check_in_time.strftime("%H:%M")), error=errors.check_in_time) }}
+        {{ field("check_out_time", _("Check-out time"), type="time", value=values.get("check_out_time", settings.check_out_time.strftime("%H:%M")), error=errors.check_out_time) }}
+      </div>
+      <div class="grid grid--fields">
+        {{ field("cancellation_fee", _("Cancellation fee (%%)"), value=values.get("cancellation_fee", pct(settings.cancellation_fee_bp)), error=errors.cancellation_fee or errors.cancellation_fee_bp,
+                 hint=_("Of the accommodation; also charged for a no-show.")) }}
+        {{ field("cancellation_window_hours", _("Free cancellation until (hours before arrival)"), type="number", value=values.get("cancellation_window_hours", settings.cancellation_window_hours), error=errors.cancellation_window_hours) }}
+      </div>
+      <div class="grid grid--fields">
+        {{ field("grace_period_hours", _("Change of mind after booking (hours)"), type="number", value=values.get("grace_period_hours", settings.grace_period_hours), error=errors.grace_period_hours,
+                 hint=_("Cancelling within this time after booking is always free.")) }}
+        {{ field("discount_cap", _("Maximum total discount (%%)"), value=values.get("discount_cap", pct(settings.discount_cap_bp)), error=errors.discount_cap or errors.discount_cap_bp) }}
+      </div>
+      <button class="button button--primary" type="submit">{{ _("Save settings") }}</button>
+    </form>
+  </section>
+
+  <section class="panel panel--accent">
+    <h2 class="panel__title">{{ _("New tax rule") }}</h2>
+    {{ form_errors(tax_errors) }}
+    <form class="stack" method="post" action="{{ url_for('settings.create_tax') }}" novalidate>
+      {{ csrf() }}
+      {{ rule_fields(tax_values, tax_errors) }}
+      <button class="button button--primary" type="submit">{{ _("Add tax rule") }}</button>
+    </form>
+  </section>
+</div>
+
+<section class="panel">
+  <h2 class="panel__title">{{ _("Tax rules") }}</h2>
+  <p class="muted">{{ _("Prices are entered before tax; each active rule becomes its own line on the bill. Check the rates against current regulations.") }}</p>
+  <div class="table-wrap table-wrap--flat">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">{{ _("Name") }}</th>
+          <th scope="col">{{ _("Rate") }}</th>
+          <th scope="col">{{ _("Applies to") }}</th>
+          <th scope="col">{{ _("Status") }}</th>
+          <th scope="col"><span class="visually-hidden">{{ _("Actions") }}</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for rule in rules %}
+        <tr>
+          <td>{{ rule.name }}</td>
+          <td>{{ rate(rule) }}</td>
+          <td>{{ base_label(rule.applies_to) }}</td>
+          <td>{% if rule.is_active %}<span class="badge badge--success">{{ _("Active") }}</span>{% else %}<span class="badge badge--neutral">{{ _("Inactive") }}</span>{% endif %}</td>
+          <td><a class="button button--ghost button--small" href="{{ url_for('settings.edit_tax', rule_id=rule.id) }}">{{ _("Edit") }}</a></td>
+        </tr>
+        {%- else %}
+        <tr><td colspan="5" class="table__empty">{{ _("No tax rules: bills will show no tax.") }}</td></tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

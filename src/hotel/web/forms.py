@@ -6,9 +6,10 @@ again by the domain and services, which never trust the web layer.
 
 from __future__ import annotations
 
+import re
 import unicodedata
 from collections.abc import Mapping
-from datetime import date
+from datetime import date, time
 
 from hotel.domain.errors import HotelError, ValidationError
 from hotel.domain.money import Money
@@ -76,6 +77,25 @@ def money(data: Mapping[str, str], name: str) -> Money:
         return Money.parse(raw)
     except ValidationError as error:
         raise ValidationError(error.code, fields={name: error.code}, **error.params) from None
+
+
+_PERCENT = re.compile(r"^(\d{1,3})(?:[.,](\d{1,2}))?$")
+
+
+def percent(data: Mapping[str, str], name: str) -> int:
+    """ "20" -> 2000 basis points, "7.5" or "7,5" -> 750. Two decimals at most."""
+    match = _PERCENT.fullmatch(data.get(name, "").strip().removesuffix("%").strip())
+    if match is None or int(match.group(1)) > 100:
+        raise ValidationError("field.invalid_percent", fields={name: "field.invalid_percent"})
+    return int(match.group(1)) * 100 + int((match.group(2) or "").ljust(2, "0"))
+
+
+def clock_time(data: Mapping[str, str], name: str) -> time:
+    raw = data.get(name, "").strip()
+    try:
+        return time.fromisoformat(raw).replace(second=0, microsecond=0)  # <input type="time">
+    except ValueError:
+        raise ValidationError("field.invalid_time", fields={name: "field.invalid_time"}) from None
 
 
 def page_request(args: Mapping[str, str], *, per_page: int = 20) -> PageRequest:

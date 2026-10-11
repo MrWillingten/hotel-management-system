@@ -18,7 +18,7 @@
   {%- if fee.is_zero() %}
   <div class="alert alert--success">{{ icon("check") }}<p>{{ _("Cancelling now is free (free until %(when)s).", when=free_until | datetimeformat("medium")) }}</p></div>
   {%- else %}
-  <div class="alert alert--warning">{{ icon("alert") }}<p>{{ _("Arrival is less than 48 hours away: cancelling now costs %(fee)s (20%% of the accommodation).", fee=fee | money) }}</p></div>
+  <div class="alert alert--warning">{{ icon("alert") }}<p>{{ _("Arrival is close: cancelling now costs %(fee)s (%(rate)s of the accommodation).", fee=fee | money, rate=fee_rate | percent) }}</p></div>
   {%- endif %}
   <form class="form-actions" method="post">
     {{ csrf() }}

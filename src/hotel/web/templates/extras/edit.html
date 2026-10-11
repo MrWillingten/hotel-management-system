@@ -1,0 +1,23 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors, checkbox -%}
+{%- set v = values if values else {} -%}
+{% block title %}{{ extra.name }}{% endblock %}
+{% block page_title %}{{ _("Edit service") }}{% endblock %}
+{% block content %}
+<section class="panel panel--narrow">
+  {{ form_errors(errors) }}
+  <form class="stack" method="post" novalidate>
+    {{ csrf() }}
+    <input type="hidden" name="version" value="{{ extra.version }}">
+    {{ field("name", _("Name"), value=v.get("name", extra.name), error=errors.name, maxlength=60) }}
+    {{ field("unit_price", _("Unit price (DT, before tax)"), value=v.get("unit_price", extra.unit_price), error=errors.unit_price,
+             hint=_("A new price only applies to future charges.")) }}
+    {{ checkbox("is_active", _("Active"), checked=(v.get("is_active") == "on") if values else extra.is_active,
+                hint=_("Inactive services can no longer be charged; past charges keep them.")) }}
+    <div class="form-actions">
+      <button class="button button--primary" type="submit">{{ _("Save changes") }}</button>
+      <a class="button button--ghost" href="{{ url_for('extras.index') }}">{{ _("Cancel") }}</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

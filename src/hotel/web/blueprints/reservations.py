@@ -7,6 +7,7 @@ from datetime import timedelta
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_babel import gettext as _
 
+from hotel.domain.enums import Role
 from hotel.domain.errors import HotelError, ValidationError
 from hotel.domain.paging import PageRequest
 from hotel.domain.period import StayPeriod
@@ -17,7 +18,7 @@ from hotel.web import forms
 from hotel.web.context import current_actor, services
 from hotel.web.formatting import money
 from hotel.web.messages import message_for
-from hotel.web.security import is_safe_redirect_target, login_required
+from hotel.web.security import is_safe_redirect_target, login_required, roles_required
 
 bp = Blueprint("reservations", __name__, url_prefix="/reservations")
 
@@ -51,6 +52,11 @@ def _room_requests(data) -> list[RoomRequest]:
     if not requests:
         raise ValidationError("reservation.no_room_selected")
     return requests
+
+
+def _fee_rate() -> int:
+    """The cancellation fee in basis points, for the texts that explain it."""
+    return services().hotel_settings.get(current_actor()).cancellation_fee_bp
 
 
 def _booking_page(errors=None, status=200, *, unavailable=None):
@@ -157,6 +163,7 @@ def review():
         guest=services().guests.get(actor, guest_id),
         notes=forms.text(data, "notes", max_length=500),
         policy_free_until=services().reservations.free_cancellation_until(period),
+        fee_rate=_fee_rate(),
         form_token=services().form_tokens.issue(actor),
     )
 
@@ -195,10 +202,15 @@ def detail(reservation_id: int):
     actor = current_actor()
     reservation = services().reservations.get(actor, reservation_id)
     rooms = {o.room.id: o.room for o in services().rooms.list_rooms(actor)}
+    in_house = reservation.status == ReservationStatus.CHECKED_IN
     return render_template(
         "reservations/detail.html",
         reservation=reservation,
+        charges=services().extras.charges_for(actor, reservation_id),
+        extras=services().extras.catalogue(actor, active_only=True) if in_house else [],
+        form_token=services().form_tokens.issue(actor) if in_house else "",
         free_until=services().reservations.free_cancellation_until(reservation.period),
+        fee_rate=_fee_rate(),
         to_clean=[r.number for r in reservation.rooms if rooms[r.room_id].housekeeping == "DIRTY"],
         today=services().clock.today(),
         arrival_passed=services().reservations.arrival_has_passed(reservation.period),
@@ -226,6 +238,54 @@ def check_in(reservation_id: int):
     else:
         flash(_("%(name)s is checked in.", name=checked_in.guest_name), "success")
     return _back_to(reservation_id)
+
+
+@bp.post("/<int:reservation_id>/charges")
+@login_required
+def add_charge(reservation_id: int):
+    """Story 4.3: charge an extra service. The one-time token stops double charges."""
+    actor = current_actor()
+    data = request.form
+    if not services().form_tokens.consume(actor, data.get("form_token")):
+        flash(
+            _("This form was already submitted. Check the charges before trying again."), "warning"
+        )
+        return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+    try:
+        charge = services().extras.charge(
+            actor,
+            reservation_id,
+            extra_id=forms.integer(data, "extra_id"),
+            quantity=forms.integer(data, "quantity"),
+            charge_date=forms.calendar_date(data, "charge_date", required=False),
+        )
+    except HotelError as exc:
+        flash(message_for(exc.code, exc.params), "danger")
+    else:
+        flash(
+            _(
+                "Charged: %(quantity)s × %(name)s.",
+                quantity=charge.quantity,
+                name=charge.description,
+            ),
+            "success",
+        )
+    return redirect(url_for("reservations.detail", reservation_id=reservation_id) + "#charges")
+
+
+@bp.post("/charges/<int:charge_id>/void")
+@roles_required(Role.MANAGER)
+def void_charge(charge_id: int):
+    reservation_id = forms.integer(request.form, "reservation_id")
+    try:
+        services().extras.void(
+            current_actor(), charge_id, reason=forms.text(request.form, "reason", max_length=200)
+        )
+    except HotelError as exc:
+        flash(message_for(exc.code, exc.params), "danger")
+    else:
+        flash(_("Charge voided."), "success")
+    return redirect(url_for("reservations.detail", reservation_id=reservation_id) + "#charges")
 
 
 @bp.route("/<int:reservation_id>/no-show", methods=["GET", "POST"])
@@ -382,5 +442,6 @@ def cancel(reservation_id: int):
         fee=fee,
         problem=problem,
         free_until=reservations.free_cancellation_until(reservation.period),
+        fee_rate=_fee_rate(),
         form_token=services().form_tokens.issue(actor),
     )

@@ -38,7 +38,7 @@
     </table>
   </div>
   <div class="alert alert--info">{{ icon("info") }}
-    <p>{{ _("Free cancellation until %(when)s. After that, cancelling costs 20%% of the accommodation.", when=policy_free_until | datetimeformat("medium")) }}</p>
+    <p>{{ _("Free cancellation until %(when)s. After that, cancelling costs %(rate)s of the accommodation.", when=policy_free_until | datetimeformat("medium"), rate=fee_rate | percent) }}</p>
   </div>
   {%- if notes %}<p class="notes">{{ notes }}</p>{% endif %}
   <form class="form-actions" method="post" action="{{ url_for('reservations.create') }}">

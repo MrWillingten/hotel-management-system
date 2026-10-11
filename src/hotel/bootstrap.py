@@ -19,9 +19,11 @@ from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.audit import AuditService
 from hotel.services.auth import AuthService
 from hotel.services.backups import BackupService
+from hotel.services.extras import ExtrasService
 from hotel.services.form_tokens import FormTokenService
 from hotel.services.front_desk import FrontDeskService
 from hotel.services.guests import GuestService
+from hotel.services.hotel_settings import HotelSettingsService
 from hotel.services.passwords import PasswordHasher, ScryptParams
 from hotel.services.reservations import ReservationService
 from hotel.services.rooms import RoomService
@@ -49,6 +51,8 @@ class Services:
     reservations: ReservationService
     form_tokens: FormTokenService
     front_desk: FrontDeskService
+    extras: ExtrasService
+    hotel_settings: HotelSettingsService
 
 
 def build_services(settings: Settings, *, clock: Clock | None = None) -> Services:
@@ -86,4 +90,6 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
         reservations=ReservationService(uow_factory, clock),
         form_tokens=FormTokenService(uow_factory, clock),
         front_desk=FrontDeskService(uow_factory, clock),
+        extras=ExtrasService(uow_factory, clock),
+        hotel_settings=HotelSettingsService(uow_factory, clock),
     )

@@ -25,14 +25,16 @@ from hotel.web.blueprints import (
     availability,
     backups,
     dashboard,
+    extras,
     guests,
+    hotel_settings,
     preferences,
     reservations,
     rooms,
     staff,
 )
 from hotel.web.context import SERVICES_KEY
-from hotel.web.formatting import money
+from hotel.web.formatting import money, percent
 from hotel.web.preferences import current_theme, select_locale, text_direction
 
 TRANSLATIONS_DIR = Path(__file__).resolve().parent.parent / "translations"
@@ -87,7 +89,9 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
         availability.bp,
         backups.bp,
         dashboard.bp,
+        extras.bp,
         guests.bp,
+        hotel_settings.bp,
         preferences.bp,
         reservations.bp,
         rooms.bp,
@@ -96,6 +100,7 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
         app.register_blueprint(blueprint)
 
     app.add_template_filter(money, "money")
+    app.add_template_filter(percent, "percent")
 
     @app.template_filter("options")
     def options_filter(items, value: str = "id", label: str = "name") -> list[tuple]:
