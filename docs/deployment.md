@@ -31,6 +31,46 @@ Then start the application with:
 
 Each workstation must trust Caddy's local root certificate once.
 
+## With Docker
+
+The image runs the same production server (Waitress) as an unprivileged user
+(uid 10001), keeps all data in the `/data` volume and reports its state on
+`/health`, which Docker checks every 30 seconds.
+
+**One computer**, reachable only from itself:
+
+```
+docker build -t hotel .
+docker run -d --name hotel -p 127.0.0.1:8000:8000 -v hotel-data:/data hotel
+docker exec -it hotel hotel create-manager
+```
+
+**Several workstations, with HTTPS** – `deploy/compose.yaml` starts the
+application behind Caddy:
+
+```
+cd deploy
+HOTEL_DOMAIN=hotel.lan docker compose up -d
+docker compose exec -it hotel hotel create-manager
+```
+
+* The application's port is not published; only Caddy (ports 80 and 443) is.
+  `HOTEL_HTTPS=1` and `HOTEL_TRUSTED_PROXIES=1` are already set.
+* The container's file system is read-only except `/data` and `/tmp`; it
+  runs with no Linux capabilities and cannot gain privileges.
+* Each workstation must trust Caddy's root certificate once. Copy it out with
+  `docker compose cp caddy:/data/caddy/pki/authorities/local/root.crt .` and
+  import it (Windows: double-click → Install → *Trusted Root Certification
+  Authorities*). `HOTEL_DOMAIN` must resolve to the server (router DNS or
+  each PC's `hosts` file).
+* Every `hotel` command works inside the container, for example
+  `docker compose exec hotel hotel backup` or `... hotel reset-totp mona`.
+  Backups are written to `/data/backups`, inside the volume: copy them off
+  the server too (`docker compose cp hotel:/data/backups ./backups`).
+* To restore: `docker compose stop hotel`, then
+  `docker compose run --rm hotel hotel restore /data/backups/FILE`, then start again.
+* A bind mount instead of the named volume must be owned by uid 10001.
+
 ## Data folder
 
 Everything the application writes lives in `HOTEL_DATA_DIR` (default

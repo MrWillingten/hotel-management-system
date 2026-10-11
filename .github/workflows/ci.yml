@@ -59,3 +59,32 @@ jobs:
         run: python -c "import sqlite3; print('SQLite', sqlite3.sqlite_version)"
       - name: Pytest with coverage
         run: pytest --cov --cov-report=term-missing
+
+  docker:
+    name: Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build
+        run: docker build -t hotel:ci .
+      - name: Runs as an unprivileged user
+        run: test "$(docker run --rm hotel:ci id -u)" = "10001"
+      - name: Starts, passes its health check and serves the login page
+        run: |
+          docker run -d --name hotel -p 127.0.0.1:8000:8000 --read-only --tmpfs /tmp \
+            --cap-drop ALL --security-opt no-new-privileges:true -v hotel-data:/data hotel:ci
+          for i in $(seq 1 30); do
+            status=$(docker inspect --format '{{.State.Health.Status}}' hotel)
+            [ "$status" = "healthy" ] && break
+            sleep 2
+          done
+          docker logs hotel
+          test "$status" = "healthy"
+          curl -fsS http://127.0.0.1:8000/health
+          curl -fsS http://127.0.0.1:8000/login | grep -q "create-manager"
+      - name: Command-line tools work inside the container
+        run: |
+          docker exec hotel hotel audit verify
+          docker exec hotel hotel version
+      - name: Compose file is valid
+        run: docker compose -f deploy/compose.yaml config --quiet

@@ -64,6 +64,15 @@ class Services:
     night_audit: NightAuditService
     two_factor: TwoFactorService
 
+    def is_healthy(self) -> bool:
+        """True when the database answers (used by the /health page)."""
+        try:
+            with self.uow_factory() as uow:
+                uow.users.count()
+        except Exception:  # any failure means "not healthy"; the caller logs it
+            return False
+        return True
+
 
 def build_services(settings: Settings, *, clock: Clock | None = None) -> Services:
     clock = clock or SystemClock(settings.tz)

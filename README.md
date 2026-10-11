@@ -107,6 +107,11 @@ Data (database, secret key, logs) is stored in `./instance`, or in the folder
 named by `HOTEL_DATA_DIR`. See [docs/deployment.md](docs/deployment.md) for all
 settings and for using the application from several computers over HTTPS.
 
+**With Docker:** `docker build -t hotel .` then
+`docker run -d -p 127.0.0.1:8000:8000 -v hotel-data:/data hotel`; for several
+workstations behind HTTPS, `docker compose up -d` in `deploy/` (see
+[docs/deployment.md](docs/deployment.md#with-docker)).
+
 ## Tests and quality checks
 
 ```bash
