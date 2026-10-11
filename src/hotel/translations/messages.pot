@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 09:17+0100\n"
+"POT-Creation-Date: 2026-10-11 09:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,12 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+
+#, python-format
+msgid ""
+"%(amount)s is still due. Record the payment before checking out, or the "
+"invoice will show it as unpaid."
+msgstr ""
 
 #, python-format
 msgid "%(amount)s per adult per night"
@@ -414,6 +420,16 @@ msgstr ""
 msgid "Check in"
 msgstr ""
 
+msgid "Check out"
+msgstr ""
+
+msgid "Check out and issue the invoice"
+msgstr ""
+
+#, python-format
+msgid "Check-in from %(in)s · check-out by %(out)s"
+msgstr ""
+
 #, python-format
 msgid "Check-in opens on the arrival day (%(arrival)s)."
 msgstr ""
@@ -428,6 +444,10 @@ msgid "Checked in"
 msgstr ""
 
 msgid "Checked out"
+msgstr ""
+
+#, python-format
+msgid "Checked out. Invoice %(number)s issued."
 msgstr ""
 
 msgid "Children"
@@ -593,6 +613,9 @@ msgstr ""
 msgid "Document number"
 msgstr ""
 
+msgid "Due from guests in the house"
+msgstr ""
+
 msgid "E-mail"
 msgstr ""
 
@@ -600,6 +623,12 @@ msgid "Each room can only be selected once."
 msgstr ""
 
 msgid "Each room needs at least one adult."
+msgstr ""
+
+#, python-format
+msgid ""
+"Early departure: the stay was booked until %(planned)s. Only the nights "
+"stayed are charged and the others become free again."
 msgstr ""
 
 msgid "Edit"
@@ -670,6 +699,9 @@ msgid "Enter an amount above 0."
 msgstr ""
 
 msgid "Enter an amount such as 180 or 180.500."
+msgstr ""
+
+msgid "Every invoice is paid."
 msgstr ""
 
 msgid "Every room is clean."
@@ -810,10 +842,23 @@ msgstr ""
 msgid "Invalid username or password, or the account is temporarily locked."
 msgstr ""
 
+msgid "Invoice"
+msgstr ""
+
+#, python-format
+msgid "Invoice %(number)s"
+msgstr ""
+
+msgid "Invoices"
+msgstr ""
+
 msgid "Is it one of these guests?"
 msgstr ""
 
 msgid "Issued invoices keep the tax they were issued with."
+msgstr ""
+
+msgid "Issued on"
 msgstr ""
 
 msgid "Keep it"
@@ -972,6 +1017,9 @@ msgstr ""
 msgid "No guests registered yet."
 msgstr ""
 
+msgid "No invoice yet: they are issued at check-out."
+msgstr ""
+
 msgid "No money received yet."
 msgstr ""
 
@@ -1024,6 +1072,12 @@ msgstr ""
 msgid "Nothing to pay."
 msgstr ""
 
+msgid "Number"
+msgstr ""
+
+msgid "Number or guest"
+msgstr ""
+
 msgid "Occupancy tonight"
 msgstr ""
 
@@ -1070,6 +1124,9 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
+msgid "Payments received"
+msgstr ""
+
 msgid "Percentage"
 msgstr ""
 
@@ -1091,6 +1148,12 @@ msgstr ""
 msgid ""
 "Prices are entered before tax; each active rule becomes its own line on "
 "the bill. Check the rates against current regulations."
+msgstr ""
+
+#, python-format
+msgid ""
+"Prices in Tunisian dinars. Issued by %(name)s. This invoice can no longer"
+" be changed; later payments appear on the reservation."
 msgstr ""
 
 msgid "Quantity"
@@ -1125,6 +1188,9 @@ msgid "Record a no-show"
 msgstr ""
 
 msgid "Record a payment"
+msgstr ""
+
+msgid "Record a payment first"
 msgstr ""
 
 msgid "Record the no-show"
@@ -1572,6 +1638,11 @@ msgstr ""
 msgid "To clean"
 msgstr ""
 
+msgid ""
+"To print or save as PDF, use your browser's Print command (Ctrl+P): only "
+"the invoice is printed."
+msgstr ""
+
 msgid "Today"
 msgstr ""
 
@@ -1599,6 +1670,9 @@ msgid "Unit price (DT, before tax)"
 msgstr ""
 
 msgid "Unlock"
+msgstr ""
+
+msgid "Unpaid after departure"
 msgstr ""
 
 msgid "Untick to take the room out of service (it can no longer be booked)."

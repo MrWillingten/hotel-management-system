@@ -13,7 +13,7 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | A3 | 🟠 | Password guessing, user enumeration | Lockout after 5 failures, doubling up to 24 h; per-address throttle (20 / 15 min); identical message; dummy hash for unknown users | ✅ S1 |
 | A4 | 🟠 | Weak passwords | scrypt (n=2¹⁵, r=8, p=1, 16-byte salt); ≥ 12 characters; common-password blocklist; no username inside | ✅ S1 |
 | A5 | 🟠 | A route forgets its role check | Deny by default; every view declares `@public`, `@login_required` or `@roles_required`; a test walks every route; services re-check roles | ✅ S1 (services ⏳ S2+) |
-| A6 | 🟠 | Receptionist grants own discounts or large refunds | Manager-only, audited | ⏳ S4 |
+| A6 | 🟠 | Receptionist grants own discounts or large refunds | Discounts and refunds manager-only (role re-checked in the service), capped, reason required, audited | ✅ S4 |
 | A7 | 🟡 | Session fixation | New token at every login, previous one destroyed | ✅ S1 |
 | A8 | 🟡 | Last manager deactivated or demoted; manager deactivating self | Refused | ✅ S2 |
 | A9 | 🟡 | Manager knows a reset password | `must_change_password` blocks every page until changed; reset ends sessions | ✅ S2 |
@@ -57,11 +57,13 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | D3 | 🟠 | Partial writes | Unit of Work transactions; failure-injection test | ✅ S1 |
 | D4 | 🟠 | Failed migration | One transaction per migration; refuse newer schemas; automatic backup before upgrading | ✅ S2 |
 | D5 | 🟡 | Undetected corruption | `quick_check` at start-up | ✅ S1 |
-| F1–F4 | 🟠 | Float errors, banker's rounding, locale input | Integer millimes, explicit half-up, locale-aware parsing | ✅ S1 (parsing in forms ⏳ S4) |
+| F1–F4 | 🟠 | Float errors, banker's rounding, locale input | Integer millimes, explicit half-up per line, "180,5" and "7,5 %" accepted, no thousands separators | ✅ S1–S4 |
+| F5 | 🟠 | Altered or deleted money records | Payments append-only and issued invoices immutable (triggers); corrections are new entries (refunds, voided charges kept); invoice numbers gap-free in the same transaction | ✅ S4 |
+| F6 | 🟡 | Typing errors become refunds to chase | Payments never above the balance due, refunds never above the overpayment | ✅ S4 |
 | P1–P6 | 🟠 | Guest personal data | Masked ID numbers, audited reveal (never stored in cookies or URLs), no PII in audit details; anonymisation | ✅ S2 (anonymisation ⏳ S5) |
 | C1 | 🔴 | Double booking race | `BEGIN IMMEDIATE` + recheck + `room_night` primary key; two-thread race test | ✅ S3 |
 | C2 | 🟠 | Lost updates | `version` column, `StaleDataError` | ✅ S1 (users) |
-| C3 | 🟠 | Double submit | One-time form tokens (owner-bound, 8 h, hashed) on booking, change and cancel | ✅ S3 |
+| C3 | 🟠 | Double submit | One-time form tokens (owner-bound, 8 h, hashed) on booking, change, cancel, charges, payments and refunds; version checks on check-in/out | ✅ S3–S4 |
 
 ## Accepted limitations
 

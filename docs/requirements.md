@@ -81,7 +81,7 @@ line, staff user, user session, audit log entry, setting. See
 | C | Service charges | Only while CHECKED_IN. |
 | D | Staff accounts | Created by managers; no self-registration. |
 | E | Maintenance vs. bookings | Scheduling maintenance over a confirmed reservation is refused with the list of affected reservations. |
-| F | Early departure / no-show | Early departure: nights actually stayed are charged (configurable). No-show: charged like a late cancellation. |
+| F | Early departure / no-show | Early departure: only the nights actually stayed are charged (at least one); the others are released. No-show: recorded after the arrival time, charged like a late cancellation. |
 | G | **Taxes** | **In scope.** Configurable tax rules (percentage, e.g. VAT; per adult per night, e.g. tourist tax). Prices are stored tax-exclusive; each tax is its own invoice line, copied onto the invoice when issued. Real rates must be verified with current Tunisian regulations. |
 | H | Occupancy rate | Room-nights sold ÷ room-nights available, excluding rooms under maintenance. |
 

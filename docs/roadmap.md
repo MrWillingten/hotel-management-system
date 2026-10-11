@@ -58,12 +58,22 @@ availability bug (maintenance nights skipped) that the database's
 check + transaction + key) did exactly what ADR 0004 promised. Lesson:
 test every query with *both* kinds of blocked night.
 
-### Sprint 4 – Front desk and billing
+### Sprint 4 – Front desk and billing ✅
 
-Dashboard · check-in / no-show · service catalogue and charges · bill preview with
-discounts and taxes (golden test from the brief) · payments and refunds · check-out
-and immutable, gap-free invoices with print styles · settings and tax rules ·
-housekeeping status.
+| ID | Story | PR | Status |
+|---|---|---|---|
+| 4.2 / 4.9 / 4.1 | Check-in, no-show, housekeeping, front-desk dashboard | #46 | ✅ |
+| 4.3 / 4.8 | Extra services and charges, hotel settings, tax rules | #47 | ✅ |
+| 4.4 / 4.5 / 4.6 | Bill preview, discounts, payments and refunds | #48 | ✅ |
+| 4.7 / 4.1 | Check-out, invoices, print styles, balances on the dashboard | #49 | ✅ |
+
+Retrospective: making the bill one pure function (`build_bill`) paid off at
+once: the preview, the desk balance, the check-out preview and the invoice
+can never disagree, and the brief's §4.7 example became a two-line test.
+Two lessons: a nested Unit of Work would wait on its own write lock, so
+settings are read through the caller's transaction (`load_settings(uow)`);
+and Jinja's `gettext` always applies `%` formatting, so a literal percent
+sign in a translatable string must be written `%%`.
 
 ### Sprint 5 – Reports, operations, languages
 

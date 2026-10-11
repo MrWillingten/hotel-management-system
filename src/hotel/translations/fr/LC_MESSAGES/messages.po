@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 09:17+0100\n"
+"POT-Creation-Date: 2026-10-11 09:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+
+#, python-format
+msgid ""
+"%(amount)s is still due. Record the payment before checking out, or the invoice will show it as "
+"unpaid."
+msgstr ""
+"%(amount)s reste dû. Enregistrez le paiement avant le départ, sinon la facture l'indiquera comme "
+"impayé."
 
 #, python-format
 msgid "%(amount)s per adult per night"
@@ -407,6 +415,16 @@ msgstr "Vérifier la disponibilité et le prix"
 msgid "Check in"
 msgstr "Enregistrer l'arrivée"
 
+msgid "Check out"
+msgstr "Enregistrer le départ"
+
+msgid "Check out and issue the invoice"
+msgstr "Enregistrer le départ et émettre la facture"
+
+#, python-format
+msgid "Check-in from %(in)s · check-out by %(out)s"
+msgstr "Arrivée à partir de %(in)s · départ avant %(out)s"
+
 #, python-format
 msgid "Check-in opens on the arrival day (%(arrival)s)."
 msgstr "L'enregistrement de l'arrivée ouvre le jour d'arrivée (%(arrival)s)."
@@ -422,6 +440,10 @@ msgstr "Arrivé"
 
 msgid "Checked out"
 msgstr "Parti"
+
+#, python-format
+msgid "Checked out. Invoice %(number)s issued."
+msgstr "Départ enregistré. Facture %(number)s émise."
 
 msgid "Children"
 msgstr "Enfants"
@@ -584,6 +606,9 @@ msgstr "Pièce"
 msgid "Document number"
 msgstr "Numéro de la pièce"
 
+msgid "Due from guests in the house"
+msgstr "Dû par les clients présents"
+
 msgid "E-mail"
 msgstr "E-mail"
 
@@ -592,6 +617,14 @@ msgstr "Chaque chambre ne peut être choisie qu'une fois."
 
 msgid "Each room needs at least one adult."
 msgstr "Chaque chambre doit compter au moins un adulte."
+
+#, python-format
+msgid ""
+"Early departure: the stay was booked until %(planned)s. Only the nights stayed are charged and "
+"the others become free again."
+msgstr ""
+"Départ anticipé : le séjour était réservé jusqu'au %(planned)s. Seules les nuits passées sont "
+"facturées et les autres redeviennent libres."
 
 msgid "Edit"
 msgstr "Modifier"
@@ -662,6 +695,9 @@ msgstr "Saisissez un montant supérieur à 0."
 
 msgid "Enter an amount such as 180 or 180.500."
 msgstr "Saisissez un montant comme 180 ou 180.500."
+
+msgid "Every invoice is paid."
+msgstr "Toutes les factures sont payées."
 
 msgid "Every room is clean."
 msgstr "Toutes les chambres sont propres."
@@ -799,11 +835,24 @@ msgstr "Intégrité vérifiée : %(count)s entrées, aucune modifiée ni suppri
 msgid "Invalid username or password, or the account is temporarily locked."
 msgstr "Nom d'utilisateur ou mot de passe incorrect, ou compte temporairement verrouillé."
 
+msgid "Invoice"
+msgstr "Facture"
+
+#, python-format
+msgid "Invoice %(number)s"
+msgstr "Facture %(number)s"
+
+msgid "Invoices"
+msgstr "Factures"
+
 msgid "Is it one of these guests?"
 msgstr "S'agit-il de l'un de ces clients ?"
 
 msgid "Issued invoices keep the tax they were issued with."
 msgstr "Les factures émises conservent la taxe avec laquelle elles ont été émises."
+
+msgid "Issued on"
+msgstr "Émise le"
 
 msgid "Keep it"
 msgstr "La conserver"
@@ -961,6 +1010,9 @@ msgstr "Aucun client ne correspond à « %(query)s »."
 msgid "No guests registered yet."
 msgstr "Aucun client enregistré pour l'instant."
 
+msgid "No invoice yet: they are issued at check-out."
+msgstr "Aucune facture pour l'instant : elles sont émises au départ."
+
 msgid "No money received yet."
 msgstr "Aucun encaissement pour l'instant."
 
@@ -1011,6 +1063,12 @@ msgstr "Remarques"
 msgid "Nothing to pay."
 msgstr "Rien à payer."
 
+msgid "Number"
+msgstr "Numéro"
+
+msgid "Number or guest"
+msgstr "Numéro ou client"
+
 msgid "Occupancy tonight"
 msgstr "Occupation ce soir"
 
@@ -1057,6 +1115,9 @@ msgstr "Paiement"
 msgid "Payments"
 msgstr "Paiements"
 
+msgid "Payments received"
+msgstr "Paiements reçus"
+
 msgid "Percentage"
 msgstr "Pourcentage"
 
@@ -1081,6 +1142,14 @@ msgid ""
 msgstr ""
 "Les prix sont saisis hors taxes ; chaque taxe active devient une ligne de la facture. Vérifiez "
 "les taux selon la réglementation en vigueur."
+
+#, python-format
+msgid ""
+"Prices in Tunisian dinars. Issued by %(name)s. This invoice can no longer be changed; later "
+"payments appear on the reservation."
+msgstr ""
+"Prix en dinars tunisiens. Émise par %(name)s. Cette facture ne peut plus être modifiée ; les "
+"paiements ultérieurs figurent sur la réservation."
 
 msgid "Quantity"
 msgstr "Quantité"
@@ -1115,6 +1184,9 @@ msgstr "Enregistrer une non-présentation"
 
 msgid "Record a payment"
 msgstr "Enregistrer un paiement"
+
+msgid "Record a payment first"
+msgstr "Enregistrer d'abord un paiement"
 
 msgid "Record the no-show"
 msgstr "Enregistrer la non-présentation"
@@ -1545,6 +1617,11 @@ msgstr "Au"
 msgid "To clean"
 msgstr "À nettoyer"
 
+msgid "To print or save as PDF, use your browser's Print command (Ctrl+P): only the invoice is printed."
+msgstr ""
+"Pour imprimer ou enregistrer en PDF, utilisez la commande Imprimer du navigateur (Ctrl+P) : seule"
+" la facture est imprimée."
+
 msgid "Today"
 msgstr "Aujourd'hui"
 
@@ -1573,6 +1650,9 @@ msgstr "Prix unitaire (DT, hors taxes)"
 
 msgid "Unlock"
 msgstr "Déverrouiller"
+
+msgid "Unpaid after departure"
+msgstr "Impayés après départ"
 
 msgid "Untick to take the room out of service (it can no longer be booked)."
 msgstr "Décochez pour mettre la chambre hors service (elle ne peut plus être réservée)."

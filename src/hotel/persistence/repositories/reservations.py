@@ -286,8 +286,15 @@ class ReservationRepository(BaseRepository):
         self._execute("DELETE FROM reservation_room WHERE reservation_id = ?", (reservation.id,))
         self._insert_rooms_and_nights(reservation)
 
-    def release_nights(self, reservation_id: int) -> None:
-        self._execute("DELETE FROM room_night WHERE reservation_id = ?", (reservation_id,))
+    def release_nights(self, reservation_id: int, *, from_night: date | None = None) -> None:
+        """Free the rooms: every night, or only those from `from_night` on."""
+        if from_night is None:
+            self._execute("DELETE FROM room_night WHERE reservation_id = ?", (reservation_id,))
+        else:
+            self._execute(
+                "DELETE FROM room_night WHERE reservation_id = ? AND night >= ?",
+                (reservation_id, date_to_db(from_night)),
+            )
 
     def update(self, reservation: Reservation) -> None:
         fee = reservation.cancellation_fee

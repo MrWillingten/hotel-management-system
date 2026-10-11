@@ -1,0 +1,42 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/billing.html" import bill_table, payment_kind, payment_method -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Invoice") }} {{ invoice.number }}{% endblock %}
+{% block page_title %}{{ _("Invoice") }} <span dir="ltr">{{ invoice.number }}</span>{% endblock %}
+{% block content %}
+<div class="page-actions no-print">
+  <a class="button button--ghost" href="{{ url_for('reservations.detail', reservation_id=invoice.reservation_id) }}">{{ _("Back to the reservation") }}</a>
+  <p class="muted">{{ _("To print or save as PDF, use your browser's Print command (Ctrl+P): only the invoice is printed.") }}</p>
+</div>
+
+<article class="panel invoice">
+  <header class="invoice__header">
+    <div>
+      <p class="invoice__hotel">{{ hotel_name }}</p>
+      <p class="muted">{{ _("Check-in from %(in)s · check-out by %(out)s", in=settings.check_in_time.strftime("%H:%M"), out=settings.check_out_time.strftime("%H:%M")) }}</p>
+    </div>
+    <dl class="facts invoice__facts">
+      <div><dt>{{ _("Invoice") }}</dt><dd dir="ltr">{{ invoice.number }}</dd></div>
+      <div><dt>{{ _("Issued on") }}</dt><dd>{{ invoice.issued_at | datetimeformat("medium") }}</dd></div>
+      <div><dt>{{ _("Guest") }}</dt><dd>{{ invoice.guest_name }}</dd></div>
+      <div><dt>{{ _("Reservation") }}</dt><dd dir="ltr">{{ invoice.reservation_code }}</dd></div>
+      <div><dt>{{ _("Stay") }}</dt><dd>{{ invoice.arrival | dateformat("medium") }} → {{ invoice.departure | dateformat("medium") }}</dd></div>
+    </dl>
+  </header>
+
+  {{ bill_table(invoice.bill) }}
+
+  {%- if invoice.payments %}
+  <h2 class="section-title">{{ _("Payments received") }}</h2>
+  <ul class="pick-list">
+    {%- for p in invoice.payments %}
+    <li><span>{{ payment_kind(p.kind) }} · {{ payment_method(p.method) }} · {{ p.paid_at | dateformat("medium") }}</span><span class="num">{{ p.signed_amount | money }}</span></li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+
+  <footer class="invoice__footer muted">
+    <p>{{ _("Prices in Tunisian dinars. Issued by %(name)s. This invoice can no longer be changed; later payments appear on the reservation.", name=invoice.issued_by_name or "—") }}</p>
+  </footer>
+</article>
+{% endblock %}

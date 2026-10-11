@@ -170,6 +170,23 @@ class Reservation:
         self.transition(ReservationStatus.CHECKED_IN)
         self.checked_in_at = now
 
+    def check_out(self, now: datetime, today: date) -> bool:
+        """The guest leaves. Returns True for an early departure.
+
+        Decision F: only the nights actually stayed are charged, so the nights
+        from today on are dropped (and released by the caller). A guest who
+        leaves on the arrival day still pays the first night.
+        """
+        self.ensure_can_become(ReservationStatus.CHECKED_OUT)
+        departure = max(today, self.period.arrival + timedelta(days=1))
+        early = departure < self.period.departure
+        if early:
+            self.period = StayPeriod(self.period.arrival, departure)
+            self.nights = [n for n in self.nights if n.night < departure]
+        self.transition(ReservationStatus.CHECKED_OUT)
+        self.checked_out_at = now
+        return early
+
 
 @dataclass(frozen=True, slots=True)
 class CancellationPolicy:

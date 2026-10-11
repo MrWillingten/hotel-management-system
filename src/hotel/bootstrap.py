@@ -25,6 +25,7 @@ from hotel.services.form_tokens import FormTokenService
 from hotel.services.front_desk import FrontDeskService
 from hotel.services.guests import GuestService
 from hotel.services.hotel_settings import HotelSettingsService
+from hotel.services.invoices import InvoiceService
 from hotel.services.passwords import PasswordHasher, ScryptParams
 from hotel.services.reservations import ReservationService
 from hotel.services.rooms import RoomService
@@ -55,6 +56,7 @@ class Services:
     extras: ExtrasService
     hotel_settings: HotelSettingsService
     billing: BillingService
+    invoices: InvoiceService
 
 
 def build_services(settings: Settings, *, clock: Clock | None = None) -> Services:
@@ -95,4 +97,5 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
         extras=ExtrasService(uow_factory, clock),
         hotel_settings=HotelSettingsService(uow_factory, clock),
         billing=BillingService(uow_factory, clock),
+        invoices=InvoiceService(uow_factory, clock),
     )

@@ -92,28 +92,40 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
 
 ### Done
 - Phases 1–5 (analysis, architecture, growth, security review, agile plan).
-- Sprints 1–3 → v0.1.0, v0.2.0, v0.3.0. Details: `CHANGELOG.md`.
+- Sprints 1–4 → v0.1.0 … v0.4.0. Details: `CHANGELOG.md`, `docs/roadmap.md`.
+- Sprint 4 map (to find things fast): front desk `services/front_desk.py`;
+  check-in/no-show in `services/reservations.py`; extras `domain|services/extras.py`
+  (named "extras" to avoid clashing with the service layer); settings
+  `domain/settings.py` + `services/hotel_settings.load_settings(uow)`; taxes
+  `domain/taxes.py`; bill `domain/billing.build_bill()` + `services/billing.bill_for(uow, r)`;
+  invoices `domain|services/invoices.py` (`issue_invoice` also used by cancel/no-show).
+  Migrations 0007–0010. Web: blueprints `billing`, `extras`, `hotel_settings`, `invoices`.
 
-### Next: Sprint 4 – Front desk and billing (23 Nov – 6 Dec)
-Stories in `docs/roadmap.md` (4.1–4.9): dashboard figures, check-in /
-no-show, service catalogue + charges, bill preview (night-by-night,
-discounts as Strategy classes, tax rules: percentage + per-adult-night,
-prices tax-exclusive, half-up per line), discounts (manager, capped 30 %),
-payments/refunds, check-out → immutable gap-free invoices + print CSS,
-settings & tax-rule screens, housekeeping status. Golden test from the
-brief §4.7 (3 × 150 + 80 services − 100 deposit).
-Then Sprint 5 (reports, charts, CSV, night audit, seasonal rates,
-anonymisation, translation review) and Sprint 6 (TOTP, Docker, JSON API,
-Windows exe, room moves, freeze, report, demo).
+### Next: Sprint 5 – Reports, operations, languages (7 – 20 Dec) → v0.9.0, code complete
+Stories to create (milestone "Sprint 5"): all §4.8 statistics (reservations,
+occupancy per day/period and per category, revenue by accommodation /
+services / taxes, cancellations and no-shows, outstanding balances,
+availability) with a 2-year range cap (threat W9) · SVG charts rendered
+server-side (no JS) · CSV export with formula-injection protection (I5) ·
+night audit (close the day: no-shows, overdue departures, totals) ·
+seasonal rates (only `ReservationService._rate_for` changes) · guest
+anonymisation (P-controls, keep invoices: they copy the name) · full
+French/Arabic review · seed v2 if needed. Then Sprint 6 (TOTP, Docker, JSON
+API, Windows exe, room moves, freeze 27 Dec, report, demo).
 
 ### Known open issues / limitations (not bugs yet fixed)
 - French and Arabic texts are drafts → native-speaker review before demo.
-- A cancelled reservation shows an accommodation total of 0 (its nights are
-  released); the fee is stored. Revisit when invoices exist (Sprint 4).
-- Shortening a stay within 48 h charges no fee (documented decision).
+- Shortening a stay within 48 h charges no fee; early departure charges no
+  fee either (decision F, documented).
+- Check-out is allowed with a balance due (shown under "Unpaid after
+  departure"); there are no credit notes: corrections after an invoice are
+  payments/refunds on the reservation.
+- Demo tax rates (VAT 7 %, 19 % on services, 3 DT/adult/night) are examples
+  to verify against Tunisian regulations.
 - Phone numbers are stored normalised and shown unformatted.
 - Daily automatic backup runs at start-up only; long-running servers need a
   scheduled `hotel backup` (documented in `docs/deployment.md`).
+- No JavaScript at all (CSP): printing is the browser's Ctrl+P.
 
 ### Bugs found and fixed (lessons)
 - `.gitignore` `backups/` hid `templates/backups/` → anchor root patterns.
@@ -121,3 +133,8 @@ Windows exe, room moves, freeze, report, demo).
   DB key contained it → test both kinds of blocked night.
 - Hidden grid labels widened RTL pages → `position: relative` on cells.
 - Leaked SQLite handle on corrupt files → close in `connect()` on error.
+- Jinja `_()` always %-formats: a literal `%` in a translatable string must be `%%`.
+- A nested Unit of Work inside another waits on its own write lock → pass
+  the open `uow` to helpers (`load_settings(uow)`, `bill_for(uow, r)`).
+- Blueprint module named `settings` was shadowed by `create_app(settings)` → `hotel_settings`.
+- Amounts/percentages render with a non-breaking space (`\u00a0`) → tests must use it.
