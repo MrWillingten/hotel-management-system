@@ -19,6 +19,7 @@
     </a>
     <nav class="nav" aria-label="{{ _('Main') }}">
       {{ nav_link("dashboard.index", _("Dashboard"), "home") }}
+      {{ nav_link("reservations.index", _("Reservations"), "calendar") }}
       {{ nav_link("guests.index", _("Guests"), "user") }}
       {{ nav_link("rooms.index", _("Rooms"), "bed") }}
       {%- if current_user and current_user.is_manager %}

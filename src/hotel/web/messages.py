@@ -77,6 +77,28 @@ MESSAGES = {
         "A guest with the same name and phone or e-mail already exists."
     ),
     "guest.reason_required": _l("Give a reason (at most 200 characters)."),
+    "reservation.arrival_in_past": _l("The arrival date can't be in the past."),
+    "reservation.too_long": _l("A stay lasts at most %(max)s nights."),
+    "reservation.too_far": _l("Bookings open at most two years ahead."),
+    "reservation.rooms_count": _l("Book between 1 and %(max)s rooms at once."),
+    "reservation.room_twice": _l("Each room can only be selected once."),
+    "reservation.occupants_invalid": _l("Each room needs at least one adult."),
+    "reservation.no_room_selected": _l("Select at least one room."),
+    "reservation.guest_do_not_rent": _l(
+        "This guest is marked do-not-rent: new reservations are refused."
+    ),
+    "reservation.room_out_of_service": _l("Room %(room)s is out of service."),
+    "reservation.capacity_exceeded": _l(
+        "Room %(room)s can sleep at most %(capacity)s guests (%(occupants)s requested)."
+    ),
+    "reservation.room_unavailable": _l(
+        "Room %(room)s is already booked or closed on %(count)s of these nights "
+        "(%(first)s to %(last)s)."
+    ),
+    "reservation.night_taken": _l(
+        "Another booking took one of these rooms a moment ago. Search again."
+    ),
+    "reservation.invalid_transition": _l("This isn't possible for a reservation in this state."),
     "field.not_a_number": _l("Enter a whole number."),
     "field.invalid_date": _l("Enter a valid date."),
     "money.invalid": _l("Enter an amount such as 180 or 180.500."),

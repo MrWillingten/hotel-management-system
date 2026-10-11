@@ -1,0 +1,65 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/reservations.html" import status_badge, stay -%}
+{% block title %}{{ reservation.code }}{% endblock %}
+{% block page_title %}{{ _("Reservation") }} <span dir="ltr">{{ reservation.code }}</span>{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <div class="badge-row">{{ status_badge(reservation.status) }}</div>
+  <div class="page-actions__buttons">
+    <a class="button button--ghost" href="{{ url_for('reservations.index') }}">{{ _("All reservations") }}</a>
+    {% block actions %}{% endblock %}
+  </div>
+</div>
+
+<div class="grid grid--two">
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Stay") }}</h2>
+    <dl class="facts">
+      <div><dt>{{ _("Guest") }}</dt><dd><a href="{{ url_for('guests.detail', guest_id=reservation.guest_id) }}">{{ reservation.guest_name }}</a></dd></div>
+      <div><dt>{{ _("Dates") }}</dt><dd>{{ stay(reservation.period) }}</dd></div>
+      <div><dt>{{ _("Booked on") }}</dt><dd>{{ reservation.created_at | datetimeformat("medium") }}</dd></div>
+      {%- if reservation.cancelled_at %}
+      <div><dt>{{ _("Cancelled on") }}</dt><dd>{{ reservation.cancelled_at | datetimeformat("medium") }}</dd></div>
+      <div><dt>{{ _("Cancellation fee") }}</dt><dd>{{ reservation.cancellation_fee | money }}</dd></div>
+      {%- endif %}
+    </dl>
+    {%- if reservation.notes %}<p class="notes">{{ reservation.notes }}</p>{% endif %}
+  </section>
+
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Rooms") }}</h2>
+    <ul class="pick-list">
+      {%- for room in reservation.rooms %}
+      <li><span><strong dir="ltr">{{ room.number }}</strong> · {{ room.category_name }}</span>
+        <span class="muted">{{ _("Adults: %(adults)s, children: %(children)s", adults=room.adults, children=room.children) }}</span></li>
+      {%- endfor %}
+    </ul>
+    {%- if reservation.status == "CONFIRMED" %}
+    <div class="alert alert--info">{{ icon("info") }}
+      <p>{{ _("Free cancellation until %(when)s. After that, cancelling costs 20%% of the accommodation.", when=free_until | datetimeformat("medium")) }}</p>
+    </div>
+    {%- endif %}
+  </section>
+</div>
+
+<section class="panel">
+  <h2 class="panel__title">{{ _("Nights and prices") }}</h2>
+  {%- if reservation.nights %}
+  <div class="table-wrap table-wrap--flat">
+    <table class="table">
+      <thead><tr><th scope="col">{{ _("Night of") }}</th><th scope="col">{{ _("Room") }}</th><th scope="col" class="num">{{ _("Price locked at booking") }}</th></tr></thead>
+      <tbody>
+        {%- set numbers = {} %}{% for r in reservation.rooms %}{% if numbers.update({r.room_id: r.number}) %}{% endif %}{% endfor %}
+        {%- for night in reservation.nights %}
+        <tr><td>{{ night.night | dateformat("full") }}</td><td dir="ltr">{{ numbers[night.room_id] }}</td><td class="num">{{ night.rate | money }}</td></tr>
+        {%- endfor %}
+      </tbody>
+      <tfoot><tr><th scope="row" colspan="2">{{ _("Accommodation total (before tax)") }}</th><td class="num"><strong>{{ reservation.accommodation_total | money }}</strong></td></tr></tfoot>
+    </table>
+  </div>
+  {%- else %}
+  <p class="muted">{{ _("The nights of this reservation were released when it was cancelled.") }}</p>
+  {%- endif %}
+</section>
+{% endblock %}

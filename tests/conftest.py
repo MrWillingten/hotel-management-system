@@ -9,6 +9,7 @@ checks as a real browser.
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from zoneinfo import ZoneInfo
 
@@ -77,3 +78,53 @@ def signed_in(client, manager):
     response = login(client)
     assert response.status_code == 302
     return client
+
+
+# ---------------------------------------------------------------- a small hotel
+@dataclass
+class SmallHotel:
+    """Deluxe 204 (2 guests, 180 DT), Deluxe 205 (2, 180), Standard 101 (2, 120),
+    Suite 401 (4, 320), a receptionist and two guests."""
+
+    boss: object
+    rita: object
+    rooms: dict
+    amira: object
+    karim: object
+
+
+@pytest.fixture
+def hotel(services, manager):
+    from hotel.domain.actor import Actor
+    from hotel.domain.enums import Role
+    from hotel.domain.guests import GuestDetails
+    from hotel.domain.money import Money
+
+    boss = Actor(manager)
+    rita_user = services.users.create_user(
+        boss,
+        username="rita",
+        full_name="Rita",
+        role=Role.RECEPTIONIST,
+        temporary_password=MANAGER_PASSWORD,
+    )
+    rooms = {}
+    for name, capacity, rate, numbers in (
+        ("Deluxe", 2, 180, ["204", "205"]),
+        ("Standard", 2, 120, ["101"]),
+        ("Suite", 4, 320, ["401"]),
+    ):
+        category = services.rooms.create_category(boss, name=name)
+        for number in numbers:
+            rooms[number] = services.rooms.create_room(
+                boss,
+                number=number,
+                category_id=category.id,
+                capacity=capacity,
+                nightly_rate=Money.from_dinars(rate),
+            )
+    amira = services.guests.register(
+        boss, GuestDetails("Amira", "Ben Salah", "CIN", "09123456", phone="+216 20 123 456")
+    )
+    karim = services.guests.register(boss, GuestDetails("Karim", "Haddad", "CIN", "11112222"))
+    return SmallHotel(boss, Actor(rita_user), rooms, amira, karim)

@@ -88,9 +88,9 @@ class RoomService:
         """Every room with what it is doing tonight."""
         require_staff(actor)
         with self._uow() as uow:
-            blocked = uow.maintenance.rooms_under_maintenance_on(self._clock.today())
+            states = uow.maintenance.states_on(self._clock.today())
             return [
-                RoomOverview(room, self._status(room, blocked))
+                RoomOverview(room, self._status(room, states))
                 for room in uow.rooms.list(category_id=category_id)
             ]
 
@@ -98,8 +98,8 @@ class RoomService:
         require_staff(actor)
         with self._uow() as uow:
             room = self._load(uow, room_id)
-            blocked = uow.maintenance.rooms_under_maintenance_on(self._clock.today())
-            return RoomOverview(room, self._status(room, blocked))
+            states = uow.maintenance.states_on(self._clock.today())
+            return RoomOverview(room, self._status(room, states))
 
     def create_room(
         self,
@@ -267,11 +267,16 @@ class RoomService:
 
     # ------------------------------------------------------------ helpers
     @staticmethod
-    def _status(room: Room, blocked: set[int]) -> RoomStatus:
+    def _status(room: Room, states: dict[int, str]) -> RoomStatus:
         if not room.in_service:
             return RoomStatus.OUT_OF_SERVICE
-        if room.id in blocked:
+        state = states.get(room.id)
+        if state == "MAINTENANCE":
             return RoomStatus.MAINTENANCE
+        if state == "CHECKED_IN":
+            return RoomStatus.OCCUPIED
+        if state == "CONFIRMED":
+            return RoomStatus.RESERVED
         return RoomStatus.AVAILABLE
 
     @staticmethod

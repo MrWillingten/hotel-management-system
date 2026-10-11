@@ -1,0 +1,122 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors, select, textarea -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/guests.html" import flags -%}
+{% block title %}{{ _("New reservation") }}{% endblock %}
+{% block page_title %}{{ _("New reservation") }}{% endblock %}
+{% block content %}
+{{ form_errors(errors) }}
+{%- if unavailable and unavailable.alternatives %}
+<div class="duplicates">
+  <p><strong>{{ _("Rooms free for the same dates:") }}</strong></p>
+  <ul>
+    {%- for room in unavailable.alternatives %}
+    <li><span dir="ltr">{{ room.number }}</span> · {{ room.category_name }} · {{ _("Capacity: %(count)s", count=room.capacity) }} · {{ room.nightly_rate | money }}</li>
+    {%- endfor %}
+  </ul>
+  <p class="muted">{{ _("Select one of them below.") }}</p>
+</div>
+{%- elif unavailable %}
+<div class="alert alert--warning"><p>{{ _("No other room is free for these dates.") }}</p></div>
+{%- endif %}
+
+<section class="panel">
+  <h2 class="panel__title"><span class="step">1</span>{{ _("Stay") }}</h2>
+  <form class="filters filters--flat" method="get" action="{{ url_for('reservations.new') }}">
+    {%- if guest %}<input type="hidden" name="guest_id" value="{{ guest.id }}">{% endif %}
+    {{ field("arrival", _("Arrival"), type="date", value=values.arrival, error=errors.arrival) }}
+    {{ field("departure", _("Departure"), type="date", value=values.departure, error=errors.departure) }}
+    {{ field("guests", _("Guests in one room"), type="number", value=values.guests) }}
+    {{ select("category", _("Category"), [("", _("All categories"))] + (categories | options), values.category) }}
+    <button class="button button--primary" type="submit">{{ icon("search") }}{{ _("Find rooms") }}</button>
+  </form>
+</section>
+
+<section class="panel">
+  <h2 class="panel__title"><span class="step">2</span>{{ _("Guest") }}</h2>
+  {%- if guest %}
+  <div class="chosen">
+    <div>
+      <a href="{{ url_for('guests.detail', guest_id=guest.id) }}"><strong>{{ guest.full_name }}</strong></a> {{ flags(guest) }}
+      <p class="muted" dir="ltr">{{ guest.id_doc_type }} {{ guest.masked_doc_number }} · {{ guest.phone or guest.email or "" }}</p>
+    </div>
+    <a class="button button--ghost button--small" href="{{ url_for('reservations.new', arrival=values.arrival, departure=values.departure, guests=values.guests, category=values.category) }}">{{ _("Change guest") }}</a>
+  </div>
+  {%- if guest.do_not_rent %}
+  <div class="alert alert--danger">{{ icon("ban") }}<p>{{ _("This guest is marked do-not-rent: the booking will be refused.") }}</p></div>
+  {%- endif %}
+  {%- else %}
+  <form class="search" method="get" action="{{ url_for('reservations.new') }}">
+    {%- for key in ("arrival", "departure", "guests", "category") %}<input type="hidden" name="{{ key }}" value="{{ values[key] }}">{% endfor %}
+    <span class="search__icon">{{ icon("search") }}</span>
+    <input class="field__input search__input" name="q" type="search" value="{{ values.q }}" maxlength="100"
+           aria-label="{{ _('Search guests') }}" placeholder="{{ _('Name, phone, e-mail or document number') }}">
+    <button class="button button--ghost" type="submit">{{ _("Search") }}</button>
+  </form>
+  {%- if matches %}
+  <ul class="pick-list">
+    {%- for g in matches %}
+    <li>
+      <span>{{ g.full_name }} {{ flags(g) }} <span class="muted" dir="ltr">{{ g.id_doc_type }} {{ g.masked_doc_number }}</span></span>
+      <a class="button button--ghost button--small" href="{{ url_for('reservations.new', guest_id=g.id, arrival=values.arrival, departure=values.departure, guests=values.guests, category=values.category) }}">{{ _("Choose") }}</a>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- elif values.q %}<p class="muted">{{ _("No guest matches “%(query)s”.", query=values.q) }}</p>{% endif %}
+  <p><a href="{{ url_for('guests.create', next=request.full_path) }}">{{ icon("plus") }}{{ _("Register a new guest") }}</a></p>
+  {%- endif %}
+</section>
+
+<section class="panel">
+  <h2 class="panel__title"><span class="step">3</span>{{ _("Rooms") }}</h2>
+  {%- if rooms is none %}
+  <p class="muted">{{ _("Choose the dates first.") }}</p>
+  {%- elif not rooms %}
+  <p class="muted">{{ _("No room is free for every night of this stay.") }}</p>
+  {%- else %}
+  <form method="post" action="{{ url_for('reservations.review') }}" novalidate>
+    {{ csrf() }}
+    <input type="hidden" name="guest_id" value="{{ guest.id if guest else '' }}">
+    <input type="hidden" name="arrival" value="{{ period.arrival }}">
+    <input type="hidden" name="departure" value="{{ period.departure }}">
+    <div class="table-wrap table-wrap--flat">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">{{ _("Book") }}</th>
+            <th scope="col">{{ _("Room") }}</th>
+            <th scope="col">{{ _("Category") }}</th>
+            <th scope="col" class="num">{{ _("Capacity") }}</th>
+            <th scope="col" class="num">{{ _("Nightly rate") }}</th>
+            <th scope="col">{{ _("Adults") }}</th>
+            <th scope="col">{{ _("Children") }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- set wanted = values.guests | int if values.guests | int > 0 else 1 %}
+          {%- for room in rooms %}
+          <tr>
+            <td><input type="checkbox" name="room" value="{{ room.id }}" aria-label="{{ _('Book room %(number)s', number=room.number) }}"
+                       {%- if values.room == room.id | string %} checked{% endif %}></td>
+            <td dir="ltr"><strong>{{ room.number }}</strong></td>
+            <td>{{ room.category_name }}</td>
+            <td class="num">{{ room.capacity }}</td>
+            <td class="num">{{ room.nightly_rate | money }}</td>
+            <td><input class="field__input field__input--tiny" type="number" min="1" max="{{ room.capacity }}" name="adults_{{ room.id }}"
+                       value="{{ [wanted, room.capacity] | min }}" aria-label="{{ _('Adults') }}"></td>
+            <td><input class="field__input field__input--tiny" type="number" min="0" max="{{ room.capacity }}" name="children_{{ room.id }}"
+                       value="0" aria-label="{{ _('Children') }}"></td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+    {{ textarea("notes", _("Notes"), maxlength=500, hint=_("Arrival time, special requests...")) }}
+    <div class="form-actions">
+      <button class="button button--primary" type="submit" {%- if not guest %} disabled{% endif %}>{{ _("Review the booking") }}</button>
+      {%- if not guest %}<span class="muted">{{ _("Choose a guest first.") }}</span>{% endif %}
+    </div>
+  </form>
+  {%- endif %}
+</section>
+{% endblock %}
