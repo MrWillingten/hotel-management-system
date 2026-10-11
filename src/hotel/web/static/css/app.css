@@ -505,6 +505,8 @@ img, svg { display: block; }
   transition: transform var(--dur-base) var(--ease);
 }
 .card--interactive:hover .card__icon { transform: scale(1.08); }
+.card--link { color: inherit; text-decoration: none; }
+.card--link:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 .card__title { font-size: var(--text-base); font-weight: 600; }
 .card__value { font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 600; }
 .panel__title { font-family: var(--font-serif); font-size: var(--text-xl); margin-block-end: var(--space-2); }
@@ -524,31 +526,6 @@ img, svg { display: block; }
 .welcome__eyebrow { color: var(--accent); font-size: var(--text-sm); font-weight: 600; margin-block-end: var(--space-1); }
 .welcome__title { font-family: var(--font-serif); font-size: var(--text-2xl); margin-block-end: var(--space-1); }
 
-.roadmap { list-style: none; margin: 0; padding: 0; }
-.roadmap__item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-2);
-  border-block-end: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  transition: background-color var(--dur-fast) var(--ease);
-}
-.roadmap__item:last-child { border-block-end: 0; }
-.roadmap__item:hover { background: var(--surface-sunken); }
-.roadmap__number {
-  display: grid;
-  place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: var(--radius-pill);
-  background: var(--surface-sunken);
-  font-size: var(--text-sm);
-  font-weight: 600;
-}
-.roadmap__item--done .roadmap__number { background: var(--success-soft); color: var(--success-text); }
-.roadmap__item--next .roadmap__number { background: var(--accent-soft); color: var(--accent-soft-text); }
-.roadmap__label { flex: 1; }
 
 /* Badges */
 .badge {
@@ -834,3 +811,7 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 .cell--out_of_service { background: repeating-linear-gradient(45deg, var(--surface-sunken) 0 6px, var(--border) 6px 8px); }
 .cell-swatch.cell--free { background: var(--surface); }
 .topbar__title [dir="ltr"] { white-space: nowrap; }
+
+/* Dashboard (Sprint 4) */
+.grid--stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr)); }
+.dashboard-footer { font-size: var(--text-sm); text-align: center; }

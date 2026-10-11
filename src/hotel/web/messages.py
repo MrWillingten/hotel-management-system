@@ -114,6 +114,16 @@ MESSAGES = {
         "The arrival time has passed: record a no-show instead of a cancellation."
     ),
     "reservation.invalid_transition": _l("This isn't possible for a reservation in this state."),
+    "reservation.check_in_too_early": _l("Check-in opens on the arrival day (%(arrival)s)."),
+    "reservation.check_in_too_late": _l(
+        "The stay is already over: this reservation can no longer be checked in."
+    ),
+    "reservation.room_still_occupied": _l(
+        "Room %(room)s is still occupied (%(code)s). Check that guest out first."
+    ),
+    "reservation.no_show_too_early": _l(
+        "A no-show can only be recorded after the check-in time on %(arrival)s."
+    ),
     "field.not_a_number": _l("Enter a whole number."),
     "field.invalid_date": _l("Enter a valid date."),
     "money.invalid": _l("Enter an amount such as 180 or 180.500."),

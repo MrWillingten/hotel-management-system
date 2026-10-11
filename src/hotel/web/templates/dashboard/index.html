@@ -1,53 +1,113 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/icons.html" import icon -%}
+{%- from "macros/forms.html" import csrf -%}
+{%- from "macros/reservations.html" import status_badge -%}
+{%- from "macros/rooms.html" import housekeeping_button -%}
 {% block title %}{{ _("Dashboard") }}{% endblock %}
 {% block page_title %}{{ _("Dashboard") }}{% endblock %}
 {% block content %}
 <section class="welcome">
   <div>
-    <p class="welcome__eyebrow">{{ now | dateformat("full") }}</p>
+    <p class="welcome__eyebrow">{{ now | dateformat("full") }} · <span dir="ltr">{{ now | timeformat("short") }}</span></p>
     <h2 class="welcome__title">{{ _("%(greeting)s, %(name)s", greeting=greeting, name=current_user.full_name) }}</h2>
-    <p class="muted">{{ _("The front desk figures will appear here once reservations are available.") }}</p>
   </div>
-  <span class="badge badge--accent">{{ _("Manager") if current_user.is_manager else _("Receptionist") }}</span>
+  <a class="button button--primary" href="{{ url_for('reservations.new') }}">{{ icon("plus") }}{{ _("New reservation") }}</a>
 </section>
 
-<div class="grid grid--cards">
+<div class="grid grid--cards grid--stats">
+  <a class="card card--interactive card--link" href="#arrivals">
+    <div class="card__icon">{{ icon("calendar") }}</div>
+    <h3 class="card__title">{{ _("Arrivals") }}</h3>
+    <p class="card__value">{{ day.arrivals | length }}</p>
+  </a>
+  <a class="card card--interactive card--link" href="#departures">
+    <div class="card__icon">{{ icon("logout") }}</div>
+    <h3 class="card__title">{{ _("Departures") }}</h3>
+    <p class="card__value">{{ day.departures | length }}</p>
+  </a>
   <article class="card card--interactive">
-    <div class="card__icon">{{ icon("clock") }}</div>
-    <h3 class="card__title">{{ _("Hotel time") }}</h3>
-    <p class="card__value">{{ now | timeformat("short") }}</p>
-    <p class="muted">{{ _("Time zone: %(tz)s", tz=config["BABEL_DEFAULT_TIMEZONE"]) }}</p>
+    <div class="card__icon">{{ icon("users") }}</div>
+    <h3 class="card__title">{{ _("Guests in the house") }}</h3>
+    <p class="card__value">{{ day.guests_in_house }}</p>
+    <p class="muted">{{ _("Reservations: %(count)s", count=day.in_house | length) }}</p>
   </article>
-
   <article class="card card--interactive">
-    <div class="card__icon">{{ icon("database") }}</div>
-    <h3 class="card__title">{{ _("System") }}</h3>
-    <dl class="facts">
-      <div><dt>{{ _("Version") }}</dt><dd dir="ltr">{{ app_version }}</dd></div>
-      <div><dt>{{ _("Database schema") }}</dt><dd dir="ltr">{{ schema_version }}</dd></div>
-    </dl>
+    <div class="card__icon">{{ icon("bed") }}</div>
+    <h3 class="card__title">{{ _("Occupancy tonight") }}</h3>
+    <p class="card__value" dir="ltr">{{ "%.1f" | format(day.occupancy.basis_points / 100) }} %</p>
+    <p class="muted">{{ _("%(sold)s of %(sellable)s rooms", sold=day.occupancy.sold, sellable=day.occupancy.sellable) }}</p>
   </article>
-
-  <article class="card card--interactive">
-    <div class="card__icon">{{ icon("shield") }}</div>
-    <h3 class="card__title">{{ _("Your session") }}</h3>
-    <p class="muted">{{ _("You'll be signed out after %(minutes)s minutes without activity.", minutes=idle_minutes) }}</p>
-  </article>
+  <a class="card card--interactive card--link" href="#housekeeping">
+    <div class="card__icon">{{ icon("star") }}</div>
+    <h3 class="card__title">{{ _("Rooms to clean") }}</h3>
+    <p class="card__value">{{ day.to_clean | length }}</p>
+  </a>
 </div>
 
-<section class="panel">
-  <h2 class="panel__title">{{ _("Project roadmap") }}</h2>
-  <ol class="roadmap">
-    {%- for number, label, status in roadmap %}
-    <li class="roadmap__item roadmap__item--{{ status }}">
-      <span class="roadmap__number" dir="ltr">{{ number }}</span>
-      <span class="roadmap__label">{{ label }}</span>
-      <span class="badge badge--{{ {'done': 'success', 'next': 'accent', 'planned': 'neutral'}[status] }}">
-        {{- {"done": _("Done"), "next": _("Next"), "planned": _("Planned")}[status] -}}
-      </span>
+<div class="grid grid--two">
+  <section class="panel" id="arrivals">
+    <h2 class="panel__title">{{ _("Arrivals") }}</h2>
+    {%- if day.arrivals %}
+    <ul class="pick-list">
+      {%- for r in day.arrivals %}
+      <li>
+        <span>
+          <a href="{{ url_for('reservations.detail', reservation_id=r.id) }}"><strong>{{ r.guest_name }}</strong></a>
+          <span class="muted" dir="ltr">· {{ r.code }} · {{ r.rooms | map(attribute="number") | join(", ") }}</span>
+          {%- if r.period.arrival < day.today %} <span class="badge badge--warning">{{ _("Late") }}</span>{% endif %}
+        </span>
+        <form method="post" action="{{ url_for('reservations.check_in', reservation_id=r.id) }}">
+          {{ csrf() }}
+          <input type="hidden" name="version" value="{{ r.version }}">
+          <input type="hidden" name="next" value="{{ url_for('dashboard.index') }}">
+          <button class="button button--ghost button--small" type="submit">{{ _("Check in") }}</button>
+        </form>
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- else %}
+    <p class="muted">{{ _("No more arrivals expected today.") }}</p>
+    {%- endif %}
+  </section>
+
+  <section class="panel" id="departures">
+    <h2 class="panel__title">{{ _("Departures") }}</h2>
+    {%- if day.departures %}
+    <ul class="pick-list">
+      {%- for r in day.departures %}
+      <li>
+        <span>
+          <a href="{{ url_for('reservations.detail', reservation_id=r.id) }}"><strong>{{ r.guest_name }}</strong></a>
+          <span class="muted" dir="ltr">· {{ r.code }} · {{ r.rooms | map(attribute="number") | join(", ") }}</span>
+          {%- if r.period.departure < day.today %} <span class="badge badge--danger">{{ _("Overdue") }}</span>{% endif %}
+        </span>
+        {{ status_badge(r.status) }}
+      </li>
+      {%- endfor %}
+    </ul>
+    {%- else %}
+    <p class="muted">{{ _("No departures left today.") }}</p>
+    {%- endif %}
+  </section>
+</div>
+
+<section class="panel" id="housekeeping">
+  <h2 class="panel__title">{{ _("Housekeeping") }}</h2>
+  {%- if day.to_clean %}
+  <ul class="pick-list">
+    {%- for room in day.to_clean %}
+    <li>
+      <span><a href="{{ url_for('rooms.detail', room_id=room.id) }}"><strong dir="ltr">{{ room.number }}</strong></a> · {{ room.category_name }}</span>
+      {{ housekeeping_button(room, next=url_for('dashboard.index')) }}
     </li>
     {%- endfor %}
-  </ol>
+  </ul>
+  {%- else %}
+  <p class="muted">{{ _("Every room is clean.") }}</p>
+  {%- endif %}
 </section>
+
+<p class="muted dashboard-footer">
+  {{ _("Version %(version)s · database schema %(schema)s · time zone %(tz)s", version=app_version, schema=schema_version, tz=config["BABEL_DEFAULT_TIMEZONE"]) }}
+</p>
 {% endblock %}

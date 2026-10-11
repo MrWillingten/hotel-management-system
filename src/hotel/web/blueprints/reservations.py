@@ -17,7 +17,7 @@ from hotel.web import forms
 from hotel.web.context import current_actor, services
 from hotel.web.formatting import money
 from hotel.web.messages import message_for
-from hotel.web.security import login_required
+from hotel.web.security import is_safe_redirect_target, login_required
 
 bp = Blueprint("reservations", __name__, url_prefix="/reservations")
 
@@ -192,11 +192,67 @@ def create():
 @bp.get("/<int:reservation_id>")
 @login_required
 def detail(reservation_id: int):
-    reservation = services().reservations.get(current_actor(), reservation_id)
+    actor = current_actor()
+    reservation = services().reservations.get(actor, reservation_id)
+    rooms = {o.room.id: o.room for o in services().rooms.list_rooms(actor)}
     return render_template(
         "reservations/detail.html",
         reservation=reservation,
         free_until=services().reservations.free_cancellation_until(reservation.period),
+        to_clean=[r.number for r in reservation.rooms if rooms[r.room_id].housekeeping == "DIRTY"],
+        today=services().clock.today(),
+        arrival_passed=services().reservations.arrival_has_passed(reservation.period),
+    )
+
+
+def _back_to(reservation_id: int):
+    """Return to the page the action came from (dashboard or detail), never off-site."""
+    target = request.form.get("next")
+    if is_safe_redirect_target(target):
+        return redirect(target)
+    return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+
+
+# ---------------------------------------------------------------- front desk
+@bp.post("/<int:reservation_id>/check-in")
+@login_required
+def check_in(reservation_id: int):
+    try:
+        checked_in = services().reservations.check_in(
+            current_actor(), reservation_id, version=forms.integer(request.form, "version")
+        )
+    except HotelError as exc:
+        flash(message_for(exc.code, exc.params), "danger")
+    else:
+        flash(_("%(name)s is checked in.", name=checked_in.guest_name), "success")
+    return _back_to(reservation_id)
+
+
+@bp.route("/<int:reservation_id>/no-show", methods=["GET", "POST"])
+@login_required
+def no_show(reservation_id: int):
+    actor = current_actor()
+    reservations = services().reservations
+    if request.method == "POST":
+        try:
+            recorded = reservations.record_no_show(
+                actor, reservation_id, version=forms.integer(request.form, "version")
+            )
+        except HotelError as exc:
+            flash(message_for(exc.code, exc.params), "danger")
+        else:
+            flash(
+                _("No-show recorded. Fee: %(fee)s.", fee=money(recorded.cancellation_fee)),
+                "success",
+            )
+        return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+    reservation = reservations.get(actor, reservation_id)
+    try:
+        fee, problem = reservations.no_show_fee(actor, reservation_id), None
+    except HotelError as exc:
+        fee, problem = None, message_for(exc.code, exc.params)
+    return render_template(
+        "reservations/no_show.html", reservation=reservation, fee=fee, problem=problem
     )
 
 

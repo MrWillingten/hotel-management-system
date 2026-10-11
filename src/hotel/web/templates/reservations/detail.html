@@ -1,5 +1,6 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/icons.html" import icon -%}
+{%- from "macros/forms.html" import csrf -%}
 {%- from "macros/reservations.html" import status_badge, stay -%}
 {% block title %}{{ reservation.code }}{% endblock %}
 {% block page_title %}{{ _("Reservation") }} <span dir="ltr">{{ reservation.code }}</span>{% endblock %}
@@ -8,14 +9,29 @@
   <div class="badge-row">{{ status_badge(reservation.status) }}</div>
   <div class="page-actions__buttons">
     <a class="button button--ghost" href="{{ url_for('reservations.index') }}">{{ _("All reservations") }}</a>
+    {%- if reservation.status == "CONFIRMED" and reservation.period.arrival <= today < reservation.period.departure %}
+    <form method="post" action="{{ url_for('reservations.check_in', reservation_id=reservation.id) }}">
+      {{ csrf() }}
+      <input type="hidden" name="version" value="{{ reservation.version }}">
+      <button class="button button--primary" type="submit">{{ icon("check") }}{{ _("Check in") }}</button>
+    </form>
+    {%- endif %}
+    {%- if reservation.status == "CONFIRMED" and arrival_passed %}
+    <a class="button button--ghost" href="{{ url_for('reservations.no_show', reservation_id=reservation.id) }}">{{ _("Record a no-show") }}</a>
+    {%- endif %}
     {%- if reservation.status in ("CONFIRMED", "CHECKED_IN") %}
     <a class="button button--primary" href="{{ url_for('reservations.edit', reservation_id=reservation.id) }}">{{ _("Change") }}</a>
     {%- endif %}
-    {%- if reservation.status == "CONFIRMED" %}
+    {%- if reservation.status == "CONFIRMED" and not arrival_passed %}
     <a class="button button--ghost" href="{{ url_for('reservations.cancel', reservation_id=reservation.id) }}">{{ _("Cancel reservation") }}</a>
     {%- endif %}
   </div>
 </div>
+{%- if reservation.status == "CONFIRMED" and to_clean %}
+<div class="alert alert--warning">{{ icon("alert") }}
+  <p>{{ _("Not cleaned yet: room %(rooms)s. Check with housekeeping before handing over the key.", rooms=to_clean | join(", ")) }}</p>
+</div>
+{%- endif %}
 
 <div class="grid grid--two">
   <section class="panel">
@@ -24,6 +40,13 @@
       <div><dt>{{ _("Guest") }}</dt><dd><a href="{{ url_for('guests.detail', guest_id=reservation.guest_id) }}">{{ reservation.guest_name }}</a></dd></div>
       <div><dt>{{ _("Dates") }}</dt><dd>{{ stay(reservation.period) }}</dd></div>
       <div><dt>{{ _("Booked on") }}</dt><dd>{{ reservation.created_at | datetimeformat("medium") }}</dd></div>
+      {%- if reservation.checked_in_at %}
+      <div><dt>{{ _("Checked in") }}</dt><dd>{{ reservation.checked_in_at | datetimeformat("medium") }}</dd></div>
+      {%- endif %}
+      {%- if reservation.no_show_at %}
+      <div><dt>{{ _("No-show recorded") }}</dt><dd>{{ reservation.no_show_at | datetimeformat("medium") }}</dd></div>
+      <div><dt>{{ _("No-show fee") }}</dt><dd>{{ reservation.cancellation_fee | money }}</dd></div>
+      {%- endif %}
       {%- if reservation.cancelled_at %}
       <div><dt>{{ _("Cancelled on") }}</dt><dd>{{ reservation.cancelled_at | datetimeformat("medium") }}</dd></div>
       <div><dt>{{ _("Cancellation fee") }}</dt><dd>{{ reservation.cancellation_fee | money }}</dd></div>
@@ -64,7 +87,7 @@
     </table>
   </div>
   {%- else %}
-  <p class="muted">{{ _("The nights of this reservation were released when it was cancelled.") }}</p>
+  <p class="muted">{{ _("The nights of this reservation were released when it was cancelled or marked as a no-show.") }}</p>
   {%- endif %}
 </section>
 {% endblock %}

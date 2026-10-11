@@ -7,10 +7,11 @@ from flask_babel import gettext as _
 
 from hotel.domain.enums import Role
 from hotel.domain.errors import HotelError
+from hotel.domain.rooms import Housekeeping
 from hotel.web import forms
 from hotel.web.context import current_actor, services
 from hotel.web.messages import message_for
-from hotel.web.security import login_required, roles_required
+from hotel.web.security import is_safe_redirect_target, login_required, roles_required
 
 bp = Blueprint("rooms", __name__, url_prefix="/rooms")
 
@@ -100,6 +101,25 @@ def detail(room_id: int):
         errors=forms.FormErrors(),
         values={},
     )
+
+
+@bp.post("/<int:room_id>/housekeeping")
+@login_required
+def housekeeping(room_id: int):
+    """Story 4.9: mark a room clean, or to be cleaned."""
+    try:
+        state = Housekeeping(request.form.get("state", ""))
+    except ValueError:
+        state = Housekeeping.CLEAN
+    room = services().rooms.set_housekeeping(current_actor(), room_id, state)
+    if state is Housekeeping.CLEAN:
+        flash(_("Room %(number)s is ready for the next guest.", number=room.number), "success")
+    else:
+        flash(_("Room %(number)s is marked to be cleaned.", number=room.number), "success")
+    target = request.form.get("next")
+    if is_safe_redirect_target(target):
+        return redirect(target)
+    return redirect(url_for("rooms.detail", room_id=room_id))
 
 
 @bp.post("/<int:room_id>/maintenance")

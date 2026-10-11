@@ -121,3 +121,40 @@ def test_grace_period():
     assert graceful.fee_for(reservation, booked + timedelta(minutes=20), TUNIS).is_zero()
     assert not graceful.fee_for(reservation, booked + timedelta(minutes=40), TUNIS).is_zero()
     assert not POLICY.fee_for(reservation, booked, TUNIS).is_zero()  # default: no grace
+
+
+# ---------------------------------------------------------------- check-in and no-show
+NOW = datetime(2026, 7, 10, 9, 0, tzinfo=UTC)
+
+
+def test_check_in_on_the_arrival_day_or_later_during_the_stay():
+    for day in (date(2026, 7, 10), date(2026, 7, 12)):  # on time, or two days late
+        r = _reservation()
+        r.check_in(NOW, day)
+        assert r.status is ReservationStatus.CHECKED_IN
+        assert r.checked_in_at == NOW
+
+
+def test_check_in_before_arrival_or_after_the_stay_is_refused():
+    r = _reservation()
+    with pytest.raises(BusinessRuleViolation, match="check_in_too_early"):
+        r.check_in(NOW, date(2026, 7, 9))
+    with pytest.raises(BusinessRuleViolation, match="check_in_too_late"):
+        r.check_in(NOW, date(2026, 7, 13))  # the departure day
+    assert r.status is ReservationStatus.CONFIRMED
+
+
+def test_check_in_only_from_confirmed():
+    r = _reservation()
+    r.check_in(NOW, date(2026, 7, 10))
+    with pytest.raises(InvalidStateTransitionError):
+        r.check_in(NOW, date(2026, 7, 10))
+
+
+def test_no_show_is_charged_like_a_late_cancellation_after_the_arrival_time():
+    policy = CancellationPolicy()
+    r = _reservation(nights=3, rate=150_000)
+    arrival = datetime(2026, 7, 10, 13, 0, tzinfo=UTC)  # 14:00 in Tunis
+    with pytest.raises(BusinessRuleViolation, match="no_show_too_early"):
+        policy.no_show_fee(r, arrival - timedelta(seconds=1), TUNIS)
+    assert policy.no_show_fee(r, arrival, TUNIS) == Money.from_dinars(90)  # 20 % of 450

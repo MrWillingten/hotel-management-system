@@ -1,25 +1,14 @@
-"""The first screen after signing in."""
+"""The first screen after signing in: the front desk's day (story 4.1)."""
 
 from __future__ import annotations
 
 from flask import Blueprint, render_template
 from flask_babel import lazy_gettext as _l
 
-from hotel import __version__
-from hotel.web.context import services
+from hotel.web.context import current_actor, services
 from hotel.web.security import login_required
 
 bp = Blueprint("dashboard", __name__)
-
-# Shown on the dashboard until the real front-desk figures arrive in Sprint 4.
-ROADMAP = (
-    (1, _l("Foundations: sign-in, themes, languages"), "done"),
-    (2, _l("Rooms, guests, staff and audit log"), "done"),
-    (3, _l("Reservations and availability"), "done"),
-    (4, _l("Front desk and billing"), "next"),
-    (5, _l("Reports, operations and translations"), "planned"),
-    (6, _l("Hardening, report and demo"), "planned"),
-)
 
 
 def _greeting(hour: int) -> str:
@@ -39,8 +28,6 @@ def index():
         "dashboard/index.html",
         greeting=_greeting(now.hour),
         now=now,
-        roadmap=ROADMAP,
-        app_version=__version__,
+        day=svc.front_desk.day(current_actor()),
         schema_version=svc.schema_version,
-        idle_minutes=svc.auth.session_idle_minutes,
     )

@@ -21,7 +21,7 @@ from hotel.persistence.repositories.base import BaseRepository, escape_like
 _SELECT = (
     "SELECT r.id, r.code, r.guest_id, r.arrival, r.departure, r.status, r.cancellation_fee_mill, "
     "r.notes, r.created_by, r.created_at, r.cancelled_at, r.checked_in_at, r.checked_out_at, "
-    "r.version, g.first_name || ' ' || g.last_name AS guest_name "
+    "r.no_show_at, r.version, g.first_name || ' ' || g.last_name AS guest_name "
     "FROM reservation r JOIN guest g ON g.id = r.guest_id"
 )
 
@@ -45,6 +45,14 @@ _FUTURE_FOR_ROOM = (
     "SELECT reservation_id FROM room_night WHERE room_id = ? AND night >= ? "
     "AND reservation_id IS NOT NULL) ORDER BY r.arrival"
 )
+
+# Front-desk lists: fixed WHERE and ORDER BY fragments, never user input.
+_LISTED = "{select} WHERE {where} ORDER BY {order}"
+_WHERE_ARRIVING = "r.status = 'CONFIRMED' AND r.arrival <= ? AND r.departure > ?"
+_WHERE_LEAVING = "r.status = 'CHECKED_IN' AND r.departure <= ?"
+_WHERE_IN_HOUSE = "r.status = 'CHECKED_IN'"
+_BY_ARRIVAL = "r.arrival, r.code"
+_BY_DEPARTURE = "r.departure, r.code"
 
 
 @dataclass(frozen=True, slots=True)
@@ -84,6 +92,7 @@ def _to_reservation(row: sqlite3.Row) -> Reservation:
         cancelled_at=datetime_from_db(row["cancelled_at"]),
         checked_in_at=datetime_from_db(row["checked_in_at"]),
         checked_out_at=datetime_from_db(row["checked_out_at"]),
+        no_show_at=datetime_from_db(row["no_show_at"]),
         version=row["version"],
         guest_name=row["guest_name"],
     )
@@ -196,6 +205,31 @@ class ReservationRepository(BaseRepository):
             for row in rows
         ]
 
+    def _listed(self, where: str, params: tuple, order: str) -> list[Reservation]:
+        rows = self._fetch_all(_LISTED.format(select=_SELECT, where=where, order=order), params)
+        reservations = [_to_reservation(r) for r in rows]
+        self._load_details(reservations)
+        return reservations
+
+    def arrivals(self, day: date) -> list[Reservation]:
+        """Confirmed stays that should have started by `day` and are not over yet."""
+        return self._listed(_WHERE_ARRIVING, (date_to_db(day), date_to_db(day)), _BY_ARRIVAL)
+
+    def departures(self, day: date) -> list[Reservation]:
+        """Guests in the house who are due to leave on `day` (or should have left)."""
+        return self._listed(_WHERE_LEAVING, (date_to_db(day),), _BY_DEPARTURE)
+
+    def in_house(self) -> list[Reservation]:
+        return self._listed(_WHERE_IN_HOUSE, (), _BY_DEPARTURE)
+
+    def in_house_rooms(self) -> dict[int, str]:
+        """room_id -> code of the checked-in reservation using it, even on its departure day."""
+        rows = self._fetch_all(
+            "SELECT rr.room_id, r.code FROM reservation_room rr "
+            "JOIN reservation r ON r.id = rr.reservation_id WHERE r.status = 'CHECKED_IN'"
+        )
+        return {row["room_id"]: row["code"] for row in rows}
+
     def future_bookings_for_room(self, room_id: int, today: date) -> list[Reservation]:
         """Active reservations that still have nights in this room from today on."""
         sql = _FUTURE_FOR_ROOM.format(select=_SELECT)
@@ -260,7 +294,8 @@ class ReservationRepository(BaseRepository):
         cursor = self._execute(
             "UPDATE reservation SET arrival = ?, departure = ?, status = ?, "
             "cancellation_fee_mill = ?, notes = ?, cancelled_at = ?, checked_in_at = ?, "
-            "checked_out_at = ?, version = version + 1 WHERE id = ? AND version = ?",
+            "checked_out_at = ?, no_show_at = ?, version = version + 1 "
+            "WHERE id = ? AND version = ?",
             (
                 date_to_db(reservation.period.arrival),
                 date_to_db(reservation.period.departure),
@@ -270,6 +305,7 @@ class ReservationRepository(BaseRepository):
                 datetime_to_db(reservation.cancelled_at),
                 datetime_to_db(reservation.checked_in_at),
                 datetime_to_db(reservation.checked_out_at),
+                datetime_to_db(reservation.no_show_at),
                 reservation.id,
                 reservation.version,
             ),
