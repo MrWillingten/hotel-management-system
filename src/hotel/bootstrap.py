@@ -31,6 +31,7 @@ from hotel.services.passwords import PasswordHasher, ScryptParams
 from hotel.services.reports import ReportService
 from hotel.services.reservations import ReservationService
 from hotel.services.rooms import RoomService
+from hotel.services.two_factor import TwoFactorService
 from hotel.services.users import UserService
 
 
@@ -61,6 +62,7 @@ class Services:
     invoices: InvoiceService
     reports: ReportService
     night_audit: NightAuditService
+    two_factor: TwoFactorService
 
 
 def build_services(settings: Settings, *, clock: Clock | None = None) -> Services:
@@ -106,4 +108,5 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
         invoices=InvoiceService(uow_factory, clock),
         reports=reports,
         night_audit=NightAuditService(uow_factory, clock, reservations, reports),
+        two_factor=TwoFactorService(uow_factory, clock),
     )

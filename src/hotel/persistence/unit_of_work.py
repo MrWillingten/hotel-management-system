@@ -37,7 +37,11 @@ from hotel.persistence.repositories.rooms import (
 from hotel.persistence.repositories.sessions import SessionRepository
 from hotel.persistence.repositories.settings import SettingRepository
 from hotel.persistence.repositories.taxes import TaxRuleRepository
-from hotel.persistence.repositories.users import UserRepository
+from hotel.persistence.repositories.users import (
+    LoginChallengeRepository,
+    RecoveryCodeRepository,
+    UserRepository,
+)
 
 
 class UnitOfWork:
@@ -62,6 +66,8 @@ class UnitOfWork:
     reports: ReportRepository
     snapshots: SnapshotRepository
     rate_periods: RatePeriodRepository
+    recovery_codes: RecoveryCodeRepository
+    login_challenges: LoginChallengeRepository
 
     def __init__(self, database_path: Path) -> None:
         self._database_path = database_path
@@ -93,6 +99,8 @@ class UnitOfWork:
         self.reports = ReportRepository(self._conn)
         self.snapshots = SnapshotRepository(self._conn)
         self.rate_periods = RatePeriodRepository(self._conn)
+        self.recovery_codes = RecoveryCodeRepository(self._conn)
+        self.login_challenges = LoginChallengeRepository(self._conn)
         return self
 
     def __exit__(

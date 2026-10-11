@@ -73,6 +73,29 @@ def login(client, username: str = "mona", password: str = MANAGER_PASSWORD, **ex
     )
 
 
+def enrol_two_factor(services, user) -> str:
+    """Switch the second factor on for a user, as their phone would; returns the secret."""
+    from hotel.domain.actor import Actor
+    from hotel.domain.totp import totp
+
+    actor = Actor(user)
+    secret = services.two_factor.begin(actor, issuer="Hotel").secret
+    services.two_factor.confirm(actor, totp(secret, services.clock.now()))
+    return secret
+
+
+def login_with_code(client, secret: str, now, username: str = "mona"):
+    """Password, then the current code (the clock must have moved past the last used one)."""
+    from hotel.domain.totp import totp
+
+    response = login(client, username)
+    assert response.headers["Location"] == "/login/code"
+    return client.post(
+        "/login/code",
+        data={"code": totp(secret, now), "csrf_token": csrf_token(client, "/login/code")},
+    )
+
+
 @pytest.fixture
 def signed_in(client, manager):
     response = login(client)

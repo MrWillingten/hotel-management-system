@@ -15,6 +15,7 @@ dependencies = [
     "Flask-Babel>=4.0,<5",    # interface translations (en, fr, ar)
     "waitress>=3.0,<4",       # production WSGI server that runs on Windows and Linux
     "tzdata>=2024.1",         # time-zone database (Windows ships none)
+    "segno>=1.6,<2",          # QR codes for two-factor enrolment (pure Python, no dependencies)
 ]
 
 [project.optional-dependencies]

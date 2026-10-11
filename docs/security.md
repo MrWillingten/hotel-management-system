@@ -18,7 +18,9 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | A8 | 🟡 | Last manager deactivated or demoted; manager deactivating self | Refused | ✅ S2 |
 | A9 | 🟡 | Manager knows a reset password | `must_change_password` blocks every page until changed; reset ends sessions | ✅ S2 |
 | A10 | 🟡 | Missing traceability | Hash-chained, append-only audit log (triggers + SHA-256 chain); `hotel audit verify`; manager viewer | ✅ S2 |
-| A11 | ⚪ | TOTP replay | Remember last used time step | ⏳ stretch |
+| A11 | ⚪ | TOTP replay | The last accepted time step is stored; a code of that step or an earlier one is refused (RFC 6238 §5.2) | ✅ S6 |
+| A12 | 🟠 | A stolen manager password alone opens every manager page | TOTP second factor (RFC 6238, standard library, RFC test vectors); required for managers after a 7-day grace period (pages blocked until enrolled); the session opens only after the code (hashed 5-minute challenge, 5 tries); wrong codes count toward the account lockout (A3); 10 one-time recovery codes stored as SHA-256; enrolment confirmed by one code; `hotel reset-totp` for a lost phone; every step audited | ✅ S6 |
+| A13 | ⚪ | The TOTP secret is readable in a stolen database | Accepted: the secret must be readable to compute codes. It is useless without the scrypt-protected password, and a stolen database already exposes everything else; backups are protected like the database | ✅ S6 (accepted) |
 
 ## Web
 

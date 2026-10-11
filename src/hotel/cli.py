@@ -4,6 +4,7 @@
     init-db          create or upgrade the database
     create-manager   create the first manager account
     reset-password   give any account a temporary password (forgotten password)
+    reset-totp       forget an account's two-factor phone (lost phone)
     night-audit      close a finished day: no-shows, overdue departures, snapshot
     seed --demo      add fictional demonstration data to an empty hotel
     backup           write a backup now
@@ -152,6 +153,30 @@ def cmd_reset_password(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_reset_totp(args: argparse.Namespace) -> int:
+    """The way back in when a manager lost the phone *and* the recovery codes.
+
+    Same trust as reset-password: whoever runs commands on the server already
+    controls the data. The account's sessions end; a manager must set up the
+    new phone at the next sign-in.
+    """
+    services = build_services(Settings.from_env())
+    system = Actor.system()
+    username = args.username.strip().lower()
+    user = next((u for u in services.users.list_users(system) if u.username == username), None)
+    if user is None:
+        print(f"No account named '{username}'.", file=sys.stderr)
+        return 1
+    if not user.two_factor.enabled and user.two_factor.pending_secret is None:
+        print(f"'{user.username}' does not use two-factor sign-in; nothing to reset.")
+        return 0
+    services.two_factor.reset(system, user.id)
+    print(f"Two-factor sign-in reset for '{user.username}'. Their recovery codes no longer work.")
+    if user.is_manager:
+        print("They must set up their new phone at the next sign-in.")
+    return 0
+
+
 def cmd_night_audit(args: argparse.Namespace) -> int:
     from datetime import date
 
@@ -278,6 +303,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     reset.add_argument("username")
     reset.set_defaults(handler=cmd_reset_password)
+
+    reset_totp = commands.add_parser(
+        "reset-totp", help="forget an account's two-factor phone (lost phone)"
+    )
+    reset_totp.add_argument("username")
+    reset_totp.set_defaults(handler=cmd_reset_totp)
 
     audit_day = commands.add_parser(
         "night-audit", help="close a finished day (yesterday by default)"

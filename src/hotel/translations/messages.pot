@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 14:03+0100\n"
+"POT-Creation-Date: 2026-10-11 15:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -193,6 +193,12 @@ msgid "Adults: %(adults)s, children: %(children)s"
 msgstr ""
 
 msgid "After"
+msgstr ""
+
+msgid ""
+"After your password, you will also type a six-digit code from an app on "
+"your phone (for example Google Authenticator, Microsoft Authenticator, "
+"Aegis or FreeOTP). A stolen password alone is then not enough to sign in."
 msgstr ""
 
 msgid "All"
@@ -417,6 +423,9 @@ msgstr ""
 msgid "Cancelling within this time after booking is always free."
 msgstr ""
 
+msgid "Cannot scan? Type this key instead:"
+msgstr ""
+
 msgid "Capacity"
 msgstr ""
 
@@ -606,10 +615,16 @@ msgstr ""
 msgid "Create account"
 msgstr ""
 
+msgid "Create new recovery codes"
+msgstr ""
+
 msgid "Create the first manager account from a terminal, in the project folder:"
 msgstr ""
 
 msgid "Created"
+msgstr ""
+
+msgid "Current code from the app"
 msgstr ""
 
 msgid "Current password"
@@ -926,6 +941,9 @@ msgstr ""
 msgid "Housekeeping"
 msgstr ""
 
+msgid "I have saved them"
+msgstr ""
+
 #, python-format
 msgid "I understand: erase the personal data of these %(count)s guests."
 msgstr ""
@@ -939,6 +957,9 @@ msgstr ""
 msgid "In service"
 msgstr ""
 
+msgid "In the app, add an account and scan this code:"
+msgstr ""
+
 msgid "Inactive"
 msgstr ""
 
@@ -946,6 +967,9 @@ msgid "Inactive services can no longer be charged; past charges keep them."
 msgstr ""
 
 msgid "Incident reference:"
+msgstr ""
+
+msgid "Install an authenticator app on your phone."
 msgstr ""
 
 #, python-format
@@ -1017,6 +1041,9 @@ msgstr ""
 msgid "Locked"
 msgstr ""
 
+msgid "Lost your phone? Type one of your recovery codes instead."
+msgstr ""
+
 msgid "Main"
 msgstr ""
 
@@ -1039,6 +1066,21 @@ msgid "Manage categories"
 msgstr ""
 
 msgid "Manager"
+msgstr ""
+
+msgid "Managers must keep two-factor sign-in."
+msgstr ""
+
+msgid ""
+"Managers must keep two-factor sign-in. If your phone is lost, use a "
+"recovery code, or ask for a reset with the command “hotel reset-totp”."
+msgstr ""
+
+#, python-format
+msgid "Managers must use two-factor sign-in. Set it up before %(date)s."
+msgstr ""
+
+msgid "Managers must use two-factor sign-in. Set it up now to continue."
 msgstr ""
 
 msgid "Manual"
@@ -1069,6 +1111,9 @@ msgstr ""
 msgid "Month"
 msgstr ""
 
+msgid "My account"
+msgstr ""
+
 msgid "Name"
 msgstr ""
 
@@ -1094,6 +1139,9 @@ msgid "New price"
 msgstr ""
 
 msgid "New rate period"
+msgstr ""
+
+msgid "New recovery codes"
 msgstr ""
 
 msgid "New reservation"
@@ -1277,6 +1325,9 @@ msgstr ""
 msgid "Of the accommodation; also charged for a no-show."
 msgstr ""
 
+msgid "On"
+msgstr ""
+
 msgid ""
 "One of these guests can no longer be anonymised (a new booking?). Reload "
 "the list."
@@ -1286,6 +1337,11 @@ msgid "Only a confirmed reservation can be cancelled."
 msgstr ""
 
 msgid "Only a day that is over can be closed."
+msgstr ""
+
+msgid ""
+"Open your authenticator app and type the six-digit code shown for this "
+"hotel."
 msgstr ""
 
 msgid "Out of service"
@@ -1360,6 +1416,9 @@ msgid ""
 " be changed; later payments appear on the reservation."
 msgstr ""
 
+msgid "QR code to scan with the authenticator app"
+msgstr ""
+
 msgid "Quantity"
 msgstr ""
 
@@ -1416,6 +1475,9 @@ msgstr ""
 msgid "Record the refund"
 msgstr ""
 
+msgid "Recovery codes"
+msgstr ""
+
 msgid "Reference"
 msgstr ""
 
@@ -1445,6 +1507,9 @@ msgid "Registered"
 msgstr ""
 
 msgid "Registered on"
+msgstr ""
+
+msgid "Reload the page and scan the new QR code."
 msgstr ""
 
 msgid "Remove"
@@ -1632,6 +1697,9 @@ msgstr ""
 msgid "Service"
 msgstr ""
 
+msgid "Set it up now"
+msgstr ""
+
 msgid "Set temporary password"
 msgstr ""
 
@@ -1651,6 +1719,15 @@ msgid "Sign in"
 msgstr ""
 
 msgid "Sign out"
+msgstr ""
+
+msgid "Sign-in code"
+msgstr ""
+
+#, python-format
+msgid ""
+"Since %(date)s, signing in asks for a code from your authenticator app "
+"after the password."
 msgstr ""
 
 msgid "Size"
@@ -1687,6 +1764,9 @@ msgid "Staff"
 msgstr ""
 
 msgid "Staff member"
+msgstr ""
+
+msgid "Start again with the password"
 msgstr ""
 
 msgid "Status"
@@ -1814,6 +1894,9 @@ msgid ""
 "(%(first)s to %(last)s)."
 msgstr ""
 
+msgid "The sign-in took too long or failed too often. Start again."
+msgstr ""
+
 msgid "The stay is already over: this reservation can no longer be checked in."
 msgstr ""
 
@@ -1837,6 +1920,12 @@ msgid "This change conflicts with existing data."
 msgstr ""
 
 msgid "This charge was already voided."
+msgstr ""
+
+msgid "This code is not correct, or it was already used. Try the next one."
+msgstr ""
+
+msgid "This code is not correct. Check the phone's time and try again."
 msgstr ""
 
 msgid "This day was already closed; nothing changed."
@@ -1954,7 +2043,34 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
+msgid "Turn off"
+msgstr ""
+
+msgid "Turn off two-factor sign-in"
+msgstr ""
+
+msgid "Turn on two-factor sign-in"
+msgstr ""
+
+msgid "Two-factor sign-in"
+msgstr ""
+
+msgid "Two-factor sign-in is already on."
+msgstr ""
+
+msgid "Two-factor sign-in is not on."
+msgstr ""
+
+msgid "Two-factor sign-in is off."
+msgstr ""
+
+msgid "Two-factor sign-in is on."
+msgstr ""
+
 msgid "Type"
+msgstr ""
+
+msgid "Type the code the app shows to finish:"
 msgstr ""
 
 #, python-format
@@ -1974,6 +2090,10 @@ msgid "Unpaid after departure"
 msgstr ""
 
 msgid "Untick to take the room out of service (it can no longer be booked)."
+msgstr ""
+
+#, python-format
+msgid "Unused recovery codes: %(n)s"
 msgstr ""
 
 msgid "Up to 3 decimals, for example 15 or 12.500."
@@ -2069,6 +2189,12 @@ msgstr ""
 msgid "With the country code for foreign numbers, e.g. +33 6 12 34 56 78."
 msgstr ""
 
+msgid ""
+"Write these codes down or print them, and keep them somewhere safe away "
+"from your phone. Each one works once, if the phone is lost. They will not"
+" be shown again."
+msgstr ""
+
 msgid "You can't deactivate your own account."
 msgstr ""
 
@@ -2082,6 +2208,9 @@ msgid "You have been signed out."
 msgstr ""
 
 msgid "You're using a temporary password. Choose your own password to continue."
+msgstr ""
+
+msgid "Your old recovery codes will stop working."
 msgstr ""
 
 msgid "Your other open sessions will be signed out."

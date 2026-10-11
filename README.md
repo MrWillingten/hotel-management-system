@@ -95,6 +95,7 @@ Open <http://127.0.0.1:8000> and sign in with the account you just created.
 | `python -m hotel init-db` | Create or upgrade the database |
 | `python -m hotel create-manager` | Create the first manager account |
 | `python -m hotel reset-password USERNAME` | Give an account a temporary password (for example a forgotten manager password) |
+| `python -m hotel reset-totp USERNAME` | Forget an account's two-factor phone (lost phone and recovery codes) |
 | `python -m hotel night-audit [--date DAY]` | Close a finished day: no-shows, overdue departures, frozen figures (also automatic at start-up) |
 | `python -m hotel seed --demo` | Fill an empty hotel with fictional demo data and demo accounts |
 | `python -m hotel backup` | Write a backup now (also done automatically every day) |

@@ -1,0 +1,17 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Recovery codes") }}{% endblock %}
+{% block page_title %}{{ _("Recovery codes") }}{% endblock %}
+{% block content %}
+<section class="panel panel--narrow stack">
+  <div class="alert alert--warning">{{ icon("key") }}
+    <p>{{ _("Write these codes down or print them, and keep them somewhere safe away from your phone. Each one works once, if the phone is lost. They will not be shown again.") }}</p>
+  </div>
+  <ol class="recovery-codes" dir="ltr">
+    {%- for code in codes %}
+    <li><code>{{ code }}</code></li>
+    {%- endfor %}
+  </ol>
+  <p><a class="button button--primary" href="{{ url_for('dashboard.index') }}">{{ _("I have saved them") }}</a></p>
+</section>
+{% endblock %}

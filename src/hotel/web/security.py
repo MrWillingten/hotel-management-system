@@ -77,6 +77,16 @@ def load_current_user() -> None:
 _ALLOWED_BEFORE_PASSWORD_CHANGE = frozenset(
     {"account.change_password", "auth.logout", "preferences.set_theme", "preferences.set_language"}
 )
+# A manager whose grace period is over can only set up the second factor (story 6.1).
+_ALLOWED_BEFORE_TWO_FACTOR = frozenset(
+    {
+        "account.two_factor",
+        "account.confirm_two_factor",
+        "auth.logout",
+        "preferences.set_theme",
+        "preferences.set_language",
+    }
+)
 
 
 def enforce_access_policy() -> Response | None:
@@ -94,6 +104,10 @@ def enforce_access_policy() -> Response | None:
         return redirect(url_for("auth.login", next=target))
     if g.user.must_change_password and endpoint not in _ALLOWED_BEFORE_PASSWORD_CHANGE:
         return redirect(url_for("account.change_password"))
+    if endpoint not in _ALLOWED_BEFORE_TWO_FACTOR and g.user.must_enrol_two_factor(
+        services().clock.now()
+    ):
+        return redirect(url_for("account.two_factor"))
     if policy.roles is not None and g.user.role not in policy.roles:
         abort(403)
     return None

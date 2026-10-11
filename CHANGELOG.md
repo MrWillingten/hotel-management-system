@@ -4,6 +4,17 @@ All notable changes are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased] – Sprint 6
+
+### Added
+- Two-factor sign-in (TOTP, RFC 6238) under Account → Two-factor sign-in:
+  scan a QR code with any authenticator app, confirm one code, receive 10
+  one-time recovery codes. Required for managers (a reminder for 7 days,
+  then every page asks to set it up); optional for receptionists, who may
+  turn it off again. A code is never accepted twice; wrong codes count
+  toward the account lockout. `hotel reset-totp USERNAME` for a lost phone.
+  New dependency: `segno` (QR codes, pure Python). Migration 0015.
+
 ## [0.9.0] – Sprint 5: Reports, operations, languages (code complete)
 
 ### Added

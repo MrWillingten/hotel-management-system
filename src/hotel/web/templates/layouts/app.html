@@ -65,6 +65,12 @@
 
     <main class="content" id="main" tabindex="-1">
       {% include "partials/flashes.html" %}
+      {%- if two_factor_due and not request.endpoint.startswith("account.") %}
+      <div class="alert alert--info no-print">{{ icon("shield") }}
+        <p>{{ _("Managers must use two-factor sign-in. Set it up before %(date)s.", date=two_factor_due|dateformat("long")) }}
+          <a href="{{ url_for('account.two_factor') }}">{{ _("Set it up now") }}</a></p>
+      </div>
+      {%- endif %}
       {% block content %}{% endblock %}
     </main>
   </div>

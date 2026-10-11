@@ -29,6 +29,13 @@ MESSAGES = {
         "Too many failed sign-in attempts from this computer. Wait a few minutes and try again."
     ),
     "auth.setup_already_done": _l("The first manager account already exists."),
+    "auth.invalid_code": _l("This code is not correct, or it was already used. Try the next one."),
+    "auth.code_expired": _l("The sign-in took too long or failed too often. Start again."),
+    "totp.wrong_code": _l("This code is not correct. Check the phone's time and try again."),
+    "totp.not_started": _l("Reload the page and scan the new QR code."),
+    "totp.not_enabled": _l("Two-factor sign-in is not on."),
+    "totp.already_enabled": _l("Two-factor sign-in is already on."),
+    "totp.required_for_managers": _l("Managers must keep two-factor sign-in."),
     "username.invalid": _l(
         "Use 3 to 32 characters: letters, digits, dots, hyphens or underscores."
     ),
