@@ -69,7 +69,7 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
                cancellation_fee_mill, created_by FK, created_at, checked_in_at,
                checked_out_at, cancelled_at, version, CK departure > arrival)
 ✅ reservation_room(reservation_id FK, room_id FK, adults CK≥1, children CK≥0,
-                    PK(reservation_id, room_id))
+                    moved_out_on NULL = current room (6.5), PK(reservation_id, room_id))
 ✅ room_night(room_id FK, night, reservation_id FK NULL, maintenance_id FK NULL,
               rate_mill, PK(room_id, night),
               CK exactly one of reservation_id / maintenance_id is set,

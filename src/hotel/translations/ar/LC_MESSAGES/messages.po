@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 17:00+0100\n"
+"POT-Creation-Date: 2026-10-11 17:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -383,6 +383,9 @@ msgstr "تاريخ الحجز"
 msgid "Bookings open at most two years ahead."
 msgstr "يمكن الحجز قبل سنتين على الأكثر."
 
+msgid "By default the guest keeps the price of every remaining night: the hotel offers the move."
+msgstr "افتراضيًا يحتفظ النزيل بسعر كل ليلة متبقية: الفندق يتحمّل النقل."
+
 msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
 msgstr "بطاقة التعريف: 8 أرقام. جواز السفر: من 5 إلى 20 حرفًا أو رقمًا."
 
@@ -445,6 +448,10 @@ msgstr "يجب أن تكون السعة بين 1 و%(max)s أشخاص."
 msgid "Capacity: %(count)s"
 msgstr "السعة: %(count)s"
 
+#, python-format
+msgid "Capacity: %(n)s"
+msgstr "السعة: %(n)s"
+
 msgid "Card"
 msgstr "بطاقة"
 
@@ -489,6 +496,9 @@ msgstr "تم حفظ التغييرات."
 
 msgid "Charge"
 msgstr "احتساب"
+
+msgid "Charge the new room's price for the remaining nights (an upgrade the guest asked for)"
+msgstr "احتساب سعر الغرفة الجديدة للّيالي المتبقية (ترقية طلبها النزيل)"
 
 msgid "Charge voided."
 msgstr "تم إلغاء الاحتساب."
@@ -641,6 +651,9 @@ msgstr "الرمز الحالي من التطبيق"
 
 msgid "Current password"
 msgstr "كلمة المرور الحالية"
+
+msgid "Current room"
+msgstr "الغرفة الحالية"
 
 msgid "Currently:"
 msgstr "حاليًا:"
@@ -898,6 +911,10 @@ msgstr "الجمعة"
 msgid "From"
 msgstr "من"
 
+#, python-format
+msgid "From %(date)s to the departure"
+msgstr "من %(date)s حتى المغادرة"
+
 msgid "Full name"
 msgstr "الاسم الكامل"
 
@@ -1059,6 +1076,10 @@ msgstr "آخر استخدام"
 msgid "Late"
 msgstr "متأخر"
 
+#, python-format
+msgid "Left on %(date)s"
+msgstr "غادرها في %(date)s"
+
 msgid "Legend"
 msgstr "مفتاح الألوان"
 
@@ -1140,6 +1161,19 @@ msgstr "الاثنين"
 msgid "Month"
 msgstr "الشهر"
 
+msgid "Move"
+msgstr "نقل"
+
+msgid "Move the guests"
+msgstr "نقل النزلاء"
+
+msgid "Move to another room"
+msgstr "النقل إلى غرفة أخرى"
+
+#, python-format
+msgid "Moved from room %(old)s to room %(new)s."
+msgstr "تم النقل من الغرفة %(old)s إلى الغرفة %(new)s."
+
 msgid "My account"
 msgstr "حسابي"
 
@@ -1178,6 +1212,9 @@ msgstr "حجز جديد"
 
 msgid "New reservations will be refused. Managers only."
 msgstr "سيتم رفض الحجوزات الجديدة. للمديرين فقط."
+
+msgid "New room"
+msgstr "الغرفة الجديدة"
 
 msgid "New service"
 msgstr "خدمة جديدة"
@@ -1228,6 +1265,9 @@ msgstr "الليالي المباعة"
 msgid "Nights sold: %(sold)s of %(sellable)s"
 msgstr "الليالي المباعة: %(sold)s من %(sellable)s"
 
+msgid "Nights that move"
+msgstr "الليالي المنقولة"
+
 #, python-format
 msgid "Nights: %(nights)s"
 msgstr "عدد الليالي: %(nights)s"
@@ -1272,8 +1312,14 @@ msgstr "لم يُستلم أي مبلغ بعد."
 msgid "No more arrivals expected today."
 msgstr "لا يُنتظر وصول نزلاء آخرين اليوم."
 
+msgid "No night is left to move in this room."
+msgstr "لم تبق أي ليلة للنقل في هذه الغرفة."
+
 msgid "No nights sold in this period."
 msgstr "لم تُبع أي ليلة في هذه الفترة."
+
+msgid "No other room is free and large enough for the rest of the stay."
+msgstr "لا توجد غرفة أخرى شاغرة وكافية لبقية الإقامة."
 
 msgid "No other room is free for these dates."
 msgstr "لا توجد غرفة أخرى متاحة في هذه التواريخ."
@@ -1472,6 +1518,10 @@ msgstr "تمت إضافة فترة التسعير %(name)s."
 
 msgid "Rate period removed. Existing bookings keep their prices."
 msgstr "حُذفت فترة التسعير. تحتفظ الحجوزات القائمة بأسعارها."
+
+#, python-format
+msgid "Rate: %(rate)s"
+msgstr "السعر: %(rate)s"
 
 msgid "Reactivate account"
 msgstr "إعادة تفعيل الحساب"
@@ -1675,6 +1725,10 @@ msgstr "الغرفة %(room)s خارج الخدمة."
 #, python-format
 msgid "Room %(room)s is still occupied (%(code)s). Check that guest out first."
 msgstr "الغرفة %(room)s ما زالت مشغولة (%(code)s). سجّل مغادرة ذلك النزيل أولاً."
+
+#, python-format
+msgid "Room %(room)s will be marked to clean."
+msgstr "سيتم وضع علامة «للتنظيف» على الغرفة %(room)s."
 
 msgid "Room categories"
 msgstr "فئات الغرف"
@@ -1897,6 +1951,9 @@ msgstr "لم يحضر النزيل. يُحتسب عدم الحضور مثل ال
 msgid "The guest is in the house: only the departure date and the occupants can change."
 msgstr "النزيل موجود في الفندق: يمكن تغيير تاريخ المغادرة والأشخاص فقط."
 
+msgid "The guests already used that room during this stay. Choose another one."
+msgstr "استخدم النزلاء هذه الغرفة بالفعل خلال هذه الإقامة. اختر غرفة أخرى."
+
 msgid "The hotel must keep at least one active manager."
 msgstr "يجب أن يحتفظ الفندق بمدير نشط واحد على الأقل."
 
@@ -2025,6 +2082,9 @@ msgstr "لم يعد بالإمكان تعديل هذا الحجز."
 
 msgid "This room has never been closed for maintenance."
 msgstr "لم تُغلق هذه الغرفة للصيانة من قبل."
+
+msgid "This room is not part of the stay any more."
+msgstr "هذه الغرفة لم تعد جزءًا من الإقامة."
 
 #, python-format
 msgid "This room still has bookings (%(codes)s). Move or cancel them first."

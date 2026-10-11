@@ -214,7 +214,9 @@ def detail(reservation_id: int):
         free_until=services().reservations.free_cancellation_until(reservation.period),
         fee_rate=_fee_rate(),
         to_clean=[
-            r.number for r in reservation.rooms if not rooms[r.room_id].housekeeping.is_ready
+            r.number
+            for r in reservation.current_rooms
+            if not rooms[r.room_id].housekeeping.is_ready
         ],
         today=services().clock.today(),
         arrival_passed=services().reservations.arrival_has_passed(reservation.period),
@@ -227,6 +229,56 @@ def _back_to(reservation_id: int):
     if is_safe_redirect_target(target):
         return redirect(target)
     return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+
+
+# ---------------------------------------------------------------- moving rooms (story 6.5)
+@bp.route("/<int:reservation_id>/move", methods=["GET", "POST"])
+@login_required
+def move(reservation_id: int):
+    actor = current_actor()
+    reservations = services().reservations
+    reservation = reservations.get(actor, reservation_id)
+    source = request.values.get("room", "")
+    booked = next((r for r in reservation.current_rooms if str(r.room_id) == source), None)
+    if booked is None:
+        return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+    if request.method == "POST":
+        if not services().form_tokens.consume(actor, request.form.get("form_token")):
+            flash(
+                _("This form was already submitted. Check the reservation before trying again."),
+                "warning",
+            )
+            return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+        try:
+            moved = reservations.move_room(
+                actor,
+                reservation_id,
+                version=forms.integer(request.form, "version"),
+                from_room_id=booked.room_id,
+                to_room_id=forms.integer(request.form, "to_room"),
+                charge_new_rate=request.form.get("charge_new_rate") == "on",
+            )
+        except HotelError as exc:
+            flash(message_for(exc.code, exc.params), "danger")
+        else:
+            new_room = moved.current_rooms[-1] if moved.current_rooms else booked
+            flash(
+                _(
+                    "Moved from room %(old)s to room %(new)s.",
+                    old=booked.number,
+                    new=new_room.number,
+                ),
+                "success",
+            )
+            return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+    return render_template(
+        "reservations/move.html",
+        reservation=reservation,
+        booked=booked,
+        candidates=reservations.move_candidates(actor, reservation_id, booked.room_id),
+        first_night=max(services().clock.today(), reservation.period.arrival),
+        form_token=services().form_tokens.issue(actor),
+    )
 
 
 # ---------------------------------------------------------------- front desk

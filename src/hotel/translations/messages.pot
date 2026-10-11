@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 17:00+0100\n"
+"POT-Creation-Date: 2026-10-11 17:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -387,6 +387,11 @@ msgstr ""
 msgid "Bookings open at most two years ahead."
 msgstr ""
 
+msgid ""
+"By default the guest keeps the price of every remaining night: the hotel "
+"offers the move."
+msgstr ""
+
 msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
 msgstr ""
 
@@ -449,6 +454,10 @@ msgstr ""
 msgid "Capacity: %(count)s"
 msgstr ""
 
+#, python-format
+msgid "Capacity: %(n)s"
+msgstr ""
+
 msgid "Card"
 msgstr ""
 
@@ -492,6 +501,11 @@ msgid "Changes saved."
 msgstr ""
 
 msgid "Charge"
+msgstr ""
+
+msgid ""
+"Charge the new room's price for the remaining nights (an upgrade the "
+"guest asked for)"
 msgstr ""
 
 msgid "Charge voided."
@@ -646,6 +660,9 @@ msgid "Current code from the app"
 msgstr ""
 
 msgid "Current password"
+msgstr ""
+
+msgid "Current room"
 msgstr ""
 
 msgid "Currently:"
@@ -906,6 +923,10 @@ msgstr ""
 msgid "From"
 msgstr ""
 
+#, python-format
+msgid "From %(date)s to the departure"
+msgstr ""
+
 msgid "Full name"
 msgstr ""
 
@@ -1066,6 +1087,10 @@ msgstr ""
 msgid "Late"
 msgstr ""
 
+#, python-format
+msgid "Left on %(date)s"
+msgstr ""
+
 msgid "Legend"
 msgstr ""
 
@@ -1145,6 +1170,19 @@ msgstr ""
 msgid "Month"
 msgstr ""
 
+msgid "Move"
+msgstr ""
+
+msgid "Move the guests"
+msgstr ""
+
+msgid "Move to another room"
+msgstr ""
+
+#, python-format
+msgid "Moved from room %(old)s to room %(new)s."
+msgstr ""
+
 msgid "My account"
 msgstr ""
 
@@ -1182,6 +1220,9 @@ msgid "New reservation"
 msgstr ""
 
 msgid "New reservations will be refused. Managers only."
+msgstr ""
+
+msgid "New room"
 msgstr ""
 
 msgid "New service"
@@ -1233,6 +1274,9 @@ msgstr ""
 msgid "Nights sold: %(sold)s of %(sellable)s"
 msgstr ""
 
+msgid "Nights that move"
+msgstr ""
+
 #, python-format
 msgid "Nights: %(nights)s"
 msgstr ""
@@ -1277,7 +1321,13 @@ msgstr ""
 msgid "No more arrivals expected today."
 msgstr ""
 
+msgid "No night is left to move in this room."
+msgstr ""
+
 msgid "No nights sold in this period."
+msgstr ""
+
+msgid "No other room is free and large enough for the rest of the stay."
 msgstr ""
 
 msgid "No other room is free for these dates."
@@ -1472,6 +1522,10 @@ msgid "Rate period %(name)s added."
 msgstr ""
 
 msgid "Rate period removed. Existing bookings keep their prices."
+msgstr ""
+
+#, python-format
+msgid "Rate: %(rate)s"
 msgstr ""
 
 msgid "Reactivate account"
@@ -1677,6 +1731,10 @@ msgstr ""
 
 #, python-format
 msgid "Room %(room)s is still occupied (%(code)s). Check that guest out first."
+msgstr ""
+
+#, python-format
+msgid "Room %(room)s will be marked to clean."
 msgstr ""
 
 msgid "Room categories"
@@ -1906,6 +1964,9 @@ msgid ""
 "change."
 msgstr ""
 
+msgid "The guests already used that room during this stay. Choose another one."
+msgstr ""
+
 msgid "The hotel must keep at least one active manager."
 msgstr ""
 
@@ -2045,6 +2106,9 @@ msgid "This reservation can no longer be changed."
 msgstr ""
 
 msgid "This room has never been closed for maintenance."
+msgstr ""
+
+msgid "This room is not part of the stay any more."
 msgstr ""
 
 #, python-format

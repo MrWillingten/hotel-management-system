@@ -69,8 +69,12 @@
     <h2 class="panel__title">{{ _("Rooms") }}</h2>
     <ul class="pick-list">
       {%- for room in reservation.rooms %}
-      <li><span><strong dir="ltr">{{ room.number }}</strong> · {{ room.category_name }}</span>
-        <span class="muted">{{ _("Adults: %(adults)s, children: %(children)s", adults=room.adults, children=room.children) }}</span></li>
+      <li><span><strong dir="ltr">{{ room.number }}</strong> · {{ room.category_name }}
+          {%- if not room.is_current %} <span class="badge badge--neutral">{{ _("Left on %(date)s", date=room.moved_out_on | dateformat("medium")) }}</span>{% endif %}</span>
+        <span class="muted">{{ _("Adults: %(adults)s, children: %(children)s", adults=room.adults, children=room.children) }}</span>
+        {%- if room.is_current and reservation.status in ("CONFIRMED", "CHECKED_IN") and today < reservation.period.departure %}
+        <a class="button button--ghost button--small" href="{{ url_for('reservations.move', reservation_id=reservation.id, room=room.room_id) }}">{{ _("Move") }}</a>
+        {%- endif %}</li>
       {%- endfor %}
     </ul>
     <dl class="facts facts--money">

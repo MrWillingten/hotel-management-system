@@ -29,8 +29,8 @@ _SELECT = (
 # clauses, or a run of "?" markers) are ever inserted with .format(); every
 # value still travels separately as a parameter.
 _ROOMS_OF = (
-    "SELECT rr.reservation_id, rr.room_id, rr.adults, rr.children, rm.number, "
-    "c.name AS category_name FROM reservation_room rr "
+    "SELECT rr.reservation_id, rr.room_id, rr.adults, rr.children, rr.moved_out_on, "
+    "rm.number, c.name AS category_name FROM reservation_room rr "
     "JOIN room rm ON rm.id = rr.room_id JOIN room_category c ON c.id = rm.category_id "
     "WHERE rr.reservation_id IN ({marks}) ORDER BY rm.number"
 )
@@ -124,6 +124,7 @@ class ReservationRepository(BaseRepository):
                     row["children"],
                     row["number"],
                     row["category_name"],
+                    date_from_db(row["moved_out_on"]) if row["moved_out_on"] else None,
                 )
             )
         nights = self._fetch_all(_NIGHTS_OF.format(marks=marks), list(by_id))
@@ -231,7 +232,8 @@ class ReservationRepository(BaseRepository):
         """room_id -> code of the checked-in reservation using it, even on its departure day."""
         rows = self._fetch_all(
             "SELECT rr.room_id, r.code FROM reservation_room rr "
-            "JOIN reservation r ON r.id = rr.reservation_id WHERE r.status = 'CHECKED_IN'"
+            "JOIN reservation r ON r.id = rr.reservation_id "
+            "WHERE r.status = 'CHECKED_IN' AND rr.moved_out_on IS NULL"
         )
         return {row["room_id"]: row["code"] for row in rows}
 
@@ -265,9 +267,18 @@ class ReservationRepository(BaseRepository):
 
     def _insert_rooms_and_nights(self, reservation: Reservation) -> None:
         self._conn.executemany(
-            "INSERT INTO reservation_room (reservation_id, room_id, adults, children) "
-            "VALUES (?, ?, ?, ?)",
-            [(reservation.id, r.room_id, r.adults, r.children) for r in reservation.rooms],
+            "INSERT INTO reservation_room (reservation_id, room_id, adults, children, "
+            "moved_out_on) VALUES (?, ?, ?, ?, ?)",
+            [
+                (
+                    reservation.id,
+                    r.room_id,
+                    r.adults,
+                    r.children,
+                    date_to_db(r.moved_out_on) if r.moved_out_on else None,
+                )
+                for r in reservation.rooms
+            ],
         )
         # The (room_id, night) primary key makes a double booking impossible here,
         # even if a check in Python were ever skipped (ADR 0004).

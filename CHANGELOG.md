@@ -28,6 +28,12 @@ All notable changes are recorded here. The format follows
   `%LOCALAPPDATA%\HotelMedina`. Built and smoke-tested by CI on Windows and
   kept as an artifact. `hotel run --open-browser`. The sign-in page shows
   the right command (`hotel.exe` or `python -m hotel`).
+- Move guests to another room ("Move" next to a room on the reservation):
+  the nights from tonight on move, nights already spent stay on the bill
+  under the old room ("Left on …"); the new room is checked like a booking
+  (free, big enough, in service; closest rooms proposed first). The guest
+  keeps the locked price by default; a manager may charge the new room's
+  price. The old room is marked to clean. Audited. Migration 0017.
 
 ## [0.9.0] – Sprint 5: Reports, operations, languages (code complete)
 
