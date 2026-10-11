@@ -125,14 +125,28 @@ from a button, a command and a catch-up at start-up · weekend nights default to
 without a stay (a setting). Issues #50 (5.0, a link from the room form to the
 categories) to #58.
 
-### Sprint 6 – Stretch, freeze, delivery (21 Dec – 3 Jan)
+### Sprint 6 – Stretch, freeze, delivery
 
-| When | Work |
-|---|---|
-| 21 – 26 Dec | **Stretch, in this order:** TOTP 2FA for managers → Docker image → read-only JSON API → Windows executable → moving a guest between rooms |
-| **27 Dec** | **Feature freeze** (moved earlier if the deadline is earlier). After this, bug fixes only. |
-| 27 Dec – 2 Jan | Manual checklist on real Windows plus three browsers · security self-assessment against OWASP ASVS Level 1 · test evidence table · report final assembly (Times New Roman 12 pt, 1.5 spacing, numbered figures) · screenshots in both themes and three languages · demo script plus **two full rehearsals** |
-| 3 Jan | `v1.0.0` tagged, release notes, PDF of the report |
+**Calendar change (11 Oct):** Sprint 5 finished about two months early, so the
+stretch goals start now. The **feature freeze stays on 27 Dec**; the extra
+time goes to polish, the report and rehearsals, not to more features.
+
+| ID | Story | Acceptance criteria |
+|---|---|---|
+| 6.1 | TOTP two-factor login for managers | RFC 6238 codes computed with the standard library (`hmac`, `hashlib`); QR code for enrolment with `segno` (new small pure-Python dependency, lock files regenerated); **required for managers once enrolled, 7-day grace period to enrol**; 10 one-time recovery codes stored hashed; a code cannot be reused (threat A11: remember the last time step); `hotel reset-totp USERNAME`; audited. Receptionists unaffected. |
+| 6.2 | Docker image | Small image, non-root user, data in a volume, health check, Waitress; example `docker compose` with Caddy (HTTPS); CI builds the image. |
+| 6.3 | Read-only JSON API | `/api/v1/` for availability, rooms, reservations and report figures; personal API tokens created by managers, stored hashed, revocable; read-only, rate-limited, documented; deny-by-default policy test still passes. |
+| 6.4 | Windows executable | PyInstaller build that starts the server and opens the browser, no Python needed; built by CI on Windows as an artifact; unsigned (SmartScreen warns once, documented). |
+| 6.5 | Move a guest to another room | Remaining nights only, availability re-checked like a change; **default: the guest keeps the locked price (courtesy move); a manager may choose the new room's rate (upgrade)**; old room marked to clean; audited. |
+| 6.6 | Hardening | OWASP ASVS Level 1 self-assessment (`docs/asvs.md`); test-evidence table (requirement → test); manual checklist for three browsers (assistant) and a real Windows PC (**the student**). |
+| 6.7 | Report | **English, LaTeX for Overleaf** (`report/`, `main.tex` + chapters, Times-like font 12 pt, 1.5 spacing, numbered figures, bibliography), 40–50 pages excluding cover/TOC. **Split:** the assistant drafts every technical chapter (requirements, design, architecture, data, security, implementation, testing, deployment, results) from the docs, ADRs and code; **the student writes the General Introduction, personal retrospectives, what was learned, difficulties met and the conclusion in their own words**. AI assistance is declared in the report. |
+| 6.8 | Demo | Demo script with timings and likely questions; screenshots in both themes and three languages; rehearsal checklist (two full rehearsals). |
+| 6.9 | Release | `v1.0.0`, release notes, report PDF compiled on Overleaf. |
+
+Decisions taken with the student (11 Oct): all recommendations accepted
+(TOTP required for managers with a 7-day grace; `segno` for the QR code;
+courtesy price on room moves), report in **English** and **LaTeX/Overleaf**,
+writing split as above.
 
 **The report is written along the way:** each sprint's Definition of Done
 includes updating its report section; leaving 40–50 pages for the last week

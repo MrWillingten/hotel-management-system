@@ -109,17 +109,23 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
   invoices `domain|services/invoices.py` (`issue_invoice` also used by cancel/no-show).
   Migrations 0007–0010. Web: blueprints `billing`, `extras`, `hotel_settings`, `invoices`.
 
-### Next: Sprint 6 – Stretch, freeze, delivery (21 Dec – 3 Jan) → v1.0.0
-Plan in `docs/roadmap.md` (Sprint 6 table). Stretch order: TOTP 2FA for
-managers → Docker image → read-only JSON API → Windows executable → moving
-a guest between rooms. Feature freeze 27 Dec, then manual Windows + three
-browsers checklist, OWASP ASVS L1 self-assessment, test evidence table,
-report (40–50 pages), screenshots in both themes and three languages,
-demo script and two rehearsals. As agreed: draft the Sprint 6 stories and
-show them to the student **before** creating issues.
-Sprint 5 translation review done by the assistant at the student's request
-(34 corrections, see docs/translations.md); a native-speaker read before the
-demo is still advised.
+### Next: Sprint 6 – Stretch, freeze, delivery (starts now, freeze 27 Dec) → v1.0.0
+**Stories 6.1–6.9 are approved and written in full in `docs/roadmap.md`**
+(Sprint 6 table + decisions). Read it before starting. To do, in order:
+1. Create milestone "Sprint 6" and one issue per story (6.1–6.9) from that table.
+2. 6.1 TOTP (stdlib RFC 6238, `segno` for QR → regenerate both lock files with
+   `uv pip compile ... --universal --generate-hashes`, required for managers
+   after a 7-day grace, hashed recovery codes, no code reuse, `hotel reset-totp`).
+3. 6.2 Docker → 6.3 JSON API (hashed manager-issued tokens) → 6.4 Windows exe
+   (PyInstaller, CI artifact) → 6.5 room move (courtesy price by default).
+4. Freeze 27 Dec. 6.6 hardening (ASVS L1, evidence table, browsers; the
+   student runs the real-Windows checklist).
+5. 6.7 report: **English, LaTeX for Overleaf** in `report/`. The assistant
+   drafts all technical chapters; **the student writes the General
+   Introduction, personal retrospectives, lessons learned, difficulties and
+   the conclusion** — leave clearly marked placeholders for those, never
+   write them. Declare AI assistance.
+6. 6.8 demo script/screenshots/rehearsal checklist, 6.9 v1.0.0.
 
 ### Known open issues / limitations (not bugs yet fixed)
 - French and Arabic texts reviewed once (AI) → a native-speaker read before the
