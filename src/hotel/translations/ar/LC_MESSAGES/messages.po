@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 08:16+0100\n"
+"POT-Creation-Date: 2026-10-11 08:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -111,6 +111,9 @@ msgstr "البالغون"
 msgid "Adults: %(adults)s, children: %(children)s"
 msgstr "البالغون: %(adults)s، الأطفال: %(children)s"
 
+msgid "After"
+msgstr "بعد"
+
 msgid "All"
 msgstr "الكل"
 
@@ -146,6 +149,10 @@ msgstr "توجد غرفة أخرى بهذا الرقم بالفعل."
 
 msgid "Arrival"
 msgstr "الوصول"
+
+#, python-format
+msgid "Arrival is less than 48 hours away: cancelling now costs %(fee)s (20%% of the accommodation)."
+msgstr "الوصول بعد أقل من 48 ساعة: الإلغاء الآن يكلف %(fee)s (20%% من ثمن الإقامة)."
 
 msgid "Arrival time, special requests..."
 msgstr "وقت الوصول، طلبات خاصة…"
@@ -190,6 +197,9 @@ msgstr "تُحفظ النسخ الاحتياطية في هذا المجلد عل
 msgid "Bad request"
 msgstr "طلب غير صالح"
 
+msgid "Before"
+msgstr "قبل"
+
 msgid "Before a restore"
 msgstr "قبل الاستعادة"
 
@@ -219,6 +229,12 @@ msgstr "بطاقة التعريف: 8 أرقام. جواز السفر: من 5 إ�
 msgid "Cancel"
 msgstr "إلغاء"
 
+msgid "Cancel reservation"
+msgstr "إلغاء الحجز"
+
+msgid "Cancel the reservation"
+msgstr "إلغاء الحجز"
+
 msgid "Cancellation fee"
 msgstr "رسوم الإلغاء"
 
@@ -227,6 +243,10 @@ msgstr "ملغى"
 
 msgid "Cancelled on"
 msgstr "تاريخ الإلغاء"
+
+#, python-format
+msgid "Cancelling now is free (free until %(when)s)."
+msgstr "الإلغاء الآن مجاني (حتى %(when)s)."
 
 msgid "Capacity"
 msgstr "السعة"
@@ -254,14 +274,23 @@ msgstr "الفئة"
 msgid "Category saved."
 msgstr "تم حفظ الفئة."
 
+msgid "Change"
+msgstr "تعديل"
+
 msgid "Change guest"
 msgstr "تغيير النزيل"
 
 msgid "Change password"
 msgstr "تغيير كلمة المرور"
 
+msgid "Change reservation"
+msgstr "تعديل الحجز"
+
 msgid "Changes saved."
 msgstr "تم حفظ التغييرات."
+
+msgid "Check availability and price"
+msgstr "التحقق من التوفر والسعر"
 
 msgid "Checked in"
 msgstr "تم تسجيل الوصول"
@@ -334,6 +363,9 @@ msgstr "تاريخ الإنشاء"
 
 msgid "Current password"
 msgstr "كلمة المرور الحالية"
+
+msgid "Currently:"
+msgstr "حاليًا:"
 
 msgid "DEMO DATA: every guest, document and booking shown here is fictional."
 msgstr "بيانات تجريبية: كل النزلاء والوثائق والحجوزات المعروضة هنا وهمية."
@@ -533,6 +565,9 @@ msgstr "اسم المستخدم أو كلمة المرور غير صحيحة، �
 msgid "Is it one of these guests?"
 msgstr "هل هو أحد هؤلاء النزلاء؟"
 
+msgid "Keep it"
+msgstr "الإبقاء عليه"
+
 msgid "Language"
 msgstr "اللغة"
 
@@ -590,8 +625,14 @@ msgstr "الجنسية"
 msgid "New category"
 msgstr "فئة جديدة"
 
+msgid "New dates"
+msgstr "التواريخ الجديدة"
+
 msgid "New password"
 msgstr "كلمة المرور الجديدة"
+
+msgid "New price"
+msgstr "السعر الجديد"
 
 msgid "New reservation"
 msgstr "حجز جديد"
@@ -619,6 +660,9 @@ msgstr "سعر الليلة (د.ت، قبل الضرائب)"
 
 msgid "Nights"
 msgstr "الليالي"
+
+msgid "Nights already booked keep their price; added nights use today's rate."
+msgstr "تحتفظ الليالي المحجوزة بسعرها؛ وتُحسب الليالي المضافة بسعر اليوم."
 
 msgid "Nights and prices"
 msgstr "الليالي والأسعار"
@@ -666,6 +710,9 @@ msgstr "ملاحظات"
 
 msgid "Occupied"
 msgstr "مشغولة"
+
+msgid "Only a confirmed reservation can be cancelled."
+msgstr "لا يمكن إلغاء إلا حجز مؤكد."
 
 msgid "Out of service"
 msgstr "خارج الخدمة"
@@ -731,6 +778,9 @@ msgstr "تسجيل النزيل"
 msgid "Registered"
 msgstr "تاريخ التسجيل"
 
+msgid "Remove this room"
+msgstr "إزالة هذه الغرفة"
+
 msgid "Reopens on"
 msgstr "تُفتح من جديد في"
 
@@ -750,8 +800,15 @@ msgstr "الحجز"
 msgid "Reservation %(code)s confirmed."
 msgstr "تم تأكيد الحجز %(code)s."
 
+#, python-format
+msgid "Reservation cancelled. Fee: %(fee)s."
+msgstr "تم إلغاء الحجز. الرسوم: %(fee)s."
+
 msgid "Reservation history"
 msgstr "سجل الحجوزات"
+
+msgid "Reservation updated."
+msgstr "تم تحديث الحجز."
 
 msgid "Reservations"
 msgstr "الحجوزات"
@@ -826,6 +883,9 @@ msgstr "حفظ التغييرات"
 msgid "Save flags"
 msgstr "حفظ العلامات"
 
+msgid "Save the change"
+msgstr "حفظ التعديل"
+
 msgid "Search"
 msgstr "بحث"
 
@@ -892,6 +952,9 @@ msgstr "تم تعيين كلمة مرور مؤقتة. يجب على صاحب ا�
 msgid "The arrival date can't be in the past."
 msgstr "لا يمكن أن يكون تاريخ الوصول في الماضي."
 
+msgid "The arrival time has passed: record a no-show instead of a cancellation."
+msgstr "مضى وقت الوصول: سجّل عدم حضور بدلًا من الإلغاء."
+
 msgid "The current password is not correct."
 msgstr "كلمة المرور الحالية غير صحيحة."
 
@@ -901,6 +964,9 @@ msgstr "البيانات المرسلة كبيرة جدًا."
 msgid "The departure date must be after the arrival date."
 msgstr "يجب أن يكون تاريخ المغادرة بعد تاريخ الوصول."
 
+msgid "The departure date must be after today."
+msgstr "يجب أن يكون تاريخ المغادرة بعد اليوم."
+
 msgid "The first day guests can stay again."
 msgstr "أول يوم يمكن فيه للنزلاء الإقامة مجددًا."
 
@@ -909,6 +975,9 @@ msgstr "حساب المدير الأول موجود بالفعل."
 
 msgid "The front desk figures will appear here once reservations are available."
 msgstr "ستظهر أرقام الاستقبال هنا بمجرد توفر الحجوزات."
+
+msgid "The guest is in the house: only the departure date and the occupants can change."
+msgstr "النزيل موجود في الفندق: يمكن تغيير تاريخ المغادرة والأشخاص فقط."
 
 msgid "The hotel must keep at least one active manager."
 msgstr "يجب أن يحتفظ الفندق بمدير نشط واحد على الأقل."
@@ -947,6 +1016,9 @@ msgstr "يتعارض هذا التغيير مع بيانات موجودة."
 msgid "This form expired or was sent from another site. Reload the page and try again."
 msgstr "انتهت صلاحية هذا النموذج أو أُرسل من موقع آخر. أعد تحميل الصفحة وحاول مرة أخرى."
 
+msgid "This form was already submitted. Check the reservation before trying again."
+msgstr "تم إرسال هذا النموذج من قبل. تحقق من الحجز قبل المحاولة مجددًا."
+
 msgid "This form was already submitted. Check the reservation list before trying again."
 msgstr "تم إرسال هذا النموذج من قبل. تحقق من قائمة الحجوزات قبل المحاولة مجددًا."
 
@@ -979,6 +1051,9 @@ msgstr "كلمة المرور هذه شائعة جدًا. اختر كلمة يص
 
 msgid "This password repeats the same characters too much."
 msgstr "كلمة المرور هذه تكرر الأحرف نفسها كثيرًا."
+
+msgid "This reservation can no longer be changed."
+msgstr "لم يعد بالإمكان تعديل هذا الحجز."
 
 msgid "This room has never been closed for maintenance."
 msgstr "لم تُغلق هذه الغرفة للصيانة من قبل."

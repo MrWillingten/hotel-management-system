@@ -11,16 +11,20 @@ from hotel.domain.clock import Clock
 from hotel.domain.errors import (
     BusinessRuleViolation,
     ConflictError,
+    InvalidStateTransitionError,
     NotFoundError,
+    StaleDataError,
     ValidationError,
 )
 from hotel.domain.money import Money
 from hotel.domain.paging import Page, PageRequest
 from hotel.domain.period import StayPeriod
 from hotel.domain.reservations import (
+    MAX_NIGHTS,
     BookedRoom,
     CancellationPolicy,
     Reservation,
+    ReservationStatus,
     RoomNight,
     RoomRequest,
     reservation_code,
@@ -190,6 +194,156 @@ class ReservationService:
                 total=str(quote.total),
             )
             return uow.reservations.get(reservation.id)
+
+    # ------------------------------------------------------------ changing
+    def preview_change(
+        self,
+        actor: Actor,
+        reservation_id: int,
+        *,
+        period: StayPeriod,
+        rooms: list[RoomRequest],
+    ) -> tuple[Reservation, Quote]:
+        """Check a change completely and return (current reservation, new price)."""
+        require_staff(actor)
+        with self._uow() as uow:
+            reservation = self._load(uow, reservation_id)
+            return reservation, self._plan_change(uow, reservation, period, rooms)
+
+    def modify(
+        self,
+        actor: Actor,
+        reservation_id: int,
+        *,
+        version: int,
+        period: StayPeriod,
+        rooms: list[RoomRequest],
+    ) -> Reservation:
+        """Scenario §4.4: change dates, rooms or occupants when availability permits.
+
+        Nights that stay the same keep the price locked when they were booked;
+        added nights are priced at today's rate.
+        """
+        require_staff(actor)
+        with self._uow() as uow:
+            reservation = self._load(uow, reservation_id)
+            if reservation.version != version:
+                raise StaleDataError(entity="reservation", id=reservation_id)
+            before_period, before_total = reservation.period, reservation.accommodation_total
+            quote = self._plan_change(uow, reservation, period, rooms)
+            reservation.period = period
+            reservation.rooms = [
+                BookedRoom(line.room.id, line.request.adults, line.request.children)
+                for line in quote.lines
+            ]
+            reservation.nights = [night for line in quote.lines for night in line.nights]
+            uow.reservations.update(reservation)
+            uow.reservations.replace_rooms_and_nights(reservation)
+            record(
+                uow,
+                self._clock,
+                actor,
+                "reservation.modified",
+                entity="reservation",
+                entity_id=reservation.id,
+                before=f"{before_period.arrival}/{before_period.departure}",
+                after=f"{period.arrival}/{period.departure}",
+                total_before=str(before_total),
+                total_after=str(quote.total),
+            )
+            return uow.reservations.get(reservation.id)
+
+    def _plan_change(
+        self,
+        uow: UnitOfWork,
+        reservation: Reservation,
+        period: StayPeriod,
+        rooms: list[RoomRequest],
+    ) -> Quote:
+        today = self._clock.today()
+        validate_room_requests(rooms)
+        if reservation.status is ReservationStatus.CHECKED_IN:
+            # The guest is in the house: only the departure (and who sleeps where
+            # in the same rooms) can change. Moving rooms is a separate operation.
+            same_rooms = {r.room_id for r in rooms} == {r.room_id for r in reservation.rooms}
+            if period.arrival != reservation.period.arrival or not same_rooms:
+                raise BusinessRuleViolation("reservation.checked_in_limits")
+            if period.departure <= today:
+                raise ValidationError(
+                    "reservation.departure_in_past",
+                    fields={"departure": "reservation.departure_in_past"},
+                )
+            if period.nights > MAX_NIGHTS:
+                raise ValidationError("reservation.too_long", max=MAX_NIGHTS)
+        elif reservation.status is ReservationStatus.CONFIRMED:
+            validate_stay(period, today)
+        else:
+            raise InvalidStateTransitionError(
+                "reservation.not_modifiable", current=reservation.status.value
+            )
+        checked = self._check_rooms(uow, period, rooms, exclude_reservation_id=reservation.id)
+        locked = {(n.room_id, n.night): n.rate for n in reservation.nights}
+        lines = [
+            QuoteLine(
+                room,
+                request,
+                [
+                    RoomNight(room.id, night, self._kept_or_current(locked, room, night))
+                    for night in period.each_night()
+                ],
+            )
+            for room, request in checked
+        ]
+        return Quote(period, lines)
+
+    def _kept_or_current(self, locked: dict, room: Room, night: date) -> Money:
+        """A night that was already booked keeps its price; a new night costs today's rate."""
+        if (room.id, night) in locked:
+            return locked[(room.id, night)]
+        return self._rate_for(room, night)
+
+    # ------------------------------------------------------------ cancelling
+    def cancellation_fee(self, actor: Actor, reservation_id: int) -> Money:
+        """What cancelling now would cost (raises if it is no longer possible)."""
+        require_staff(actor)
+        with self._uow() as uow:
+            reservation = self._load(uow, reservation_id)
+            self._ensure_cancellable(reservation)
+            return self.policy.fee_for(reservation, self._clock.now(), self._clock.hotel_tz)
+
+    def cancel(self, actor: Actor, reservation_id: int, *, version: int) -> Reservation:
+        """Business rule BR11. The rooms are released immediately."""
+        require_staff(actor)
+        now = self._clock.now()
+        with self._uow() as uow:
+            reservation = self._load(uow, reservation_id)
+            if reservation.version != version:
+                raise StaleDataError(entity="reservation", id=reservation_id)
+            self._ensure_cancellable(reservation)
+            fee = self.policy.fee_for(reservation, now, self._clock.hotel_tz)
+            reservation.transition(ReservationStatus.CANCELLED)
+            reservation.cancellation_fee = fee
+            reservation.cancelled_at = now
+            uow.reservations.update(reservation)
+            uow.reservations.release_nights(reservation.id)
+            record(
+                uow,
+                self._clock,
+                actor,
+                "reservation.cancelled",
+                entity="reservation",
+                entity_id=reservation.id,
+                fee=str(fee),
+                total=str(reservation.accommodation_total),
+            )
+            return uow.reservations.get(reservation.id)
+
+    @staticmethod
+    def _ensure_cancellable(reservation: Reservation) -> None:
+        if reservation.status is not ReservationStatus.CONFIRMED:
+            raise InvalidStateTransitionError(
+                "reservation.not_cancellable", current=reservation.status.value
+            )
 
     # ------------------------------------------------------------ reading
     def get(self, actor: Actor, reservation_id: int) -> Reservation:

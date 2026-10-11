@@ -1,0 +1,32 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/reservations.html" import stay -%}
+{% block title %}{{ _("Cancel reservation") }}{% endblock %}
+{% block page_title %}{{ _("Cancel reservation") }} <span dir="ltr">{{ reservation.code }}</span>{% endblock %}
+{% block content %}
+<section class="panel panel--narrow">
+  <dl class="facts">
+    <div><dt>{{ _("Guest") }}</dt><dd>{{ reservation.guest_name }}</dd></div>
+    <div><dt>{{ _("Stay") }}</dt><dd>{{ stay(reservation.period) }}</dd></div>
+    <div><dt>{{ _("Accommodation total (before tax)") }}</dt><dd>{{ reservation.accommodation_total | money }}</dd></div>
+  </dl>
+  {%- if problem %}
+  <div class="alert alert--danger" role="alert">{{ icon("alert") }}<p>{{ problem }}</p></div>
+  <a class="button button--ghost" href="{{ url_for('reservations.detail', reservation_id=reservation.id) }}">{{ _("Back") }}</a>
+  {%- else %}
+  {%- if fee.is_zero() %}
+  <div class="alert alert--success">{{ icon("check") }}<p>{{ _("Cancelling now is free (free until %(when)s).", when=free_until | datetimeformat("medium")) }}</p></div>
+  {%- else %}
+  <div class="alert alert--warning">{{ icon("alert") }}<p>{{ _("Arrival is less than 48 hours away: cancelling now costs %(fee)s (20%% of the accommodation).", fee=fee | money) }}</p></div>
+  {%- endif %}
+  <form class="form-actions" method="post">
+    {{ csrf() }}
+    <input type="hidden" name="form_token" value="{{ form_token }}">
+    <input type="hidden" name="version" value="{{ reservation.version }}">
+    <button class="button button--danger" type="submit">{{ _("Cancel the reservation") }}</button>
+    <a class="button button--ghost" href="{{ url_for('reservations.detail', reservation_id=reservation.id) }}">{{ _("Keep it") }}</a>
+  </form>
+  {%- endif %}
+</section>
+{% endblock %}

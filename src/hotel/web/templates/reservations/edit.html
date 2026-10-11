@@ -1,0 +1,87 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/reservations.html" import stay -%}
+{%- set checked_in = reservation.status == "CHECKED_IN" -%}
+{%- set v = values if values else {} -%}
+{% block title %}{{ _("Change reservation") }}{% endblock %}
+{% block page_title %}{{ _("Change reservation") }} <span dir="ltr">{{ reservation.code }}</span>{% endblock %}
+{% block content %}
+{%- if reservation.status not in ("CONFIRMED", "CHECKED_IN") %}
+<div class="alert alert--warning"><p>{{ _("This reservation can no longer be changed.") }}</p></div>
+{%- endif %}
+{{ form_errors(errors) }}
+
+<section class="panel panel--wide">
+  <p class="muted">{{ _("Currently:") }} {{ stay(reservation.period) }} · {{ reservation.accommodation_total | money }}</p>
+  {%- if checked_in %}<p class="muted">{{ _("The guest is in the house: only the departure date and the occupants can change.") }}</p>{% endif %}
+  <form class="stack" method="post" action="{{ url_for('reservations.edit_review', reservation_id=reservation.id) }}" novalidate>
+    {{ csrf() }}
+    <div class="grid grid--fields">
+      {%- if checked_in %}
+      <input type="hidden" name="arrival" value="{{ reservation.period.arrival }}">
+      <div class="field"><span class="field__label">{{ _("Arrival") }}</span><span>{{ reservation.period.arrival | dateformat("medium") }}</span></div>
+      {%- else %}
+      {{ field("arrival", _("Arrival"), type="date", value=v.get("arrival", reservation.period.arrival), error=errors.arrival) }}
+      {%- endif %}
+      {{ field("departure", _("Departure"), type="date", value=v.get("departure", reservation.period.departure), error=errors.departure) }}
+    </div>
+    <div class="table-wrap table-wrap--flat">
+      <table class="table">
+        <thead><tr><th scope="col">{{ _("Room") }}</th><th scope="col">{{ _("Adults") }}</th><th scope="col">{{ _("Children") }}</th></tr></thead>
+        <tbody>
+          {%- for booked in reservation.rooms %}
+          {%- set i = loop.index0 %}
+          {%- set chosen = v.get("room_" ~ i, booked.room_id | string) %}
+          <tr>
+            <td>
+              {%- if checked_in %}
+              <input type="hidden" name="room_{{ i }}" value="{{ booked.room_id }}"><strong dir="ltr">{{ booked.number }}</strong>
+              {%- else %}
+              <select class="field__input" name="room_{{ i }}" aria-label="{{ _('Room') }}">
+                {%- if reservation.rooms | length > 1 %}<option value="">{{ _("Remove this room") }}</option>{% endif %}
+                {%- for room in rooms %}
+                <option value="{{ room.id }}" {%- if chosen == room.id | string %} selected{% endif %}>{{ room.number }} · {{ room.category_name }} · {{ room.capacity }} · {{ room.nightly_rate | money }}</option>
+                {%- endfor %}
+              </select>
+              {%- endif %}
+            </td>
+            <td><input class="field__input field__input--tiny" type="number" min="1" name="adults_{{ i }}" value="{{ v.get('adults_' ~ i, booked.adults) }}" aria-label="{{ _('Adults') }}"></td>
+            <td><input class="field__input field__input--tiny" type="number" min="0" name="children_{{ i }}" value="{{ v.get('children_' ~ i, booked.children) }}" aria-label="{{ _('Children') }}"></td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="form-actions">
+      <button class="button button--primary" type="submit">{{ _("Check availability and price") }}</button>
+      <a class="button button--ghost" href="{{ url_for('reservations.detail', reservation_id=reservation.id) }}">{{ _("Cancel") }}</a>
+    </div>
+  </form>
+</section>
+
+{%- if quote %}
+<section class="panel panel--wide panel--accent">
+  <h2 class="panel__title">{{ _("New price") }}</h2>
+  <dl class="facts">
+    <div><dt>{{ _("New dates") }}</dt><dd>{{ stay(quote.period) }}</dd></div>
+    <div><dt>{{ _("Before") }}</dt><dd>{{ reservation.accommodation_total | money }}</dd></div>
+    <div><dt>{{ _("After") }}</dt><dd><strong>{{ quote.total | money }}</strong></dd></div>
+  </dl>
+  <p class="muted">{{ _("Nights already booked keep their price; added nights use today's rate.") }}</p>
+  <form method="post" action="{{ url_for('reservations.change', reservation_id=reservation.id) }}">
+    {{ csrf() }}
+    <input type="hidden" name="form_token" value="{{ form_token }}">
+    <input type="hidden" name="version" value="{{ reservation.version }}">
+    <input type="hidden" name="arrival" value="{{ quote.period.arrival }}">
+    <input type="hidden" name="departure" value="{{ quote.period.departure }}">
+    {%- for line in quote.lines %}
+    <input type="hidden" name="room_{{ loop.index0 }}" value="{{ line.room.id }}">
+    <input type="hidden" name="adults_{{ loop.index0 }}" value="{{ line.request.adults }}">
+    <input type="hidden" name="children_{{ loop.index0 }}" value="{{ line.request.children }}">
+    {%- endfor %}
+    <button class="button button--primary" type="submit">{{ icon("check") }}{{ _("Save the change") }}</button>
+  </form>
+</section>
+{%- endif %}
+{% endblock %}
