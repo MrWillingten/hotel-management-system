@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 08:20+0100\n"
+"POT-Creation-Date: 2026-10-11 08:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -168,6 +168,9 @@ msgstr "12 حرفًا على الأقل. الجملة القصيرة سهلة ا
 
 msgid "Audit log"
 msgstr "سجل التدقيق"
+
+msgid "Availability"
+msgstr "التوفر"
 
 msgid "Available"
 msgstr "متاحة"
@@ -491,6 +494,9 @@ msgstr "انتهت صلاحية النموذج"
 msgid "Foundations: sign-in, themes, languages"
 msgstr "الأساسيات: تسجيل الدخول والسمات واللغات"
 
+msgid "Free"
+msgstr "متاحة"
+
 #, python-format
 msgid "Free cancellation until %(when)s. After that, cancelling costs 20%% of the accommodation."
 msgstr "الإلغاء مجاني حتى %(when)s. بعد ذلك، يكلف الإلغاء 20%% من ثمن الإقامة."
@@ -577,6 +583,9 @@ msgstr "آخر ليلة مغلقة"
 msgid "Last name"
 msgstr "اللقب"
 
+msgid "Legend"
+msgstr "مفتاح الألوان"
+
 msgid "Light"
 msgstr "فاتح"
 
@@ -649,6 +658,9 @@ msgstr "التالي"
 msgid "Next page"
 msgstr "الصفحة التالية"
 
+msgid "Next week"
+msgstr "الأسبوع التالي"
+
 msgid "Night of"
 msgstr "ليلة"
 
@@ -693,6 +705,9 @@ msgstr "لا توجد غرفة أخرى متاحة في هذه التواريخ.
 msgid "No reservation matches these filters."
 msgstr "لا يوجد حجز يطابق هذه المرشحات."
 
+msgid "No reservations yet."
+msgstr "لا توجد حجوزات بعد."
+
 msgid "No room is free for every night of this stay."
 msgstr "لا توجد غرفة متاحة طوال ليالي هذه الإقامة."
 
@@ -733,6 +748,9 @@ msgstr "جواز السفر"
 msgid "Password"
 msgstr "كلمة المرور"
 
+msgid "Past"
+msgstr "منقضية"
+
 msgid "Phone"
 msgstr "الهاتف"
 
@@ -744,6 +762,9 @@ msgstr "تفضيلات مفيدة للموظفين. بدون معلومات حس
 
 msgid "Previous"
 msgstr "السابقة"
+
+msgid "Previous week"
+msgstr "الأسبوع السابق"
 
 msgid "Price locked at booking"
 msgstr "السعر المثبت عند الحجز"
@@ -816,9 +837,6 @@ msgstr "الحجوزات"
 msgid "Reservations and availability"
 msgstr "الحجوزات والتوفر"
 
-msgid "Reservations arrive in the next version of the application."
-msgstr "ستتوفر الحجوزات في الإصدار القادم من التطبيق."
-
 msgid "Reserved"
 msgstr "محجوزة"
 
@@ -866,6 +884,10 @@ msgstr "رقم الغرفة"
 
 msgid "Rooms"
 msgstr "الغرف"
+
+#, python-format
+msgid "Rooms and nights from %(start)s"
+msgstr "الغرف والليالي ابتداءً من %(start)s"
 
 msgid "Rooms free for the same dates:"
 msgstr "غرف متاحة في التواريخ نفسها:"
@@ -915,6 +937,10 @@ msgstr "الحجم"
 
 msgid "Skip to content"
 msgstr "انتقل إلى المحتوى"
+
+#, python-format
+msgid "Some bookings have more guests than this capacity (%(codes)s). Change them first."
+msgstr "بعض الحجوزات تضم أشخاصًا أكثر من هذه السعة (%(codes)s). عدّلها أولًا."
 
 msgid "Some fields need your attention."
 msgstr "بعض الحقول تحتاج إلى مراجعة."
@@ -998,8 +1024,8 @@ msgid "The request couldn't be understood."
 msgstr "تعذّر فهم الطلب."
 
 #, python-format
-msgid "The room is already closed on %(count)s of these nights (%(first)s to %(last)s)."
-msgstr "الغرفة مغلقة بالفعل في %(count)s من هذه الليالي (من %(first)s إلى %(last)s)."
+msgid "The room is already closed or booked on %(count)s of these nights (%(first)s to %(last)s)."
+msgstr "الغرفة مغلقة أو محجوزة بالفعل في %(count)s من هذه الليالي (من %(first)s إلى %(last)s)."
 
 msgid "The two passwords are different."
 msgstr "كلمتا المرور غير متطابقتين."
@@ -1058,6 +1084,10 @@ msgstr "لم يعد بالإمكان تعديل هذا الحجز."
 msgid "This room has never been closed for maintenance."
 msgstr "لم تُغلق هذه الغرفة للصيانة من قبل."
 
+#, python-format
+msgid "This room still has bookings (%(codes)s). Move or cancel them first."
+msgstr "لا تزال لهذه الغرفة حجوزات (%(codes)s). انقلها أو ألغها أولًا."
+
 msgid "This username is already used."
 msgstr "اسم المستخدم هذا مستخدم بالفعل."
 
@@ -1067,6 +1097,9 @@ msgstr "المنطقة الزمنية: %(tz)s"
 
 msgid "To"
 msgstr "إلى"
+
+msgid "Today"
+msgstr "اليوم"
 
 msgid "Tonight"
 msgstr "الليلة"
@@ -1130,6 +1163,9 @@ msgstr "تم تسجيل الاطلاع على الرقم الكامل في سج�
 
 msgid "We couldn't find what you were looking for."
 msgstr "لم نعثر على ما تبحث عنه."
+
+msgid "Weeks"
+msgstr "الأسابيع"
 
 #, python-format
 msgid "Welcome, %(name)s."

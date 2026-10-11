@@ -14,9 +14,9 @@ bp = Blueprint("dashboard", __name__)
 # Shown on the dashboard until the real front-desk figures arrive in Sprint 4.
 ROADMAP = (
     (1, _l("Foundations: sign-in, themes, languages"), "done"),
-    (2, _l("Rooms, guests, staff and audit log"), "next"),
-    (3, _l("Reservations and availability"), "planned"),
-    (4, _l("Front desk and billing"), "planned"),
+    (2, _l("Rooms, guests, staff and audit log"), "done"),
+    (3, _l("Reservations and availability"), "done"),
+    (4, _l("Front desk and billing"), "next"),
     (5, _l("Reports, operations and translations"), "planned"),
     (6, _l("Hardening, report and demo"), "planned"),
 )

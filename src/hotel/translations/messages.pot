@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 08:20+0100\n"
+"POT-Creation-Date: 2026-10-11 08:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -173,6 +173,9 @@ msgid ""
 msgstr ""
 
 msgid "Audit log"
+msgstr ""
+
+msgid "Availability"
 msgstr ""
 
 msgid "Available"
@@ -499,6 +502,9 @@ msgstr ""
 msgid "Foundations: sign-in, themes, languages"
 msgstr ""
 
+msgid "Free"
+msgstr ""
+
 #, python-format
 msgid ""
 "Free cancellation until %(when)s. After that, cancelling costs 20%% of "
@@ -589,6 +595,9 @@ msgstr ""
 msgid "Last name"
 msgstr ""
 
+msgid "Legend"
+msgstr ""
+
 msgid "Light"
 msgstr ""
 
@@ -661,6 +670,9 @@ msgstr ""
 msgid "Next page"
 msgstr ""
 
+msgid "Next week"
+msgstr ""
+
 msgid "Night of"
 msgstr ""
 
@@ -705,6 +717,9 @@ msgstr ""
 msgid "No reservation matches these filters."
 msgstr ""
 
+msgid "No reservations yet."
+msgstr ""
+
 msgid "No room is free for every night of this stay."
 msgstr ""
 
@@ -745,6 +760,9 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
+msgid "Past"
+msgstr ""
+
 msgid "Phone"
 msgstr ""
 
@@ -755,6 +773,9 @@ msgid "Preferences useful to the staff. No sensitive information."
 msgstr ""
 
 msgid "Previous"
+msgstr ""
+
+msgid "Previous week"
 msgstr ""
 
 msgid "Price locked at booking"
@@ -828,9 +849,6 @@ msgstr ""
 msgid "Reservations and availability"
 msgstr ""
 
-msgid "Reservations arrive in the next version of the application."
-msgstr ""
-
 msgid "Reserved"
 msgstr ""
 
@@ -883,6 +901,10 @@ msgstr ""
 msgid "Rooms"
 msgstr ""
 
+#, python-format
+msgid "Rooms and nights from %(start)s"
+msgstr ""
+
 msgid "Rooms free for the same dates:"
 msgstr ""
 
@@ -930,6 +952,12 @@ msgid "Size"
 msgstr ""
 
 msgid "Skip to content"
+msgstr ""
+
+#, python-format
+msgid ""
+"Some bookings have more guests than this capacity (%(codes)s). Change "
+"them first."
 msgstr ""
 
 msgid "Some fields need your attention."
@@ -1017,8 +1045,8 @@ msgstr ""
 
 #, python-format
 msgid ""
-"The room is already closed on %(count)s of these nights (%(first)s to "
-"%(last)s)."
+"The room is already closed or booked on %(count)s of these nights "
+"(%(first)s to %(last)s)."
 msgstr ""
 
 msgid "The two passwords are different."
@@ -1084,6 +1112,10 @@ msgstr ""
 msgid "This room has never been closed for maintenance."
 msgstr ""
 
+#, python-format
+msgid "This room still has bookings (%(codes)s). Move or cancel them first."
+msgstr ""
+
 msgid "This username is already used."
 msgstr ""
 
@@ -1092,6 +1124,9 @@ msgid "Time zone: %(tz)s"
 msgstr ""
 
 msgid "To"
+msgstr ""
+
+msgid "Today"
 msgstr ""
 
 msgid "Tonight"
@@ -1157,6 +1192,9 @@ msgid "Viewing the full number was recorded in the audit log."
 msgstr ""
 
 msgid "We couldn't find what you were looking for."
+msgstr ""
+
+msgid "Weeks"
 msgstr ""
 
 #, python-format

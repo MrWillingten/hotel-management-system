@@ -15,10 +15,12 @@ from datetime import timedelta
 from hotel.bootstrap import Services
 from hotel.domain.actor import Actor
 from hotel.domain.enums import Role
-from hotel.domain.errors import BusinessRuleViolation
+from hotel.domain.errors import BusinessRuleViolation, HotelError
 from hotel.domain.guests import GuestDetails, search_key
 from hotel.domain.money import Money
 from hotel.domain.paging import PageRequest
+from hotel.domain.period import StayPeriod
+from hotel.domain.reservations import RoomRequest
 
 DEMO_FLAG = "demo_data"
 
@@ -97,6 +99,7 @@ class DemoResult:
     accounts: dict[str, str] = field(default_factory=dict)  # username -> password (shown once)
     rooms: int = 0
     guests: int = 0
+    reservations: int = 0
 
 
 def _demo_password() -> str:
@@ -161,9 +164,42 @@ def seed_demo(services: Services, *, guests: int = 40, seed: int = 2026) -> Demo
             )
         result.guests += 1
 
+    result.reservations = _demo_reservations(services, system, rng)
+
     with services.uow_factory() as uow:
         uow.settings.set(DEMO_FLAG, "1")
     return result
+
+
+def _demo_reservations(services: Services, system: Actor, rng: random.Random) -> int:
+    """About two dozen bookings over the next three weeks, a few of them cancelled."""
+    today = services.clock.today()
+    rooms = [o.room for o in services.rooms.list_rooms(system) if o.room.in_service]
+    guests = [
+        g
+        for g in services.guests.search(system, "", PageRequest(per_page=100)).items
+        if not g.do_not_rent
+    ]
+    created = 0
+    if not rooms or not guests:
+        return created
+    for attempt in range(40):
+        room = rng.choice(rooms)
+        arrival = today + timedelta(days=rng.randrange(0, 21))
+        period = StayPeriod(arrival, arrival + timedelta(days=rng.randrange(1, 6)))
+        try:
+            reservation = services.reservations.create(
+                system,
+                guest_id=rng.choice(guests).id,
+                period=period,
+                rooms=[RoomRequest(room.id, rng.randint(1, room.capacity))],
+            )
+        except HotelError:
+            continue  # that room was already taken: try another combination
+        created += 1
+        if attempt % 11 == 5 and arrival > today + timedelta(days=3):
+            services.reservations.cancel(system, reservation.id, version=reservation.version)
+    return created
 
 
 def _demo_account(

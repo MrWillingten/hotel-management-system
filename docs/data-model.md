@@ -49,18 +49,19 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
         in_service, notes, version)
 ✅ maintenance(id PK, room_id FK, start_date, end_date, reason, created_by FK,
                CK end_date > start_date)
-   guest(id PK, first_name, last_name, id_doc_type CK∈{CIN,PASSPORT}, id_doc_number,
+✅ guest(id PK, first_name, last_name, id_doc_type CK∈{CIN,PASSPORT}, id_doc_number,
          nationality, phone, email, is_vip, do_not_rent, notes, is_active, created_at,
          version, UQ(id_doc_type, id_doc_number))
-   reservation(id PK, code UQ, guest_id FK, arrival, departure,
+✅ reservation(id PK, code UQ, guest_id FK, arrival, departure,
                status CK∈{CONFIRMED,CHECKED_IN,CHECKED_OUT,CANCELLED,NO_SHOW},
                cancellation_fee_mill, created_by FK, created_at, checked_in_at,
                checked_out_at, cancelled_at, version, CK departure > arrival)
-   reservation_room(reservation_id FK, room_id FK, adults CK≥1, children CK≥0,
+✅ reservation_room(reservation_id FK, room_id FK, adults CK≥1, children CK≥0,
                     PK(reservation_id, room_id))
-✅ room_night(room_id FK, night, maintenance_id FK, PK(room_id, night))
-              Sprint 3 rebuilds it to: + reservation_id FK NULL, rate_mill,
-              CK exactly one of reservation_id / maintenance_id is set
+✅ room_night(room_id FK, night, reservation_id FK NULL, maintenance_id FK NULL,
+              rate_mill, PK(room_id, night),
+              CK exactly one of reservation_id / maintenance_id is set,
+              CK a reserved night has a rate)
    service(id PK, name UQ, unit_price_mill CK≥0, is_active)
    service_charge(id PK, reservation_id FK, service_id FK, quantity CK 1..99,
                   unit_price_mill, charge_date, created_by FK)
@@ -77,9 +78,9 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
                 unit_mill, amount_mill, UQ(invoice_id, line_no))
 ✅ audit_log(id PK, at, user_id FK NULL, action, entity, entity_id, details, ip,
              prev_hash, hash)
-   setting(key PK, value)
-   counter(name PK, year, value)                    gap-free invoice numbers
-   form_token(token_hash PK, user_id FK, created_at) one-time submit tokens
+✅ setting(key PK, value)
+✅ counter(name, year, value, PK(name, year))                    gap-free invoice numbers
+✅ form_token(token_hash PK, user_id FK, created_at) one-time submit tokens
 ```
 
 ## Conventions

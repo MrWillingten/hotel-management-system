@@ -1,0 +1,65 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Availability") }}{% endblock %}
+{% block page_title %}{{ _("Availability") }}{% endblock %}
+{% block content %}
+{%- set labels = {"FREE": _("Free"), "RESERVED": _("Reserved"), "OCCUPIED": _("Occupied"),
+                  "MAINTENANCE": _("Maintenance"), "OUT_OF_SERVICE": _("Out of service"), "PAST": _("Past")} -%}
+<div class="page-actions">
+  <nav class="form-actions" aria-label="{{ _('Weeks') }}">
+    <a class="button button--ghost button--small" href="{{ url_for('availability.index', start=previous) }}">{{ _("Previous week") }}</a>
+    <a class="button button--ghost button--small" href="{{ url_for('availability.index') }}">{{ _("Today") }}</a>
+    <a class="button button--ghost button--small" href="{{ url_for('availability.index', start=following) }}">{{ _("Next week") }}</a>
+  </nav>
+  <ul class="legend" aria-label="{{ _('Legend') }}">
+    {%- for kind in ("FREE", "RESERVED", "OCCUPIED", "MAINTENANCE", "OUT_OF_SERVICE") %}
+    <li><span class="cell-swatch cell--{{ kind | lower }}" aria-hidden="true"></span>{{ labels[kind] }}</li>
+    {%- endfor %}
+  </ul>
+</div>
+
+<div class="table-wrap grid-wrap">
+  <table class="table availability">
+    <caption class="visually-hidden">{{ _("Rooms and nights from %(start)s", start=calendar.start | dateformat("long")) }}</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="availability__room">{{ _("Room") }}</th>
+        {%- for day in calendar.days %}
+        <th scope="col" class="availability__day{% if day == calendar.today %} availability__day--today{% endif %}">
+          <span class="availability__weekday">{{ day | dateformat("EEE") }}</span>
+          <span class="availability__date" dir="ltr">{{ day.day }}</span>
+        </th>
+        {%- endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {%- for row in calendar.rows %}
+      <tr>
+        <th scope="row" class="availability__room">
+          <a href="{{ url_for('rooms.detail', room_id=row.room.id) }}" dir="ltr">{{ row.room.number }}</a>
+          <span class="muted">{{ row.room.category_name }}</span>
+        </th>
+        {%- for cell in row.cells %}
+        {%- set label = labels[cell.kind] ~ (" · " ~ cell.code ~ " · " ~ cell.guest_name if cell.code else "") %}
+        <td class="cell cell--{{ cell.kind | lower }}">
+          {%- if cell.reservation_id %}
+          <a class="cell__link" href="{{ url_for('reservations.detail', reservation_id=cell.reservation_id) }}" title="{{ label }}">
+            {%- if cell.starts_here %}<span class="cell__text">{{ cell.guest_name.split(" ")[-1] }}</span>{% endif %}
+            <span class="visually-hidden">{{ row.room.number }}, {{ cell.night | dateformat("medium") }}: {{ label }}</span>
+          </a>
+          {%- elif cell.kind == "FREE" %}
+          <a class="cell__link" title="{{ _('Book room %(number)s', number=row.room.number) }}"
+             href="{{ url_for('reservations.new', arrival=cell.night, departure=cell.night + timedelta(days=1), room=row.room.id, guests=1) }}">
+            <span class="visually-hidden">{{ _("Book room %(number)s", number=row.room.number) }}, {{ cell.night | dateformat("medium") }}</span>
+          </a>
+          {%- else %}
+          <span class="visually-hidden">{{ row.room.number }}, {{ cell.night | dateformat("medium") }}: {{ label }}</span>
+          {%- endif %}
+        </td>
+        {%- endfor %}
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

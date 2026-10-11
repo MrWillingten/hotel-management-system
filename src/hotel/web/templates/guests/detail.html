@@ -2,6 +2,7 @@
 {%- from "macros/forms.html" import csrf, field, form_errors, checkbox -%}
 {%- from "macros/guests.html" import flags -%}
 {%- from "macros/icons.html" import icon -%}
+{%- from "macros/reservations.html" import status_badge, stay -%}
 {% block title %}{{ guest.full_name }}{% endblock %}
 {% block page_title %}{{ guest.full_name }}{% endblock %}
 {% block content %}
@@ -65,7 +66,30 @@
 </div>
 
 <section class="panel">
-  <h2 class="panel__title">{{ _("Reservation history") }}</h2>
-  <p class="muted">{{ _("Reservations arrive in the next version of the application.") }}</p>
+  <div class="page-actions">
+    <h2 class="panel__title">{{ _("Reservation history") }}</h2>
+    {%- if not guest.do_not_rent %}
+    <a class="button button--ghost button--small" href="{{ url_for('reservations.new', guest_id=guest.id) }}">{{ _("New reservation") }}</a>
+    {%- endif %}
+  </div>
+  {%- if reservations %}
+  <div class="table-wrap table-wrap--flat">
+    <table class="table">
+      <thead><tr><th scope="col">{{ _("Code") }}</th><th scope="col">{{ _("Dates") }}</th><th scope="col">{{ _("Rooms") }}</th><th scope="col">{{ _("Status") }}</th></tr></thead>
+      <tbody>
+        {%- for r in reservations %}
+        <tr>
+          <td dir="ltr"><a href="{{ url_for('reservations.detail', reservation_id=r.id) }}">{{ r.code }}</a></td>
+          <td>{{ stay(r.period) }}</td>
+          <td dir="ltr">{{ r.rooms | map(attribute="number") | join(", ") or "—" }}</td>
+          <td>{{ status_badge(r.status) }}</td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+  {%- else %}
+  <p class="muted">{{ _("No reservations yet.") }}</p>
+  {%- endif %}
 </section>
 {% endblock %}

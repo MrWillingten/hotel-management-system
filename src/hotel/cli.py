@@ -140,7 +140,10 @@ def cmd_seed(args: argparse.Namespace) -> int:
             )
             return 1
         raise
-    print(f"Demo data added: {result.rooms} rooms, {result.guests} fictional guests.")
+    print(
+        f"Demo data added: {result.rooms} rooms, {result.guests} fictional guests, "
+        f"{result.reservations} reservations."
+    )
     if result.accounts:
         print("Demo accounts (shown only once, write them down):")
         for username, password in result.accounts.items():

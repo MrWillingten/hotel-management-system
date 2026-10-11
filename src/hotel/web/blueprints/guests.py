@@ -122,6 +122,7 @@ def _detail_page(guest_id: int, *, revealed: str | None = None, errors=None, sta
     return render_template(
         "guests/detail.html",
         guest=guest,
+        reservations=services().reservations.for_guest(current_actor(), guest_id),
         revealed=revealed,
         country=names.get(guest.nationality or "", guest.nationality),
         errors=errors or forms.FormErrors(),

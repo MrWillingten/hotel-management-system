@@ -168,6 +168,7 @@ class RoomService:
             room.number, room.category_id, room.capacity = number, category_id, capacity
             room.nightly_rate, room.in_service, room.notes = nightly_rate, in_service, notes
             self._check_room(uow, room)
+            self._protect_future_bookings(uow, room)
             uow.rooms.update(room)
             names = ("number", "category", "capacity", "nightly_rate", "in_service", "notes")
             after = (number, category_id, capacity, nightly_rate, in_service, notes)
@@ -278,6 +279,29 @@ class RoomService:
         if state == "CONFIRMED":
             return RoomStatus.RESERVED
         return RoomStatus.AVAILABLE
+
+    def _protect_future_bookings(self, uow: UnitOfWork, room: Room) -> None:
+        """Story 3.8: a room change must never strand a guest who already booked it."""
+        bookings = uow.reservations.future_bookings_for_room(room.id, self._clock.today())
+        if not bookings:
+            return
+        if not room.in_service:
+            raise ConflictError(
+                "room.has_future_bookings",
+                codes=", ".join(b.code for b in bookings[:5]),
+                count=len(bookings),
+            )
+        too_many = [
+            b
+            for b in bookings
+            if any(r.room_id == room.id and r.occupants > room.capacity for r in b.rooms)
+        ]
+        if too_many:
+            raise ConflictError(
+                "room.capacity_conflict",
+                fields={"capacity": "room.capacity_conflict"},
+                codes=", ".join(b.code for b in too_many[:5]),
+            )
 
     @staticmethod
     def _load(uow: UnitOfWork, room_id: int) -> Room:

@@ -44,13 +44,19 @@ merge (an inline test password; a template hidden by a too-broad
 `.gitignore` pattern). Lesson: anchor ignore patterns, and never chain a
 commit with a push.
 
-### Sprint 3 – Reservations
+### Sprint 3 – Reservations ✅
 
-Availability search · multi-room booking with per-night locked prices ·
-conflict suggestions · availability grid · modification with optimistic locking ·
-cancellation fee (47:59 / 48:00 / 48:01 tests) · two-thread race test and
-one-time form tokens · room edits that would break bookings are refused ·
-guest reservation history.
+| ID | Story | PR | Status |
+|---|---|---|---|
+| 3.1 / 3.2 / 3.3 / 3.7 | Availability, booking, alternatives, concurrency | #33 | ✅ |
+| 3.5 / 3.6 | Change and cancel (BR11) | #34 | ✅ |
+| 3.4 / 3.8 / 3.9 | Grid, room-change guards, guest history | #35 | ✅ |
+
+Retrospective: the riskiest sprint finished on time. A test exposed a real
+availability bug (maintenance nights skipped) that the database's
+`room_night` key had silently contained; the layered defence (Python
+check + transaction + key) did exactly what ADR 0004 promised. Lesson:
+test every query with *both* kinds of blocked night.
 
 ### Sprint 4 – Front desk and billing
 

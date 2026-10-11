@@ -802,3 +802,35 @@ a.user-chip:hover { background: var(--surface-hover); }
 .table tfoot td.num { text-align: end; }
 input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--accent); }
 .button:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Availability grid: colour AND text/legend, never colour alone */
+.legend { display: flex; flex-wrap: wrap; gap: var(--space-3); list-style: none; margin: 0; padding: 0; font-size: var(--text-sm); }
+.legend li { display: inline-flex; align-items: center; gap: var(--space-1); }
+.cell-swatch { width: 0.9rem; height: 0.9rem; border-radius: 3px; border: 1px solid var(--border-strong); }
+.grid-wrap { max-height: 75vh; }
+.availability { border-collapse: separate; border-spacing: 0; font-size: var(--text-xs); }
+.availability th, .availability td { padding: 0; border-block-end: 1px solid var(--border); border-inline-end: 1px solid var(--border); }
+.availability thead th { position: sticky; inset-block-start: 0; z-index: 2; }
+.availability__room {
+  position: sticky; inset-inline-start: 0; z-index: 1;
+  min-width: 7rem; padding: var(--space-2) var(--space-3) !important;
+  background: var(--surface); text-align: start;
+}
+.availability thead .availability__room { z-index: 3; background: var(--surface-sunken); }
+.availability__room .muted { display: block; font-weight: 400; }
+.availability__day { min-width: 2.75rem; padding: var(--space-1) !important; text-align: center !important; }
+.availability__weekday { display: block; font-weight: 400; }
+.availability__date { display: block; font-size: var(--text-sm); color: var(--text); }
+.availability__day--today { background: var(--accent-soft) !important; color: var(--accent-soft-text); }
+.cell { position: relative; height: 2.5rem; } /* contains the screen-reader labels inside the scroll box */
+.cell__link { display: flex; align-items: center; height: 100%; min-height: 2.5rem; padding-inline: var(--space-1); color: inherit; transition: filter var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.cell__link:hover, .cell__link:focus-visible { filter: brightness(0.93); box-shadow: inset 0 0 0 2px var(--accent); outline: none; }
+.cell__text { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 6rem; font-weight: 600; }
+.cell--free { background: var(--surface); }
+.cell--past { background: var(--surface-sunken); }
+.cell--reserved { background: var(--info-soft); color: var(--info-text); }
+.cell--occupied { background: var(--accent-soft); color: var(--accent-soft-text); }
+.cell--maintenance { background: repeating-linear-gradient(135deg, var(--warning-soft) 0 6px, color-mix(in srgb, var(--warning-soft) 60%, var(--warning)) 6px 8px); }
+.cell--out_of_service { background: repeating-linear-gradient(45deg, var(--surface-sunken) 0 6px, var(--border) 6px 8px); }
+.cell-swatch.cell--free { background: var(--surface); }
+.topbar__title [dir="ltr"] { white-space: nowrap; }
