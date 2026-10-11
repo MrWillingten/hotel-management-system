@@ -9,6 +9,17 @@ The interface is available in English (source language), French and Arabic
 
 ## Updating the catalogues after changing text
 
+The quickest way is the helper script, which extracts the strings, merges
+them into both catalogues, optionally fills new ones from a JSON file
+(`{"English text": ["French", "Arabic"]}`), compiles the `.mo` files and
+lists anything still missing:
+
+```bash
+python scripts/i18n_sync.py new_strings.json
+```
+
+The same steps by hand:
+
 Run from the project folder with the virtual environment active:
 
 ```bash
