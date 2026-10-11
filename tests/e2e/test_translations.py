@@ -76,6 +76,8 @@ def test_placeholders_are_kept(language):
                 "%(first)s",
                 "%(last)s",
                 "%(reopens)s",
+                "%(total)s",
+                "%(query)s",
                 "%(tz)s",
                 "%(minutes)s",
                 "%(min_length)s",

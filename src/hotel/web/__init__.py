@@ -18,7 +18,16 @@ from hotel.config import LANGUAGES, ConfigurationError, Settings
 from hotel.domain.money import Money
 from hotel.secret_key import load_or_create_secret_key
 from hotel.web import errors, security
-from hotel.web.blueprints import account, audit, auth, dashboard, preferences, rooms, staff
+from hotel.web.blueprints import (
+    account,
+    audit,
+    auth,
+    dashboard,
+    guests,
+    preferences,
+    rooms,
+    staff,
+)
 from hotel.web.context import SERVICES_KEY
 from hotel.web.preferences import current_theme, select_locale, text_direction
 
@@ -72,6 +81,7 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
         audit.bp,
         auth.bp,
         dashboard.bp,
+        guests.bp,
         preferences.bp,
         rooms.bp,
         staff.bp,

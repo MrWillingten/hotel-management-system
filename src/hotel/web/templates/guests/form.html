@@ -1,0 +1,53 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors, select, textarea, checkbox -%}
+{%- set editing = guest is not none -%}
+{%- set v = values if values else {} -%}
+{%- macro val(name, default="") -%}{{ v.get(name, (guest[name] if editing and guest[name] is not none else default)) }}{%- endmacro -%}
+{% block title %}{{ _("Edit guest") if editing else _("Register a guest") }}{% endblock %}
+{% block page_title %}{{ _("Edit guest") if editing else _("Register a guest") }}{% endblock %}
+{% block content %}
+<section class="panel panel--wide">
+  {{ form_errors(errors) }}
+  {%- if duplicates %}
+  <div class="duplicates">
+    <p><strong>{{ _("Is it one of these guests?") }}</strong></p>
+    <ul>
+      {%- for d in duplicates %}
+      <li><a href="{{ url_for('guests.detail', guest_id=d.id) }}">{{ d.full_name }}</a>
+        <span class="muted" dir="ltr">{{ d.id_doc_type }} {{ d.masked_doc_number }} · {{ d.phone or d.email or "" }}</span></li>
+      {%- endfor %}
+    </ul>
+  </div>
+  {%- endif %}
+  <form class="stack" method="post" novalidate>
+    {{ csrf() }}
+    {%- if editing %}<input type="hidden" name="version" value="{{ guest.version }}">{% endif %}
+    <div class="grid grid--fields">
+      {{ field("first_name", _("First name"), value=val("first_name"), error=errors.first_name, maxlength=60,
+               autocomplete="off", autofocus=not editing) }}
+      {{ field("last_name", _("Last name"), value=val("last_name"), error=errors.last_name, maxlength=60, autocomplete="off") }}
+    </div>
+    <div class="grid grid--fields">
+      {{ select("id_doc_type", _("Identity document"), [("CIN", _("National ID card (CIN)")), ("PASSPORT", _("Passport"))],
+                val("id_doc_type", "CIN"), errors.id_doc_type) }}
+      {{ field("id_doc_number", _("Document number"), value=val("id_doc_number"), error=errors.id_doc_number,
+               maxlength=20, autocomplete="off", hint=_("CIN: 8 digits. Passport: 5 to 20 letters or digits.")) }}
+    </div>
+    {{ select("nationality", _("Nationality"), [("", "—")] + countries, val("nationality"), errors.nationality) }}
+    <div class="grid grid--fields">
+      {{ field("phone", _("Phone"), value=val("phone"), type="tel", error=errors.phone, required=False,
+               maxlength=25, hint=_("With the country code for foreign numbers, e.g. +33 6 12 34 56 78.")) }}
+      {{ field("email", _("E-mail"), value=val("email"), type="email", error=errors.email, required=False, maxlength=254) }}
+    </div>
+    {{ textarea("notes", _("Notes"), value=val("notes"), error=errors.notes, maxlength=500,
+                hint=_("Preferences useful to the staff. No sensitive information.")) }}
+    {%- if duplicates and not editing %}
+    {{ checkbox("confirm_duplicate", _("This is a different person: register anyway")) }}
+    {%- endif %}
+    <div class="form-actions">
+      <button class="button button--primary" type="submit">{{ _("Save changes") if editing else _("Register guest") }}</button>
+      <a class="button button--ghost" href="{{ url_for('guests.detail', guest_id=guest.id) if editing else url_for('guests.index') }}">{{ _("Cancel") }}</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

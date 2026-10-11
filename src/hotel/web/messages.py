@@ -65,6 +65,18 @@ MESSAGES = {
         "The room is already closed on %(count)s of these nights (%(first)s to %(last)s)."
     ),
     "maintenance.already_over": _l("This maintenance period is already over."),
+    "guest.name_invalid": _l("Use 1 to %(max_length)s letters, spaces, hyphens or apostrophes."),
+    "guest.doc_type_invalid": _l("Choose a document type."),
+    "guest.cin_invalid": _l("A CIN number has exactly 8 digits."),
+    "guest.passport_invalid": _l("A passport number has 5 to 20 letters or digits."),
+    "guest.phone_invalid": _l("Enter a phone number of 8 to 15 digits."),
+    "guest.email_invalid": _l("Enter a valid e-mail address."),
+    "guest.nationality_invalid": _l("Choose a country from the list."),
+    "guest.document_taken": _l("A guest with this identity document is already registered."),
+    "guest.probable_duplicate": _l(
+        "A guest with the same name and phone or e-mail already exists."
+    ),
+    "guest.reason_required": _l("Give a reason (at most 200 characters)."),
     "field.not_a_number": _l("Enter a whole number."),
     "field.invalid_date": _l("Enter a valid date."),
     "money.invalid": _l("Enter an amount such as 180 or 180.500."),

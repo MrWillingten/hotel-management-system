@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 01:04+0100\n"
+"POT-Creation-Date: 2026-10-11 01:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -26,12 +26,24 @@ msgstr "%(greeting)s، %(name)s"
 msgid "3 to 32 characters: letters, digits, dots, hyphens or underscores."
 msgstr "من 3 إلى 32 حرفًا: أحرف لاتينية أو أرقام أو نقاط أو شرطات أو شرطات سفلية."
 
+msgid "A CIN number has exactly 8 digits."
+msgstr "يتكون رقم بطاقة التعريف الوطنية من 8 أرقام بالضبط."
+
 msgid "A category with this name already exists."
 msgstr "توجد فئة بهذا الاسم بالفعل."
+
+msgid "A guest with the same name and phone or e-mail already exists."
+msgstr "يوجد نزيل بالاسم نفسه ورقم الهاتف أو البريد الإلكتروني نفسه."
+
+msgid "A guest with this identity document is already registered."
+msgstr "يوجد نزيل مسجل بوثيقة الهوية هذه بالفعل."
 
 #, python-format
 msgid "A maintenance period lasts at most %(max)s nights."
 msgstr "تستمر فترة الصيانة %(max)s ليلة كحد أقصى."
+
+msgid "A passport number has 5 to 20 letters or digits."
+msgstr "يتكون رقم جواز السفر من 5 إلى 20 حرفًا أو رقمًا."
 
 msgid "Access"
 msgstr "الوصول"
@@ -88,6 +100,9 @@ msgstr "كل الإجراءات"
 msgid "All categories"
 msgstr "كل الفئات"
 
+msgid "All guests"
+msgstr "كل النزلاء"
+
 msgid "All rooms"
 msgstr "كل الغرف"
 
@@ -117,6 +132,9 @@ msgstr "العودة إلى لوحة القيادة"
 
 msgid "Bad request"
 msgstr "طلب غير صالح"
+
+msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
+msgstr "بطاقة التعريف: 8 أرقام. جواز السفر: من 5 إلى 20 حرفًا أو رقمًا."
 
 msgid "Cancel"
 msgstr "إلغاء"
@@ -151,6 +169,12 @@ msgstr "تم حفظ التغييرات."
 
 msgid "Choose a category."
 msgstr "اختر فئة."
+
+msgid "Choose a country from the list."
+msgstr "اختر بلدًا من القائمة."
+
+msgid "Choose a document type."
+msgstr "اختر نوع الوثيقة."
 
 msgid "Choose a password different from the current one."
 msgstr "اختر كلمة مرور مختلفة عن الحالية."
@@ -203,8 +227,23 @@ msgstr "الوصف"
 msgid "Details"
 msgstr "التفاصيل"
 
+msgid "Do not rent"
+msgstr "ممنوع الحجز"
+
+msgid "Document"
+msgstr "الوثيقة"
+
+msgid "Document number"
+msgstr "رقم الوثيقة"
+
 msgid "Done"
 msgstr "مكتمل"
+
+msgid "E-mail"
+msgstr "البريد الإلكتروني"
+
+msgid "Edit guest"
+msgstr "تعديل النزيل"
 
 msgid "Edit room"
 msgstr "تعديل الغرفة"
@@ -221,12 +260,18 @@ msgstr "أدخل اسمًا من 1 إلى 50 حرفًا."
 msgid "Enter a nightly rate above 0 and at most 100,000 DT."
 msgstr "أدخل سعرًا لليلة أكبر من 0 ولا يتجاوز 100,000 د.ت."
 
+msgid "Enter a phone number of 8 to 15 digits."
+msgstr "أدخل رقم هاتف من 8 إلى 15 رقمًا."
+
 #, python-format
 msgid "Enter a reason of at most %(max_length)s characters."
 msgstr "أدخل سببًا لا يتجاوز %(max_length)s حرفًا."
 
 msgid "Enter a valid date."
 msgstr "أدخل تاريخًا صالحًا."
+
+msgid "Enter a valid e-mail address."
+msgstr "أدخل بريدًا إلكترونيًا صالحًا."
 
 msgid "Enter a whole number."
 msgstr "أدخل عددًا صحيحًا."
@@ -242,6 +287,12 @@ msgstr "تصفية"
 
 msgid "First closed night"
 msgstr "أول ليلة مغلقة"
+
+msgid "First name"
+msgstr "الاسم"
+
+msgid "Flags"
+msgstr "العلامات"
 
 msgid "For example 204 or B-12."
 msgstr "مثل 204 أو B-12."
@@ -261,6 +312,9 @@ msgstr "الاستقبال والفوترة"
 msgid "Full name"
 msgstr "الاسم الكامل"
 
+msgid "Give a reason (at most 200 characters)."
+msgstr "اذكر السبب (200 حرف كحد أقصى)."
+
 msgid "Good afternoon"
 msgstr "طاب يومك"
 
@@ -270,11 +324,28 @@ msgstr "مساء الخير"
 msgid "Good morning"
 msgstr "صباح الخير"
 
+#, python-format
+msgid "Guest %(name)s registered."
+msgstr "تم تسجيل النزيل %(name)s."
+
+msgid "Guests"
+msgstr "النزلاء"
+
+#, python-format
+msgid "Guests found: %(total)s"
+msgstr "عدد النزلاء الذين تم العثور عليهم: %(total)s"
+
 msgid "Hardening, report and demo"
 msgstr "التحصين والتقرير والعرض التوضيحي"
 
 msgid "Hotel time"
 msgstr "توقيت الفندق"
+
+msgid "Identity and contact"
+msgstr "الهوية ووسائل الاتصال"
+
+msgid "Identity document"
+msgstr "وثيقة الهوية"
 
 msgid "In service"
 msgstr "في الخدمة"
@@ -293,11 +364,17 @@ msgstr "تم التحقق من السلامة: %(count)s إدخال، لم يُ�
 msgid "Invalid username or password, or the account is temporarily locked."
 msgstr "اسم المستخدم أو كلمة المرور غير صحيحة، أو أن الحساب مقفل مؤقتًا."
 
+msgid "Is it one of these guests?"
+msgstr "هل هو أحد هؤلاء النزلاء؟"
+
 msgid "Language"
 msgstr "اللغة"
 
 msgid "Last closed night"
 msgstr "آخر ليلة مغلقة"
+
+msgid "Last name"
+msgstr "اللقب"
 
 msgid "Light"
 msgstr "فاتح"
@@ -332,11 +409,23 @@ msgstr "حسب النظام"
 msgid "Name"
 msgstr "الاسم"
 
+msgid "Name, phone, e-mail or document number"
+msgstr "الاسم أو الهاتف أو البريد الإلكتروني أو رقم الوثيقة"
+
+msgid "National ID card (CIN)"
+msgstr "بطاقة التعريف الوطنية"
+
+msgid "Nationality"
+msgstr "الجنسية"
+
 msgid "New category"
 msgstr "فئة جديدة"
 
 msgid "New password"
 msgstr "كلمة المرور الجديدة"
+
+msgid "New reservations will be refused. Managers only."
+msgstr "سيتم رفض الحجوزات الجديدة. للمديرين فقط."
 
 msgid "Next"
 msgstr "التالي"
@@ -355,6 +444,13 @@ msgstr "لا يوجد أي حساب بعد."
 
 msgid "No entries match these filters."
 msgstr "لا توجد إدخالات تطابق هذه المرشحات."
+
+#, python-format
+msgid "No guest matches “%(query)s”."
+msgstr "لا يوجد نزيل يطابق «%(query)s»."
+
+msgid "No guests registered yet."
+msgstr "لا يوجد نزلاء مسجلون بعد."
 
 msgid "No rooms yet."
 msgstr "لا توجد غرف بعد."
@@ -378,11 +474,20 @@ msgstr "الصفحة غير موجودة"
 msgid "Pages"
 msgstr "الصفحات"
 
+msgid "Passport"
+msgstr "جواز السفر"
+
 msgid "Password"
 msgstr "كلمة المرور"
 
+msgid "Phone"
+msgstr "الهاتف"
+
 msgid "Planned"
 msgstr "مخطط له"
+
+msgid "Preferences useful to the staff. No sensitive information."
+msgstr "تفضيلات مفيدة للموظفين. بدون معلومات حساسة."
 
 msgid "Previous"
 msgstr "السابقة"
@@ -405,6 +510,15 @@ msgstr "موظف استقبال"
 msgid "Record"
 msgstr "السجل"
 
+msgid "Register a guest"
+msgstr "تسجيل نزيل"
+
+msgid "Register guest"
+msgstr "تسجيل النزيل"
+
+msgid "Registered"
+msgstr "تاريخ التسجيل"
+
 msgid "Reopens on"
 msgstr "تُفتح من جديد في"
 
@@ -417,8 +531,14 @@ msgstr "أعد كتابة كلمة المرور المؤقتة"
 msgid "Reports, operations and translations"
 msgstr "التقارير والعمليات والترجمات"
 
+msgid "Reservation history"
+msgstr "سجل الحجوزات"
+
 msgid "Reservations and availability"
 msgstr "الحجوزات والتوفر"
+
+msgid "Reservations arrive in the next version of the application."
+msgstr "ستتوفر الحجوزات في الإصدار القادم من التطبيق."
 
 msgid "Reset password"
 msgstr "إعادة تعيين كلمة المرور"
@@ -460,8 +580,20 @@ msgstr "عدد الغرف: %(count)s"
 msgid "Save changes"
 msgstr "حفظ التغييرات"
 
+msgid "Save flags"
+msgstr "حفظ العلامات"
+
+msgid "Search"
+msgstr "بحث"
+
+msgid "Search guests"
+msgstr "البحث عن نزلاء"
+
 msgid "Set temporary password"
 msgstr "تعيين كلمة مرور مؤقتة"
+
+msgid "Show"
+msgstr "إظهار"
 
 msgid "Sign in"
 msgstr "تسجيل الدخول"
@@ -554,6 +686,12 @@ msgstr "يتعارض هذا التغيير مع بيانات موجودة."
 msgid "This form expired or was sent from another site. Reload the page and try again."
 msgstr "انتهت صلاحية هذا النموذج أو أُرسل من موقع آخر. أعد تحميل الصفحة وحاول مرة أخرى."
 
+msgid "This is a different person: register anyway"
+msgstr "هذا شخص مختلف: سجّله على أي حال"
+
+msgid "This is recorded in the audit log."
+msgstr "يُسجَّل هذا الإجراء في سجل التدقيق."
+
 msgid "This maintenance period is already over."
 msgstr "انتهت فترة الصيانة هذه بالفعل."
 
@@ -600,6 +738,10 @@ msgstr "أزل التحديد لإخراج الغرفة من الخدمة (لن 
 msgid "Up to 3 decimals, for example 180 or 180.500."
 msgstr "حتى 3 أرقام عشرية، مثل 180 أو 180.500."
 
+#, python-format
+msgid "Use 1 to %(max_length)s letters, spaces, hyphens or apostrophes."
+msgstr "استخدم من 1 إلى %(max_length)s من الأحرف أو المسافات أو الشرطات أو الفواصل العليا."
+
 msgid "Use 1 to 10 letters, digits or hyphens, for example 204 or B-12."
 msgstr "استخدم من 1 إلى 10 أحرف أو أرقام أو شرطات، مثل 204 أو B-12."
 
@@ -623,8 +765,17 @@ msgstr "المستخدم"
 msgid "Username"
 msgstr "اسم المستخدم"
 
+msgid "VIP"
+msgstr "شخصية مهمة"
+
+msgid "VIP guest"
+msgstr "نزيل مهم (VIP)"
+
 msgid "Version"
 msgstr "الإصدار"
+
+msgid "Viewing the full number was recorded in the audit log."
+msgstr "تم تسجيل الاطلاع على الرقم الكامل في سجل التدقيق."
 
 msgid "We couldn't find what you were looking for."
 msgstr "لم نعثر على ما تبحث عنه."
@@ -635,6 +786,9 @@ msgstr "مرحبًا، %(name)s."
 
 msgid "When"
 msgstr "التاريخ"
+
+msgid "With the country code for foreign numbers, e.g. +33 6 12 34 56 78."
+msgstr "مع رمز البلد للأرقام الأجنبية، مثل ‎+33 6 12 34 56 78."
 
 msgid "You can't deactivate your own account."
 msgstr "لا يمكنك تعطيل حسابك الخاص."
