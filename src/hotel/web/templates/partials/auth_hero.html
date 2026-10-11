@@ -1,0 +1,26 @@
+{#- The brand side of the sign-in pages (story 6.12): the hotel's name written
+    as a signature. Pure SVG + CSS (no JavaScript, CSP-safe): a clip rectangle
+    sweeps from left to right like a pen while the letters' outlines are drawn
+    (stroke-dashoffset), then the ink fills in, holds, fades, and starts again.
+    Decorative: the name is also in the page title and footer. -#}
+{#- Great Vibes at 140 px is about 63 units per letter: the name gets that width,
+    but never more than 740 of the 800 units, so a long name is squeezed to fit. -#}
+{%- set text_width = [hotel_name | length * 63, 740] | min %}
+<section class="auth-hero" aria-hidden="true">
+  <div class="auth-hero__inner">
+    <svg class="signature" viewBox="0 0 800 240" focusable="false">
+      <defs>
+        <clipPath id="signature-pen">
+          <rect class="signature__pen" x="0" y="0" width="800" height="240"></rect>
+        </clipPath>
+      </defs>
+      <g clip-path="url(#signature-pen)">
+        <text class="signature__text" x="400" y="150" text-anchor="middle"
+              textLength="{{ text_width }}" lengthAdjust="spacingAndGlyphs">{{ hotel_name }}</text>
+        <path class="signature__flourish" pathLength="1"
+              d="M 120 200 C 250 180, 360 222, 480 198 S 650 170, 710 190"></path>
+      </g>
+    </svg>
+    <p class="auth-hero__tagline">{{ _("Reception and management") }}</p>
+  </div>
+</section>

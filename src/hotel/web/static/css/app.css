@@ -20,6 +20,8 @@
   src: url("../fonts/inter-latin-500.woff2") format("woff2"); }
 @font-face { font-family: "Inter"; font-weight: 600; font-display: swap;
   src: url("../fonts/inter-latin-600.woff2") format("woff2"); }
+@font-face { font-family: "Great Vibes"; font-weight: 400; font-display: swap;
+  src: url("../fonts/great-vibes-latin-400.woff2") format("woff2"); }
 @font-face { font-family: "Playfair Display"; font-weight: 500; font-display: swap;
   src: url("../fonts/playfair-display-latin-500.woff2") format("woff2"); }
 @font-face { font-family: "Playfair Display"; font-weight: 600; font-display: swap;
@@ -70,6 +72,10 @@
   --hero-line: rgb(255 255 255 / 0.05);
   --hero-text: #f7ede4;
   --hero-muted: #d9bfa9;
+  /* Sign-in decoration (story 6.12): mixed from the accent, so they follow every theme */
+  --hero-gold: #d8ad62;
+  --auth-stripe: color-mix(in srgb, var(--accent) 6%, transparent);
+  --auth-sheen: color-mix(in srgb, var(--accent) 12%, transparent);
 
   /* Elevation */
   --shadow-sm: 0 1px 2px rgb(43 38 34 / 0.06), 0 1px 3px rgb(43 38 34 / 0.04);
@@ -928,4 +934,90 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 ::-webkit-scrollbar-thumb:hover { background-color: var(--scrollbar-thumb-hover); }
 @supports not selector(::-webkit-scrollbar) {
   * { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+}
+
+/* Premium sign-in page (story 6.12). CSS only: the CSP allows no script.
+   Brand side: the hotel's name as a signature (see partials/auth_hero.html).
+   Form side: slow diagonal stripes drifting endlessly, a soft light sweep,
+   and the form on a raised card so the motion never hurts readability. */
+.auth-hero__inner { inline-size: 100%; }
+.signature { display: block; inline-size: min(40rem, 100%); block-size: auto; overflow: visible; direction: ltr; }
+.signature__text {
+  font-family: "Great Vibes", "Playfair Display", cursive;
+  font-size: 140px;
+  fill: var(--hero-text);
+  fill-opacity: 0;
+  stroke: var(--hero-text);
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+  /* Longer than any glyph outline: hidden at 1400, fully drawn at 0. */
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: signature-ink 11s ease-in-out infinite;
+}
+.signature__flourish {
+  fill: none;
+  stroke: var(--hero-gold);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;  /* pathLength="1": 0 = drawn, 1 = hidden */
+  stroke-dashoffset: 1;
+  animation: signature-flourish 11s ease-in-out infinite;
+}
+/* The pen: a clip that uncovers the name from left to right while it is written. */
+.signature__pen { transform-box: fill-box; transform-origin: left center; animation: signature-pen 11s ease-in-out infinite; }
+@keyframes signature-pen {
+  0% { transform: scaleX(0); }
+  42%, 100% { transform: scaleX(1); }
+}
+@keyframes signature-ink {
+  0% { stroke-dashoffset: 1400; fill-opacity: 0; opacity: 1; }
+  42% { stroke-dashoffset: 0; fill-opacity: 0; }
+  56% { fill-opacity: 1; }
+  88% { stroke-dashoffset: 0; fill-opacity: 1; opacity: 1; }
+  97%, 100% { stroke-dashoffset: 0; fill-opacity: 1; opacity: 0; }
+}
+@keyframes signature-flourish {
+  0%, 44% { stroke-dashoffset: 1; opacity: 1; }
+  60%, 88% { stroke-dashoffset: 0; opacity: 1; }
+  97%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+.auth-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--bg);
+  /* Square tile + stripes at 25/50/75 % = a pattern that repeats seamlessly. */
+  background-image: linear-gradient(135deg,
+    var(--auth-stripe) 25%, transparent 25% 50%, var(--auth-stripe) 50% 75%, transparent 75%);
+  background-size: 56px 56px;
+  animation: auth-stripes 7s linear infinite;
+}
+/* Moving by exactly one tile makes the loop invisible. */
+@keyframes auth-stripes { to { background-position: 56px 0; } }
+.auth-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 35%, var(--auth-sheen) 50%, transparent 65%);
+  background-size: 260% 260%;
+  animation: auth-sheen 9s ease-in-out infinite alternate;
+}
+@keyframes auth-sheen { from { background-position: 0% 0%; } to { background-position: 100% 100%; } }
+.auth-card {
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Still and complete: the name written, the pattern resting. */
+  .signature__text, .signature__flourish, .signature__pen, .auth-panel, .auth-panel::before { animation: none !important; }
+  .signature__text { stroke-dashoffset: 0; fill-opacity: 1; }
+  .signature__flourish { stroke-dashoffset: 0; }
 }

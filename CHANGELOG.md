@@ -39,6 +39,11 @@ All notable changes are recorded here. The format follows
   is for and an example; a translated **Help** page in the menu shows each
   role only the topics it can use (story 6.10).
 - Thin scrollbars in the theme's colours, light and dark (story 6.11).
+- Sign-in page (story 6.12): the hotel's name writes itself as an animated
+  signature in Great Vibes (bundled, OFL) with a gold flourish; the form
+  side has slowly drifting diagonal stripes and a light sweep, the form sits
+  on a raised card. CSS and SVG only; still for people who ask for reduced
+  motion.
 
 ### Security (story 6.6)
 - OWASP ASVS 5.0 Level 1 self-assessment (`docs/asvs.md`): 58 requirements

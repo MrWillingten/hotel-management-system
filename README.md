@@ -176,6 +176,7 @@ Commits written with the assistant carry a `Co-Authored-By` trailer.
 * Fonts: [Inter](https://rsms.me/inter/), [Playfair Display](https://github.com/clauseggers/Playfair)
   and [Noto Sans Arabic](https://notofonts.github.io/), SIL Open Font License 1.1
   (licence texts in `src/hotel/web/static/fonts/`)
+* [Great Vibes](https://fonts.google.com/specimen/Great+Vibes) font (SIL Open Font License)
 * Common-password list derived from [SecLists](https://github.com/danielmiessler/SecLists) (MIT)
 
 ## License
