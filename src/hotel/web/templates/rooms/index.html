@@ -46,7 +46,8 @@
       </tr>
       {%- else %}
       <tr><td colspan="6" class="table__empty">
-        {%- if categories %}{{ _("No rooms yet.") }}{% else %}{{ _("Create a room category first, then add rooms.") }}{% endif -%}
+        {%- if categories %}{{ _("No rooms yet.") }}{% else %}{{ _("Create a room category first, then add rooms.") }}
+        {%- if current_user.is_manager %} <a href="{{ url_for('rooms.categories') }}">{{ _("Manage categories") }}</a>{% endif %}{% endif -%}
       </td></tr>
       {%- endfor %}
     </tbody>

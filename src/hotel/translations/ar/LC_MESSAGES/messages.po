@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 10:22+0100\n"
+"POT-Creation-Date: 2026-10-11 13:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -84,6 +84,10 @@ msgstr "يتكون رقم جواز السفر من 5 إلى 20 حرفًا أو �
 msgid "A percentage (7 or 7.5) or an amount in dinars (3.000), depending on the kind."
 msgstr "نسبة مئوية (7 أو 7.5) أو مبلغ بالدينار (3.000) حسب النوع."
 
+#, python-format
+msgid "A report covers at most %(max)s nights (two years)."
+msgstr "يغطي التقرير %(max)s ليلة كحد أقصى (سنتان)."
+
 msgid "A service with this name already exists."
 msgstr "توجد خدمة بهذا الاسم بالفعل."
 
@@ -99,6 +103,9 @@ msgstr "تم رفض الوصول"
 
 msgid "Accommodation"
 msgstr "الإقامة"
+
+msgid "Accommodation (after discounts)"
+msgstr "الإقامة (بعد التخفيضات)"
 
 #, python-format
 msgid "Accommodation only. All discounts together: at most %(cap)s of it."
@@ -242,8 +249,18 @@ msgstr "سجل التدقيق"
 msgid "Availability"
 msgstr "التوفر"
 
+msgid "Availability on"
+msgstr "التوفر يوم"
+
+#, python-format
+msgid "Availability on %(day)s"
+msgstr "التوفر يوم %(day)s"
+
 msgid "Available"
 msgstr "متاحة"
+
+msgid "Average daily rate"
+msgstr "متوسط سعر الليلة"
 
 msgid "Back"
 msgstr "رجوع"
@@ -323,6 +340,9 @@ msgstr "إلغاء الحجز"
 msgid "Cancel the reservation"
 msgstr "إلغاء الحجز"
 
+msgid "Cancellation and no-show fees"
+msgstr "رسوم الإلغاء وعدم الحضور"
+
 msgid "Cancellation fee"
 msgstr "رسوم الإلغاء"
 
@@ -330,11 +350,21 @@ msgstr "رسوم الإلغاء"
 msgid "Cancellation fee (%%)"
 msgstr "رسوم الإلغاء (%%)"
 
+msgid "Cancellations"
+msgstr "الإلغاءات"
+
+msgid "Cancellations and no-shows"
+msgstr "الإلغاءات وعدم الحضور"
+
 msgid "Cancelled"
 msgstr "ملغى"
 
 msgid "Cancelled on"
 msgstr "تاريخ الإلغاء"
+
+#, python-format
+msgid "Cancelled: %(c)s · no-shows: %(n)s"
+msgstr "ملغاة: %(c)s · عدم حضور: %(n)s"
 
 #, python-format
 msgid "Cancelling now is free (free until %(when)s)."
@@ -365,6 +395,9 @@ msgstr "إيصال البطاقة أو رقم التحويل إن وُجد."
 
 msgid "Cash"
 msgstr "نقداً"
+
+msgid "Cash received"
+msgstr "المبالغ المستلمة"
 
 msgid "Categories"
 msgstr "الفئات"
@@ -724,6 +757,9 @@ msgstr "أول ليلة مغلقة"
 msgid "First name"
 msgstr "الاسم"
 
+msgid "First night"
+msgstr "الليلة الأولى"
+
 msgid "Fixed amount (DT)"
 msgstr "مبلغ ثابت (د.ت)"
 
@@ -835,8 +871,15 @@ msgstr "الفاتورة"
 msgid "Invoice %(number)s"
 msgstr "الفاتورة %(number)s"
 
+msgid "Invoiced"
+msgstr "المفوتر"
+
 msgid "Invoices"
 msgstr "الفواتير"
+
+#, python-format
+msgid "Invoices: %(count)s"
+msgstr "الفواتير: %(count)s"
 
 msgid "Is it one of these guests?"
 msgstr "هل هو أحد هؤلاء النزلاء؟"
@@ -861,6 +904,9 @@ msgstr "آخر ليلة مغلقة"
 
 msgid "Last name"
 msgstr "اللقب"
+
+msgid "Last night"
+msgstr "الليلة الأخيرة"
 
 msgid "Late"
 msgstr "متأخر"
@@ -892,6 +938,9 @@ msgstr "انتهت الصيانة: الغرفة متاحة مجددًا ابتد
 msgid "Maintenance history"
 msgstr "سجل الصيانة"
 
+msgid "Manage categories"
+msgstr "إدارة الأصناف"
+
 msgid "Manager"
 msgstr "مدير"
 
@@ -916,6 +965,9 @@ msgstr "الحد الأقصى للتخفيض الإجمالي (%%)"
 
 msgid "Method"
 msgstr "الطريقة"
+
+msgid "Month"
+msgstr "الشهر"
 
 msgid "Name"
 msgstr "الاسم"
@@ -962,6 +1014,9 @@ msgstr "الصفحة التالية"
 msgid "Next week"
 msgstr "الأسبوع التالي"
 
+msgid "Night"
+msgstr "الليلة"
+
 msgid "Night of"
 msgstr "ليلة"
 
@@ -979,6 +1034,13 @@ msgstr "تحتفظ الليالي المحجوزة بسعرها؛ وتُحسب �
 
 msgid "Nights and prices"
 msgstr "الليالي والأسعار"
+
+msgid "Nights sold"
+msgstr "الليالي المباعة"
+
+#, python-format
+msgid "Nights sold: %(sold)s of %(sellable)s"
+msgstr "الليالي المباعة: %(sold)s من %(sellable)s"
 
 #, python-format
 msgid "Nights: %(nights)s"
@@ -1009,11 +1071,17 @@ msgstr "لا يوجد نزلاء مسجلون بعد."
 msgid "No invoice yet: they are issued at check-out."
 msgstr "لا توجد فواتير بعد: تصدر عند المغادرة."
 
+msgid "No money received in this period."
+msgstr "لم يُستلم أي مبلغ في هذه الفترة."
+
 msgid "No money received yet."
 msgstr "لم يُستلم أي مبلغ بعد."
 
 msgid "No more arrivals expected today."
 msgstr "لا وصول متوقع بعد اليوم."
+
+msgid "No nights sold in this period."
+msgstr "لم تُبع أي ليلة في هذه الفترة."
 
 msgid "No other room is free for these dates."
 msgstr "لا توجد غرفة أخرى متاحة في هذه التواريخ."
@@ -1046,6 +1114,9 @@ msgstr "تم تسجيل عدم الحضور"
 msgid "No-show recorded. Fee: %(fee)s."
 msgstr "تم تسجيل عدم الحضور. الرسوم: %(fee)s."
 
+msgid "No-shows"
+msgstr "عدم الحضور"
+
 msgid "Not allowed"
 msgstr "غير مسموح"
 
@@ -1069,6 +1140,15 @@ msgstr "الرقم"
 msgid "Number or guest"
 msgstr "الرقم أو النزيل"
 
+msgid "Occupancy"
+msgstr "الإشغال"
+
+msgid "Occupancy per day"
+msgstr "الإشغال اليومي"
+
+msgid "Occupancy per month"
+msgstr "الإشغال الشهري"
+
 msgid "Occupancy tonight"
 msgstr "نسبة الإشغال الليلة"
 
@@ -1083,6 +1163,12 @@ msgstr "لا يمكن إلغاء إلا حجز مؤكد."
 
 msgid "Out of service"
 msgstr "خارج الخدمة"
+
+msgid "Outstanding"
+msgstr "المتبقي المستحق"
+
+msgid "Outstanding balances"
+msgstr "الأرصدة غير المسددة"
 
 msgid "Overdue"
 msgstr "متجاوز"
@@ -1240,6 +1326,9 @@ msgstr "أعد كتابة كلمة المرور الجديدة"
 msgid "Repeat the temporary password"
 msgstr "أعد كتابة كلمة المرور المؤقتة"
 
+msgid "Reports"
+msgstr "التقارير"
+
 msgid "Reservation"
 msgstr "الحجز"
 
@@ -1260,6 +1349,9 @@ msgstr "تم تحديث الحجز."
 msgid "Reservations"
 msgstr "الحجوزات"
 
+msgid "Reservations made"
+msgstr "الحجوزات المسجلة"
+
 #, python-format
 msgid "Reservations: %(count)s"
 msgstr "الحجوزات: %(count)s"
@@ -1269,6 +1361,20 @@ msgstr "محجوزة"
 
 msgid "Reset password"
 msgstr "إعادة تعيين كلمة المرور"
+
+msgid "Revenue"
+msgstr "الإيرادات"
+
+msgid ""
+"Revenue counts when the invoice is issued; cash received is the money actually taken in the "
+"period. Ranges of at most two years."
+msgstr ""
+"تُحتسب الإيرادات عند إصدار الفاتورة؛ والمبالغ المستلمة هي ما قُبض فعلاً خلال الفترة. فترات لا "
+"تتجاوز سنتين."
+
+#, python-format
+msgid "Revenue per available room: %(revpar)s"
+msgstr "الإيراد لكل غرفة متاحة: %(revpar)s"
 
 msgid "Review the booking"
 msgstr "مراجعة الحجز"
@@ -1329,6 +1435,9 @@ msgstr "أُغلقت الغرفة ابتداءً من %(first)s، وتُفتح �
 msgid "Room number"
 msgstr "رقم الغرفة"
 
+msgid "Room value"
+msgstr "قيمة الغرف"
+
 msgid "Rooms"
 msgstr "الغرف"
 
@@ -1370,6 +1479,9 @@ msgstr "اختر غرفة واحدة على الأقل."
 msgid "Select one of them below."
 msgstr "اختر إحداها أدناه."
 
+msgid "Sellable"
+msgstr "القابلة للبيع"
+
 msgid "Service"
 msgstr "الخدمة"
 
@@ -1396,6 +1508,9 @@ msgstr "الحجم"
 
 msgid "Skip to content"
 msgstr "انتقل إلى المحتوى"
+
+msgid "Sold"
+msgstr "المباعة"
 
 #, python-format
 msgid "Some bookings have more guests than this capacity (%(codes)s). Change them first."
@@ -1508,6 +1623,9 @@ msgstr "يجب أن يحتفظ الفندق بمدير نشط واحد على ا
 
 msgid "The hotel owes the guest a refund. Ask a manager to record it."
 msgstr "على الفندق رد مبلغ للنزيل. اطلب من المدير تسجيله."
+
+msgid "The last night must not be before the first night."
+msgstr "لا يمكن أن تسبق الليلة الأخيرة الليلة الأولى."
 
 msgid "The nights of this reservation were released when it was cancelled or marked as a no-show."
 msgstr "أُفرج عن ليالي هذا الحجز عند إلغائه أو تسجيل عدم الحضور."

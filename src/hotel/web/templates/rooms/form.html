@@ -7,7 +7,8 @@
 {% block content %}
 <section class="panel panel--narrow">
   {%- if not categories %}
-  <div class="alert alert--warning"><p>{{ _("Create a room category first, then add rooms.") }}</p></div>
+  <div class="alert alert--warning"><p>{{ _("Create a room category first, then add rooms.") }}
+    <a href="{{ url_for('rooms.categories') }}">{{ _("Manage categories") }}</a></p></div>
   {%- endif %}
   {{ form_errors(errors) }}
   <form class="stack" method="post" novalidate>

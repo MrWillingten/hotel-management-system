@@ -99,6 +99,13 @@ gettext and Babel catalogues.
 | 5.7 | As a manager, I anonymise old guests | Personal data replaced, invoices keep their own copy of the name, action audited. |
 | 5.8 | Seed v2 | Several months of realistic history, so the reports and charts look alive in the demo. |
 
+Decisions taken with the student before the sprint (11 Oct): revenue counts
+**when invoiced**, with cash received shown separately · the night audit runs
+from a button, a command and a catch-up at start-up · weekend nights default to
+**Saturday and Sunday nights** (a setting) · anonymisation after **24 months**
+without a stay (a setting). Issues #50 (5.0, a link from the room form to the
+categories) to #58.
+
 ### Sprint 6 – Stretch, freeze, delivery (21 Dec – 3 Jan)
 
 | When | Work |
