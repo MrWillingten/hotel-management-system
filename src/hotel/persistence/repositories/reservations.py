@@ -51,6 +51,7 @@ _LISTED = "{select} WHERE {where} ORDER BY {order}"
 _WHERE_ARRIVING = "r.status = 'CONFIRMED' AND r.arrival <= ? AND r.departure > ?"
 _WHERE_LEAVING = "r.status = 'CHECKED_IN' AND r.departure <= ?"
 _WHERE_IN_HOUSE = "r.status = 'CHECKED_IN'"
+_WHERE_NOT_ARRIVED = "r.status = 'CONFIRMED' AND r.arrival <= ?"
 _BY_ARRIVAL = "r.arrival, r.code"
 _BY_DEPARTURE = "r.departure, r.code"
 
@@ -218,6 +219,10 @@ class ReservationRepository(BaseRepository):
     def departures(self, day: date) -> list[Reservation]:
         """Guests in the house who are due to leave on `day` (or should have left)."""
         return self._listed(_WHERE_LEAVING, (date_to_db(day),), _BY_DEPARTURE)
+
+    def not_arrived(self, day: date) -> list[Reservation]:
+        """Still CONFIRMED although the stay should have started on or before `day`."""
+        return self._listed(_WHERE_NOT_ARRIVED, (date_to_db(day),), _BY_ARRIVAL)
 
     def in_house(self) -> list[Reservation]:
         return self._listed(_WHERE_IN_HOUSE, (), _BY_DEPARTURE)

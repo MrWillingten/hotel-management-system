@@ -170,3 +170,12 @@ def test_cli_run_uses_waitress_and_warns_on_network_addresses(cli_env, monkeypat
 )
 def test_loopback_detection(host, loopback):
     assert cli._is_loopback(host) is loopback
+
+
+def test_cli_night_audit(cli_env, capsys):
+    assert cli.main(["night-audit"]) == 0
+    assert "closed." in capsys.readouterr().out
+    assert cli.main(["night-audit"]) == 0
+    assert "already closed" in capsys.readouterr().out
+    assert cli.main(["night-audit", "--date", "nope"]) == 2
+    assert cli.main(["night-audit", "--date", "2999-01-01"]) == 1

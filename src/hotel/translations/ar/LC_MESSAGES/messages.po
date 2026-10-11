@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 13:31+0100\n"
+"POT-Creation-Date: 2026-10-11 13:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -245,6 +245,9 @@ msgstr "لا يتجاوز الرصيد المستحق."
 
 msgid "Audit log"
 msgstr "سجل التدقيق"
+
+msgid "Automatic"
+msgstr "تلقائي"
 
 msgid "Availability"
 msgstr "التوفر"
@@ -518,11 +521,23 @@ msgstr "اختر نوع الضريبة وما تُطبَّق عليه."
 msgid "Cleaned, to inspect"
 msgstr "نُظِّفت، بانتظار المعاينة"
 
+msgid "Close a day"
+msgstr "إقفال يوم"
+
 msgid "Close for maintenance"
 msgstr "إغلاق للصيانة"
 
+msgid "Close the day"
+msgstr "إقفال اليوم"
+
 msgid "Close the room"
 msgstr "إغلاق الغرفة"
+
+msgid "Closed by"
+msgstr "أقفله"
+
+msgid "Closed days"
+msgstr "الأيام المقفلة"
 
 msgid "Code"
 msgstr "الرمز"
@@ -577,6 +592,12 @@ msgstr "التاريخ"
 
 msgid "Dates"
 msgstr "التواريخ"
+
+msgid "Day"
+msgstr "اليوم"
+
+msgid "Day closed."
+msgstr "تم إقفال اليوم."
 
 msgid "Deactivate account"
 msgstr "تعطيل الحساب"
@@ -829,6 +850,14 @@ msgstr "عدد الأشخاص في الغرفة"
 msgid "Guests in the house"
 msgstr "النزلاء المقيمون"
 
+msgid ""
+"Guests who never came become no-shows, guests still in after their departure are listed, and the "
+"day's figures are frozen. Running it twice changes nothing; finished days are also closed "
+"automatically when the application starts."
+msgstr ""
+"يُسجَّل النزلاء الذين لم يحضروا كعدم حضور، وتُدرج أسماء من بقوا بعد موعد مغادرتهم، وتُجمَّد أرقام"
+" اليوم. التشغيل مرتين لا يغيّر شيئاً، كما تُقفل الأيام المنتهية تلقائياً عند تشغيل التطبيق."
+
 msgid "Hotel rules"
 msgstr "قواعد الفندق"
 
@@ -1017,6 +1046,9 @@ msgstr "الأسبوع التالي"
 msgid "Night"
 msgstr "الليلة"
 
+msgid "Night audit"
+msgstr "التدقيق الليلي"
+
 msgid "Night of"
 msgstr "ليلة"
 
@@ -1051,6 +1083,9 @@ msgstr "لا يوجد أي حساب بعد."
 
 msgid "No backups yet."
 msgstr "لا توجد نسخ احتياطية بعد."
+
+msgid "No day closed yet."
+msgstr "لم يُقفل أي يوم بعد."
 
 msgid "No departures left today."
 msgstr "لا مغادرات متبقية اليوم."
@@ -1117,6 +1152,9 @@ msgstr "تم تسجيل عدم الحضور. الرسوم: %(fee)s."
 msgid "No-shows"
 msgstr "عدم الحضور"
 
+msgid "No-shows recorded"
+msgstr "حالات عدم الحضور المسجلة"
+
 msgid "Not allowed"
 msgstr "غير مسموح"
 
@@ -1160,6 +1198,9 @@ msgstr "من الإقامة؛ وتُحتسب أيضاً عند عدم الحضو
 
 msgid "Only a confirmed reservation can be cancelled."
 msgstr "لا يمكن إلغاء إلا حجز مؤكد."
+
+msgid "Only a day that is over can be closed."
+msgstr "لا يمكن إقفال إلا يوم منتهٍ."
 
 msgid "Out of service"
 msgstr "خارج الخدمة"
@@ -1546,6 +1587,9 @@ msgstr "الحالة"
 msgid "Stay"
 msgstr "الإقامة"
 
+msgid "Still checked in after departure"
+msgstr "ما زالوا مقيمين بعد موعد المغادرة"
+
 msgid "Subtotal before discounts and taxes"
 msgstr "المجموع الفرعي قبل التخفيضات والضرائب"
 
@@ -1670,6 +1714,9 @@ msgstr "يتعارض هذا التغيير مع بيانات موجودة."
 
 msgid "This charge was already voided."
 msgstr "تم إلغاء هذا الاحتساب من قبل."
+
+msgid "This day was already closed; nothing changed."
+msgstr "كان هذا اليوم مقفلاً من قبل؛ لم يتغير شيء."
 
 msgid "This form expired or was sent from another site. Reload the page and try again."
 msgstr "انتهت صلاحية هذا النموذج أو أُرسل من موقع آخر. أعد تحميل الصفحة وحاول مرة أخرى."

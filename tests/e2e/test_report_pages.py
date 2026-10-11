@@ -77,3 +77,27 @@ def test_csv_neutralises_formulas():
     assert safe_cell(7) == "7"
     assert safe_cell(None) == ""
     assert to_csv(["a"], [["=x"]]) == "﻿a\r\n'=x\r\n"
+
+
+def test_night_audit_page_and_command(client, services, hotel, clock, monkeypatch, capsys):
+    from datetime import timedelta
+
+    book(services, hotel, stay(8, 10), "204")
+    clock.advance(timedelta(days=1))
+    login(client)
+    from tests.conftest import csrf_token
+
+    page = client.get("/night-audit/").get_data(as_text=True)
+    assert "No day closed yet." in page
+    response = client.post(
+        "/night-audit/", data={"csrf_token": csrf_token(client, "/"), "day": "2026-07-08"}
+    )
+    assert "Day closed." in response.get_data(as_text=True)
+    again = client.post(
+        "/night-audit/", data={"csrf_token": csrf_token(client, "/"), "day": "2026-07-08"}
+    )
+    assert "already closed" in again.get_data(as_text=True)
+    future = client.post(
+        "/night-audit/", data={"csrf_token": csrf_token(client, "/"), "day": "2026-07-09"}
+    )
+    assert future.status_code == 400

@@ -157,6 +157,7 @@ MESSAGES = {
     "reference.invalid": _l("Use at most %(max_length)s characters."),
     "report.range_reversed": _l("The last night must not be before the first night."),
     "report.range_too_long": _l("A report covers at most %(max)s nights (two years)."),
+    "night_audit.day_not_over": _l("Only a day that is over can be closed."),
     "field.not_a_number": _l("Enter a whole number."),
     "field.invalid_date": _l("Enter a valid date."),
     "money.invalid": _l("Enter an amount such as 180 or 180.500."),
