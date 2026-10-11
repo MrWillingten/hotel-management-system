@@ -44,6 +44,12 @@ All notable changes are recorded here. The format follows
   side has slowly drifting diagonal stripes and a light sweep, the form sits
   on a raised card. CSS and SVG only; still for people who ask for reduced
   motion.
+- Invoice redesigned as a sheet of paper (story 6.13), always in the light
+  "paper" palette (also in the dark theme): letterhead with the signature
+  name and a gold rule, INVOICE title and number, billed-to / stay /
+  reservation blocks, the bill, a "Paid in full" or "Balance due" stamp,
+  the payments table, and a thank-you line. Ctrl+P prints only the sheet on
+  A4 with page numbers ("Save as PDF" for a PDF).
 
 ### Security (story 6.6)
 - OWASP ASVS 5.0 Level 1 self-assessment (`docs/asvs.md`): 58 requirements
