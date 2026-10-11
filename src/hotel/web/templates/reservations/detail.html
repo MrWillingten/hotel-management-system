@@ -8,7 +8,12 @@
   <div class="badge-row">{{ status_badge(reservation.status) }}</div>
   <div class="page-actions__buttons">
     <a class="button button--ghost" href="{{ url_for('reservations.index') }}">{{ _("All reservations") }}</a>
-    {% block actions %}{% endblock %}
+    {%- if reservation.status in ("CONFIRMED", "CHECKED_IN") %}
+    <a class="button button--primary" href="{{ url_for('reservations.edit', reservation_id=reservation.id) }}">{{ _("Change") }}</a>
+    {%- endif %}
+    {%- if reservation.status == "CONFIRMED" %}
+    <a class="button button--ghost" href="{{ url_for('reservations.cancel', reservation_id=reservation.id) }}">{{ _("Cancel reservation") }}</a>
+    {%- endif %}
   </div>
 </div>
 

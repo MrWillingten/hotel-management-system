@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 08:16+0100\n"
+"POT-Creation-Date: 2026-10-11 08:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -112,6 +112,9 @@ msgstr "Adultes"
 msgid "Adults: %(adults)s, children: %(children)s"
 msgstr "Adultes : %(adults)s, enfants : %(children)s"
 
+msgid "After"
+msgstr "Après"
+
 msgid "All"
 msgstr "Tous"
 
@@ -147,6 +150,10 @@ msgstr "Une autre chambre porte déjà ce numéro."
 
 msgid "Arrival"
 msgstr "Arrivée"
+
+#, python-format
+msgid "Arrival is less than 48 hours away: cancelling now costs %(fee)s (20%% of the accommodation)."
+msgstr "L'arrivée est dans moins de 48 heures : annuler maintenant coûte %(fee)s (20 %% de l'hébergement)."
 
 msgid "Arrival time, special requests..."
 msgstr "Heure d'arrivée, demandes particulières…"
@@ -191,6 +198,9 @@ msgstr "Les sauvegardes sont stockées dans ce dossier du serveur :"
 msgid "Bad request"
 msgstr "Requête invalide"
 
+msgid "Before"
+msgstr "Avant"
+
 msgid "Before a restore"
 msgstr "Avant une restauration"
 
@@ -220,6 +230,12 @@ msgstr "CIN : 8 chiffres. Passeport : 5 à 20 lettres ou chiffres."
 msgid "Cancel"
 msgstr "Annuler"
 
+msgid "Cancel reservation"
+msgstr "Annuler la réservation"
+
+msgid "Cancel the reservation"
+msgstr "Annuler la réservation"
+
 msgid "Cancellation fee"
 msgstr "Frais d'annulation"
 
@@ -228,6 +244,10 @@ msgstr "Annulée"
 
 msgid "Cancelled on"
 msgstr "Annulée le"
+
+#, python-format
+msgid "Cancelling now is free (free until %(when)s)."
+msgstr "Annuler maintenant est gratuit (jusqu'au %(when)s)."
 
 msgid "Capacity"
 msgstr "Capacité"
@@ -255,14 +275,23 @@ msgstr "Catégorie"
 msgid "Category saved."
 msgstr "Catégorie enregistrée."
 
+msgid "Change"
+msgstr "Modifier"
+
 msgid "Change guest"
 msgstr "Changer de client"
 
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
+msgid "Change reservation"
+msgstr "Modifier la réservation"
+
 msgid "Changes saved."
 msgstr "Modifications enregistrées."
+
+msgid "Check availability and price"
+msgstr "Vérifier la disponibilité et le prix"
 
 msgid "Checked in"
 msgstr "Arrivé"
@@ -337,6 +366,9 @@ msgstr "Créée le"
 
 msgid "Current password"
 msgstr "Mot de passe actuel"
+
+msgid "Currently:"
+msgstr "Actuellement :"
 
 msgid "DEMO DATA: every guest, document and booking shown here is fictional."
 msgstr "DONNÉES DE DÉMONSTRATION : tous les clients, documents et réservations affichés ici sont fictifs."
@@ -538,6 +570,9 @@ msgstr "Nom d'utilisateur ou mot de passe incorrect, ou compte temporairement ve
 msgid "Is it one of these guests?"
 msgstr "S'agit-il de l'un de ces clients ?"
 
+msgid "Keep it"
+msgstr "La conserver"
+
 msgid "Language"
 msgstr "Langue"
 
@@ -595,8 +630,14 @@ msgstr "Nationalité"
 msgid "New category"
 msgstr "Nouvelle catégorie"
 
+msgid "New dates"
+msgstr "Nouvelles dates"
+
 msgid "New password"
 msgstr "Nouveau mot de passe"
+
+msgid "New price"
+msgstr "Nouveau prix"
 
 msgid "New reservation"
 msgstr "Nouvelle réservation"
@@ -624,6 +665,9 @@ msgstr "Tarif par nuit (DT, hors taxes)"
 
 msgid "Nights"
 msgstr "Nuits"
+
+msgid "Nights already booked keep their price; added nights use today's rate."
+msgstr "Les nuits déjà réservées gardent leur prix ; les nuits ajoutées sont au tarif du jour."
 
 msgid "Nights and prices"
 msgstr "Nuits et prix"
@@ -671,6 +715,9 @@ msgstr "Remarques"
 
 msgid "Occupied"
 msgstr "Occupée"
+
+msgid "Only a confirmed reservation can be cancelled."
+msgstr "Seule une réservation confirmée peut être annulée."
 
 msgid "Out of service"
 msgstr "Hors service"
@@ -736,6 +783,9 @@ msgstr "Enregistrer le client"
 msgid "Registered"
 msgstr "Enregistré le"
 
+msgid "Remove this room"
+msgstr "Retirer cette chambre"
+
 msgid "Reopens on"
 msgstr "Réouverture le"
 
@@ -755,8 +805,15 @@ msgstr "Réservation"
 msgid "Reservation %(code)s confirmed."
 msgstr "Réservation %(code)s confirmée."
 
+#, python-format
+msgid "Reservation cancelled. Fee: %(fee)s."
+msgstr "Réservation annulée. Frais : %(fee)s."
+
 msgid "Reservation history"
 msgstr "Historique des réservations"
+
+msgid "Reservation updated."
+msgstr "Réservation mise à jour."
 
 msgid "Reservations"
 msgstr "Réservations"
@@ -831,6 +888,9 @@ msgstr "Enregistrer"
 msgid "Save flags"
 msgstr "Enregistrer les indicateurs"
 
+msgid "Save the change"
+msgstr "Enregistrer la modification"
+
 msgid "Search"
 msgstr "Rechercher"
 
@@ -897,6 +957,9 @@ msgstr "Mot de passe temporaire défini. La personne devra en choisir un nouveau
 msgid "The arrival date can't be in the past."
 msgstr "La date d'arrivée ne peut pas être passée."
 
+msgid "The arrival time has passed: record a no-show instead of a cancellation."
+msgstr "L'heure d'arrivée est passée : enregistrez une non-présentation plutôt qu'une annulation."
+
 msgid "The current password is not correct."
 msgstr "Le mot de passe actuel est incorrect."
 
@@ -906,6 +969,9 @@ msgstr "Les données envoyées sont trop volumineuses."
 msgid "The departure date must be after the arrival date."
 msgstr "La date de départ doit être postérieure à la date d'arrivée."
 
+msgid "The departure date must be after today."
+msgstr "La date de départ doit être postérieure à aujourd'hui."
+
 msgid "The first day guests can stay again."
 msgstr "Le premier jour où des clients peuvent de nouveau séjourner."
 
@@ -914,6 +980,9 @@ msgstr "Le premier compte gestionnaire existe déjà."
 
 msgid "The front desk figures will appear here once reservations are available."
 msgstr "Les indicateurs de la réception apparaîtront ici dès que les réservations seront disponibles."
+
+msgid "The guest is in the house: only the departure date and the occupants can change."
+msgstr "Le client est à l'hôtel : seuls la date de départ et les occupants peuvent changer."
 
 msgid "The hotel must keep at least one active manager."
 msgstr "L'hôtel doit garder au moins un gestionnaire actif."
@@ -952,6 +1021,9 @@ msgstr "Cette modification est en conflit avec des données existantes."
 msgid "This form expired or was sent from another site. Reload the page and try again."
 msgstr "Ce formulaire a expiré ou a été envoyé depuis un autre site. Rechargez la page et réessayez."
 
+msgid "This form was already submitted. Check the reservation before trying again."
+msgstr "Ce formulaire a déjà été envoyé. Vérifiez la réservation avant de réessayer."
+
 msgid "This form was already submitted. Check the reservation list before trying again."
 msgstr "Ce formulaire a déjà été envoyé. Vérifiez la liste des réservations avant de réessayer."
 
@@ -984,6 +1056,9 @@ msgstr "Ce mot de passe est trop courant. Choisissez-en un moins prévisible."
 
 msgid "This password repeats the same characters too much."
 msgstr "Ce mot de passe répète trop les mêmes caractères."
+
+msgid "This reservation can no longer be changed."
+msgstr "Cette réservation ne peut plus être modifiée."
 
 msgid "This room has never been closed for maintenance."
 msgstr "Cette chambre n'a jamais été fermée pour maintenance."

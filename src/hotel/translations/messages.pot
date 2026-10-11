@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 08:16+0100\n"
+"POT-Creation-Date: 2026-10-11 08:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,6 +113,9 @@ msgstr ""
 msgid "Adults: %(adults)s, children: %(children)s"
 msgstr ""
 
+msgid "After"
+msgstr ""
+
 msgid "All"
 msgstr ""
 
@@ -147,6 +150,12 @@ msgid "Another room already has this number."
 msgstr ""
 
 msgid "Arrival"
+msgstr ""
+
+#, python-format
+msgid ""
+"Arrival is less than 48 hours away: cancelling now costs %(fee)s (20%% of"
+" the accommodation)."
 msgstr ""
 
 msgid "Arrival time, special requests..."
@@ -194,6 +203,9 @@ msgstr ""
 msgid "Bad request"
 msgstr ""
 
+msgid "Before"
+msgstr ""
+
 msgid "Before a restore"
 msgstr ""
 
@@ -223,6 +235,12 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+msgid "Cancel reservation"
+msgstr ""
+
+msgid "Cancel the reservation"
+msgstr ""
+
 msgid "Cancellation fee"
 msgstr ""
 
@@ -230,6 +248,10 @@ msgid "Cancelled"
 msgstr ""
 
 msgid "Cancelled on"
+msgstr ""
+
+#, python-format
+msgid "Cancelling now is free (free until %(when)s)."
 msgstr ""
 
 msgid "Capacity"
@@ -258,13 +280,22 @@ msgstr ""
 msgid "Category saved."
 msgstr ""
 
+msgid "Change"
+msgstr ""
+
 msgid "Change guest"
 msgstr ""
 
 msgid "Change password"
 msgstr ""
 
+msgid "Change reservation"
+msgstr ""
+
 msgid "Changes saved."
+msgstr ""
+
+msgid "Check availability and price"
 msgstr ""
 
 msgid "Checked in"
@@ -339,6 +370,9 @@ msgid "Created"
 msgstr ""
 
 msgid "Current password"
+msgstr ""
+
+msgid "Currently:"
 msgstr ""
 
 msgid "DEMO DATA: every guest, document and booking shown here is fictional."
@@ -543,6 +577,9 @@ msgstr ""
 msgid "Is it one of these guests?"
 msgstr ""
 
+msgid "Keep it"
+msgstr ""
+
 msgid "Language"
 msgstr ""
 
@@ -600,7 +637,13 @@ msgstr ""
 msgid "New category"
 msgstr ""
 
+msgid "New dates"
+msgstr ""
+
 msgid "New password"
+msgstr ""
+
+msgid "New price"
 msgstr ""
 
 msgid "New reservation"
@@ -628,6 +671,9 @@ msgid "Nightly rate (DT, before tax)"
 msgstr ""
 
 msgid "Nights"
+msgstr ""
+
+msgid "Nights already booked keep their price; added nights use today's rate."
 msgstr ""
 
 msgid "Nights and prices"
@@ -675,6 +721,9 @@ msgid "Notes"
 msgstr ""
 
 msgid "Occupied"
+msgstr ""
+
+msgid "Only a confirmed reservation can be cancelled."
 msgstr ""
 
 msgid "Out of service"
@@ -741,6 +790,9 @@ msgstr ""
 msgid "Registered"
 msgstr ""
 
+msgid "Remove this room"
+msgstr ""
+
 msgid "Reopens on"
 msgstr ""
 
@@ -760,7 +812,14 @@ msgstr ""
 msgid "Reservation %(code)s confirmed."
 msgstr ""
 
+#, python-format
+msgid "Reservation cancelled. Fee: %(fee)s."
+msgstr ""
+
 msgid "Reservation history"
+msgstr ""
+
+msgid "Reservation updated."
 msgstr ""
 
 msgid "Reservations"
@@ -840,6 +899,9 @@ msgstr ""
 msgid "Save flags"
 msgstr ""
 
+msgid "Save the change"
+msgstr ""
+
 msgid "Search"
 msgstr ""
 
@@ -906,6 +968,9 @@ msgstr ""
 msgid "The arrival date can't be in the past."
 msgstr ""
 
+msgid "The arrival time has passed: record a no-show instead of a cancellation."
+msgstr ""
+
 msgid "The current password is not correct."
 msgstr ""
 
@@ -915,6 +980,9 @@ msgstr ""
 msgid "The departure date must be after the arrival date."
 msgstr ""
 
+msgid "The departure date must be after today."
+msgstr ""
+
 msgid "The first day guests can stay again."
 msgstr ""
 
@@ -922,6 +990,11 @@ msgid "The first manager account already exists."
 msgstr ""
 
 msgid "The front desk figures will appear here once reservations are available."
+msgstr ""
+
+msgid ""
+"The guest is in the house: only the departure date and the occupants can "
+"change."
 msgstr ""
 
 msgid "The hotel must keep at least one active manager."
@@ -966,6 +1039,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"This form was already submitted. Check the reservation before trying "
+"again."
+msgstr ""
+
+msgid ""
 "This form was already submitted. Check the reservation list before trying"
 " again."
 msgstr ""
@@ -998,6 +1076,9 @@ msgid "This password is too common. Choose a less predictable one."
 msgstr ""
 
 msgid "This password repeats the same characters too much."
+msgstr ""
+
+msgid "This reservation can no longer be changed."
 msgstr ""
 
 msgid "This room has never been closed for maintenance."

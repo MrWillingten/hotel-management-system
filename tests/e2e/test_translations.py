@@ -86,6 +86,7 @@ def test_placeholders_are_kept(language):
                 "%(room)s",
                 "%(capacity)s",
                 "%(occupants)s",
+                "%(fee)s",
                 "%(tz)s",
                 "%(minutes)s",
                 "%(min_length)s",

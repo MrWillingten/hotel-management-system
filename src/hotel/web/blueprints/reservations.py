@@ -15,6 +15,8 @@ from hotel.persistence.repositories.reservations import ReservationFilter
 from hotel.services.reservations import RoomUnavailableError
 from hotel.web import forms
 from hotel.web.context import current_actor, services
+from hotel.web.formatting import money
+from hotel.web.messages import message_for
 from hotel.web.security import login_required
 
 bp = Blueprint("reservations", __name__, url_prefix="/reservations")
@@ -195,4 +197,134 @@ def detail(reservation_id: int):
         "reservations/detail.html",
         reservation=reservation,
         free_until=services().reservations.free_cancellation_until(reservation.period),
+    )
+
+
+# ---------------------------------------------------------------- changing
+def _indexed_room_requests(data) -> list[RoomRequest]:
+    """Edit form rows: room_<i>, adults_<i>, children_<i>; an empty room removes the row."""
+    requests = []
+    for index in range(10):
+        raw = data.get(f"room_{index}", "")
+        if not raw.isdigit():
+            continue
+        requests.append(
+            RoomRequest(
+                int(raw),
+                forms.integer(data, f"adults_{index}"),
+                forms.integer(data, f"children_{index}", required=False) or 0,
+            )
+        )
+    if not requests:
+        raise ValidationError("reservation.no_room_selected")
+    return requests
+
+
+def _edit_page(reservation, *, values=None, errors=None, quote=None, status=200):
+    actor = current_actor()
+    rooms = [o.room for o in services().rooms.list_rooms(actor) if o.room.in_service]
+    return render_template(
+        "reservations/edit.html",
+        reservation=reservation,
+        rooms=rooms,
+        values=values,
+        errors=errors or forms.FormErrors(),
+        quote=quote,
+        form_token=services().form_tokens.issue(actor) if quote else "",
+    ), status
+
+
+@bp.get("/<int:reservation_id>/edit")
+@login_required
+def edit(reservation_id: int):
+    return _edit_page(services().reservations.get(current_actor(), reservation_id))
+
+
+@bp.post("/<int:reservation_id>/edit")
+@login_required
+def edit_review(reservation_id: int):
+    """Check the change and show the new price next to the old one."""
+    actor = current_actor()
+    data = request.form
+    try:
+        current, quote = services().reservations.preview_change(
+            actor, reservation_id, period=_period(data), rooms=_indexed_room_requests(data)
+        )
+    except HotelError as exc:
+        reservation = services().reservations.get(actor, reservation_id)
+        return _edit_page(
+            reservation,
+            values=data,
+            errors=forms.FormErrors.from_error(exc),
+            status=409 if isinstance(exc, RoomUnavailableError) else 400,
+        )
+    return _edit_page(current, values=data, quote=quote)
+
+
+@bp.post("/<int:reservation_id>/change")
+@login_required
+def change(reservation_id: int):
+    actor = current_actor()
+    data = request.form
+    if not services().form_tokens.consume(actor, data.get("form_token")):
+        flash(
+            _("This form was already submitted. Check the reservation before trying again."),
+            "warning",
+        )
+        return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+    try:
+        services().reservations.modify(
+            actor,
+            reservation_id,
+            version=forms.integer(data, "version"),
+            period=_period(data),
+            rooms=_indexed_room_requests(data),
+        )
+    except HotelError as exc:
+        reservation = services().reservations.get(actor, reservation_id)
+        return _edit_page(
+            reservation, values=data, errors=forms.FormErrors.from_error(exc), status=409
+        )
+    flash(_("Reservation updated."), "success")
+    return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+
+
+# ---------------------------------------------------------------- cancelling
+@bp.route("/<int:reservation_id>/cancel", methods=["GET", "POST"])
+@login_required
+def cancel(reservation_id: int):
+    actor = current_actor()
+    reservations = services().reservations
+    if request.method == "POST":
+        if not services().form_tokens.consume(actor, request.form.get("form_token")):
+            flash(
+                _("This form was already submitted. Check the reservation before trying again."),
+                "warning",
+            )
+            return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+        try:
+            cancelled = reservations.cancel(
+                actor, reservation_id, version=forms.integer(request.form, "version")
+            )
+        except HotelError as exc:
+            flash(message_for(exc.code, exc.params), "danger")
+        else:
+            flash(
+                _("Reservation cancelled. Fee: %(fee)s.", fee=money(cancelled.cancellation_fee)),
+                "success",
+            )
+        return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+    reservation = reservations.get(actor, reservation_id)
+    try:
+        fee = reservations.cancellation_fee(actor, reservation_id)
+        problem = None
+    except HotelError as exc:
+        fee, problem = None, message_for(exc.code, exc.params)
+    return render_template(
+        "reservations/cancel.html",
+        reservation=reservation,
+        fee=fee,
+        problem=problem,
+        free_until=reservations.free_cancellation_until(reservation.period),
+        form_token=services().form_tokens.issue(actor),
     )

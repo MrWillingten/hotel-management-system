@@ -98,6 +98,15 @@ MESSAGES = {
     "reservation.night_taken": _l(
         "Another booking took one of these rooms a moment ago. Search again."
     ),
+    "reservation.checked_in_limits": _l(
+        "The guest is in the house: only the departure date and the occupants can change."
+    ),
+    "reservation.departure_in_past": _l("The departure date must be after today."),
+    "reservation.not_modifiable": _l("This reservation can no longer be changed."),
+    "reservation.not_cancellable": _l("Only a confirmed reservation can be cancelled."),
+    "reservation.cancel_after_arrival": _l(
+        "The arrival time has passed: record a no-show instead of a cancellation."
+    ),
     "reservation.invalid_transition": _l("This isn't possible for a reservation in this state."),
     "field.not_a_number": _l("Enter a whole number."),
     "field.invalid_date": _l("Enter a valid date."),
