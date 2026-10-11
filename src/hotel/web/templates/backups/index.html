@@ -1,0 +1,52 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ _("Backups") }}{% endblock %}
+{% block page_title %}{{ _("Backups") }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <p class="muted">{{ _("A backup is taken automatically every day when the application starts, and before every upgrade.") }}</p>
+  <form method="post" action="{{ url_for('backups.create') }}">
+    {{ csrf() }}
+    <button class="button button--primary" type="submit">{{ icon("archive") }}{{ _("Back up now") }}</button>
+  </form>
+</div>
+<div class="alert alert--info">{{ icon("info") }}
+  <div>
+    <p>{{ _("Backups are stored in this folder on the server:") }}</p>
+    <code class="code-block" dir="ltr">{{ folder }}</code>
+    <p>{{ _("Copy them regularly to another disk or a USB drive. To restore one, stop the application and run:") }}</p>
+    <code class="code-block" dir="ltr">python -m hotel restore FILE</code>
+  </div>
+</div>
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">{{ _("File") }}</th>
+        <th scope="col">{{ _("Created") }}</th>
+        <th scope="col">{{ _("Type") }}</th>
+        <th scope="col" class="num">{{ _("Size") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for b in backups %}
+      <tr>
+        <td dir="ltr"><code>{{ b.name }}</code></td>
+        <td>{{ b.created_at | datetimeformat("short", rebase=False) }}</td>
+        <td>
+          {%- if b.label == "auto" %}{{ _("Daily") }}
+          {%- elif b.label == "manual" %}{{ _("Manual") }}
+          {%- elif b.label == "pre-restore" %}{{ _("Before a restore") }}
+          {%- elif b.label.startswith("pre-upgrade") %}{{ _("Before an upgrade") }}
+          {%- else %}{{ b.label }}{% endif -%}
+        </td>
+        <td class="num">{{ (b.size / 1024) | round(1) }} KB</td>
+      </tr>
+      {%- else %}
+      <tr><td colspan="4" class="table__empty">{{ _("No backups yet.") }}</td></tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -53,9 +53,9 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | ID | Sev | Risk | Control | Status |
 |---|---|---|---|---|
 | D1 | 🔴 | Foreign keys off by default | Enabled on every connection, tested | ✅ S1 |
-| D2 | 🔴 | Inconsistent file-copy backups | SQLite backup API + integrity check | ⏳ S2 |
+| D2 | 🔴 | Inconsistent file-copy backups | SQLite online backup API, integrity check, atomic rename, daily rotation, backup before upgrades, safety copy before restore | ✅ S2 |
 | D3 | 🟠 | Partial writes | Unit of Work transactions; failure-injection test | ✅ S1 |
-| D4 | 🟠 | Failed migration | One transaction per migration; refuse newer schemas | ✅ S1 |
+| D4 | 🟠 | Failed migration | One transaction per migration; refuse newer schemas; automatic backup before upgrading | ✅ S2 |
 | D5 | 🟡 | Undetected corruption | `quick_check` at start-up | ✅ S1 |
 | F1–F4 | 🟠 | Float errors, banker's rounding, locale input | Integer millimes, explicit half-up, locale-aware parsing | ✅ S1 (parsing in forms ⏳ S4) |
 | P1–P6 | 🟠 | Guest personal data | Masked ID numbers, audited reveal (never stored in cookies or URLs), no PII in audit details; anonymisation | ✅ S2 (anonymisation ⏳ S5) |

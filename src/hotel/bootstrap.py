@@ -13,10 +13,12 @@ from importlib import resources
 from hotel.config import Settings
 from hotel.domain.clock import Clock, SystemClock
 from hotel.domain.passwords import PasswordPolicy
+from hotel.persistence.backup import create_backup
 from hotel.persistence.db import initialise_database
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.audit import AuditService
 from hotel.services.auth import AuthService
+from hotel.services.backups import BackupService
 from hotel.services.guests import GuestService
 from hotel.services.passwords import PasswordHasher, ScryptParams
 from hotel.services.rooms import RoomService
@@ -40,11 +42,24 @@ class Services:
     users: UserService
     rooms: RoomService
     guests: GuestService
+    backups: BackupService
 
 
 def build_services(settings: Settings, *, clock: Clock | None = None) -> Services:
-    schema_version = initialise_database(settings.database_path)
     clock = clock or SystemClock(settings.tz)
+
+    def backup_before_upgrade(current_version: int) -> None:
+        # A failed or unwanted upgrade can always be undone from this copy.
+        create_backup(
+            settings.database_path,
+            settings.backup_dir,
+            clock.local_now(),
+            label=f"pre-upgrade-v{current_version}",
+        )
+
+    schema_version = initialise_database(
+        settings.database_path, before_upgrade=backup_before_upgrade
+    )
 
     def uow_factory() -> UnitOfWork:
         return UnitOfWork(settings.database_path)
@@ -61,4 +76,5 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
         users=UserService(uow_factory, clock, hasher, policy),
         rooms=RoomService(uow_factory, clock),
         guests=GuestService(uow_factory, clock),
+        backups=BackupService(uow_factory, clock, settings.database_path, settings.backup_dir),
     )

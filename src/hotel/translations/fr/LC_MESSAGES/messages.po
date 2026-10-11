@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 01:10+0100\n"
+"POT-Creation-Date: 2026-10-11 01:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -27,6 +27,11 @@ msgstr "3 à 32 caractères : lettres, chiffres, points, tirets ou tirets bas."
 
 msgid "A CIN number has exactly 8 digits."
 msgstr "Un numéro de CIN comporte exactement 8 chiffres."
+
+msgid "A backup is taken automatically every day when the application starts, and before every upgrade."
+msgstr ""
+"Une sauvegarde est faite automatiquement chaque jour au démarrage de l'application, et avant "
+"chaque mise à jour."
 
 msgid "A category with this name already exists."
 msgstr "Une catégorie porte déjà ce nom."
@@ -129,8 +134,27 @@ msgstr "Retour au personnel"
 msgid "Back to the dashboard"
 msgstr "Retour au tableau de bord"
 
+msgid "Back up now"
+msgstr "Sauvegarder maintenant"
+
+#, python-format
+msgid "Backup %(name)s written."
+msgstr "Sauvegarde %(name)s enregistrée."
+
+msgid "Backups"
+msgstr "Sauvegardes"
+
+msgid "Backups are stored in this folder on the server:"
+msgstr "Les sauvegardes sont stockées dans ce dossier du serveur :"
+
 msgid "Bad request"
 msgstr "Requête invalide"
+
+msgid "Before a restore"
+msgstr "Avant une restauration"
+
+msgid "Before an upgrade"
+msgstr "Avant une mise à jour"
 
 msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
 msgstr "CIN : 8 chiffres. Passeport : 5 à 20 lettres ou chiffres."
@@ -190,6 +214,11 @@ msgstr "Fermer la chambre"
 msgid "Colour theme"
 msgstr "Thème de couleurs"
 
+msgid "Copy them regularly to another disk or a USB drive. To restore one, stop the application and run:"
+msgstr ""
+"Copiez-les régulièrement sur un autre disque ou une clé USB. Pour en restaurer une, arrêtez "
+"l'application et exécutez :"
+
 msgid "Create a room category first, then add rooms."
 msgstr "Créez d'abord une catégorie, puis ajoutez des chambres."
 
@@ -199,8 +228,14 @@ msgstr "Créer le compte"
 msgid "Create the first manager account from a terminal, in the project folder:"
 msgstr "Créez le premier compte gestionnaire depuis un terminal, dans le dossier du projet :"
 
+msgid "Created"
+msgstr "Créée le"
+
 msgid "Current password"
 msgstr "Mot de passe actuel"
+
+msgid "Daily"
+msgstr "Quotidienne"
 
 msgid "Dark"
 msgstr "Sombre"
@@ -280,6 +315,9 @@ msgstr "Saisissez un montant comme 180 ou 180.500."
 
 msgid "Everyone"
 msgstr "Tout le monde"
+
+msgid "File"
+msgstr "Fichier"
 
 msgid "Filter"
 msgstr "Filtrer"
@@ -404,6 +442,9 @@ msgstr "Historique de maintenance"
 msgid "Manager"
 msgstr "Gestionnaire"
 
+msgid "Manual"
+msgstr "Manuelle"
+
 msgid "Match system"
 msgstr "Selon le système"
 
@@ -442,6 +483,9 @@ msgstr "Tarif par nuit (DT, hors taxes)"
 
 msgid "No account exists yet."
 msgstr "Aucun compte n'existe encore."
+
+msgid "No backups yet."
+msgstr "Aucune sauvegarde pour l'instant."
 
 msgid "No entries match these filters."
 msgstr "Aucune entrée ne correspond à ces filtres."
@@ -602,6 +646,9 @@ msgstr "Se connecter"
 msgid "Sign out"
 msgstr "Se déconnecter"
 
+msgid "Size"
+msgstr "Taille"
+
 msgid "Skip to content"
 msgstr "Aller au contenu"
 
@@ -731,6 +778,9 @@ msgid "Too many failed sign-in attempts from this computer. Wait a few minutes a
 msgstr ""
 "Trop de tentatives de connexion échouées depuis cet ordinateur. Patientez quelques minutes, puis "
 "réessayez."
+
+msgid "Type"
+msgstr "Type"
 
 msgid "Unlock"
 msgstr "Déverrouiller"

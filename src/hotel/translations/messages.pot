@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 01:10+0100\n"
+"POT-Creation-Date: 2026-10-11 01:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,11 @@ msgid "3 to 32 characters: letters, digits, dots, hyphens or underscores."
 msgstr ""
 
 msgid "A CIN number has exactly 8 digits."
+msgstr ""
+
+msgid ""
+"A backup is taken automatically every day when the application starts, "
+"and before every upgrade."
 msgstr ""
 
 msgid "A category with this name already exists."
@@ -132,7 +137,26 @@ msgstr ""
 msgid "Back to the dashboard"
 msgstr ""
 
+msgid "Back up now"
+msgstr ""
+
+#, python-format
+msgid "Backup %(name)s written."
+msgstr ""
+
+msgid "Backups"
+msgstr ""
+
+msgid "Backups are stored in this folder on the server:"
+msgstr ""
+
 msgid "Bad request"
+msgstr ""
+
+msgid "Before a restore"
+msgstr ""
+
+msgid "Before an upgrade"
 msgstr ""
 
 msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
@@ -193,6 +217,11 @@ msgstr ""
 msgid "Colour theme"
 msgstr ""
 
+msgid ""
+"Copy them regularly to another disk or a USB drive. To restore one, stop "
+"the application and run:"
+msgstr ""
+
 msgid "Create a room category first, then add rooms."
 msgstr ""
 
@@ -202,7 +231,13 @@ msgstr ""
 msgid "Create the first manager account from a terminal, in the project folder:"
 msgstr ""
 
+msgid "Created"
+msgstr ""
+
 msgid "Current password"
+msgstr ""
+
+msgid "Daily"
 msgstr ""
 
 msgid "Dark"
@@ -282,6 +317,9 @@ msgid "Enter an amount such as 180 or 180.500."
 msgstr ""
 
 msgid "Everyone"
+msgstr ""
+
+msgid "File"
 msgstr ""
 
 msgid "Filter"
@@ -407,6 +445,9 @@ msgstr ""
 msgid "Manager"
 msgstr ""
 
+msgid "Manual"
+msgstr ""
+
 msgid "Match system"
 msgstr ""
 
@@ -444,6 +485,9 @@ msgid "Nightly rate (DT, before tax)"
 msgstr ""
 
 msgid "No account exists yet."
+msgstr ""
+
+msgid "No backups yet."
 msgstr ""
 
 msgid "No entries match these filters."
@@ -605,6 +649,9 @@ msgstr ""
 msgid "Sign out"
 msgstr ""
 
+msgid "Size"
+msgstr ""
+
 msgid "Skip to content"
 msgstr ""
 
@@ -737,6 +784,9 @@ msgstr ""
 msgid ""
 "Too many failed sign-in attempts from this computer. Wait a few minutes "
 "and try again."
+msgstr ""
+
+msgid "Type"
 msgstr ""
 
 msgid "Unlock"

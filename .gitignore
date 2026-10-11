@@ -8,13 +8,13 @@ dist/
 venv/
 
 # Application data: database, secret key, logs and backups never go to Git
-instance/
+/instance/
 *.db
 *.db-wal
 *.db-shm
 *.sqlite3
-backups/
-logs/
+/backups/
+/logs/
 secret_key
 
 # Tooling
