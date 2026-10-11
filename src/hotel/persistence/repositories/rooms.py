@@ -202,11 +202,17 @@ class MaintenanceRepository(BaseRepository):
         )
         return [date_from_db(r["night"]) for r in rows]
 
-    def rooms_under_maintenance_on(self, night: date) -> set[int]:
+    def states_on(self, night: date) -> dict[int, str]:
+        """room_id -> "MAINTENANCE" or the status of the reservation holding that night."""
         rows = self._fetch_all(
-            "SELECT room_id FROM room_night WHERE night = ?", (date_to_db(night),)
+            "SELECT n.room_id, n.maintenance_id, r.status FROM room_night n "
+            "LEFT JOIN reservation r ON r.id = n.reservation_id WHERE n.night = ?",
+            (date_to_db(night),),
         )
-        return {r["room_id"] for r in rows}
+        return {
+            row["room_id"]: "MAINTENANCE" if row["maintenance_id"] else row["status"]
+            for row in rows
+        }
 
     def delete(self, maintenance_id: int) -> None:
         self._execute("DELETE FROM maintenance WHERE id = ?", (maintenance_id,))

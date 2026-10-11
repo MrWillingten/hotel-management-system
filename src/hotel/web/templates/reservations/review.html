@@ -1,0 +1,60 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/reservations.html" import stay -%}
+{% block title %}{{ _("Review the booking") }}{% endblock %}
+{% block page_title %}{{ _("Review the booking") }}{% endblock %}
+{% block content %}
+<section class="panel panel--wide">
+  <dl class="facts">
+    <div><dt>{{ _("Guest") }}</dt><dd>{{ guest.full_name }}</dd></div>
+    <div><dt>{{ _("Stay") }}</dt><dd>{{ stay(quote.period) }}</dd></div>
+  </dl>
+  <div class="table-wrap table-wrap--flat">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">{{ _("Room") }}</th>
+          <th scope="col">{{ _("Guests") }}</th>
+          <th scope="col" class="num">{{ _("Nights") }}</th>
+          <th scope="col" class="num">{{ _("Nightly rate") }}</th>
+          <th scope="col" class="num">{{ _("Amount") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for line in quote.lines %}
+        <tr>
+          <td><strong dir="ltr">{{ line.room.number }}</strong> · {{ line.room.category_name }}</td>
+          <td>{{ _("Adults: %(adults)s, children: %(children)s", adults=line.request.adults, children=line.request.children) }}</td>
+          <td class="num">{{ line.nights | length }}</td>
+          <td class="num">{{ line.room.nightly_rate | money }}</td>
+          <td class="num">{{ line.subtotal | money }}</td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+      <tfoot>
+        <tr><th scope="row" colspan="4">{{ _("Accommodation total (before tax)") }}</th><td class="num"><strong>{{ quote.total | money }}</strong></td></tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="alert alert--info">{{ icon("info") }}
+    <p>{{ _("Free cancellation until %(when)s. After that, cancelling costs 20%% of the accommodation.", when=policy_free_until | datetimeformat("medium")) }}</p>
+  </div>
+  {%- if notes %}<p class="notes">{{ notes }}</p>{% endif %}
+  <form class="form-actions" method="post" action="{{ url_for('reservations.create') }}">
+    {{ csrf() }}
+    <input type="hidden" name="form_token" value="{{ form_token }}">
+    <input type="hidden" name="guest_id" value="{{ guest.id }}">
+    <input type="hidden" name="arrival" value="{{ quote.period.arrival }}">
+    <input type="hidden" name="departure" value="{{ quote.period.departure }}">
+    <input type="hidden" name="notes" value="{{ notes }}">
+    {%- for line in quote.lines %}
+    <input type="hidden" name="room" value="{{ line.room.id }}">
+    <input type="hidden" name="adults_{{ line.room.id }}" value="{{ line.request.adults }}">
+    <input type="hidden" name="children_{{ line.room.id }}" value="{{ line.request.children }}">
+    {%- endfor %}
+    <button class="button button--primary" type="submit">{{ icon("check") }}{{ _("Confirm booking") }}</button>
+    <a class="button button--ghost" href="{{ url_for('reservations.new', guest_id=guest.id, arrival=quote.period.arrival, departure=quote.period.departure) }}">{{ _("Back") }}</a>
+  </form>
+</section>
+{% endblock %}

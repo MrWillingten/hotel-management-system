@@ -24,9 +24,11 @@ _ROOM_NUMBER = re.compile(r"^[A-Z0-9][A-Z0-9-]{0,9}$")
 
 
 class RoomStatus(StrEnum):
-    """What a room is doing tonight. Reserved/occupied arrive with reservations."""
+    """What a room is doing tonight (§4.5: reserved, occupied, available, unavailable)."""
 
     AVAILABLE = "AVAILABLE"
+    RESERVED = "RESERVED"
+    OCCUPIED = "OCCUPIED"
     MAINTENANCE = "MAINTENANCE"
     OUT_OF_SERVICE = "OUT_OF_SERVICE"
 

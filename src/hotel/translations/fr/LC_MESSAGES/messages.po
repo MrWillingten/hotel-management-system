@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 01:14+0100\n"
+"POT-Creation-Date: 2026-10-11 08:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -49,11 +49,18 @@ msgstr "Une période de maintenance dure au plus %(max)s nuits."
 msgid "A passport number has 5 to 20 letters or digits."
 msgstr "Un numéro de passeport comporte de 5 à 20 lettres ou chiffres."
 
+#, python-format
+msgid "A stay lasts at most %(max)s nights."
+msgstr "Un séjour dure au plus %(max)s nuits."
+
 msgid "Access"
 msgstr "Accès"
 
 msgid "Access denied"
 msgstr "Accès refusé"
+
+msgid "Accommodation total (before tax)"
+msgstr "Total hébergement (hors taxes)"
 
 #, python-format
 msgid "Account %(username)s created. Give them the temporary password in person."
@@ -98,6 +105,16 @@ msgstr "Adresse"
 msgid "Administration"
 msgstr "Administration"
 
+msgid "Adults"
+msgstr "Adultes"
+
+#, python-format
+msgid "Adults: %(adults)s, children: %(children)s"
+msgstr "Adultes : %(adults)s, enfants : %(children)s"
+
+msgid "All"
+msgstr "Tous"
+
 msgid "All actions"
 msgstr "Toutes les actions"
 
@@ -107,8 +124,14 @@ msgstr "Toutes les catégories"
 msgid "All guests"
 msgstr "Tous les clients"
 
+msgid "All reservations"
+msgstr "Toutes les réservations"
+
 msgid "All rooms"
 msgstr "Toutes les chambres"
+
+msgid "Amount"
+msgstr "Montant"
 
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr "Les montants ont au plus 3 décimales (millimes)."
@@ -116,8 +139,23 @@ msgstr "Les montants ont au plus 3 décimales (millimes)."
 msgid "An unexpected error occurred. It has been logged."
 msgstr "Une erreur inattendue s'est produite. Elle a été enregistrée."
 
+msgid "Another booking took one of these rooms a moment ago. Search again."
+msgstr "Une autre réservation vient de prendre l'une de ces chambres. Relancez la recherche."
+
 msgid "Another room already has this number."
 msgstr "Une autre chambre porte déjà ce numéro."
+
+msgid "Arrival"
+msgstr "Arrivée"
+
+msgid "Arrival time, special requests..."
+msgstr "Heure d'arrivée, demandes particulières…"
+
+msgid "Arriving from"
+msgstr "Arrivée à partir du"
+
+msgid "Arriving until"
+msgstr "Arrivée jusqu'au"
 
 msgid "At least 12 characters. A short sentence is easy to remember and hard to guess."
 msgstr "Au moins 12 caractères. Une courte phrase est facile à retenir et difficile à deviner."
@@ -127,6 +165,9 @@ msgstr "Journal d'audit"
 
 msgid "Available"
 msgstr "Disponible"
+
+msgid "Back"
+msgstr "Retour"
 
 msgid "Back to staff"
 msgstr "Retour au personnel"
@@ -156,11 +197,37 @@ msgstr "Avant une restauration"
 msgid "Before an upgrade"
 msgstr "Avant une mise à jour"
 
+msgid "Book"
+msgstr "Réserver"
+
+#, python-format
+msgid "Book between 1 and %(max)s rooms at once."
+msgstr "Réservez entre 1 et %(max)s chambres à la fois."
+
+#, python-format
+msgid "Book room %(number)s"
+msgstr "Réserver la chambre %(number)s"
+
+msgid "Booked on"
+msgstr "Réservé le"
+
+msgid "Bookings open at most two years ahead."
+msgstr "Les réservations sont ouvertes au plus deux ans à l'avance."
+
 msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
 msgstr "CIN : 8 chiffres. Passeport : 5 à 20 lettres ou chiffres."
 
 msgid "Cancel"
 msgstr "Annuler"
+
+msgid "Cancellation fee"
+msgstr "Frais d'annulation"
+
+msgid "Cancelled"
+msgstr "Annulée"
+
+msgid "Cancelled on"
+msgstr "Annulée le"
 
 msgid "Capacity"
 msgstr "Capacité"
@@ -171,6 +238,10 @@ msgstr "Capacité (personnes)"
 #, python-format
 msgid "Capacity must be between 1 and %(max)s guests."
 msgstr "La capacité doit être comprise entre 1 et %(max)s personnes."
+
+#, python-format
+msgid "Capacity: %(count)s"
+msgstr "Capacité : %(count)s"
 
 msgid "Categories"
 msgstr "Catégories"
@@ -184,11 +255,26 @@ msgstr "Catégorie"
 msgid "Category saved."
 msgstr "Catégorie enregistrée."
 
+msgid "Change guest"
+msgstr "Changer de client"
+
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
 msgid "Changes saved."
 msgstr "Modifications enregistrées."
+
+msgid "Checked in"
+msgstr "Arrivé"
+
+msgid "Checked out"
+msgstr "Parti"
+
+msgid "Children"
+msgstr "Enfants"
+
+msgid "Choose"
+msgstr "Choisir"
 
 msgid "Choose a category."
 msgstr "Choisissez une catégorie."
@@ -199,11 +285,17 @@ msgstr "Choisissez un pays dans la liste."
 msgid "Choose a document type."
 msgstr "Choisissez un type de pièce."
 
+msgid "Choose a guest first."
+msgstr "Choisissez d'abord un client."
+
 msgid "Choose a password different from the current one."
 msgstr "Choisissez un mot de passe différent de l'actuel."
 
 msgid "Choose a role."
 msgstr "Choisissez un rôle."
+
+msgid "Choose the dates first."
+msgstr "Choisissez d'abord les dates."
 
 msgid "Close for maintenance"
 msgstr "Fermer pour maintenance"
@@ -211,8 +303,20 @@ msgstr "Fermer pour maintenance"
 msgid "Close the room"
 msgstr "Fermer la chambre"
 
+msgid "Code"
+msgstr "Code"
+
+msgid "Code or guest"
+msgstr "Code ou client"
+
 msgid "Colour theme"
 msgstr "Thème de couleurs"
+
+msgid "Confirm booking"
+msgstr "Confirmer la réservation"
+
+msgid "Confirmed"
+msgstr "Confirmée"
 
 msgid "Copy them regularly to another disk or a USB drive. To restore one, stop the application and run:"
 msgstr ""
@@ -249,6 +353,9 @@ msgstr "Tableau de bord"
 msgid "Database schema"
 msgstr "Schéma de la base"
 
+msgid "Dates"
+msgstr "Dates"
+
 msgid "Deactivate account"
 msgstr "Désactiver le compte"
 
@@ -257,6 +364,9 @@ msgstr "Désactivé"
 
 msgid "Deactivating signs the person out everywhere, immediately."
 msgstr "La désactivation déconnecte immédiatement la personne partout."
+
+msgid "Departure"
+msgstr "Départ"
 
 msgid "Description"
 msgstr "Description"
@@ -278,6 +388,12 @@ msgstr "Terminé"
 
 msgid "E-mail"
 msgstr "E-mail"
+
+msgid "Each room can only be selected once."
+msgstr "Chaque chambre ne peut être choisie qu'une fois."
+
+msgid "Each room needs at least one adult."
+msgstr "Chaque chambre doit compter au moins un adulte."
 
 msgid "Edit guest"
 msgstr "Modifier le client"
@@ -325,6 +441,9 @@ msgstr "Fichier"
 msgid "Filter"
 msgstr "Filtrer"
 
+msgid "Find rooms"
+msgstr "Chercher des chambres"
+
 msgid "First closed night"
 msgstr "Première nuit fermée"
 
@@ -342,6 +461,10 @@ msgstr "Formulaire expiré"
 
 msgid "Foundations: sign-in, themes, languages"
 msgstr "Fondations : connexion, thèmes, langues"
+
+#, python-format
+msgid "Free cancellation until %(when)s. After that, cancelling costs 20%% of the accommodation."
+msgstr "Annulation gratuite jusqu'au %(when)s. Ensuite, l'annulation coûte 20 %% de l'hébergement."
 
 msgid "From"
 msgstr "Du"
@@ -364,6 +487,9 @@ msgstr "Bonsoir"
 msgid "Good morning"
 msgstr "Bonjour"
 
+msgid "Guest"
+msgstr "Client"
+
 #, python-format
 msgid "Guest %(name)s registered."
 msgstr "Client %(name)s enregistré."
@@ -374,6 +500,9 @@ msgstr "Clients"
 #, python-format
 msgid "Guests found: %(total)s"
 msgstr "Clients trouvés : %(total)s"
+
+msgid "Guests in one room"
+msgstr "Personnes par chambre"
 
 msgid "Hardening, report and demo"
 msgstr "Consolidation, rapport et démonstration"
@@ -469,8 +598,14 @@ msgstr "Nouvelle catégorie"
 msgid "New password"
 msgstr "Nouveau mot de passe"
 
+msgid "New reservation"
+msgstr "Nouvelle réservation"
+
 msgid "New reservations will be refused. Managers only."
 msgstr "Les nouvelles réservations seront refusées. Réservé aux gestionnaires."
+
+msgid "Newest arrivals first."
+msgstr "Arrivées les plus récentes en premier."
 
 msgid "Next"
 msgstr "Prochain"
@@ -478,11 +613,24 @@ msgstr "Prochain"
 msgid "Next page"
 msgstr "Page suivante"
 
+msgid "Night of"
+msgstr "Nuit du"
+
 msgid "Nightly rate"
 msgstr "Tarif par nuit"
 
 msgid "Nightly rate (DT, before tax)"
 msgstr "Tarif par nuit (DT, hors taxes)"
+
+msgid "Nights"
+msgstr "Nuits"
+
+msgid "Nights and prices"
+msgstr "Nuits et prix"
+
+#, python-format
+msgid "Nights: %(nights)s"
+msgstr "Nuits : %(nights)s"
 
 msgid "No account exists yet."
 msgstr "Aucun compte n'existe encore."
@@ -500,14 +648,29 @@ msgstr "Aucun client ne correspond à « %(query)s »."
 msgid "No guests registered yet."
 msgstr "Aucun client enregistré pour l'instant."
 
+msgid "No other room is free for these dates."
+msgstr "Aucune autre chambre n'est libre à ces dates."
+
+msgid "No reservation matches these filters."
+msgstr "Aucune réservation ne correspond à ces filtres."
+
+msgid "No room is free for every night of this stay."
+msgstr "Aucune chambre n'est libre pour toutes les nuits de ce séjour."
+
 msgid "No rooms yet."
 msgstr "Aucune chambre pour l'instant."
+
+msgid "No-show"
+msgstr "Non présenté"
 
 msgid "Not allowed"
 msgstr "Non autorisé"
 
 msgid "Notes"
 msgstr "Remarques"
+
+msgid "Occupied"
+msgstr "Occupée"
 
 msgid "Out of service"
 msgstr "Hors service"
@@ -540,6 +703,9 @@ msgstr "Préférences utiles au personnel. Aucune information sensible."
 msgid "Previous"
 msgstr "Précédente"
 
+msgid "Price locked at booking"
+msgstr "Prix fixé à la réservation"
+
 msgid "Project roadmap"
 msgstr "Feuille de route du projet"
 
@@ -561,6 +727,9 @@ msgstr "Enregistrement"
 msgid "Register a guest"
 msgstr "Enregistrer un client"
 
+msgid "Register a new guest"
+msgstr "Enregistrer un nouveau client"
+
 msgid "Register guest"
 msgstr "Enregistrer le client"
 
@@ -579,8 +748,18 @@ msgstr "Répétez le mot de passe temporaire"
 msgid "Reports, operations and translations"
 msgstr "Rapports, exploitation et traductions"
 
+msgid "Reservation"
+msgstr "Réservation"
+
+#, python-format
+msgid "Reservation %(code)s confirmed."
+msgstr "Réservation %(code)s confirmée."
+
 msgid "Reservation history"
 msgstr "Historique des réservations"
+
+msgid "Reservations"
+msgstr "Réservations"
 
 msgid "Reservations and availability"
 msgstr "Réservations et disponibilités"
@@ -588,8 +767,14 @@ msgstr "Réservations et disponibilités"
 msgid "Reservations arrive in the next version of the application."
 msgstr "Les réservations arrivent dans la prochaine version de l'application."
 
+msgid "Reserved"
+msgstr "Réservée"
+
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
+
+msgid "Review the booking"
+msgstr "Vérifier la réservation"
 
 msgid "Role"
 msgstr "Rôle"
@@ -605,6 +790,18 @@ msgstr "Chambre %(number)s"
 msgid "Room %(number)s added."
 msgstr "Chambre %(number)s ajoutée."
 
+#, python-format
+msgid "Room %(room)s can sleep at most %(capacity)s guests (%(occupants)s requested)."
+msgstr "La chambre %(room)s accueille au plus %(capacity)s personnes (%(occupants)s demandées)."
+
+#, python-format
+msgid "Room %(room)s is already booked or closed on %(count)s of these nights (%(first)s to %(last)s)."
+msgstr "La chambre %(room)s est déjà réservée ou fermée %(count)s de ces nuits (du %(first)s au %(last)s)."
+
+#, python-format
+msgid "Room %(room)s is out of service."
+msgstr "La chambre %(room)s est hors service."
+
 msgid "Room categories"
 msgstr "Catégories de chambres"
 
@@ -617,6 +814,9 @@ msgstr "Numéro de chambre"
 
 msgid "Rooms"
 msgstr "Chambres"
+
+msgid "Rooms free for the same dates:"
+msgstr "Chambres libres aux mêmes dates :"
 
 msgid "Rooms, guests, staff and audit log"
 msgstr "Chambres, clients, personnel et journal d'audit"
@@ -636,6 +836,12 @@ msgstr "Rechercher"
 
 msgid "Search guests"
 msgstr "Rechercher des clients"
+
+msgid "Select at least one room."
+msgstr "Sélectionnez au moins une chambre."
+
+msgid "Select one of them below."
+msgstr "Sélectionnez-en une ci-dessous."
 
 msgid "Set temporary password"
 msgstr "Définir un mot de passe temporaire"
@@ -676,6 +882,9 @@ msgstr "Membre du personnel"
 msgid "Status"
 msgstr "Statut"
 
+msgid "Stay"
+msgstr "Séjour"
+
 msgid "System"
 msgstr "Système"
 
@@ -684,6 +893,9 @@ msgstr "Mot de passe temporaire"
 
 msgid "Temporary password set. They must choose a new one at their next sign-in."
 msgstr "Mot de passe temporaire défini. La personne devra en choisir un nouveau à sa prochaine connexion."
+
+msgid "The arrival date can't be in the past."
+msgstr "La date d'arrivée ne peut pas être passée."
 
 msgid "The current password is not correct."
 msgstr "Le mot de passe actuel est incorrect."
@@ -705,6 +917,9 @@ msgstr "Les indicateurs de la réception apparaîtront ici dès que les réserva
 
 msgid "The hotel must keep at least one active manager."
 msgstr "L'hôtel doit garder au moins un gestionnaire actif."
+
+msgid "The nights of this reservation were released when it was cancelled."
+msgstr "Les nuits de cette réservation ont été libérées lors de son annulation."
 
 msgid "The page you asked for doesn't exist."
 msgstr "La page demandée n'existe pas."
@@ -737,11 +952,23 @@ msgstr "Cette modification est en conflit avec des données existantes."
 msgid "This form expired or was sent from another site. Reload the page and try again."
 msgstr "Ce formulaire a expiré ou a été envoyé depuis un autre site. Rechargez la page et réessayez."
 
+msgid "This form was already submitted. Check the reservation list before trying again."
+msgstr "Ce formulaire a déjà été envoyé. Vérifiez la liste des réservations avant de réessayer."
+
+msgid "This guest is marked do-not-rent: new reservations are refused."
+msgstr "Ce client est marqué « ne pas louer » : les nouvelles réservations sont refusées."
+
+msgid "This guest is marked do-not-rent: the booking will be refused."
+msgstr "Ce client est marqué « ne pas louer » : la réservation sera refusée."
+
 msgid "This is a different person: register anyway"
 msgstr "C'est une autre personne : enregistrer quand même"
 
 msgid "This is recorded in the audit log."
 msgstr "Cette action est enregistrée dans le journal d'audit."
+
+msgid "This isn't possible for a reservation in this state."
+msgstr "Impossible pour une réservation dans cet état."
 
 msgid "This maintenance period is already over."
 msgstr "Cette période de maintenance est déjà terminée."

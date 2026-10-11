@@ -13,7 +13,7 @@ from hotel.services.guests import ProbableDuplicateError
 from hotel.web import forms
 from hotel.web.context import current_actor, services
 from hotel.web.messages import message_for
-from hotel.web.security import login_required
+from hotel.web.security import is_safe_redirect_target, login_required
 
 bp = Blueprint("guests", __name__, url_prefix="/guests")
 
@@ -72,6 +72,11 @@ def create():
                 duplicates = [services().guests.get(current_actor(), exc.params["existing_id"])]
         else:
             flash(_("Guest %(name)s registered.", name=guest.full_name), "success")
+            back = request.args.get("next")
+            if is_safe_redirect_target(back) and back.startswith("/reservations/new"):
+                # Coming from a booking: go back to it with the new guest selected.
+                separator = "&" if "?" in back else "?"
+                return redirect(f"{back}{separator}guest_id={guest.id}")
             return redirect(url_for("guests.detail", guest_id=guest.id))
     return render_template(
         "guests/form.html",

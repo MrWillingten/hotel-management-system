@@ -1,0 +1,12 @@
+{%- macro status_badge(status) -%}
+{%- set kinds = {"CONFIRMED": ("info", _("Confirmed")), "CHECKED_IN": ("accent", _("Checked in")),
+                 "CHECKED_OUT": ("success", _("Checked out")), "CANCELLED": ("neutral", _("Cancelled")),
+                 "NO_SHOW": ("danger", _("No-show"))} -%}
+{%- set kind, label = kinds.get(status, ("neutral", status)) -%}
+<span class="badge badge--{{ kind }}">{{ label }}</span>
+{%- endmacro %}
+
+{%- macro stay(period) -%}
+{{ period.arrival | dateformat("medium") }} → {{ period.departure | dateformat("medium") }}
+<span class="muted">· {{ _("Nights: %(nights)s", nights=period.nights) }}</span>
+{%- endmacro %}

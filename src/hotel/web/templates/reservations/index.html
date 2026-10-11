@@ -1,0 +1,67 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/paging.html" import pagination -%}
+{%- from "macros/reservations.html" import status_badge -%}
+{% block title %}{{ _("Reservations") }}{% endblock %}
+{% block page_title %}{{ _("Reservations") }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <p class="muted">{{ _("Newest arrivals first.") }}</p>
+  <a class="button button--primary" href="{{ url_for('reservations.new') }}">{{ icon("plus") }}{{ _("New reservation") }}</a>
+</div>
+<form class="filters" method="get">
+  <div class="field">
+    <label class="field__label" for="f-q">{{ _("Code or guest") }}</label>
+    <input class="field__input" id="f-q" name="q" type="search" value="{{ filters.query }}" maxlength="50">
+  </div>
+  <div class="field">
+    <label class="field__label" for="f-status">{{ _("Status") }}</label>
+    <select class="field__input" id="f-status" name="status">
+      <option value="">{{ _("All") }}</option>
+      {%- for s in statuses %}
+      <option value="{{ s.value }}" {%- if filters.status == s %} selected{% endif %}>{{ status_badge(s.value) | striptags }}</option>
+      {%- endfor %}
+    </select>
+  </div>
+  <div class="field">
+    <label class="field__label" for="f-from">{{ _("Arriving from") }}</label>
+    <input class="field__input" id="f-from" name="from" type="date" value="{{ filters.arriving_from or '' }}">
+  </div>
+  <div class="field">
+    <label class="field__label" for="f-until">{{ _("Arriving until") }}</label>
+    <input class="field__input" id="f-until" name="until" type="date" value="{{ filters.arriving_until or '' }}">
+  </div>
+  <button class="button button--primary" type="submit">{{ _("Filter") }}</button>
+</form>
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">{{ _("Code") }}</th>
+        <th scope="col">{{ _("Guest") }}</th>
+        <th scope="col">{{ _("Rooms") }}</th>
+        <th scope="col">{{ _("Arrival") }}</th>
+        <th scope="col">{{ _("Departure") }}</th>
+        <th scope="col" class="num">{{ _("Amount") }}</th>
+        <th scope="col">{{ _("Status") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for r in page.items %}
+      <tr>
+        <td dir="ltr"><a href="{{ url_for('reservations.detail', reservation_id=r.id) }}">{{ r.code }}</a></td>
+        <td>{{ r.guest_name }}</td>
+        <td dir="ltr">{{ r.rooms | map(attribute="number") | join(", ") }}</td>
+        <td>{{ r.period.arrival | dateformat("medium") }}</td>
+        <td>{{ r.period.departure | dateformat("medium") }}</td>
+        <td class="num">{{ r.accommodation_total | money }}</td>
+        <td>{{ status_badge(r.status) }}</td>
+      </tr>
+      {%- else %}
+      <tr><td colspan="7" class="table__empty">{{ _("No reservation matches these filters.") }}</td></tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+{{ pagination(page) }}
+{% endblock %}
