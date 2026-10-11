@@ -14,6 +14,11 @@ All notable changes are recorded here. The format follows
   turn it off again. A code is never accepted twice; wrong codes count
   toward the account lockout. `hotel reset-totp USERNAME` for a lost phone.
   New dependency: `segno` (QR codes, pure Python). Migration 0015.
+- Docker image (`Dockerfile`): unprivileged user, data in the `/data`
+  volume, `HEALTHCHECK` on the new public `/health` page, dependencies from
+  the hash-checked lock file. `deploy/compose.yaml` runs it behind Caddy
+  (HTTPS with a local certificate authority) with a read-only file system
+  and no capabilities. CI builds the image and checks it starts healthy.
 
 ## [0.9.0] – Sprint 5: Reports, operations, languages (code complete)
 

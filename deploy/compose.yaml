@@ -1,0 +1,53 @@
+# Several workstations on the hotel network, with HTTPS (story 6.2).
+#
+#   cd deploy
+#   docker compose up -d
+#   docker compose exec -it hotel hotel create-manager
+#
+# Then open https://hotel.localhost (or the name set in HOTEL_DOMAIN) and
+# trust Caddy's local certificate authority once per workstation
+# (docs/deployment.md explains how).
+
+services:
+  hotel:
+    build: ..
+    image: hotel:latest
+    restart: unless-stopped
+    environment:
+      HOTEL_NAME: ${HOTEL_NAME:-Hotel Medina}
+      HOTEL_TIMEZONE: ${HOTEL_TIMEZONE:-Africa/Tunis}
+      HOTEL_HTTPS: "1"            # cookies get the Secure flag, HSTS is sent
+      HOTEL_TRUSTED_PROXIES: "1"  # client addresses come from Caddy (login throttling)
+    volumes:
+      - hotel-data:/data
+    # Not published: only Caddy can reach the application.
+    expose:
+      - "8000"
+    # Hardening: nothing to write outside /data and /tmp, no extra privileges.
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+
+  caddy:
+    image: caddy:2.11.7-alpine
+    restart: unless-stopped
+    depends_on:
+      hotel:
+        condition: service_healthy
+    environment:
+      HOTEL_DOMAIN: ${HOTEL_DOMAIN:-hotel.localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  hotel-data:
+  caddy-data:
+  caddy-config:

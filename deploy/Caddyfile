@@ -1,0 +1,8 @@
+# HTTPS in front of the application (story 6.2).
+# `tls internal`: Caddy creates its own certificate authority, suitable for a
+# private hotel network without a public domain name.
+{$HOTEL_DOMAIN} {
+	tls internal
+	encode gzip
+	reverse_proxy hotel:8000
+}

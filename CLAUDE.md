@@ -112,11 +112,14 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
 ### Next: Sprint 6 – Stretch, freeze, delivery (starts now, freeze 27 Dec) → v1.0.0
 **Stories 6.1–6.9 are approved and written in full in `docs/roadmap.md`**
 (Sprint 6 table + decisions). Read it before starting. To do, in order:
-1. Create milestone "Sprint 6" and one issue per story (6.1–6.9) from that table.
-2. 6.1 TOTP (stdlib RFC 6238, `segno` for QR → regenerate both lock files with
-   `uv pip compile ... --universal --generate-hashes`, required for managers
-   after a 7-day grace, hashed recovery codes, no code reuse, `hotel reset-totp`).
-3. 6.2 Docker → 6.3 JSON API (hashed manager-issued tokens) → 6.4 Windows exe
+1. ✅ Milestone "Sprint 6" (#5) + issues #67–#75 (6.1 = #67 … 6.9 = #75).
+2. ✅ 6.1 TOTP (PR #76): `domain/totp.py`, `services/two_factor.py`, two-step
+   login in `services/auth.py` (`login` → challenge → `complete_login`), gate in
+   `web/security.py`, migration 0015, ADR 0006. Test helpers in conftest:
+   `enrol_two_factor`, `login_with_code` (advance the clock 30 s after enrolling).
+   Tests that jump > 7 days with a manager must enrol (grace gate).
+3. 6.2 Docker (`Dockerfile`, `deploy/`, `/health`, CI job "Docker image"; no
+   Docker on the dev machine → CI is the test) → 6.3 JSON API (hashed manager-issued tokens) → 6.4 Windows exe
    (PyInstaller, CI artifact) → 6.5 room move (courtesy price by default).
 4. Freeze 27 Dec. 6.6 hardening (ASVS L1, evidence table, browsers; the
    student runs the real-Windows checklist).
@@ -143,6 +146,9 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
 - No JavaScript at all (CSP): printing is the browser's Ctrl+P.
 
 ### Bugs found and fixed (lessons)
+- Regenerating `requirements-dev.lock` with a newer uv dropped `typing-extensions`
+  (<3.13 marker) → when adding a dependency, regenerate `requirements.lock` but
+  only insert the new block into the dev lock; check `git diff` of both.
 - `.gitignore` `backups/` hid `templates/backups/` → anchor root patterns.
 - Availability skipped maintenance nights (`IS NOT NULL` with no exclusion);
   DB key contained it → test both kinds of blocked night.

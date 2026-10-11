@@ -36,6 +36,7 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | W8 | 🟡 | Vulnerable dependencies | pip-audit in CI, Dependabot | ✅ S1 |
 | W9 | ⚪ | Expensive report ranges | 2-year cap (731 nights), tested | ✅ S5 |
 | W10 | ⚪ | File uploads | None by design | ✅ |
+| W11 | 🟡 | A compromised container gains root or persists | Image runs as uid 10001; compose: read-only file system, all capabilities dropped, `no-new-privileges`; dependencies installed only from hash-checked wheels; app port reachable only through Caddy (HTTPS) | ✅ S6 |
 
 ## Input validation and injection
 
