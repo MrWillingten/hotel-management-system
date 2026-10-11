@@ -11,7 +11,7 @@ Semester project for the *Python Programming* course (Engineering, Cybersecurity
 ![Python](https://img.shields.io/badge/Python-3.11%2B-a0522d)
 ![Languages](https://img.shields.io/badge/UI-English%20%7C%20Fran%C3%A7ais%20%7C%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9-a0522d)
 
-| Sign-in (light) | Dashboard (dark) | Arabic, right-to-left |
+| Sign-in (light) | Front-desk dashboard (dark) | Arabic, right-to-left |
 |---|---|---|
 | ![Sign-in page](docs/screenshots/sign-in-light.jpg) | ![Dashboard in dark mode](docs/screenshots/dashboard-dark.jpg) | ![Dashboard in Arabic](docs/screenshots/dashboard-arabic-rtl.jpg) |
 
@@ -19,20 +19,27 @@ Semester project for the *Python Programming* course (Engineering, Cybersecurity
 |---|---|---|
 | ![Availability grid](docs/screenshots/availability-grid.jpg) | ![Availability grid in Arabic](docs/screenshots/availability-arabic-rtl.jpg) | ![Guest list with masked document numbers](docs/screenshots/guests-dark.jpg) |
 
+| Bill with taxes and a deposit | Issued invoice (print-ready) |
+|---|---|
+| ![Bill preview with VAT and tourist tax](docs/screenshots/bill-dark.jpg) | ![Invoice F-2026-00001](docs/screenshots/invoice-dark.jpg) |
+
 ## Status
 
-**v0.3.0 – Sprint 3** is complete. The application can already:
+**v0.4.0 – Sprint 4** is complete. The application can already:
 
+* **Run the front desk**: today's arrivals and departures, check-in, no-shows, check-out, rooms to clean, occupancy tonight and money still due
+* **Bill exactly**: nights at their locked prices, extra services, manager discounts (capped), configurable taxes, deposits, payments and refunds, all in integer millimes
+* **Issue invoices** at check-out with gap-free numbers (`F-2026-00001`); issued invoices can never be changed, and print cleanly
 * **Take reservations** for one or more rooms, with exact prices locked per night, and explain refusals with free alternatives
-* **Change and cancel reservations**, applying the hotel's 20 % late-cancellation fee automatically
+* **Change and cancel reservations**, applying the hotel's late-cancellation fee (20 % by default, set by the manager) automatically
 * **Show availability** as a rooms × 14 nights grid
 * **Never double-book**, even when two receptionists click at the same moment (proved by a race test)
 * **Manage rooms, guests and staff** with duplicate detection, masked ID numbers and role-based access
 * **Keep a tamper-evident audit log** and **back up** the database every day
 * **Speak English, French and Arabic** (right-to-left), in light or dark mode, on any screen size
-* 380+ automated tests, run on Ubuntu and Windows by GitHub Actions
+* 480+ automated tests, run on Ubuntu and Windows by GitHub Actions
 
-Check-in/out, billing with taxes and reports arrive in Sprints 4–5 ([roadmap](docs/roadmap.md)).
+Reports, charts, CSV export and the night audit arrive in Sprint 5 ([roadmap](docs/roadmap.md)).
 
 ## Quick start
 
@@ -84,6 +91,7 @@ Open <http://127.0.0.1:8000> and sign in with the account you just created.
 | `python -m hotel run --dev` | Development server with auto-reload and debugger |
 | `python -m hotel init-db` | Create or upgrade the database |
 | `python -m hotel create-manager` | Create the first manager account |
+| `python -m hotel reset-password USERNAME` | Give an account a temporary password (for example a forgotten manager password) |
 | `python -m hotel seed --demo` | Fill an empty hotel with fictional demo data and demo accounts |
 | `python -m hotel backup` | Write a backup now (also done automatically every day) |
 | `python -m hotel restore FILE` | Replace the database with a backup (stop the application first) |

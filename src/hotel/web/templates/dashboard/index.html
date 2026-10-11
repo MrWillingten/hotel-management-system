@@ -1,8 +1,7 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/icons.html" import icon -%}
 {%- from "macros/forms.html" import csrf -%}
-{%- from "macros/reservations.html" import status_badge -%}
-{%- from "macros/rooms.html" import housekeeping_button -%}
+{%- from "macros/rooms.html" import housekeeping_badge, housekeeping_button -%}
 {% block title %}{{ _("Dashboard") }}{% endblock %}
 {% block page_title %}{{ _("Dashboard") }}{% endblock %}
 {% block content %}
@@ -36,10 +35,19 @@
     <h3 class="card__title">{{ _("Occupancy tonight") }}</h3>
     <p class="card__value" dir="ltr">{{ "%.1f" | format(day.occupancy.basis_points / 100) }} %</p>
     <p class="muted">{{ _("%(sold)s of %(sellable)s rooms", sold=day.occupancy.sold, sellable=day.occupancy.sellable) }}</p>
+    {%- if day.under_maintenance %}
+    <p class="muted">{{ _("Under maintenance: %(rooms)s", rooms=day.under_maintenance | map(attribute="number") | join(", ")) }}</p>
+    {%- endif %}
   </article>
+  <a class="card card--interactive card--link" href="#balances">
+    <div class="card__icon">{{ icon("database") }}</div>
+    <h3 class="card__title">{{ _("Due from guests in the house") }}</h3>
+    {#- A narrow card may wrap between the amount and the currency, never inside them. #}
+    <p class="card__value card__value--money">{{ day.in_house_due | money | replace("\u00a0", " ") }}</p>
+  </a>
   <a class="card card--interactive card--link" href="#housekeeping">
     <div class="card__icon">{{ icon("star") }}</div>
-    <h3 class="card__title">{{ _("Rooms to clean") }}</h3>
+    <h3 class="card__title">{{ _("Rooms not ready") }}</h3>
     <p class="card__value">{{ day.to_clean | length }}</p>
   </a>
 </div>
@@ -81,7 +89,7 @@
           <span class="muted" dir="ltr">· {{ r.code }} · {{ r.rooms | map(attribute="number") | join(", ") }}</span>
           {%- if r.period.departure < day.today %} <span class="badge badge--danger">{{ _("Overdue") }}</span>{% endif %}
         </span>
-        {{ status_badge(r.status) }}
+        <a class="button button--ghost button--small" href="{{ url_for('reservations.check_out', reservation_id=r.id) }}">{{ _("Check out") }}</a>
       </li>
       {%- endfor %}
     </ul>
@@ -91,21 +99,39 @@
   </section>
 </div>
 
+<div class="grid grid--two">
+<section class="panel" id="balances">
+  <h2 class="panel__title">{{ _("Unpaid after departure") }}</h2>
+  {%- if day.unpaid %}
+  <ul class="pick-list">
+    {%- for reservation_id, number, guest, due in day.unpaid %}
+    <li>
+      <span><a href="{{ url_for('billing.bill', reservation_id=reservation_id) }}"><strong>{{ guest }}</strong></a> <span class="muted" dir="ltr">· {{ number }}</span></span>
+      <span class="num">{{ due | money }}</span>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- else %}
+  <p class="muted">{{ _("Every invoice is paid.") }}</p>
+  {%- endif %}
+</section>
+
 <section class="panel" id="housekeeping">
   <h2 class="panel__title">{{ _("Housekeeping") }}</h2>
   {%- if day.to_clean %}
   <ul class="pick-list">
     {%- for room in day.to_clean %}
     <li>
-      <span><a href="{{ url_for('rooms.detail', room_id=room.id) }}"><strong dir="ltr">{{ room.number }}</strong></a> · {{ room.category_name }}</span>
+      <span><a href="{{ url_for('rooms.detail', room_id=room.id) }}"><strong dir="ltr">{{ room.number }}</strong></a> · {{ room.category_name }} {{ housekeeping_badge(room.housekeeping) }}</span>
       {{ housekeeping_button(room, next=url_for('dashboard.index')) }}
     </li>
     {%- endfor %}
   </ul>
   {%- else %}
-  <p class="muted">{{ _("Every room is clean.") }}</p>
+  <p class="muted">{{ _("Every room is ready.") }}</p>
   {%- endif %}
 </section>
+</div>
 
 <p class="muted dashboard-footer">
   {{ _("Version %(version)s · database schema %(schema)s · time zone %(tz)s", version=app_version, schema=schema_version, tz=config["BABEL_DEFAULT_TIMEZONE"]) }}

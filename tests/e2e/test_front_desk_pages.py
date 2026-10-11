@@ -52,7 +52,7 @@ def test_detail_page_warns_about_rooms_not_cleaned(client, services, hotel):
     services.rooms.set_housekeeping(hotel.rita, hotel.rooms["204"].id, Housekeeping.DIRTY)
     login(client)
     page = client.get(f"/reservations/{r.id}").get_data(as_text=True)
-    assert "Not cleaned yet: room 204" in page
+    assert "Not ready yet (cleaning or inspection pending): room 204" in page
     assert "Check in" in page
     assert "Record a no-show" not in page  # before 14:00
 
@@ -83,10 +83,15 @@ def test_housekeeping_from_the_room_page_and_dashboard(client, services, hotel):
     _post(client, f"/rooms/{room_id}/housekeeping", {"state": "DIRTY"})
     assert "To clean" in client.get("/rooms/").get_data(as_text=True)
     dashboard = client.get("/").get_data(as_text=True)
-    assert "Mark clean" in dashboard
+    assert "Mark cleaned" in dashboard
     response = _post(client, f"/rooms/{room_id}/housekeeping", {"state": "CLEAN", "next": "/"})
     assert response.headers["Location"] == "/"
-    assert "Every room is clean." in client.get("/").get_data(as_text=True)
-    # An unknown value is treated as "clean" rather than trusted.
+    page = client.get("/").get_data(as_text=True)
+    assert "Cleaned, to inspect" in page
+    assert "Mark inspected" in page
+    _post(client, f"/rooms/{room_id}/housekeeping", {"state": "INSPECTED", "next": "/"})
+    assert "Every room is ready." in client.get("/").get_data(as_text=True)
+    # An unknown value changes nothing rather than being trusted.
     response = _post(client, f"/rooms/{room_id}/housekeeping", {"state": "<script>"})
     assert response.headers["Location"] == f"/rooms/{room_id}"
+    assert services.rooms.get_room(hotel.boss, room_id).room.housekeeping == "INSPECTED"

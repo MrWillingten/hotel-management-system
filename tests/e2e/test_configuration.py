@@ -118,6 +118,24 @@ def test_cli_create_manager(cli_env, monkeypatch, capsys):
     assert cli.main(["create-manager", "--username", "other", "--full-name", "Other"]) == 1
 
 
+def test_cli_reset_password_lets_a_locked_out_manager_back_in(cli_env, monkeypatch, capsys):
+    from hotel.bootstrap import build_services
+    from hotel.config import Settings
+
+    monkeypatch.setattr(cli.getpass, "getpass", lambda prompt="": "cognac-and-cedar-2026")
+    assert cli.main(["create-manager", "--username", "mona", "--full-name", "Mona"]) == 0
+    assert cli.main(["reset-password", "nobody"]) == 1
+    assert "No account named 'nobody'" in capsys.readouterr().err
+    monkeypatch.setattr(cli.getpass, "getpass", lambda prompt="": "fresh-jasmine-tea-42")
+    assert cli.main(["reset-password", "Mona"]) == 0
+    assert "must choose a new one" in capsys.readouterr().out
+    services = build_services(Settings.from_env())
+    login = services.auth.login("mona", "fresh-jasmine-tea-42", ip="127.0.0.1")
+    assert login.user.must_change_password
+    with services.uow_factory() as uow:
+        assert [e.action for e in uow.audit.iterate()][-2] == "user.password_reset"
+
+
 def test_cli_create_manager_reports_invalid_input(cli_env, monkeypatch, capsys):
     monkeypatch.setattr(cli.getpass, "getpass", lambda prompt="": "cognac-and-cedar-2026")
     assert cli.main(["create-manager", "--username", "x", "--full-name", "X"]) == 1

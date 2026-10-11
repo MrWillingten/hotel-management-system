@@ -95,7 +95,11 @@ def test_housekeeping(services, hotel):
     assert dirty.version == room.version  # not a change to the room's description
     assert services.rooms.get_room(hotel.rita, room.id).room.housekeeping is Housekeeping.DIRTY
     assert [r.number for r in services.front_desk.day(hotel.rita).to_clean] == ["101"]
-    services.rooms.set_housekeeping(hotel.rita, room.id, Housekeeping.CLEAN)
+    cleaned = services.rooms.set_housekeeping(hotel.rita, room.id, Housekeeping.CLEAN)
+    assert services.rooms.get_room(hotel.rita, room.id).room.housekeeping is Housekeeping.CLEAN
+    assert [r.number for r in services.front_desk.day(hotel.rita).to_clean] == ["101"]
+    assert not cleaned.housekeeping.is_ready  # cleaned, but nobody has inspected it yet
+    services.rooms.set_housekeeping(hotel.rita, room.id, Housekeeping.INSPECTED)
     assert services.front_desk.day(hotel.rita).to_clean == []
 
 
@@ -130,6 +134,7 @@ def test_occupancy_excludes_rooms_under_maintenance(services, hotel):
     book(services, hotel, stay(8, 9), "204")
     occupancy = services.front_desk.day(hotel.rita).occupancy
     assert (occupancy.sold, occupancy.sellable) == (1, 3)
+    assert [r.number for r in services.front_desk.day(hotel.rita).under_maintenance] == ["101"]
 
 
 def test_front_desk_needs_staff(services, hotel):

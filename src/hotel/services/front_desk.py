@@ -7,10 +7,12 @@ from datetime import date
 
 from hotel.domain.actor import Actor
 from hotel.domain.clock import Clock
+from hotel.domain.money import Money
 from hotel.domain.reservations import Reservation
-from hotel.domain.rooms import Housekeeping, Room
+from hotel.domain.rooms import Room
 from hotel.persistence.unit_of_work import UnitOfWorkFactory
 from hotel.services.authorization import require_staff
+from hotel.services.billing import bill_for
 
 
 @dataclass(frozen=True, slots=True)
@@ -32,8 +34,11 @@ class FrontDeskDay:
     arrivals: list[Reservation] = field(default_factory=list)
     departures: list[Reservation] = field(default_factory=list)
     in_house: list[Reservation] = field(default_factory=list)
-    to_clean: list[Room] = field(default_factory=list)
+    to_clean: list[Room] = field(default_factory=list)  # dirty or waiting for inspection
+    under_maintenance: list[Room] = field(default_factory=list)  # closed tonight
     occupancy: Occupancy = Occupancy(0, 0)
+    in_house_due: Money = field(default_factory=Money.zero)  # what guests in the house owe
+    unpaid: list[tuple[int, str, str, Money]] = field(default_factory=list)  # after check-out
 
     @property
     def guests_in_house(self) -> int:
@@ -54,11 +59,18 @@ class FrontDeskService:
             states = uow.maintenance.states_on(today)
             sellable = [r for r in rooms if r.in_service and states.get(r.id) != "MAINTENANCE"]
             sold = sum(1 for r in sellable if states.get(r.id) in ("CONFIRMED", "CHECKED_IN"))
+            in_house = uow.reservations.in_house()
+            due = Money.zero()
+            for reservation in in_house:
+                due += max(bill_for(uow, reservation).balance, Money.zero())
             return FrontDeskDay(
                 today=today,
                 arrivals=uow.reservations.arrivals(today),
                 departures=uow.reservations.departures(today),
-                in_house=uow.reservations.in_house(),
-                to_clean=[r for r in rooms if r.housekeeping is Housekeeping.DIRTY],
+                in_house=in_house,
+                to_clean=[r for r in rooms if not r.housekeeping.is_ready],
+                under_maintenance=[r for r in rooms if states.get(r.id) == "MAINTENANCE"],
                 occupancy=Occupancy(sold, len(sellable)),
+                in_house_due=due,
+                unpaid=uow.invoices.unpaid(),
             )

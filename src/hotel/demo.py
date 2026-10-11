@@ -10,10 +10,12 @@ from __future__ import annotations
 import random
 import secrets
 from dataclasses import dataclass, field
-from datetime import timedelta
+from datetime import datetime, time, timedelta
 
-from hotel.bootstrap import Services
+from hotel.bootstrap import Services, build_services
 from hotel.domain.actor import Actor
+from hotel.domain.billing import PaymentMethod, PercentDiscount
+from hotel.domain.clock import FixedClock
 from hotel.domain.enums import Role
 from hotel.domain.errors import BusinessRuleViolation, HotelError
 from hotel.domain.guests import GuestDetails, search_key
@@ -21,6 +23,8 @@ from hotel.domain.money import Money
 from hotel.domain.paging import PageRequest
 from hotel.domain.period import StayPeriod
 from hotel.domain.reservations import RoomRequest
+from hotel.domain.rooms import Housekeeping
+from hotel.domain.taxes import PerAdultNightTax, PercentTax, TaxBase
 
 DEMO_FLAG = "demo_data"
 
@@ -94,12 +98,25 @@ NOTES = (
 )
 
 
+EXTRAS = (
+    ("Breakfast", 15),
+    ("Dinner", 35),
+    ("Airport transfer", 40),
+    ("Laundry", 12),
+    ("Minibar", 8),
+    ("Spa access", 60),
+)
+HISTORY_DAYS = 7  # the demo replays the last week, so it has stays, bills and invoices
+MAINTENANCE_ROOM = "105"
+
+
 @dataclass
 class DemoResult:
     accounts: dict[str, str] = field(default_factory=dict)  # username -> password (shown once)
     rooms: int = 0
     guests: int = 0
     reservations: int = 0
+    invoices: int = 0
 
 
 def _demo_password() -> str:
@@ -116,6 +133,12 @@ def seed_demo(services: Services, *, guests: int = 40, seed: int = 2026) -> Demo
     # The generator is seeded so every demo database looks the same; it only
     # invents names and phone numbers, never anything security-related.
     rng = random.Random(seed)  # noqa: S311  # nosec B311
+
+    # Everything goes through the normal services, but with a clock that starts
+    # a week ago and is moved forward day by day ("replaying" the week).
+    real_now = services.clock.now()
+    clock = FixedClock(real_now - timedelta(days=HISTORY_DAYS), services.clock.hotel_tz)
+    services = build_services(services.settings, clock=clock)
 
     manager = _demo_account(services, system, result, "demo.manager", "Demo Manager", Role.MANAGER)
     boss = Actor(manager) if manager else system
@@ -135,15 +158,7 @@ def seed_demo(services: Services, *, guests: int = 40, seed: int = 2026) -> Demo
                 nightly_rate=Money.from_dinars(rate),
             )
             result.rooms += 1
-    today = services.clock.today()
-    room_105 = next(o.room for o in rooms.list_rooms(boss) if o.room.number == "105")
-    rooms.schedule_maintenance(
-        boss,
-        room_105.id,
-        first_night=today,
-        reopens_on=today + timedelta(days=3),
-        reason="Air conditioning repair",
-    )
+    _demo_catalogue(services, boss)
 
     used_documents: set[str] = set()
     for i in range(guests):
@@ -164,11 +179,124 @@ def seed_demo(services: Services, *, guests: int = 40, seed: int = 2026) -> Demo
             )
         result.guests += 1
 
-    result.reservations = _demo_reservations(services, system, rng)
+    _demo_history(services, clock, boss, rng, result)
+    clock.advance(real_now - clock.now())  # back to the present
+    today = services.clock.today()
+    room_105 = next(o.room for o in rooms.list_rooms(boss) if o.room.number == MAINTENANCE_ROOM)
+    rooms.schedule_maintenance(
+        boss,
+        room_105.id,
+        first_night=today,
+        reopens_on=today + timedelta(days=3),
+        reason="Air conditioning repair",
+    )
+    result.reservations += _demo_reservations(services, system, rng)
 
     with services.uow_factory() as uow:
         uow.settings.set(DEMO_FLAG, "1")
     return result
+
+
+def _demo_catalogue(services: Services, boss: Actor) -> None:
+    for name, price in EXTRAS:
+        services.extras.create(boss, name=name, unit_price=Money.from_dinars(price))
+    # Example rates only: check them against current Tunisian regulations.
+    taxes = services.hotel_settings
+    taxes.create_tax_rule(boss, PercentTax(name="VAT", rate_bp=700))
+    taxes.create_tax_rule(
+        boss, PercentTax(name="VAT on services", rate_bp=1900, applies_to=TaxBase.SERVICES)
+    )
+    taxes.create_tax_rule(
+        boss, PerAdultNightTax(name="Tourist tax", amount_per=Money.from_dinars(3))
+    )
+
+
+def _at(clock: FixedClock, hour: int) -> None:
+    """Move the demo clock forward to `hour` o'clock (hotel time), never backwards."""
+    local = datetime.combine(clock.today(), time(hour), tzinfo=clock.hotel_tz)
+    if local < clock.now():
+        local += timedelta(days=1)
+    clock.advance(local - clock.now())
+
+
+def _demo_history(
+    services: Services, clock: FixedClock, boss: Actor, rng: random.Random, result: DemoResult
+) -> None:
+    """Replay the last week: walk-ins check in, charge extras, pay and check out."""
+    desk = Actor.system("seed")
+    extras = {e.name: e for e in services.extras.catalogue(desk)}
+    guests = [
+        g
+        for g in services.guests.search(desk, "", PageRequest(per_page=100)).items
+        if not g.do_not_rent
+    ]
+    if not guests:
+        return
+    for day in range(HISTORY_DAYS):
+        _at(clock, 11)  # morning: departures
+        for stay in services.front_desk.day(desk).departures:
+            bill = services.billing.bill(desk, stay.id)
+            # Exactly one guest leaves something unpaid, so the dashboard has a case.
+            if bill.balance.millimes > 0 and result.invoices != 2:
+                method = rng.choice([PaymentMethod.CARD, PaymentMethod.CASH])
+                services.billing.record_payment(desk, stay.id, amount=bill.balance, method=method)
+            services.invoices.check_out(desk, stay.id, version=stay.version)
+            result.invoices += 1
+        if day < HISTORY_DAYS - 1:  # today's rooms stay "to clean" for the demo
+            for room in services.front_desk.day(desk).to_clean:
+                services.rooms.set_housekeeping(desk, room.id, Housekeeping.INSPECTED)
+
+        _at(clock, 15)  # afternoon: arrivals
+        today = clock.today()
+        no_show = None
+        for arrival in range(rng.randint(2, 4)):
+            period = StayPeriod(today, today + timedelta(days=rng.randint(1, 4)))
+            free = [
+                r
+                for r in services.reservations.find_available_rooms(desk, period)
+                if r.number != MAINTENANCE_ROOM
+            ]
+            if not free:
+                break
+            room = rng.choice(free)
+            adults = rng.randint(1, min(2, room.capacity))
+            reservation = services.reservations.create(
+                desk,
+                guest_id=rng.choice(guests).id,
+                period=period,
+                rooms=[RoomRequest(room.id, adults)],
+            )
+            result.reservations += 1
+            if day == 2 and arrival == 0:  # one guest never comes (recorded tonight)
+                no_show = reservation
+                continue
+            if rng.random() < 0.4:  # a 30 % deposit paid by transfer before arriving
+                deposit = reservation.accommodation_total.percent(3_000)
+                services.billing.record_payment(
+                    desk, reservation.id, amount=deposit, method=PaymentMethod.TRANSFER
+                )
+            reservation = services.reservations.check_in(
+                desk, reservation.id, version=reservation.version
+            )
+            if day == 4 and arrival == 0:
+                services.billing.grant_discount(
+                    boss,
+                    PercentDiscount(
+                        reservation_id=reservation.id, reason="Returning guest", rate_bp=1000
+                    ),
+                )
+            services.extras.charge(
+                desk, reservation.id, extra_id=extras["Breakfast"].id, quantity=adults
+            )
+            extra = rng.choice(["Dinner", "Airport transfer", "Laundry", "Minibar", "Spa access"])
+            services.extras.charge(
+                desk, reservation.id, extra_id=extras[extra].id, quantity=rng.randint(1, 2)
+            )
+        if no_show is not None:
+            _at(clock, 22)
+            services.reservations.record_no_show(desk, no_show.id, version=no_show.version)
+            result.invoices += 1
+        _at(clock, 8)  # the next morning
 
 
 def _demo_reservations(services: Services, system: Actor, rng: random.Random) -> int:

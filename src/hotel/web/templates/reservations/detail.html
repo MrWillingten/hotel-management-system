@@ -10,6 +10,12 @@
   <div class="page-actions__buttons">
     <a class="button button--ghost" href="{{ url_for('reservations.index') }}">{{ _("All reservations") }}</a>
     <a class="button button--ghost" href="{{ url_for('billing.bill', reservation_id=reservation.id) }}">{{ _("Bill and payments") }}</a>
+    {%- if invoice %}
+    <a class="button button--ghost" href="{{ url_for('invoices.detail', invoice_id=invoice.id) }}">{{ _("Invoice %(number)s", number=invoice.number) }}</a>
+    {%- endif %}
+    {%- if reservation.status == "CHECKED_IN" %}
+    <a class="button button--primary" href="{{ url_for('reservations.check_out', reservation_id=reservation.id) }}">{{ icon("logout") }}{{ _("Check out") }}</a>
+    {%- endif %}
     {%- if reservation.status == "CONFIRMED" and reservation.period.arrival <= today < reservation.period.departure %}
     <form method="post" action="{{ url_for('reservations.check_in', reservation_id=reservation.id) }}">
       {{ csrf() }}
@@ -30,7 +36,7 @@
 </div>
 {%- if reservation.status == "CONFIRMED" and to_clean %}
 <div class="alert alert--warning">{{ icon("alert") }}
-  <p>{{ _("Not cleaned yet: room %(rooms)s. Check with housekeeping before handing over the key.", rooms=to_clean | join(", ")) }}</p>
+  <p>{{ _("Not ready yet (cleaning or inspection pending): room %(rooms)s. Check with housekeeping before handing over the key.", rooms=to_clean | join(", ")) }}</p>
 </div>
 {%- endif %}
 
@@ -43,6 +49,9 @@
       <div><dt>{{ _("Booked on") }}</dt><dd>{{ reservation.created_at | datetimeformat("medium") }}</dd></div>
       {%- if reservation.checked_in_at %}
       <div><dt>{{ _("Checked in") }}</dt><dd>{{ reservation.checked_in_at | datetimeformat("medium") }}</dd></div>
+      {%- endif %}
+      {%- if reservation.checked_out_at %}
+      <div><dt>{{ _("Checked out") }}</dt><dd>{{ reservation.checked_out_at | datetimeformat("medium") }}</dd></div>
       {%- endif %}
       {%- if reservation.no_show_at %}
       <div><dt>{{ _("No-show recorded") }}</dt><dd>{{ reservation.no_show_at | datetimeformat("medium") }}</dd></div>

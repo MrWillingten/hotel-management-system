@@ -158,3 +158,46 @@ def test_no_show_is_charged_like_a_late_cancellation_after_the_arrival_time():
     with pytest.raises(BusinessRuleViolation, match="no_show_too_early"):
         policy.no_show_fee(r, arrival - timedelta(seconds=1), TUNIS)
     assert policy.no_show_fee(r, arrival, TUNIS) == Money.from_dinars(90)  # 20 % of 450
+
+
+# ---------------------------------------------------------------- check-out
+def _in_house(arrival=date(2026, 7, 10), nights=3):
+    r = _reservation(arrival=arrival, nights=nights)
+    r.check_in(NOW, arrival)
+    return r
+
+
+def test_check_out_on_the_planned_day_keeps_every_night():
+    r = _in_house()
+    assert r.check_out(NOW, date(2026, 7, 13)) is False
+    assert r.status is ReservationStatus.CHECKED_OUT
+    assert r.checked_out_at == NOW
+    assert len(r.nights) == 3
+
+
+def test_early_departure_charges_only_the_nights_stayed():
+    r = _in_house()
+    assert r.check_out(NOW, date(2026, 7, 12)) is True
+    assert r.period == StayPeriod(date(2026, 7, 10), date(2026, 7, 12))
+    assert r.accommodation_total == Money.from_dinars(300)
+
+
+def test_leaving_on_the_arrival_day_still_pays_one_night():
+    r = _in_house()
+    r.check_out(NOW, date(2026, 7, 10))
+    assert r.period.nights == 1
+    assert r.accommodation_total == Money.from_dinars(150)
+
+
+def test_a_late_check_out_changes_nothing_and_only_from_checked_in():
+    r = _in_house()
+    assert r.check_out(NOW, date(2026, 7, 15)) is False
+    assert r.period.departure == date(2026, 7, 13)
+    with pytest.raises(InvalidStateTransitionError):
+        _reservation().check_out(NOW, date(2026, 7, 10))
+
+
+def test_invoice_numbers():
+    from hotel.domain.invoices import invoice_number
+
+    assert invoice_number(2026, 1) == "F-2026-00001"

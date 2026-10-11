@@ -34,10 +34,19 @@ class RoomStatus(StrEnum):
 
 
 class Housekeeping(StrEnum):
-    """Is the room ready for the next guest? Check-out makes it DIRTY (story 4.9)."""
+    """Is the room ready for the next guest? (story 4.9)
 
-    CLEAN = "CLEAN"
+    Check-out makes a room DIRTY; housekeeping cleans it (CLEAN); a second
+    person checks it (INSPECTED) and only then is it ready for a guest.
+    """
+
     DIRTY = "DIRTY"
+    CLEAN = "CLEAN"  # cleaned, waiting for the inspection
+    INSPECTED = "INSPECTED"
+
+    @property
+    def is_ready(self) -> bool:
+        return self is Housekeeping.INSPECTED
 
 
 def _clean(raw: str) -> str:
@@ -100,7 +109,7 @@ class Room:
     notes: str = ""
     version: int = 1
     category_name: str | None = None  # filled when read from the database
-    housekeeping: Housekeeping = Housekeeping.CLEAN
+    housekeeping: Housekeeping = Housekeeping.INSPECTED
 
     def can_host(self, occupants: int) -> bool:
         return 1 <= occupants <= self.capacity  # business rule BR7

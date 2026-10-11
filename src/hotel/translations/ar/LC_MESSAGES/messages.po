@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 09:17+0100\n"
+"POT-Creation-Date: 2026-10-11 10:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -18,6 +18,12 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+
+#, python-format
+msgid ""
+"%(amount)s is still due. Record the payment before checking out, or the invoice will show it as "
+"unpaid."
+msgstr "ما زال %(amount)s مستحقاً. سجّل الدفعة قبل المغادرة، وإلا ستظهر الفاتورة غير مسددة."
 
 #, python-format
 msgid "%(amount)s per adult per night"
@@ -406,6 +412,16 @@ msgstr "التحقق من التوفر والسعر"
 msgid "Check in"
 msgstr "تسجيل الوصول"
 
+msgid "Check out"
+msgstr "تسجيل المغادرة"
+
+msgid "Check out and issue the invoice"
+msgstr "تسجيل المغادرة وإصدار الفاتورة"
+
+#, python-format
+msgid "Check-in from %(in)s · check-out by %(out)s"
+msgstr "الوصول ابتداءً من %(in)s · المغادرة قبل %(out)s"
+
 #, python-format
 msgid "Check-in opens on the arrival day (%(arrival)s)."
 msgstr "يبدأ تسجيل الوصول يوم الوصول (%(arrival)s)."
@@ -421,6 +437,10 @@ msgstr "تم تسجيل الوصول"
 
 msgid "Checked out"
 msgstr "تم تسجيل المغادرة"
+
+#, python-format
+msgid "Checked out. Invoice %(number)s issued."
+msgstr "تم تسجيل المغادرة. صدرت الفاتورة %(number)s."
 
 msgid "Children"
 msgstr "الأطفال"
@@ -462,8 +482,8 @@ msgstr "اختر التواريخ أولًا."
 msgid "Choose the kind of tax and what it applies to."
 msgstr "اختر نوع الضريبة وما تُطبَّق عليه."
 
-msgid "Clean"
-msgstr "نظيفة"
+msgid "Cleaned, to inspect"
+msgstr "نُظِّفت، بانتظار المعاينة"
 
 msgid "Close for maintenance"
 msgstr "إغلاق للصيانة"
@@ -581,6 +601,9 @@ msgstr "الوثيقة"
 msgid "Document number"
 msgstr "رقم الوثيقة"
 
+msgid "Due from guests in the house"
+msgstr "المستحق على النزلاء المقيمين"
+
 msgid "E-mail"
 msgstr "البريد الإلكتروني"
 
@@ -589,6 +612,14 @@ msgstr "يمكن اختيار كل غرفة مرة واحدة فقط."
 
 msgid "Each room needs at least one adult."
 msgstr "تحتاج كل غرفة إلى شخص بالغ واحد على الأقل."
+
+#, python-format
+msgid ""
+"Early departure: the stay was booked until %(planned)s. Only the nights stayed are charged and "
+"the others become free again."
+msgstr ""
+"مغادرة مبكرة: كانت الإقامة محجوزة حتى %(planned)s. تُحتسب الليالي التي قضاها النزيل فقط، وتصبح "
+"الباقية متاحة من جديد."
 
 msgid "Edit"
 msgstr "تعديل"
@@ -660,8 +691,11 @@ msgstr "أدخل مبلغاً أكبر من 0."
 msgid "Enter an amount such as 180 or 180.500."
 msgstr "أدخل مبلغًا مثل 180 أو 180.500."
 
-msgid "Every room is clean."
-msgstr "جميع الغرف نظيفة."
+msgid "Every invoice is paid."
+msgstr "جميع الفواتير مسددة."
+
+msgid "Every room is ready."
+msgstr "جميع الغرف جاهزة."
 
 msgid "Everyone"
 msgstr "الجميع"
@@ -794,11 +828,24 @@ msgstr "تم التحقق من السلامة: %(count)s إدخال، لم يُ�
 msgid "Invalid username or password, or the account is temporarily locked."
 msgstr "اسم المستخدم أو كلمة المرور غير صحيحة، أو أن الحساب مقفل مؤقتًا."
 
+msgid "Invoice"
+msgstr "الفاتورة"
+
+#, python-format
+msgid "Invoice %(number)s"
+msgstr "الفاتورة %(number)s"
+
+msgid "Invoices"
+msgstr "الفواتير"
+
 msgid "Is it one of these guests?"
 msgstr "هل هو أحد هؤلاء النزلاء؟"
 
 msgid "Issued invoices keep the tax they were issued with."
 msgstr "تحتفظ الفواتير الصادرة بالضريبة التي صدرت بها."
+
+msgid "Issued on"
+msgstr "تاريخ الإصدار"
 
 msgid "Keep it"
 msgstr "الإبقاء عليه"
@@ -851,8 +898,11 @@ msgstr "مدير"
 msgid "Manual"
 msgstr "يدوية"
 
-msgid "Mark clean"
-msgstr "وضع علامة نظيفة"
+msgid "Mark cleaned"
+msgstr "وضع علامة: نُظِّفت"
+
+msgid "Mark inspected"
+msgstr "وضع علامة: عوينت"
 
 msgid "Mark to clean"
 msgstr "وضع علامة للتنظيف"
@@ -956,6 +1006,9 @@ msgstr "لا يوجد نزيل يطابق «%(query)s»."
 msgid "No guests registered yet."
 msgstr "لا يوجد نزلاء مسجلون بعد."
 
+msgid "No invoice yet: they are issued at check-out."
+msgstr "لا توجد فواتير بعد: تصدر عند المغادرة."
+
 msgid "No money received yet."
 msgstr "لم يُستلم أي مبلغ بعد."
 
@@ -997,14 +1050,24 @@ msgid "Not allowed"
 msgstr "غير مسموح"
 
 #, python-format
-msgid "Not cleaned yet: room %(rooms)s. Check with housekeeping before handing over the key."
-msgstr "لم تُنظَّف بعد: الغرفة %(rooms)s. تحقق مع قسم التنظيف قبل تسليم المفتاح."
+msgid ""
+"Not ready yet (cleaning or inspection pending): room %(rooms)s. Check with housekeeping before "
+"handing over the key."
+msgstr ""
+"غير جاهزة بعد (التنظيف أو المعاينة قيد الانتظار): الغرفة %(rooms)s. تحقق مع قسم التنظيف قبل تسليم"
+" المفتاح."
 
 msgid "Notes"
 msgstr "ملاحظات"
 
 msgid "Nothing to pay."
 msgstr "لا شيء للدفع."
+
+msgid "Number"
+msgstr "الرقم"
+
+msgid "Number or guest"
+msgstr "الرقم أو النزيل"
 
 msgid "Occupancy tonight"
 msgstr "نسبة الإشغال الليلة"
@@ -1052,6 +1115,9 @@ msgstr "دفعة"
 msgid "Payments"
 msgstr "المدفوعات"
 
+msgid "Payments received"
+msgstr "المدفوعات المستلمة"
+
 msgid "Percentage"
 msgstr "نسبة مئوية"
 
@@ -1077,6 +1143,14 @@ msgstr ""
 "تُدخل الأسعار دون ضرائب؛ وتصبح كل ضريبة نشطة سطراً مستقلاً في الفاتورة. تحقق من النسب وفق "
 "التشريعات السارية."
 
+#, python-format
+msgid ""
+"Prices in Tunisian dinars. Issued by %(name)s. This invoice can no longer be changed; later "
+"payments appear on the reservation."
+msgstr ""
+"الأسعار بالدينار التونسي. أصدرها %(name)s. لا يمكن تعديل هذه الفاتورة؛ وتظهر المدفوعات اللاحقة في"
+" الحجز."
+
 msgid "Quantity"
 msgstr "الكمية"
 
@@ -1085,6 +1159,9 @@ msgstr "النسبة"
 
 msgid "Reactivate account"
 msgstr "إعادة تفعيل الحساب"
+
+msgid "Ready"
+msgstr "جاهزة"
 
 msgid "Reason"
 msgstr "السبب"
@@ -1110,6 +1187,9 @@ msgstr "تسجيل عدم الحضور"
 
 msgid "Record a payment"
 msgstr "تسجيل دفعة"
+
+msgid "Record a payment first"
+msgstr "سجّل دفعة أولاً"
 
 msgid "Record the no-show"
 msgstr "تأكيد عدم الحضور"
@@ -1208,6 +1288,10 @@ msgid "Room %(number)s added."
 msgstr "تمت إضافة الغرفة %(number)s."
 
 #, python-format
+msgid "Room %(number)s is cleaned and waits for its inspection."
+msgstr "الغرفة %(number)s نُظِّفت وتنتظر المعاينة."
+
+#, python-format
 msgid "Room %(number)s is marked to be cleaned."
 msgstr "تم وضع علامة للتنظيف على الغرفة %(number)s."
 
@@ -1255,8 +1339,8 @@ msgstr "الغرف والليالي ابتداءً من %(start)s"
 msgid "Rooms free for the same dates:"
 msgstr "غرف متاحة في التواريخ نفسها:"
 
-msgid "Rooms to clean"
-msgstr "غرف للتنظيف"
+msgid "Rooms not ready"
+msgstr "غرف غير جاهزة"
 
 #, python-format
 msgid "Rooms: %(count)s"
@@ -1536,6 +1620,9 @@ msgstr "إلى"
 msgid "To clean"
 msgstr "للتنظيف"
 
+msgid "To print or save as PDF, use your browser's Print command (Ctrl+P): only the invoice is printed."
+msgstr "للطباعة أو الحفظ بصيغة PDF استخدم أمر الطباعة في المتصفح (Ctrl+P): تُطبع الفاتورة فقط."
+
 msgid "Today"
 msgstr "اليوم"
 
@@ -1554,6 +1641,10 @@ msgstr "المجموع"
 msgid "Type"
 msgstr "النوع"
 
+#, python-format
+msgid "Under maintenance: %(rooms)s"
+msgstr "قيد الصيانة: %(rooms)s"
+
 msgid "Unit price"
 msgstr "سعر الوحدة"
 
@@ -1562,6 +1653,9 @@ msgstr "سعر الوحدة (د.ت، دون ضرائب)"
 
 msgid "Unlock"
 msgstr "فتح القفل"
+
+msgid "Unpaid after departure"
+msgstr "غير مسدد بعد المغادرة"
 
 msgid "Untick to take the room out of service (it can no longer be booked)."
 msgstr "أزل التحديد لإخراج الغرفة من الخدمة (لن يمكن حجزها بعد ذلك)."

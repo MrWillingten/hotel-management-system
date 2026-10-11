@@ -29,8 +29,8 @@ why the business logic can be tested and used without a web server.
 | `src/hotel/secret_key.py` | Generates and protects the cookie-signing key |
 | `src/hotel/bootstrap.py` | Composition root |
 | `src/hotel/cli.py` | Command-line interface |
-| `src/hotel/domain/` | `Money`, `StayPeriod`, `Clock`, `User`, `PasswordPolicy`, error hierarchy |
-| `src/hotel/services/` | `AuthService`, `PasswordHasher`, role checks |
+| `src/hotel/domain/` | `Money`, `StayPeriod`, `Clock`, users, rooms, guests, reservations, extras, taxes, `build_bill()`, invoices, settings, error hierarchy |
+| `src/hotel/services/` | One service per area (auth, users, rooms, guests, reservations, front desk, extras, hotel settings, billing, invoices, backups, audit), role checks |
 | `src/hotel/persistence/` | `connect()`, migrations, `UnitOfWork`, repositories |
 | `src/hotel/web/` | `create_app()`, security hooks, blueprints, templates, static files |
 | `src/hotel/translations/` | French and Arabic catalogues |
@@ -46,7 +46,8 @@ why the business logic can be tested and used without a web server.
 | `room_night` table with `UNIQUE(room_id, night)` | The database itself makes double booking impossible ([ADR 0004](adr/0004-room-night-table.md)) |
 | Error codes, translated in the web layer | Domain stays language-independent; EN/FR/AR messages ([ADR 0005](adr/0005-i18n-error-codes.md)) |
 | Composition over inheritance for rooms | Room categories differ in data, not behaviour, so they are rows, not subclasses |
-| Inheritance where behaviour differs | Exception hierarchy; tax rules and discounts (Strategy pattern, Sprint 4) |
+| Inheritance where behaviour differs | Exception hierarchy; tax rules (`PercentTax`, `PerAdultNightTax`) and discounts (`PercentDiscount`, `FixedDiscount`) as Strategy classes |
+| The bill is one pure function | `build_bill()` is used by the preview, the desk balance, the check-out preview and the invoice, so they can never disagree |
 | Money as integer millimes | Exact arithmetic; explicit half-up rounding |
 | Injected `Clock` | Time-dependent rules (48 h fee, sessions, lockout) are testable |
 

@@ -1,0 +1,40 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/paging.html" import pagination -%}
+{% block title %}{{ _("Invoices") }}{% endblock %}
+{% block page_title %}{{ _("Invoices") }}{% endblock %}
+{% block content %}
+<form class="filters" method="get">
+  <div class="field">
+    <label class="field__label" for="f-q">{{ _("Number or guest") }}</label>
+    <input class="field__input" id="f-q" name="q" type="search" value="{{ query }}" maxlength="50">
+  </div>
+  <button class="button button--primary" type="submit">{{ _("Search") }}</button>
+</form>
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">{{ _("Number") }}</th>
+        <th scope="col">{{ _("Issued on") }}</th>
+        <th scope="col">{{ _("Guest") }}</th>
+        <th scope="col">{{ _("Reservation") }}</th>
+        <th scope="col" class="num">{{ _("Total") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for invoice in page.items %}
+      <tr>
+        <td dir="ltr"><a href="{{ url_for('invoices.detail', invoice_id=invoice.id) }}">{{ invoice.number }}</a></td>
+        <td>{{ invoice.issued_at | datetimeformat("short") }}</td>
+        <td>{{ invoice.guest_name }}</td>
+        <td dir="ltr"><a href="{{ url_for('reservations.detail', reservation_id=invoice.reservation_id) }}">{{ invoice.reservation_code }}</a></td>
+        <td class="num">{{ invoice.listed_total | money }}</td>
+      </tr>
+      {%- else %}
+      <tr><td colspan="5" class="table__empty">{{ _("No invoice yet: they are issued at check-out.") }}</td></tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+{{ pagination(page) }}
+{% endblock %}

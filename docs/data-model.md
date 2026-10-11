@@ -46,7 +46,8 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
 
 ✅ room_category(id PK, name UQ, description)
 ✅ room(id PK, number UQ, category_id FK, capacity CK>0, nightly_rate_mill CK≥0,
-        in_service, notes, version, housekeeping CK∈{CLEAN,DIRTY})
+        in_service, notes, version, housekeeping CK∈{CLEAN,DIRTY},
+        awaiting_inspection CK only when CLEAN)   → dirty / cleaned / inspected
 ✅ maintenance(id PK, room_id FK, start_date, end_date, reason, created_by FK,
                CK end_date > start_date)
 ✅ guest(id PK, first_name, last_name, id_doc_type CK∈{CIN,PASSPORT}, id_doc_number,
@@ -67,18 +68,20 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
 ✅ service_charge(id PK, reservation_id FK, extra_id FK, description, quantity CK 1..99,
                   unit_price_mill, charge_date, created_by FK, created_at,
                   voided_at, voided_by FK, void_reason, CK void_reason iff voided)
-   payment(id PK, reservation_id FK, amount_mill CK>0,
+✅ payment(id PK, reservation_id FK, amount_mill CK>0,
            kind CK∈{DEPOSIT,PAYMENT,REFUND}, method CK∈{CASH,CARD,TRANSFER},
-           paid_at, recorded_by FK)
-   discount(id PK, reservation_id FK, kind CK∈{PERCENT,FIXED}, value, reason NOT NULL,
-            approved_by FK, created_at)
+           reference, paid_at, recorded_by FK)             append-only (triggers)
+✅ discount(id PK, reservation_id FK, kind CK∈{PERCENT,FIXED}, rate_bp, amount_mill,
+            reason NOT NULL, approved_by FK, created_at, removed_at, removed_by FK)
 ✅ tax_rule(id PK, name, kind CK∈{PERCENT,PER_ADULT_NIGHT}, rate_bp, amount_mill,
             applies_to CK∈{ACCOMMODATION,SERVICES}, is_active, version,
             CK exactly the value of its kind; per-night taxes on accommodation only)
-   invoice(id PK, number UQ, reservation_id FK UQ, issued_at, issued_by FK,
-           subtotal_mill, discount_mill, tax_mill, total_mill, paid_mill, balance_mill)
-   invoice_line(id PK, invoice_id FK, line_no, kind, description, quantity,
-                unit_mill, amount_mill, UQ(invoice_id, line_no))
+✅ invoice(id PK, number UQ, reservation_id FK UQ, reservation_code, guest_name,
+           arrival, departure, issued_at, issued_by FK, subtotal_mill, discount_mill,
+           tax_mill, total_mill, paid_mill, balance_mill,
+           CK total = subtotal - discount + tax, CK balance = total - paid)   immutable
+✅ invoice_line(invoice_id FK, line_no, kind, label, quantity, unit_mill, amount_mill,
+                first_date, last_date, rate_bp, PK(invoice_id, line_no))      immutable
 ✅ audit_log(id PK, at, user_id FK NULL, action, entity, entity_id, details, ip,
              prev_hash, hash)
 ✅ setting(key PK, value)              hotel.* keys = HotelSettings (story 4.8)

@@ -1,0 +1,33 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/billing.html" import bill_table -%}
+{%- from "macros/reservations.html" import stay -%}
+{% block title %}{{ _("Check out") }}{% endblock %}
+{% block page_title %}{{ _("Check out") }} <span dir="ltr">{{ reservation.code }}</span>{% endblock %}
+{% block content %}
+<section class="panel">
+  <dl class="facts">
+    <div><dt>{{ _("Guest") }}</dt><dd>{{ reservation.guest_name }}</dd></div>
+    <div><dt>{{ _("Stay") }}</dt><dd>{{ stay(ending.period) }}</dd></div>
+  </dl>
+  {%- if early %}
+  <div class="alert alert--info">{{ icon("info") }}
+    <p>{{ _("Early departure: the stay was booked until %(planned)s. Only the nights stayed are charged and the others become free again.", planned=reservation.period.departure | dateformat("medium")) }}</p>
+  </div>
+  {%- endif %}
+  {%- if bill.balance.millimes > 0 %}
+  <div class="alert alert--warning">{{ icon("alert") }}
+    <p>{{ _("%(amount)s is still due. Record the payment before checking out, or the invoice will show it as unpaid.", amount=bill.balance | money) }}</p>
+  </div>
+  {%- endif %}
+  {{ bill_table(bill) }}
+  <form class="form-actions" method="post">
+    {{ csrf() }}
+    <input type="hidden" name="version" value="{{ reservation.version }}">
+    <button class="button button--primary" type="submit">{{ icon("check") }}{{ _("Check out and issue the invoice") }}</button>
+    <a class="button button--ghost" href="{{ url_for('billing.bill', reservation_id=reservation.id) }}">{{ _("Record a payment first") }}</a>
+    <a class="button button--ghost" href="{{ url_for('reservations.detail', reservation_id=reservation.id) }}">{{ _("Back") }}</a>
+  </form>
+</section>
+{% endblock %}

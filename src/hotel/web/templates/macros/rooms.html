@@ -9,7 +9,8 @@
 
 {%- macro housekeeping_badge(state) -%}
 {%- if state == "DIRTY" %}<span class="badge badge--warning">{{ _("To clean") }}</span>
-{%- else %}<span class="badge badge--success">{{ _("Clean") }}</span>{% endif %}
+{%- elif state == "CLEAN" %}<span class="badge badge--info">{{ _("Cleaned, to inspect") }}</span>
+{%- else %}<span class="badge badge--success">{{ _("Ready") }}</span>{% endif %}
 {%- endmacro %}
 
 {%- macro housekeeping_button(room, next=None) -%}
@@ -18,7 +19,10 @@
   {%- if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
   {%- if room.housekeeping == "DIRTY" %}
   <input type="hidden" name="state" value="CLEAN">
-  <button class="button button--ghost button--small" type="submit">{{ icon("check") }}{{ _("Mark clean") }}</button>
+  <button class="button button--ghost button--small" type="submit">{{ icon("check") }}{{ _("Mark cleaned") }}</button>
+  {%- elif room.housekeeping == "CLEAN" %}
+  <input type="hidden" name="state" value="INSPECTED">
+  <button class="button button--ghost button--small" type="submit">{{ icon("eye") }}{{ _("Mark inspected") }}</button>
   {%- else %}
   <input type="hidden" name="state" value="DIRTY">
   <button class="button button--ghost button--small" type="submit">{{ _("Mark to clean") }}</button>

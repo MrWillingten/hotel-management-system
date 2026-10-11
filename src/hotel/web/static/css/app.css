@@ -813,7 +813,7 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 .topbar__title [dir="ltr"] { white-space: nowrap; }
 
 /* Dashboard (Sprint 4) */
-.grid--stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr)); }
+.grid--stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); }
 .dashboard-footer { font-size: var(--text-sm); text-align: center; }
 .charge-form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-3); margin-block-start: var(--space-3); }
 .charge-form .field { flex: 1 1 9rem; }
@@ -829,3 +829,24 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 .bill__balance--credit th, .bill__balance--credit td { color: var(--warning-text); }
 .bill__line--discount td, .bill__line--discount_cap td { color: var(--success-text); }
 .facts--money { margin-block: var(--space-3); padding-block-start: var(--space-3); border-block-start: 1px solid var(--border); }
+/* Invoice (screen and print) */
+.invoice { gap: var(--space-4); }
+.invoice__header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-4); }
+.invoice__hotel { font-family: var(--font-serif); font-size: var(--text-2xl); font-weight: 600; }
+.invoice__facts { min-width: min(100%, 20rem); }
+.invoice__footer { font-size: var(--text-sm); }
+
+@media print {
+  /* Only the document: no navigation, buttons, flashes or demo banner; black on white. */
+  :root { color-scheme: light; }
+  body { background: #fff !important; color: #000 !important; }
+  /* The demo banner stays: a printed demo invoice must never pass for a real one. */
+  .sidebar, .topbar, .flashes, .no-print, .skip-link { display: none !important; }
+  .shell, .main-column, .content { display: block; margin: 0; padding: 0; }
+  .panel, .invoice { border: 0; box-shadow: none; background: #fff; padding: 0; }
+  .table-wrap { overflow: visible; border: 0; }
+  .table th, .table td, .muted, .bill__balance th, .bill__balance td { color: #000 !important; }
+  .table tr { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}
+.card__value--money { font-size: var(--text-lg); }

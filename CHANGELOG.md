@@ -4,6 +4,48 @@ All notable changes are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] – Sprint 4: Front desk and billing
+
+### Added
+- Front-desk dashboard: arrivals (late ones flagged), departures, guests
+  in the house, occupancy tonight (rooms under maintenance excluded),
+  money due from guests in the house, unpaid invoices, rooms to clean.
+- Check-in (BR17) from the arrival day, never while the previous guest
+  of a room is still checked in; warning for rooms not yet cleaned.
+- No-show after the arrival time, charged like a late cancellation;
+  the nights are released.
+- Housekeeping per room: dirty → cleaned → inspected (ready); check-out
+  marks rooms dirty; the dashboard lists rooms not ready and rooms under
+  maintenance.
+- `hotel reset-password USERNAME`: a way back in when the only manager
+  forgets their password (temporary password, sessions ended, audited).
+- Extra-services catalogue (manager) and charges to a stay (BR19):
+  only while checked in, dated within the stay, price copied (BR20);
+  managers void a wrong charge with a reason.
+- Hotel settings: check-in/out times, cancellation fee, window and
+  grace period, discount cap. The cancellation and no-show rules use them.
+- Tax rules (Strategy pattern): percentage of the accommodation or of
+  the services, or an amount per adult per night. Prices stay
+  tax-exclusive; each tax is its own line, rounded half-up.
+- Bill preview built by one pure function; golden tests for the brief's
+  scenario §4.7 with and without taxes.
+- Discounts (Strategy pattern): manager only, reason required,
+  accommodation only, capped (30 % by default).
+- Deposits, payments and manager-only refunds; never more than the
+  balance due or the overpayment; append-only payment table.
+- Check-out issues the invoice in the same transaction, numbered
+  `F-YYYY-NNNNN` without gaps; early departures charge only the nights
+  stayed and release the others. Cancellation and no-show fees are
+  invoiced too. Invoices are immutable (database triggers) and have a
+  print stylesheet.
+- Demo data replays the last week: stays, extras, payments, check-outs,
+  invoices, a no-show and one unpaid departure.
+
+### Changed
+- Cancellation texts show the configured rate instead of a fixed 20 %.
+- A guest still in a room on their departure day keeps it "occupied".
+- The dashboard roadmap placeholder is gone.
+
 ## [0.3.0] – Sprint 3: Reservations and availability
 
 ### Added

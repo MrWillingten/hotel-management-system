@@ -12,6 +12,7 @@ def test_demo_data_fills_an_empty_hotel(services):
     assert result.rooms == 17
     assert result.guests == 30
     assert result.reservations >= 15
+    assert result.invoices >= 5  # a replayed week: check-outs and a no-show
     assert set(result.accounts) == {"demo.manager", "demo.reception"}
     assert is_demo(services)
     system = Actor.system()
@@ -26,6 +27,11 @@ def test_demo_data_fills_an_empty_hotel(services):
     assert sum(g.do_not_rent for g in guests.items) == 1
     login = services.auth.login("demo.reception", result.accounts["demo.reception"], ip="1.1.1.1")
     assert not login.user.must_change_password
+    day = services.front_desk.day(system)
+    assert day.in_house  # guests still in the house today
+    assert day.to_clean  # rooms left this morning
+    assert services.invoices.search(system, "", PageRequest()).total == result.invoices
+    assert services.audit.verify(system).ok  # the replayed history is a valid chain
 
 
 def test_demo_data_is_deterministic(services, settings, clock, tmp_path):

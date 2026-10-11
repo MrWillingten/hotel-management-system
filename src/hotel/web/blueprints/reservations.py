@@ -208,11 +208,14 @@ def detail(reservation_id: int):
         reservation=reservation,
         charges=services().extras.charges_for(actor, reservation_id),
         bill=services().billing.bill(actor, reservation_id),
+        invoice=services().invoices.for_reservation(actor, reservation_id),
         extras=services().extras.catalogue(actor, active_only=True) if in_house else [],
         form_token=services().form_tokens.issue(actor) if in_house else "",
         free_until=services().reservations.free_cancellation_until(reservation.period),
         fee_rate=_fee_rate(),
-        to_clean=[r.number for r in reservation.rooms if rooms[r.room_id].housekeeping == "DIRTY"],
+        to_clean=[
+            r.number for r in reservation.rooms if not rooms[r.room_id].housekeeping.is_ready
+        ],
         today=services().clock.today(),
         arrival_passed=services().reservations.arrival_has_passed(reservation.period),
     )
@@ -239,6 +242,36 @@ def check_in(reservation_id: int):
     else:
         flash(_("%(name)s is checked in.", name=checked_in.guest_name), "success")
     return _back_to(reservation_id)
+
+
+@bp.route("/<int:reservation_id>/check-out", methods=["GET", "POST"])
+@login_required
+def check_out(reservation_id: int):
+    """Story 4.7: show the final bill, then check out and issue the invoice."""
+    actor = current_actor()
+    if request.method == "POST":
+        try:
+            invoice = services().invoices.check_out(
+                actor, reservation_id, version=forms.integer(request.form, "version")
+            )
+        except HotelError as exc:
+            flash(message_for(exc.code, exc.params), "danger")
+            return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+        flash(_("Checked out. Invoice %(number)s issued.", number=invoice.number), "success")
+        return redirect(url_for("invoices.detail", invoice_id=invoice.id))
+    current = services().reservations.get(actor, reservation_id)
+    try:
+        ending, bill, early = services().invoices.preview_check_out(actor, reservation_id)
+    except HotelError as exc:
+        flash(message_for(exc.code, exc.params), "danger")
+        return redirect(url_for("reservations.detail", reservation_id=reservation_id))
+    return render_template(
+        "reservations/check_out.html",
+        reservation=current,
+        ending=ending,
+        bill=bill,
+        early=early,
+    )
 
 
 @bp.post("/<int:reservation_id>/charges")

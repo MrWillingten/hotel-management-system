@@ -37,6 +37,7 @@ from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.audit import record
 from hotel.services.authorization import require_staff
 from hotel.services.hotel_settings import load_settings
+from hotel.services.invoices import issue_invoice
 
 MAX_ALTERNATIVES = 5
 MAX_NOTES = 500
@@ -366,6 +367,8 @@ class ReservationService:
                 fee=str(fee),
                 total=str(reservation.accommodation_total),
             )
+            if not fee.is_zero():
+                issue_invoice(uow, self._clock, actor, reservation)  # the fee is billed
             return uow.reservations.get(reservation.id)
 
     # ------------------------------------------------------------ front desk
@@ -435,6 +438,8 @@ class ReservationService:
                 fee=str(fee),
                 total=str(reservation.accommodation_total),
             )
+            if not fee.is_zero():
+                issue_invoice(uow, self._clock, actor, reservation)
             return uow.reservations.get(reservation.id)
 
     @staticmethod
