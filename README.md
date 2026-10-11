@@ -156,6 +156,7 @@ Read more in [docs/architecture.md](docs/architecture.md).
 | [requirements.md](docs/requirements.md) | Actors, business rules, decisions on ambiguous points, scenarios |
 | [architecture.md](docs/architecture.md) | Layers, modules, request lifecycle, error handling |
 | [data-model.md](docs/data-model.md) | ERD and relational schema |
+| [user-guide.md](docs/user-guide.md) | Every page and button, per role, with examples |
 | [security.md](docs/security.md) | Threat review and the status of each control |
 | [asvs.md](docs/asvs.md) | OWASP ASVS 5.0 Level 1 self-assessment |
 | [test-evidence.md](docs/test-evidence.md) | Which test proves each scenario and business rule |
@@ -175,6 +176,7 @@ Commits written with the assistant carry a `Co-Authored-By` trailer.
 * Fonts: [Inter](https://rsms.me/inter/), [Playfair Display](https://github.com/clauseggers/Playfair)
   and [Noto Sans Arabic](https://notofonts.github.io/), SIL Open Font License 1.1
   (licence texts in `src/hotel/web/static/fonts/`)
+* [Great Vibes](https://fonts.google.com/specimen/Great+Vibes) font (SIL Open Font License)
 * Common-password list derived from [SecLists](https://github.com/danielmiessler/SecLists) (MIT)
 
 ## License

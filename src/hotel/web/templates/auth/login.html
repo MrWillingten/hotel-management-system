@@ -5,13 +5,7 @@
 {% block body_class %}auth{% endblock %}
 {% block body %}
 <div class="auth-layout">
-  <section class="auth-hero" aria-hidden="true">
-    <div class="auth-hero__inner">
-      <span class="brand__mark brand__mark--large">{{ hotel_name[:1] }}</span>
-      <p class="auth-hero__name">{{ hotel_name }}</p>
-      <p class="auth-hero__tagline">{{ _("Reception and management") }}</p>
-    </div>
-  </section>
+  {% include "partials/auth_hero.html" %}
 
   <main class="auth-panel" id="main" tabindex="-1">
     <div class="auth-panel__prefs">{% include "partials/preferences.html" %}</div>

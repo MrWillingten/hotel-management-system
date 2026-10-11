@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 17:14+0100\n"
+"POT-Creation-Date: 2026-10-11 19:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -64,6 +64,20 @@ msgstr ""
 msgid "A category with this name already exists."
 msgstr "Une catégorie porte déjà ce nom."
 
+msgid "A couple wants 12–14 July: room 205 is free both nights, so click it on the 12th."
+msgstr "Un couple veut le 12–14 juillet : la chambre 205 est libre les deux nuits, cliquez-la le 12."
+
+msgid "A different price for a category between two dates (e.g. summer)."
+msgstr "Un autre prix pour une catégorie entre deux dates (par exemple l’été)."
+
+msgid "A free cell"
+msgstr "Une case libre"
+
+msgid "A grid of rooms and nights, two weeks at a time: what is free when, at a glance."
+msgstr ""
+"Une grille des chambres et des nuits, deux semaines à la fois : ce qui est libre et quand, d’un "
+"coup d’œil."
+
 msgid "A guest with the same name and phone or e-mail already exists."
 msgstr "Un client portant le même nom et le même téléphone ou e-mail existe déjà."
 
@@ -87,6 +101,9 @@ msgstr "Un numéro de passeport comporte de 5 à 20 lettres ou chiffres."
 msgid "A percentage (7 or 7.5) or an amount in dinars (3.000), depending on the kind."
 msgstr "Un pourcentage (7 ou 7,5) ou un montant en dinars (3,000), selon le type."
 
+msgid "A percentage (VAT) or an amount per adult per night (tourist tax)."
+msgstr "Un pourcentage (TVA) ou un montant par adulte et par nuit (taxe de séjour)."
+
 #, python-format
 msgid "A rate period lasts at most %(max)s nights."
 msgstr "Une période tarifaire dure au plus %(max)s nuits."
@@ -103,6 +120,12 @@ msgstr ""
 msgid "A report covers at most %(max)s nights (two years)."
 msgstr "Un rapport couvre au plus %(max)s nuits (deux ans)."
 
+msgid "A reservation"
+msgstr "Une réservation"
+
+msgid "A second person checked it: the room is ready."
+msgstr "Une seconde personne l’a contrôlée : la chambre est prête."
+
 msgid "A service with this name already exists."
 msgstr "Un service portant ce nom existe déjà."
 
@@ -118,6 +141,13 @@ msgstr ""
 "Un jeton permet à un autre programme (un tableur, un tableau de bord) de lire les chambres, les "
 "disponibilités, les réservations et les chiffres des rapports via l’API JSON en lecture seule. Il"
 " agit en votre nom, mais ne peut jamais rien modifier."
+
+msgid ""
+"A verified copy of the database; one is also made every day. Copy the backups to another device "
+"regularly."
+msgstr ""
+"Une copie vérifiée de la base de données ; une copie est aussi faite chaque jour. Copiez "
+"régulièrement les sauvegardes sur un autre appareil."
 
 msgid "API tokens"
 msgstr "Jetons d’API"
@@ -154,6 +184,14 @@ msgstr "Compte réactivé."
 msgid "Account unlocked."
 msgstr "Compte déverrouillé."
 
+msgid ""
+"Accounts are created by a manager with a temporary password, which you replace at your first "
+"sign-in. Click your name in the top bar to change your password or set up two-factor sign-in."
+msgstr ""
+"Les comptes sont créés par un gérant avec un mot de passe temporaire, que vous remplacez à votre "
+"première connexion. Cliquez sur votre nom dans la barre du haut pour changer votre mot de passe "
+"ou activer la connexion en deux étapes."
+
 msgid "Accounts are deactivated, never deleted, so the audit log keeps its meaning."
 msgstr "Les comptes sont désactivés, jamais supprimés, pour que le journal d'audit garde son sens."
 
@@ -168,6 +206,9 @@ msgstr "Actif"
 
 msgid "Add a room"
 msgstr "Ajouter une chambre"
+
+msgid "Add a room / Edit room"
+msgstr "Ajouter / modifier une chambre"
 
 msgid "Add a staff member"
 msgstr "Ajouter un membre du personnel"
@@ -208,6 +249,27 @@ msgstr "Adultes : %(adults)s, enfants : %(children)s"
 msgid "After"
 msgstr "Après"
 
+msgid "After 5 wrong passwords the account is locked for 15 minutes; a manager can unlock it."
+msgstr ""
+"Après 5 mots de passe erronés, le compte est verrouillé 15 minutes ; un gérant peut le "
+"déverrouiller."
+
+msgid "After a check-out, 204 is To clean; the cleaner marks it cleaned, you inspect it."
+msgstr ""
+"Après un départ, la 204 est « À nettoyer » ; le personnel de ménage la marque nettoyée, vous la "
+"contrôlez."
+
+msgid "After the arrival time, for a guest who never came; the rooms are freed."
+msgstr "Après l’heure d’arrivée, pour un client qui n’est jamais venu ; les chambres sont libérées."
+
+msgid ""
+"After the password, a six-digit code from an app on your phone. Required for managers. Keep the "
+"recovery codes safe: each one works once if the phone is lost."
+msgstr ""
+"Après le mot de passe, un code à six chiffres d’une application de votre téléphone. Obligatoire "
+"pour les gérants. Gardez les codes de secours en lieu sûr : chacun fonctionne une fois si le "
+"téléphone est perdu."
+
 msgid ""
 "After your password, you will also type a six-digit code from an app on your phone (for example "
 "Google Authenticator, Microsoft Authenticator, Aegis or FreeOTP). A stolen password alone is then"
@@ -235,6 +297,12 @@ msgstr "Toutes les réservations"
 msgid "All rooms"
 msgstr "Toutes les chambres"
 
+msgid "Always search first, so a returning guest is not registered twice."
+msgstr "Cherchez toujours d’abord, pour ne pas enregistrer deux fois un client qui revient."
+
+msgid "Amira arrives at 15:10: find her under Arrivals and press Check in."
+msgstr "Amira arrive à 15 h 10 : trouvez-la dans « Arrivées » et appuyez sur « Enregistrer l'arrivée »."
+
 msgid "Amount"
 msgstr "Montant"
 
@@ -244,11 +312,21 @@ msgstr "Montant (DT)"
 msgid "Amount per adult per night"
 msgstr "Montant par adulte et par nuit"
 
+msgid ""
+"Amount, method and an optional reference; never more than the balance due. Payments are never "
+"edited or deleted."
+msgstr ""
+"Montant, moyen de paiement et référence facultative ; jamais plus que le solde dû. Les paiements "
+"ne sont jamais modifiés ni supprimés."
+
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr "Les montants ont au plus 3 décimales (millimes)."
 
 msgid "An amount per adult per night can only apply to the accommodation."
 msgstr "Un montant par adulte et par nuit ne peut s'appliquer qu'à l'hébergement."
+
+msgid "An employee leaves: open their account and deactivate it."
+msgstr "Un employé part : ouvrez son compte et désactivez-le."
 
 msgid "An unexpected error occurred. It has been logged."
 msgstr "Une erreur inattendue s'est produite. Elle a été enregistrée."
@@ -301,6 +379,9 @@ msgstr "Au plus le solde dû."
 
 msgid "Audit log"
 msgstr "Journal d'audit"
+
+msgid "Audit log, backups and privacy"
+msgstr "Journal d'audit, sauvegardes et vie privée"
 
 msgid "Automatic"
 msgstr "Automatique"
@@ -373,6 +454,9 @@ msgstr "Note"
 msgid "Bill and payments"
 msgstr "Note et paiements"
 
+msgid "Blocks a room between two dates; refused over existing bookings."
+msgstr "Bloque une chambre entre deux dates ; refusé s’il y a des réservations."
+
 msgid "Book"
 msgstr "Réserver"
 
@@ -390,11 +474,17 @@ msgstr "Réservé le"
 msgid "Bookings open at most two years ahead."
 msgstr "Les réservations sont ouvertes au plus deux ans à l'avance."
 
+msgid "Breakfast goes from 15 to 18 DT: edit it; breakfasts already charged keep 15 DT."
+msgstr "Le petit-déjeuner passe de 15 à 18 DT : modifiez-le ; ceux déjà facturés restent à 15 DT."
+
 msgid "By default the guest keeps the price of every remaining night: the hotel offers the move."
 msgstr "Par défaut, le client garde le prix de chaque nuit restante : l’hôtel offre le changement."
 
 msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
 msgstr "CIN : 8 chiffres. Passeport : 5 à 20 lettres ou chiffres."
+
+msgid "CSV"
+msgstr "CSV"
 
 msgid "Cancel"
 msgstr "Annuler"
@@ -528,6 +618,13 @@ msgstr "Enregistrer le départ"
 msgid "Check out and issue the invoice"
 msgstr "Enregistrer le départ et émettre la facture"
 
+msgid ""
+"Check-in and check-out times, cancellation fee and window, discount cap, weekend surcharge, "
+"anonymisation delay."
+msgstr ""
+"Heures d’arrivée et de départ, frais et délai d’annulation, plafond de remise, supplément week-"
+"end, délai d’anonymisation."
+
 #, python-format
 msgid "Check-in from %(in)s · check-out by %(out)s"
 msgstr "Arrivée à partir de %(in)s · départ avant %(out)s"
@@ -557,6 +654,9 @@ msgstr "Enfants"
 
 msgid "Choose"
 msgstr "Choisir"
+
+msgid "Choose / Register a new guest"
+msgstr "Choisir / enregistrer un nouveau client"
 
 msgid "Choose a category."
 msgstr "Choisissez une catégorie."
@@ -616,6 +716,13 @@ msgstr "Clôturée par"
 msgid "Closed days"
 msgstr "Journées clôturées"
 
+msgid ""
+"Closes a finished day: guests who never came become no-shows and the day's figures are frozen. "
+"Missed days are closed automatically at start-up."
+msgstr ""
+"Clôture une journée terminée : les clients jamais arrivés deviennent des non-présentations et les"
+" chiffres du jour sont figés. Les jours manqués sont clôturés automatiquement au démarrage."
+
 msgid "Code"
 msgstr "Code"
 
@@ -624,6 +731,9 @@ msgstr "Code ou client"
 
 msgid "Colour theme"
 msgstr "Thème de couleurs"
+
+msgid "Compare July 2026 with July 2025 before setting summer prices."
+msgstr "Comparez juillet 2026 à juillet 2025 avant de fixer les prix d’été."
 
 msgid "Confirm booking"
 msgstr "Confirmer la réservation"
@@ -753,11 +863,17 @@ msgstr "Pièce"
 msgid "Document number"
 msgstr "Numéro de la pièce"
 
+msgid "Downloads a table for Excel or LibreOffice; exports are audited."
+msgstr "Télécharge un tableau pour Excel ou LibreOffice ; les exports sont journalisés."
+
 msgid "Due from guests in the house"
 msgstr "Dû par les clients présents"
 
 msgid "E-mail"
 msgstr "E-mail"
+
+msgid "EN, FR, ع and the sun/moon buttons in the top bar; remembered on this computer."
+msgstr "EN, FR, ع et les boutons soleil/lune dans la barre du haut ; mémorisés sur cet ordinateur."
 
 msgid "Each room can only be selected once."
 msgstr "Chaque chambre ne peut être choisie qu'une fois."
@@ -790,6 +906,9 @@ msgstr "Modifier la taxe"
 
 msgid "End now"
 msgstr "Terminer maintenant"
+
+msgid "Ends the session at once. Sessions also end after 30 minutes without activity."
+msgstr "Termine la session immédiatement. Les sessions se terminent aussi après 30 minutes d’inactivité."
 
 msgid "Enter a name of 1 to 100 characters."
 msgstr "Saisissez un nom de 1 à 100 caractères."
@@ -843,14 +962,38 @@ msgstr "Saisissez un montant supérieur à 0."
 msgid "Enter an amount such as 180 or 180.500."
 msgstr "Saisissez un montant comme 180 ou 180.500."
 
+msgid "Erases the personal data of guests without a stay for a long time."
+msgstr "Efface les données personnelles des clients sans séjour depuis longtemps."
+
+msgid "Every guest once, found by name, document, phone or e-mail. Accents and capitals do not matter."
+msgstr ""
+"Chaque client une seule fois, retrouvé par nom, pièce d’identité, téléphone ou e-mail. Accents et"
+" majuscules sans importance."
+
 msgid "Every invoice is paid."
 msgstr "Toutes les factures sont payées."
+
+msgid "Every morning, check that yesterday is in the list of closed days."
+msgstr "Chaque matin, vérifiez que la veille figure parmi les jours clôturés."
 
 msgid "Every room is ready."
 msgstr "Toutes les chambres sont prêtes."
 
+msgid ""
+"Every room with its status tonight. Housekeeping: To clean → Cleaned, to inspect → Ready. Only a "
+"ready room should be given to a guest."
+msgstr ""
+"Chaque chambre avec son état ce soir. Ménage : À nettoyer → Nettoyée, à contrôler → Prête. Seule "
+"une chambre prête doit être attribuée à un client."
+
 msgid "Everyone"
 msgstr "Tout le monde"
+
+msgid "Everything about one stay, and every action on it."
+msgstr "Tout sur un séjour, et toutes les actions possibles."
+
+msgid "Example:"
+msgstr "Exemple :"
 
 msgid "Expired"
 msgstr "Expiré"
@@ -866,6 +1009,9 @@ msgstr "Les services supplémentaires peuvent être facturés une fois l'arrivé
 
 msgid "Extra services can only be charged while the guest is checked in."
 msgstr "Les services supplémentaires ne peuvent être facturés que pendant le séjour du client."
+
+msgid "Extra services, settings and taxes"
+msgstr "Services supplémentaires, paramètres et taxes"
 
 msgid "File"
 msgstr "Fichier"
@@ -891,6 +1037,9 @@ msgstr "Montant fixe (DT)"
 msgid "Flags"
 msgstr "Indicateurs"
 
+msgid "For a forgotten password or a lock."
+msgstr "Pour un mot de passe oublié ou un verrouillage."
+
 msgid "For example 204 or B-12."
 msgstr "Par exemple 204 ou B-12."
 
@@ -915,6 +1064,13 @@ msgstr "Annulation gratuite jusqu'au %(when)s. Ensuite, annuler coûte %(rate)s 
 
 msgid "Free cancellation until (hours before arrival)"
 msgstr "Annulation gratuite jusqu'à (heures avant l'arrivée)"
+
+msgid ""
+"Free until 48 hours before arrival, then a fee (20 % by default). The exact fee is shown before "
+"you confirm."
+msgstr ""
+"Gratuit jusqu’à 48 heures avant l’arrivée, puis des frais (20 % par défaut). Le montant exact est"
+" affiché avant de confirmer."
 
 msgid "Friday"
 msgstr "Vendredi"
@@ -946,6 +1102,9 @@ msgstr "Accorder"
 
 msgid "Grant a discount"
 msgstr "Accorder une remise"
+
+msgid "Group rooms (Standard, Deluxe…); needed before adding rooms."
+msgstr "Regroupent les chambres (Standard, Deluxe…) ; nécessaires avant d’ajouter des chambres."
 
 msgid "Guest"
 msgstr "Client"
@@ -991,6 +1150,9 @@ msgstr ""
 "gardent leur propre copie car ce sont des pièces comptables. La limite se règle dans les "
 "Paramètres."
 
+msgid "Help"
+msgstr "Aide"
+
 msgid "Hotel rules"
 msgstr "Règles de l'hôtel"
 
@@ -1009,6 +1171,9 @@ msgstr "Identité et coordonnées"
 
 msgid "Identity document"
 msgstr "Pièce d'identité"
+
+msgid "If someone similar exists, the form proposes them first."
+msgstr "Si une personne semblable existe, le formulaire la propose d’abord."
 
 msgid "In service"
 msgstr "En service"
@@ -1054,6 +1219,9 @@ msgstr "Facturé"
 msgid "Invoices"
 msgstr "Factures"
 
+msgid "Invoices still owing money after the guest left; open one to record a payment."
+msgstr "Factures encore dues après le départ du client ; ouvrez-en une pour enregistrer un paiement."
+
 #, python-format
 msgid "Invoices: %(count)s"
 msgstr "Factures : %(count)s"
@@ -1061,11 +1229,23 @@ msgstr "Factures : %(count)s"
 msgid "Is it one of these guests?"
 msgstr "S'agit-il de l'un de ces clients ?"
 
+msgid ""
+"Issued at check-out (and for cancellation or no-show fees), numbered without gaps, and never "
+"changed afterwards: corrections are payments or refunds."
+msgstr ""
+"Émises au départ (et pour les frais d’annulation ou de non-présentation), numérotées sans trou, "
+"jamais modifiées ensuite : les corrections sont des paiements ou des remboursements."
+
 msgid "Issued invoices keep the tax they were issued with."
 msgstr "Les factures émises conservent la taxe avec laquelle elles ont été émises."
 
 msgid "Issued on"
 msgstr "Émise le"
+
+msgid "Karim, 10–13 July, 2 adults: Find rooms → Book 204 → Review → Confirm booking."
+msgstr ""
+"Karim, 10–13 juillet, 2 adultes : Chercher des chambres → Réserver la 204 → Vérifier → Confirmer "
+"la réservation."
 
 msgid "Keep it"
 msgstr "La conserver"
@@ -1075,6 +1255,9 @@ msgstr "Type"
 
 msgid "Language"
 msgstr "Langue"
+
+msgid "Language and theme"
+msgstr "Langue et thème"
 
 msgid "Last closed night"
 msgstr "Dernière nuit fermée"
@@ -1098,8 +1281,16 @@ msgstr "Quittée le %(date)s"
 msgid "Legend"
 msgstr "Légende"
 
+msgid "Let another program read (never change) the hotel's figures; in your account."
+msgstr ""
+"Permettent à un autre programme de lire (jamais modifier) les chiffres de l’hôtel ; dans votre "
+"compte."
+
 msgid "Light"
 msgstr "Clair"
+
+msgid "Lists every room free on every night of the stay."
+msgstr "Liste toutes les chambres libres chaque nuit du séjour."
 
 msgid "Locked"
 msgstr "Verrouillé"
@@ -1131,6 +1322,12 @@ msgstr "Gérer les catégories"
 msgid "Manager"
 msgstr "Gestionnaire"
 
+msgid "Managers"
+msgstr "Gérants"
+
+msgid "Managers create accounts; accounts are deactivated, never deleted."
+msgstr "Les gérants créent les comptes ; les comptes sont désactivés, jamais supprimés."
+
 msgid "Managers must keep two-factor sign-in."
 msgstr "Les gérants doivent garder la connexion en deux étapes."
 
@@ -1147,6 +1344,15 @@ msgstr "Les gérants doivent utiliser la connexion en deux étapes. Activez-la a
 
 msgid "Managers must use two-factor sign-in. Set it up now to continue."
 msgstr "Les gérants doivent utiliser la connexion en deux étapes. Activez-la maintenant pour continuer."
+
+msgid "Managers set up the rooms the hotel sells and their prices."
+msgstr "Les gérants configurent les chambres que l’hôtel vend et leurs prix."
+
+msgid "Managers: a percentage or fixed amount on accommodation, with a reason."
+msgstr "Gérants : un pourcentage ou un montant fixe sur l’hébergement, avec un motif."
+
+msgid "Managers: when the guest paid more than the total."
+msgstr "Gérants : quand le client a payé plus que le total."
 
 msgid "Manual"
 msgstr "Manuelle"
@@ -1182,6 +1388,9 @@ msgstr "Changer"
 msgid "Move the guests"
 msgstr "Changer les clients de chambre"
 
+msgid "Move through time."
+msgstr "Pour se déplacer dans le temps."
+
 msgid "Move to another room"
 msgstr "Changer de chambre"
 
@@ -1189,11 +1398,21 @@ msgstr "Changer de chambre"
 msgid "Moved from room %(old)s to room %(new)s."
 msgstr "Changement de la chambre %(old)s vers la chambre %(new)s effectué."
 
+msgid ""
+"Moves the guests to another room from tonight on, at the same price by default. The old room "
+"stays on the bill and goes to the cleaning list."
+msgstr ""
+"Change les clients de chambre à partir de ce soir, au même prix par défaut. L’ancienne chambre "
+"reste sur la note et passe dans la liste du ménage."
+
 msgid "My account"
 msgstr "Mon compte"
 
 msgid "Name"
 msgstr "Nom"
+
+msgid "Name and price; a new price applies to future charges only."
+msgstr "Nom et prix ; un nouveau prix ne s’applique qu’aux prochaines prestations."
 
 msgid "Name, phone, e-mail or document number"
 msgstr "Nom, téléphone, e-mail ou numéro de pièce"
@@ -1209,6 +1428,13 @@ msgstr "Nouvelle catégorie"
 
 msgid "New dates"
 msgstr "Nouvelles dates"
+
+msgid ""
+"New dates, rooms or occupants; availability and price are checked again. Nights already booked "
+"keep their price."
+msgstr ""
+"Nouvelles dates, chambres ou occupants ; disponibilité et prix sont vérifiés à nouveau. Les nuits"
+" déjà réservées gardent leur prix."
 
 msgid "New password"
 msgstr "Nouveau mot de passe"
@@ -1245,6 +1471,12 @@ msgstr "Arrivées les plus récentes en premier."
 
 msgid "Next page"
 msgstr "Page suivante"
+
+msgid "Next to a departure: opens the final bill and the invoice."
+msgstr "À côté d’un départ : ouvre la note finale et la facture."
+
+msgid "Next to an arrival: records that the guest has arrived."
+msgstr "À côté d’une arrivée : enregistre que le client est arrivé."
 
 msgid "Next week"
 msgstr "Semaine suivante"
@@ -1402,6 +1634,9 @@ msgstr "Numéro"
 msgid "Number or guest"
 msgstr "Numéro ou client"
 
+msgid "Number, category, capacity, nightly price."
+msgstr "Numéro, catégorie, capacité, prix par nuit."
+
 msgid "Occupancy"
 msgstr "Occupation"
 
@@ -1413,6 +1648,13 @@ msgstr "Occupation par mois"
 
 msgid "Occupancy tonight"
 msgstr "Occupation ce soir"
+
+msgid ""
+"Occupancy, average daily rate, revenue per available room, money invoiced and received, "
+"cancellations, outstanding balances, for any range up to two years."
+msgstr ""
+"Occupation, prix moyen par nuit, revenu par chambre disponible, montants facturés et encaissés, "
+"annulations, soldes dus, sur toute période jusqu’à deux ans."
 
 msgid "Occupied"
 msgstr "Occupée"
@@ -1431,6 +1673,12 @@ msgstr "Seule une réservation confirmée peut être annulée."
 
 msgid "Only a day that is over can be closed."
 msgstr "Seule une journée terminée peut être clôturée."
+
+msgid "Open an invoice and press Ctrl+P."
+msgstr "Ouvrez une facture et appuyez sur Ctrl+P."
+
+msgid "Open this page"
+msgstr "Ouvrir cette page"
 
 msgid "Open your authenticator app and type the six-digit code shown for this hotel."
 msgstr ""
@@ -1461,6 +1709,9 @@ msgstr "Pages"
 
 msgid "Paid"
 msgstr "Payé"
+
+msgid "Paint 204 from 3 to 6 July: room page → Close for maintenance."
+msgstr "Peindre la 204 du 3 au 6 juillet : page de la chambre → Fermer pour maintenance."
 
 msgid "Passport"
 msgstr "Passeport"
@@ -1495,6 +1746,9 @@ msgstr "Précédente"
 msgid "Previous week"
 msgstr "Semaine précédente"
 
+msgid "Previous week, Today, Next week"
+msgstr "Semaine précédente, Aujourd'hui, Semaine suivante"
+
 msgid "Price locked at booking"
 msgstr "Prix fixé à la réservation"
 
@@ -1512,6 +1766,9 @@ msgid ""
 msgstr ""
 "Prix en dinars tunisiens. Émise par %(name)s. Cette facture ne peut plus être modifiée ; les "
 "paiements ultérieurs figurent sur la réservation."
+
+msgid "Print or save as PDF"
+msgstr "Imprimer ou enregistrer en PDF"
 
 msgid ""
 "Programs send it in the header “Authorization: Bearer …”. Anyone who has it can read the hotel's "
@@ -1540,6 +1797,11 @@ msgstr "Période tarifaire supprimée. Les réservations existantes gardent leur
 msgid "Rate: %(rate)s"
 msgstr "Tarif : %(rate)s"
 
+msgid "Re-print last week's invoice for a company: search its number or the guest's name."
+msgstr ""
+"Réimprimer la facture de la semaine dernière pour une entreprise : cherchez son numéro ou le nom "
+"du client."
+
 msgid "Reactivate account"
 msgstr "Réactiver le compte"
 
@@ -1564,6 +1826,9 @@ msgstr "Objet"
 
 msgid "Record a deposit"
 msgstr "Enregistrer un acompte"
+
+msgid "Record a deposit / payment"
+msgstr "Enregistrer un acompte / un paiement"
 
 msgid "Record a no-show"
 msgstr "Enregistrer une non-présentation"
@@ -1674,6 +1939,9 @@ msgstr "Réservée"
 msgid "Reset password"
 msgstr "Réinitialiser le mot de passe"
 
+msgid "Reveals a masked document number; the reveal is audited."
+msgstr "Révèle un numéro de pièce masqué ; l’affichage est journalisé."
+
 msgid "Revenue"
 msgstr "Chiffre d'affaires"
 
@@ -1763,6 +2031,9 @@ msgstr "Valeur des chambres"
 msgid "Rooms"
 msgstr "Chambres"
 
+msgid "Rooms and housekeeping"
+msgstr "Chambres et ménage"
+
 #, python-format
 msgid "Rooms and nights from %(start)s"
 msgstr "Chambres et nuits à partir du %(start)s"
@@ -1772,6 +2043,12 @@ msgstr "Chambres libres aux mêmes dates :"
 
 msgid "Rooms not ready"
 msgstr "Chambres non prêtes"
+
+msgid "Rooms that are not ready, with a button to move each to its next state."
+msgstr "Les chambres non prêtes, avec un bouton pour passer chacune à l’état suivant."
+
+msgid "Rooms, prices and maintenance"
+msgstr "Chambres, prix et maintenance"
 
 #, python-format
 msgid "Rooms: %(count)s"
@@ -1798,6 +2075,9 @@ msgstr "Rechercher"
 msgid "Search guests"
 msgstr "Rechercher des clients"
 
+msgid "Search “dupont” before registering Lucas Dupont: he may already be there."
+msgstr "Cherchez « dupont » avant d’enregistrer Lucas Dupont : il existe peut-être déjà."
+
 msgid "Seasonal rates"
 msgstr "Tarifs saisonniers"
 
@@ -1810,6 +2090,9 @@ msgstr "Sélectionnez-en une ci-dessous."
 msgid "Sellable"
 msgstr "Vendables"
 
+msgid "Sends a room back."
+msgstr "Renvoie une chambre au ménage."
+
 msgid "Service"
 msgstr "Service"
 
@@ -1818,6 +2101,12 @@ msgstr "L’activer maintenant"
 
 msgid "Set temporary password"
 msgstr "Définir un mot de passe temporaire"
+
+msgid "Set temporary password / Unlock"
+msgstr "Mot de passe temporaire / Déverrouiller"
+
+msgid "Settings"
+msgstr "Paramètres"
 
 msgid "Settings and taxes"
 msgstr "Paramètres et taxes"
@@ -1831,6 +2120,9 @@ msgstr "Afficher"
 msgid "Show the figures"
 msgstr "Afficher les chiffres"
 
+msgid "Shows each night and the total; Confirm booking saves it (only once)."
+msgstr "Affiche chaque nuit et le total ; « Confirmer la réservation » l’enregistre (une seule fois)."
+
 msgid "Sign in"
 msgstr "Se connecter"
 
@@ -1839,6 +2131,12 @@ msgstr "Se déconnecter"
 
 msgid "Sign-in code"
 msgstr "Code de connexion"
+
+msgid "Signing in and your account"
+msgstr "Connexion et votre compte"
+
+msgid "Signs the person out everywhere, at once."
+msgstr "Déconnecte la personne partout, immédiatement."
 
 #, python-format
 msgid "Since %(date)s, signing in asks for a code from your authenticator app after the password."
@@ -1885,6 +2183,9 @@ msgstr "Membre du personnel"
 msgid "Start again with the password"
 msgstr "Recommencer avec le mot de passe"
 
+msgid "Starts a booking for that room from that night."
+msgstr "Commence une réservation pour cette chambre à partir de cette nuit."
+
 msgid "Status"
 msgstr "Statut"
 
@@ -1899,6 +2200,9 @@ msgstr "Sous-total avant remises et taxes"
 
 msgid "Sunday"
 msgstr "Dimanche"
+
+msgid "Take a 100 DT deposit by card with the slip number as reference."
+msgstr "Prenez un acompte de 100 DT par carte avec le numéro du ticket comme référence."
 
 #, python-format
 msgid "Tax rule %(name)s added."
@@ -1924,6 +2228,11 @@ msgstr "C'est plus que le solde dû (%(due)s DT)."
 msgid "That is more than the guest overpaid (%(credit)s DT)."
 msgstr "C'est plus que le trop-perçu du client (%(credit)s DT)."
 
+msgid "The air conditioning breaks in 204: press Move, choose 205, keep the price."
+msgstr ""
+"La climatisation tombe en panne dans la 204 : appuyez sur « Changer », choisissez la 205, gardez "
+"le prix."
+
 msgid "The arrival date can't be in the past."
 msgstr "La date d'arrivée ne peut pas être passée."
 
@@ -1941,6 +2250,12 @@ msgstr "La note est réglée."
 
 msgid "The catalogue is empty."
 msgstr "Le catalogue est vide."
+
+msgid "The catalogue of chargeable services, the hotel's rules and its taxes."
+msgstr "Le catalogue des services facturables, les règles de l’hôtel et ses taxes."
+
+msgid "The cleaner has finished."
+msgstr "Le ménage est terminé."
 
 msgid "The current password is not correct."
 msgstr "Le mot de passe actuel est incorrect."
@@ -2009,6 +2324,9 @@ msgstr "La requête n'a pas pu être comprise."
 msgid "The room is already closed or booked on %(count)s of these nights (%(first)s to %(last)s)."
 msgstr "La chambre est déjà fermée ou réservée %(count)s de ces nuits (du %(first)s au %(last)s)."
 
+msgid "The running bill of a stay, exactly as the invoice will show it."
+msgstr "La note en cours d’un séjour, telle que la facture la montrera."
+
 msgid "The sign-in took too long or failed too often. Start again."
 msgstr "La connexion a pris trop de temps ou a échoué trop souvent. Recommencez."
 
@@ -2017,6 +2335,9 @@ msgstr "Le séjour est déjà terminé : l'arrivée ne peut plus être enregistr
 
 msgid "The token was revoked. Programs using it can no longer read data."
 msgstr "Le jeton a été révoqué. Les programmes qui l’utilisent ne peuvent plus lire les données."
+
+msgid "The tools that keep the hotel's data trustworthy and safe."
+msgstr "Les outils qui gardent les données de l’hôtel fiables et en sécurité."
 
 msgid "The two passwords are different."
 msgstr "Les deux mots de passe sont différents."
@@ -2119,6 +2440,14 @@ msgstr "Ce nom d'utilisateur est déjà utilisé."
 msgid "This value is out of the allowed range."
 msgstr "Cette valeur est hors des limites autorisées."
 
+msgid ""
+"Three steps: the stay (dates, guests, category), the guest, then the rooms. Each night's price is"
+" locked when you book; later price changes never alter the booking."
+msgstr ""
+"Trois étapes : le séjour (dates, personnes, catégorie), le client, puis les chambres. Le prix de "
+"chaque nuit est figé à la réservation ; les changements de prix ultérieurs ne la modifient "
+"jamais."
+
 msgid "Thursday"
 msgstr "Jeudi"
 
@@ -2152,6 +2481,9 @@ msgid "Too many failed sign-in attempts from this computer. Wait a few minutes a
 msgstr ""
 "Trop de tentatives de connexion échouées depuis cet ordinateur. Patientez quelques minutes, puis "
 "réessayez."
+
+msgid "Topics"
+msgstr "Sujets"
 
 msgid "Total"
 msgstr "Total"
@@ -2248,6 +2580,11 @@ msgstr "Nom d'utilisateur"
 msgid "VIP"
 msgstr "VIP"
 
+msgid "VIP for special attention; Do not rent (managers) refuses new bookings."
+msgstr ""
+"VIP pour une attention particulière ; « Ne pas louer » (gérants) refuse les nouvelles "
+"réservations."
+
 msgid "VIP guest"
 msgstr "Client VIP"
 
@@ -2302,11 +2639,30 @@ msgstr ""
 "Ce qui peut être facturé pendant un séjour : petit-déjeuner, transfert aéroport, blanchisserie… "
 "Prix hors taxes."
 
+msgid "What each page is for, its main buttons and an example. Only what your role can use is shown."
+msgstr ""
+"À quoi sert chaque page, ses principaux boutons et un exemple. Seul ce que votre rôle peut "
+"utiliser est affiché."
+
 msgid "What is it for?"
 msgstr "À quoi sert-il ?"
 
+msgid "What needs attention today: arrivals, departures, guests in the house, rooms to clean."
+msgstr ""
+"Ce qui demande votre attention aujourd’hui : arrivées, départs, clients présents, chambres à "
+"nettoyer."
+
 msgid "When"
 msgstr "Date"
+
+msgid "While the guest is checked in: breakfasts, transfers… with a quantity and date."
+msgstr "Pendant le séjour : petits-déjeuners, transferts… avec une quantité et une date."
+
+msgid "Who did what and when; altered or removed entries are detected and shown."
+msgstr "Qui a fait quoi et quand ; les entrées modifiées ou supprimées sont détectées et signalées."
+
+msgid "With a temporary password replaced at first sign-in."
+msgstr "Avec un mot de passe temporaire remplacé à la première connexion."
 
 msgid "With the country code for foreign numbers, e.g. +33 6 12 34 56 78."
 msgstr "Avec l'indicatif pour les numéros étrangers, par ex. +33 6 12 34 56 78."
@@ -2317,6 +2673,9 @@ msgid ""
 msgstr ""
 "Notez ou imprimez ces codes et gardez-les en lieu sûr, loin de votre téléphone. Chacun fonctionne"
 " une seule fois, si le téléphone est perdu. Ils ne seront plus affichés."
+
+msgid "Yesterday by default; running it twice changes nothing."
+msgstr "La veille par défaut ; le lancer deux fois ne change rien."
 
 #, python-format
 msgid "You already have %(max)s active tokens. Revoke one first."
@@ -2349,4 +2708,7 @@ msgstr "Votre mot de passe a été modifié."
 #, python-format
 msgid "on %(base)s"
 msgstr "sur %(base)s"
+
+msgid "“Who refunded 46 DT on R-2026-00031?”: filter the audit log by action."
+msgstr "« Qui a remboursé 46 DT sur R-2026-00031 ? » : filtrez le journal d'audit par action."
 
