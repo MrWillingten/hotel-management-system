@@ -6,7 +6,7 @@ from flask import Blueprint, flash, g, redirect, render_template, request, sessi
 from flask_babel import gettext as _
 
 from hotel.domain.errors import AuthenticationError
-from hotel.web.context import services, settings
+from hotel.web.context import cookie_name, services, settings
 from hotel.web.messages import message_for
 from hotel.web.security import AUTH_COOKIE, is_safe_redirect_target, public
 
@@ -98,12 +98,12 @@ def _signed_in(result, next_target: str | None = None):
     # Never keep a session id from before the login (session fixation):
     # end any previous server session and start a fresh Flask session,
     # which also gives the user a new CSRF token.
-    services().auth.logout(request.cookies.get(AUTH_COOKIE))
+    services().auth.logout(request.cookies.get(cookie_name(AUTH_COOKIE)))
     session.clear()
     g.clear_auth_cookie = False
     response = redirect(next_target or url_for("dashboard.index"))
     response.set_cookie(
-        AUTH_COOKIE,
+        cookie_name(AUTH_COOKIE),
         result.token,
         httponly=True,
         samesite="Lax",
@@ -117,9 +117,12 @@ def _signed_in(result, next_target: str | None = None):
 @bp.post("/logout")
 @public  # must work even when the session has already expired
 def logout():
-    services().auth.logout(request.cookies.get(AUTH_COOKIE))
+    services().auth.logout(request.cookies.get(cookie_name(AUTH_COOKIE)))
     session.clear()
     response = redirect(url_for("auth.login"))
-    response.delete_cookie(AUTH_COOKIE, path="/")
+    response.delete_cookie(cookie_name(AUTH_COOKIE), path="/")
+    # Ask the browser to forget cached pages (guest data) from this session
+    # (ASVS V14.3.1). Cookies are not listed: the language and theme stay.
+    response.headers["Clear-Site-Data"] = '"cache", "storage"'
     flash(_("You have been signed out."), "info")
     return response

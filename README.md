@@ -157,6 +157,10 @@ Read more in [docs/architecture.md](docs/architecture.md).
 | [architecture.md](docs/architecture.md) | Layers, modules, request lifecycle, error handling |
 | [data-model.md](docs/data-model.md) | ERD and relational schema |
 | [security.md](docs/security.md) | Threat review and the status of each control |
+| [asvs.md](docs/asvs.md) | OWASP ASVS 5.0 Level 1 self-assessment |
+| [test-evidence.md](docs/test-evidence.md) | Which test proves each scenario and business rule |
+| [manual-checks.md](docs/manual-checks.md) | Browser and real-Windows checklists |
+| [api.md](docs/api.md) | The read-only JSON API |
 | [roadmap.md](docs/roadmap.md) | Sprints, Git workflow, Definition of Done |
 | [adr/](docs/adr) | Architecture decision records |
 | [translations.md](docs/translations.md) | How to update the French and Arabic texts |

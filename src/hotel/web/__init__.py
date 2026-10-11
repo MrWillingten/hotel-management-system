@@ -68,7 +68,7 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
         MAX_CONTENT_LENGTH=1024 * 1024,
         # Flask's own signed cookie only carries flash messages and the CSRF token;
         # authentication uses the server-side session (see security.AUTH_COOKIE).
-        SESSION_COOKIE_NAME="hotel_ui",
+        SESSION_COOKIE_NAME="__Host-hotel_ui" if settings.https else "hotel_ui",
         SESSION_COOKIE_HTTPONLY=True,
         SESSION_COOKIE_SAMESITE="Lax",
         SESSION_COOKIE_SECURE=settings.https,
