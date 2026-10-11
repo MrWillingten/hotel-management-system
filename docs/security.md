@@ -39,7 +39,7 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 
 | ID | Sev | Risk | Control | Status |
 |---|---|---|---|---|
-| I1 | 🔴 | SQL injection | Every query uses `?` parameters; sorting through whitelists; `LIKE` escaping; bandit in CI | ✅ S1 (sorting/search ⏳ S2) |
+| I1 | 🔴 | SQL injection | Every query uses `?` parameters; sorting through whitelists; `LIKE` escaping; bandit in CI; injection strings in search tests | ✅ S2 |
 | I2 | 🟠 | XSS | Jinja autoescaping, no `|safe` on user data, strict CSP; test with a `<script>` name | ✅ S1 |
 | I3 | 🟠 | CSRF | Flask-WTF on every POST; logout and preferences are POST; `SameSite=Lax` | ✅ S1 |
 | I4 | 🟠 | Trusting hidden form fields | Server recomputes prices; whitelisted preference values | ✅ S1 (prices ⏳ S3) |
@@ -58,7 +58,7 @@ Status: ✅ done (with tests) · ⏳ planned (sprint).
 | D4 | 🟠 | Failed migration | One transaction per migration; refuse newer schemas | ✅ S1 |
 | D5 | 🟡 | Undetected corruption | `quick_check` at start-up | ✅ S1 |
 | F1–F4 | 🟠 | Float errors, banker's rounding, locale input | Integer millimes, explicit half-up, locale-aware parsing | ✅ S1 (parsing in forms ⏳ S4) |
-| P1–P6 | 🟠 | Guest personal data | Masked ID numbers, audit on reveal, no PII in logs, anonymisation | ⏳ S2/S5 |
+| P1–P6 | 🟠 | Guest personal data | Masked ID numbers, audited reveal (never stored in cookies or URLs), no PII in audit details; anonymisation | ✅ S2 (anonymisation ⏳ S5) |
 | C1 | 🔴 | Double booking race | `BEGIN IMMEDIATE` + recheck + `UNIQUE(room_id, night)` | ⏳ S3 (`BEGIN IMMEDIATE` ✅) |
 | C2 | 🟠 | Lost updates | `version` column, `StaleDataError` | ✅ S1 (users) |
 | C3 | 🟠 | Double submit | One-time form tokens | ⏳ S3 |

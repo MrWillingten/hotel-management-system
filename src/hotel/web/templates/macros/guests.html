@@ -1,0 +1,5 @@
+{%- from "macros/icons.html" import icon -%}
+{%- macro flags(guest) -%}
+{%- if guest.is_vip %}<span class="badge badge--accent">{{ icon("star") }}{{ _("VIP") }}</span>{% endif %}
+{%- if guest.do_not_rent %} <span class="badge badge--danger">{{ icon("ban") }}{{ _("Do not rent") }}</span>{% endif %}
+{%- endmacro %}

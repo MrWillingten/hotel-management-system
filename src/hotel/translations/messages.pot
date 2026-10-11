@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 01:04+0100\n"
+"POT-Creation-Date: 2026-10-11 01:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,11 +24,23 @@ msgstr ""
 msgid "3 to 32 characters: letters, digits, dots, hyphens or underscores."
 msgstr ""
 
+msgid "A CIN number has exactly 8 digits."
+msgstr ""
+
 msgid "A category with this name already exists."
+msgstr ""
+
+msgid "A guest with the same name and phone or e-mail already exists."
+msgstr ""
+
+msgid "A guest with this identity document is already registered."
 msgstr ""
 
 #, python-format
 msgid "A maintenance period lasts at most %(max)s nights."
+msgstr ""
+
+msgid "A passport number has 5 to 20 letters or digits."
 msgstr ""
 
 msgid "Access"
@@ -88,6 +100,9 @@ msgstr ""
 msgid "All categories"
 msgstr ""
 
+msgid "All guests"
+msgstr ""
+
 msgid "All rooms"
 msgstr ""
 
@@ -118,6 +133,9 @@ msgid "Back to the dashboard"
 msgstr ""
 
 msgid "Bad request"
+msgstr ""
+
+msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
 msgstr ""
 
 msgid "Cancel"
@@ -152,6 +170,12 @@ msgid "Changes saved."
 msgstr ""
 
 msgid "Choose a category."
+msgstr ""
+
+msgid "Choose a country from the list."
+msgstr ""
+
+msgid "Choose a document type."
 msgstr ""
 
 msgid "Choose a password different from the current one."
@@ -205,7 +229,22 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
+msgid "Do not rent"
+msgstr ""
+
+msgid "Document"
+msgstr ""
+
+msgid "Document number"
+msgstr ""
+
 msgid "Done"
+msgstr ""
+
+msgid "E-mail"
+msgstr ""
+
+msgid "Edit guest"
 msgstr ""
 
 msgid "Edit room"
@@ -223,11 +262,17 @@ msgstr ""
 msgid "Enter a nightly rate above 0 and at most 100,000 DT."
 msgstr ""
 
+msgid "Enter a phone number of 8 to 15 digits."
+msgstr ""
+
 #, python-format
 msgid "Enter a reason of at most %(max_length)s characters."
 msgstr ""
 
 msgid "Enter a valid date."
+msgstr ""
+
+msgid "Enter a valid e-mail address."
 msgstr ""
 
 msgid "Enter a whole number."
@@ -243,6 +288,12 @@ msgid "Filter"
 msgstr ""
 
 msgid "First closed night"
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "Flags"
 msgstr ""
 
 msgid "For example 204 or B-12."
@@ -263,6 +314,9 @@ msgstr ""
 msgid "Full name"
 msgstr ""
 
+msgid "Give a reason (at most 200 characters)."
+msgstr ""
+
 msgid "Good afternoon"
 msgstr ""
 
@@ -272,10 +326,27 @@ msgstr ""
 msgid "Good morning"
 msgstr ""
 
+#, python-format
+msgid "Guest %(name)s registered."
+msgstr ""
+
+msgid "Guests"
+msgstr ""
+
+#, python-format
+msgid "Guests found: %(total)s"
+msgstr ""
+
 msgid "Hardening, report and demo"
 msgstr ""
 
 msgid "Hotel time"
+msgstr ""
+
+msgid "Identity and contact"
+msgstr ""
+
+msgid "Identity document"
 msgstr ""
 
 msgid "In service"
@@ -297,10 +368,16 @@ msgstr ""
 msgid "Invalid username or password, or the account is temporarily locked."
 msgstr ""
 
+msgid "Is it one of these guests?"
+msgstr ""
+
 msgid "Language"
 msgstr ""
 
 msgid "Last closed night"
+msgstr ""
+
+msgid "Last name"
 msgstr ""
 
 msgid "Light"
@@ -336,10 +413,22 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+msgid "Name, phone, e-mail or document number"
+msgstr ""
+
+msgid "National ID card (CIN)"
+msgstr ""
+
+msgid "Nationality"
+msgstr ""
+
 msgid "New category"
 msgstr ""
 
 msgid "New password"
+msgstr ""
+
+msgid "New reservations will be refused. Managers only."
 msgstr ""
 
 msgid "Next"
@@ -358,6 +447,13 @@ msgid "No account exists yet."
 msgstr ""
 
 msgid "No entries match these filters."
+msgstr ""
+
+#, python-format
+msgid "No guest matches “%(query)s”."
+msgstr ""
+
+msgid "No guests registered yet."
 msgstr ""
 
 msgid "No rooms yet."
@@ -382,10 +478,19 @@ msgstr ""
 msgid "Pages"
 msgstr ""
 
+msgid "Passport"
+msgstr ""
+
 msgid "Password"
 msgstr ""
 
+msgid "Phone"
+msgstr ""
+
 msgid "Planned"
+msgstr ""
+
+msgid "Preferences useful to the staff. No sensitive information."
 msgstr ""
 
 msgid "Previous"
@@ -409,6 +514,15 @@ msgstr ""
 msgid "Record"
 msgstr ""
 
+msgid "Register a guest"
+msgstr ""
+
+msgid "Register guest"
+msgstr ""
+
+msgid "Registered"
+msgstr ""
+
 msgid "Reopens on"
 msgstr ""
 
@@ -421,7 +535,13 @@ msgstr ""
 msgid "Reports, operations and translations"
 msgstr ""
 
+msgid "Reservation history"
+msgstr ""
+
 msgid "Reservations and availability"
+msgstr ""
+
+msgid "Reservations arrive in the next version of the application."
 msgstr ""
 
 msgid "Reset password"
@@ -464,7 +584,19 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
+msgid "Save flags"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Search guests"
+msgstr ""
+
 msgid "Set temporary password"
+msgstr ""
+
+msgid "Show"
 msgstr ""
 
 msgid "Sign in"
@@ -562,6 +694,12 @@ msgid ""
 "again."
 msgstr ""
 
+msgid "This is a different person: register anyway"
+msgstr ""
+
+msgid "This is recorded in the audit log."
+msgstr ""
+
 msgid "This maintenance period is already over."
 msgstr ""
 
@@ -610,6 +748,10 @@ msgstr ""
 msgid "Up to 3 decimals, for example 180 or 180.500."
 msgstr ""
 
+#, python-format
+msgid "Use 1 to %(max_length)s letters, spaces, hyphens or apostrophes."
+msgstr ""
+
 msgid "Use 1 to 10 letters, digits or hyphens, for example 204 or B-12."
 msgstr ""
 
@@ -633,7 +775,16 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
+msgid "VIP"
+msgstr ""
+
+msgid "VIP guest"
+msgstr ""
+
 msgid "Version"
+msgstr ""
+
+msgid "Viewing the full number was recorded in the audit log."
 msgstr ""
 
 msgid "We couldn't find what you were looking for."
@@ -644,6 +795,9 @@ msgid "Welcome, %(name)s."
 msgstr ""
 
 msgid "When"
+msgstr ""
+
+msgid "With the country code for foreign numbers, e.g. +33 6 12 34 56 78."
 msgstr ""
 
 msgid "You can't deactivate your own account."

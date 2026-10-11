@@ -1,0 +1,54 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/paging.html" import pagination -%}
+{%- from "macros/guests.html" import flags -%}
+{% block title %}{{ _("Guests") }}{% endblock %}
+{% block page_title %}{{ _("Guests") }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <form class="search" method="get" role="search">
+    <label class="visually-hidden" for="q">{{ _("Search guests") }}</label>
+    <span class="search__icon">{{ icon("search") }}</span>
+    <input class="field__input search__input" id="q" name="q" type="search" value="{{ query }}" maxlength="100"
+           placeholder="{{ _('Name, phone, e-mail or document number') }}" autofocus>
+    <input type="hidden" name="sort" value="{{ sort }}">
+    <button class="button button--primary" type="submit">{{ _("Search") }}</button>
+  </form>
+  <a class="button button--ghost" href="{{ url_for('guests.create') }}">{{ icon("plus") }}{{ _("Register a guest") }}</a>
+</div>
+
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        {%- macro sort_link(key, label) -%}
+        <a class="sort-link{% if sort == key %} sort-link--active{% endif %}"
+           href="{{ url_for('guests.index', q=query, sort=key) }}">{{ label }}</a>
+        {%- endmacro %}
+        <th scope="col">{{ sort_link("name", _("Name")) }}</th>
+        <th scope="col">{{ _("Document") }}</th>
+        <th scope="col">{{ _("Phone") }}</th>
+        <th scope="col">{{ _("E-mail") }}</th>
+        <th scope="col">{{ sort_link("newest", _("Registered")) }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for guest in page.items %}
+      <tr>
+        <td><a href="{{ url_for('guests.detail', guest_id=guest.id) }}">{{ guest.last_name }}, {{ guest.first_name }}</a> {{ flags(guest) }}</td>
+        <td dir="ltr">{{ guest.id_doc_type }} {{ guest.masked_doc_number }}</td>
+        <td dir="ltr">{{ guest.phone or "—" }}</td>
+        <td dir="ltr">{{ guest.email or "—" }}</td>
+        <td>{{ guest.created_at | dateformat("medium") }}</td>
+      </tr>
+      {%- else %}
+      <tr><td colspan="5" class="table__empty">
+        {%- if query %}{{ _("No guest matches “%(query)s”.", query=query) }}{% else %}{{ _("No guests registered yet.") }}{% endif -%}
+      </td></tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+<p class="muted">{{ _("Guests found: %(total)s", total=page.total) if query else "" }}</p>
+{{ pagination(page) }}
+{% endblock %}

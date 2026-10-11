@@ -1,0 +1,71 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors, checkbox -%}
+{%- from "macros/guests.html" import flags -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ guest.full_name }}{% endblock %}
+{% block page_title %}{{ guest.full_name }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <div class="badge-row">{{ flags(guest) }}</div>
+  <div class="page-actions__buttons">
+    <a class="button button--ghost" href="{{ url_for('guests.index') }}">{{ _("All guests") }}</a>
+    <a class="button button--primary" href="{{ url_for('guests.edit', guest_id=guest.id) }}">{{ _("Edit guest") }}</a>
+  </div>
+</div>
+
+{%- if guest.do_not_rent %}
+<div class="alert alert--danger" role="alert">{{ icon("ban") }}
+  <p><strong>{{ _("Do not rent") }}</strong>: {{ guest.do_not_rent_reason }}</p>
+</div>
+{%- endif %}
+
+<div class="grid grid--two">
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Identity and contact") }}</h2>
+    <dl class="facts">
+      <div>
+        <dt>{{ _("National ID card (CIN)") if guest.id_doc_type == "CIN" else _("Passport") }}</dt>
+        <dd class="reveal">
+          <span dir="ltr">{{ revealed or guest.masked_doc_number }}</span>
+          {%- if not revealed %}
+          <form method="post" action="{{ url_for('guests.reveal_document', guest_id=guest.id) }}">
+            {{ csrf() }}
+            <button class="button button--ghost button--small" type="submit" title="{{ _('This is recorded in the audit log.') }}">
+              {{ icon("eye") }}{{ _("Show") }}</button>
+          </form>
+          {%- endif %}
+        </dd>
+      </div>
+      <div><dt>{{ _("Nationality") }}</dt><dd>{{ country or "—" }}</dd></div>
+      <div><dt>{{ _("Phone") }}</dt><dd dir="ltr">{{ guest.phone or "—" }}</dd></div>
+      <div><dt>{{ _("E-mail") }}</dt><dd dir="ltr">{{ guest.email or "—" }}</dd></div>
+      <div><dt>{{ _("Registered") }}</dt><dd>{{ guest.created_at | dateformat("long") }}</dd></div>
+    </dl>
+    {%- if revealed %}<p class="muted">{{ _("Viewing the full number was recorded in the audit log.") }}</p>{% endif %}
+    {%- if guest.notes %}<p class="notes">{{ guest.notes }}</p>{% endif %}
+  </section>
+
+  <section class="panel">
+    <h2 class="panel__title">{{ _("Flags") }}</h2>
+    {{ form_errors(errors) }}
+    <form class="stack" method="post" action="{{ url_for('guests.set_flags', guest_id=guest.id) }}" novalidate>
+      {{ csrf() }}
+      <input type="hidden" name="version" value="{{ guest.version }}">
+      {{ checkbox("is_vip", _("VIP guest"), checked=guest.is_vip) }}
+      {%- if current_user.is_manager %}
+      {{ checkbox("do_not_rent", _("Do not rent"), checked=guest.do_not_rent,
+                  hint=_("New reservations will be refused. Managers only.")) }}
+      {{ field("reason", _("Reason"), value=guest.do_not_rent_reason or "", error=errors.reason, required=False, maxlength=200) }}
+      {%- else %}
+      {%- if guest.do_not_rent %}<input type="hidden" name="do_not_rent" value="on"><input type="hidden" name="reason" value="{{ guest.do_not_rent_reason }}">{% endif %}
+      {%- endif %}
+      <button class="button button--ghost" type="submit">{{ _("Save flags") }}</button>
+    </form>
+  </section>
+</div>
+
+<section class="panel">
+  <h2 class="panel__title">{{ _("Reservation history") }}</h2>
+  <p class="muted">{{ _("Reservations arrive in the next version of the application.") }}</p>
+</section>
+{% endblock %}
