@@ -23,6 +23,11 @@ All notable changes are recorded here. The format follows
   report summary) with personal tokens that managers create and revoke under
   Account → API tokens: shown once, stored hashed, expiring, rate-limited.
   Documented in `docs/api.md`. Migration 0016.
+- Windows program `hotel.exe` (PyInstaller, one file, no Python needed):
+  first start asks for the manager account, then opens the browser; data in
+  `%LOCALAPPDATA%\HotelMedina`. Built and smoke-tested by CI on Windows and
+  kept as an artifact. `hotel run --open-browser`. The sign-in page shows
+  the right command (`hotel.exe` or `python -m hotel`).
 
 ## [0.9.0] – Sprint 5: Reports, operations, languages (code complete)
 

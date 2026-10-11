@@ -81,6 +81,8 @@ def cmd_run(args: argparse.Namespace) -> int:
             file=sys.stderr,
         )
     print(f"{settings.hotel_name} is running on http://{args.host}:{args.port}  (Ctrl+C to stop)")
+    if args.open_browser:
+        _open_browser_soon(args.host, args.port)
     if args.dev:
         app.run(host=args.host, port=args.port, debug=True)
     else:
@@ -88,6 +90,21 @@ def cmd_run(args: argparse.Namespace) -> int:
 
         serve(app, host=args.host, port=args.port, threads=8)
     return 0
+
+
+def _open_browser_soon(host: str, port: int) -> None:
+    """Open the page once the server has had a moment to start (Windows build, story 6.4)."""
+    import threading
+    import webbrowser
+
+    try:
+        everywhere = ipaddress.ip_address(host).is_unspecified  # 0.0.0.0 or ::
+    except ValueError:  # a host name
+        everywhere = False
+    shown = "127.0.0.1" if everywhere else host
+    timer = threading.Timer(1.5, webbrowser.open, [f"http://{shown}:{port}/"])
+    timer.daemon = True
+    timer.start()
 
 
 def cmd_init_db(_: argparse.Namespace) -> int:
@@ -286,6 +303,9 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--port", type=int, default=8000, help="port (default: 8000)")
     run.add_argument(
         "--dev", action="store_true", help="development mode with auto-reload and debugger"
+    )
+    run.add_argument(
+        "--open-browser", action="store_true", help="open the sign-in page in the default browser"
     )
     run.set_defaults(handler=cmd_run)
 

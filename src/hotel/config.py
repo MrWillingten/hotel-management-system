@@ -14,6 +14,7 @@ the debugger on.
 from __future__ import annotations
 
 import os
+import sys
 from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
@@ -91,3 +92,8 @@ class Settings:
             https=_flag(env.get("HOTEL_HTTPS")),
             trusted_proxies=trusted_proxies,
         )
+
+
+def cli_command() -> str:
+    """How to run the command-line tools here: the Windows build is one program (story 6.4)."""
+    return "hotel.exe" if getattr(sys, "frozen", False) else "python -m hotel"
