@@ -17,7 +17,7 @@ from urllib.parse import urlsplit
 from flask import Flask, Response, abort, current_app, g, jsonify, redirect, request, url_for
 
 from hotel.domain.enums import Role
-from hotel.web.context import services, settings
+from hotel.web.context import cookie_name, services, settings
 from hotel.web.rate_limit import RateLimiter
 
 POLICY_ATTRIBUTE = "_hotel_access_policy"
@@ -76,7 +76,7 @@ def is_safe_redirect_target(target: str | None) -> bool:
 
 # ---------------------------------------------------------------- request hooks
 def load_current_user() -> None:
-    token = request.cookies.get(AUTH_COOKIE)
+    token = request.cookies.get(cookie_name(AUTH_COOKIE))
     g.user = services().auth.authenticate_session(token) if token else None
     g.clear_auth_cookie = token is not None and g.user is None
 
@@ -200,7 +200,7 @@ def add_security_headers(response: Response) -> Response:
         # Pages may contain guest data: the back button after logout must not show them.
         headers["Cache-Control"] = "no-store"
     if getattr(g, "clear_auth_cookie", False):
-        response.delete_cookie(AUTH_COOKIE, path="/")
+        response.delete_cookie(cookie_name(AUTH_COOKIE), path="/")
     return response
 
 

@@ -11,7 +11,7 @@ from hotel.domain.api_tokens import LIFETIMES
 from hotel.domain.enums import Role
 from hotel.domain.errors import BusinessRuleViolation, ValidationError
 from hotel.web import forms
-from hotel.web.context import current_actor, services, settings
+from hotel.web.context import cookie_name, current_actor, services, settings
 from hotel.web.messages import message_for
 from hotel.web.security import AUTH_COOKIE, login_required, roles_required
 
@@ -34,7 +34,7 @@ def change_password():
                     current_actor(),
                     current_password=current,
                     new_password=new,
-                    current_token=request.cookies.get(AUTH_COOKIE),
+                    current_token=request.cookies.get(cookie_name(AUTH_COOKIE)),
                 )
             except ValidationError as exc:
                 errors = forms.FormErrors.from_error(exc)

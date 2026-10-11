@@ -22,3 +22,14 @@ def settings() -> Settings:
 def current_actor() -> Actor:
     """The signed-in user and their address, for role checks and the audit log."""
     return Actor(user=g.get("user"), ip=request.remote_addr, label="anonymous")
+
+
+def cookie_name(base: str) -> str:
+    """Behind HTTPS every cookie gets the "__Host-" prefix (ASVS V3.3.1).
+
+    Browsers then accept the cookie only if it is Secure, has Path=/ and no
+    Domain, so another site on the network (or a sub-domain) cannot plant or
+    overwrite it. On plain-HTTP localhost the prefix would make browsers
+    refuse the cookie, so it is used only when HOTEL_HTTPS is on.
+    """
+    return f"__Host-{base}" if settings().https else base

@@ -35,6 +35,17 @@ All notable changes are recorded here. The format follows
   keeps the locked price by default; a manager may charge the new room's
   price. The old room is marked to clean. Audited. Migration 0017.
 
+### Security (story 6.6)
+- OWASP ASVS 5.0 Level 1 self-assessment (`docs/asvs.md`): 58 requirements
+  met, 12 not applicable. Gaps fixed: every cookie is `__Host-` prefixed
+  behind HTTPS; sign-out sends `Clear-Site-Data`; the common-password list
+  grew from 1,193 to 7,309 entries of 12+ characters.
+- `docs/security.md`: authorization matrix, input validation rules,
+  brute-force and lockout-abuse notes, dependency update time frames.
+- `docs/test-evidence.md` maps every scenario, business rule and decision
+  to its tests (a test checks the references stay valid);
+  `docs/manual-checks.md` lists the browser and real-Windows checks.
+
 ## [0.9.0] – Sprint 5: Reports, operations, languages (code complete)
 
 ### Added

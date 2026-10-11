@@ -125,12 +125,24 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
    Account → API tokens, `docs/api.md`, migration 0016.
    ✅ 6.4 Windows exe (PR #80): `packaging/windows/` (launcher, spec, README),
    `requirements-build.lock` (extra `build`), CI job "Windows executable" → artifact.
-   6.5 room move: `Reservation.move_room`, `ReservationService.move_room/move_candidates`,
+   ✅ 6.5 room move (PR #81): `Reservation.move_room`, `ReservationService.move_room/move_candidates`,
    `reservation_room.moved_out_on` (migration 0017): use `reservation.current_rooms`
    for anything about *now* (occupancy, housekeeping, edits); `rooms` keeps history.
    Dependabot ignores Python minor bumps of the image (tested versions only).
-4. Freeze 27 Dec. 6.6 hardening (ASVS L1, evidence table, browsers; the
-   student runs the real-Windows checklist).
+4. ✅ 6.6 hardening docs (PR after #81): `docs/asvs.md` (ASVS 5.0 L1, from the
+   official CSV), `docs/test-evidence.md`, `docs/manual-checks.md` (Firefox/Edge
+   and real-Windows columns are the **student's**; issue #72 stays open until
+   then), `tests/unit/test_docs.py` checks cited tests exist. Cookies:
+   `web/context.cookie_name()` adds `__Host-` behind HTTPS.
+   **NEXT: frontend polish 6.10–6.14 (agreed 11 Oct, details in roadmap):**
+   6.10 user guide (`docs/user-guide.md` + translated in-app Help page) →
+   6.11 thin themed scrollbar → 6.12 login page (diagonal animated background,
+   animated Great Vibes signature, reduced-motion) → 6.13 invoice print/PDF
+   (A4, light, branded) → 6.14 walk-through (role tour at first sign-in +
+   self-ticking dashboard checklist from the audit log). No JavaScript (CSP).
+   Then 6.7 report. Freeze 27 Dec.
+   Running the app: `.venv/bin/python -m hotel run` (the student's `sh` kept
+   /usr/bin/python after activation).
 5. 6.7 report: **English, LaTeX for Overleaf** in `report/`. The assistant
    drafts all technical chapters; **the student writes the General
    Introduction, personal retrospectives, lessons learned, difficulties and

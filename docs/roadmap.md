@@ -148,6 +148,22 @@ Decisions taken with the student (11 Oct): all recommendations accepted
 courtesy price on room moves), report in **English** and **LaTeX/Overleaf**,
 writing split as above.
 
+**Frontend polish requested by the student (11 Oct), before the report.**
+All without JavaScript (the CSP forbids it), in both themes, on phones,
+in Arabic, and with `prefers-reduced-motion` respected:
+
+| ID | Story | Acceptance criteria |
+|---|---|---|
+| 6.10 | User guide and in-app Help | `docs/user-guide.md`: every page and button per role, what it is for, a short example; a translated **Help** page in the app (menu link) built from the same content |
+| 6.11 | Themed thin scrollbar | Thin scrollbar in the theme's colours, light and dark, nearly invisible track (Discord-like); Firefox (`scrollbar-width/color`) and Chromium |
+| 6.12 | Premium sign-in page | Form side: endless slow diagonal animated background; brand side: the hotel name written as an animated signature (SVG stroke drawing, loops) in **Great Vibes** (OFL, bundled) beside the Playfair serif; still when reduced motion is asked |
+| 6.13 | Invoice print / PDF | Ctrl+P → "Save as PDF" gives an A4, always-light, hotel-branded invoice: letterhead, guest and stay blocks, lines, taxes, totals, payments, footer with number and page |
+| 6.14 | Walk-through for new accounts | First sign-in: a short role-specific guided tour (manager / receptionist), Next/Back/Skip, EN/FR/AR; then a "Getting started" checklist on the dashboard that ticks itself from the audit log and can be dismissed; re-openable from Help |
+
+Decisions (11 Oct): Great Vibes for the signature; tour + checklist; guide
+as a repo document plus a translated in-app Help page. Order: 6.10 → 6.11 →
+6.12 → 6.13 → 6.14, then the report.
+
 **The report is written along the way:** each sprint's Definition of Done
 includes updating its report section; leaving 40–50 pages for the last week
 would fail.

@@ -10,6 +10,7 @@ from __future__ import annotations
 from flask import Response, request
 
 from hotel.config import LANGUAGES, RTL_LANGUAGES
+from hotel.web.context import cookie_name
 
 LANG_COOKIE = "hotel_lang"
 THEME_COOKIE = "hotel_theme"
@@ -18,7 +19,7 @@ _ONE_YEAR = 365 * 24 * 3600
 
 
 def select_locale() -> str:
-    chosen = request.cookies.get(LANG_COOKIE)
+    chosen = request.cookies.get(cookie_name(LANG_COOKIE))
     if chosen in LANGUAGES:
         return chosen
     return request.accept_languages.best_match(LANGUAGES) or "en"
@@ -29,11 +30,17 @@ def text_direction(locale: str) -> str:
 
 
 def current_theme() -> str:
-    chosen = request.cookies.get(THEME_COOKIE)
+    chosen = request.cookies.get(cookie_name(THEME_COOKIE))
     return chosen if chosen in THEMES else "system"
 
 
 def remember(response: Response, cookie: str, value: str, *, secure: bool) -> None:
     response.set_cookie(
-        cookie, value, max_age=_ONE_YEAR, httponly=True, samesite="Lax", secure=secure, path="/"
+        cookie_name(cookie),
+        value,
+        max_age=_ONE_YEAR,
+        httponly=True,
+        samesite="Lax",
+        secure=secure,
+        path="/",
     )
