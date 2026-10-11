@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 00:59+0100\n"
+"POT-Creation-Date: 2026-10-11 01:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -25,6 +25,13 @@ msgstr "%(greeting)s، %(name)s"
 
 msgid "3 to 32 characters: letters, digits, dots, hyphens or underscores."
 msgstr "من 3 إلى 32 حرفًا: أحرف لاتينية أو أرقام أو نقاط أو شرطات أو شرطات سفلية."
+
+msgid "A category with this name already exists."
+msgstr "توجد فئة بهذا الاسم بالفعل."
+
+#, python-format
+msgid "A maintenance period lasts at most %(max)s nights."
+msgstr "تستمر فترة الصيانة %(max)s ليلة كحد أقصى."
 
 msgid "Access"
 msgstr "الوصول"
@@ -51,11 +58,23 @@ msgstr "تُعطَّل الحسابات ولا تُحذف أبدًا، حتى ي
 msgid "Action"
 msgstr "الإجراء"
 
+msgid "Actions"
+msgstr "الإجراءات"
+
 msgid "Active"
 msgstr "نشط"
 
+msgid "Add a room"
+msgstr "إضافة غرفة"
+
 msgid "Add a staff member"
 msgstr "إضافة موظف"
+
+msgid "Add category"
+msgstr "إضافة الفئة"
+
+msgid "Add room"
+msgstr "إضافة الغرفة"
 
 msgid "Address"
 msgstr "العنوان"
@@ -66,17 +85,29 @@ msgstr "الإدارة"
 msgid "All actions"
 msgstr "كل الإجراءات"
 
+msgid "All categories"
+msgstr "كل الفئات"
+
+msgid "All rooms"
+msgstr "كل الغرف"
+
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr "تحتوي المبالغ على 3 أرقام عشرية كحد أقصى (المليمات)."
 
 msgid "An unexpected error occurred. It has been logged."
 msgstr "حدث خطأ غير متوقع. تم تسجيله."
 
+msgid "Another room already has this number."
+msgstr "توجد غرفة أخرى بهذا الرقم بالفعل."
+
 msgid "At least 12 characters. A short sentence is easy to remember and hard to guess."
 msgstr "12 حرفًا على الأقل. الجملة القصيرة سهلة التذكر وصعبة التخمين."
 
 msgid "Audit log"
 msgstr "سجل التدقيق"
+
+msgid "Available"
+msgstr "متاحة"
 
 msgid "Back to staff"
 msgstr "العودة إلى الموظفين"
@@ -90,11 +121,36 @@ msgstr "طلب غير صالح"
 msgid "Cancel"
 msgstr "إلغاء"
 
+msgid "Capacity"
+msgstr "السعة"
+
+msgid "Capacity (guests)"
+msgstr "السعة (أشخاص)"
+
+#, python-format
+msgid "Capacity must be between 1 and %(max)s guests."
+msgstr "يجب أن تكون السعة بين 1 و%(max)s أشخاص."
+
+msgid "Categories"
+msgstr "الفئات"
+
+msgid "Categories group rooms such as Standard, Deluxe or Suite."
+msgstr "تجمع الفئات الغرف، مثل عادية أو فاخرة أو جناح."
+
+msgid "Category"
+msgstr "الفئة"
+
+msgid "Category saved."
+msgstr "تم حفظ الفئة."
+
 msgid "Change password"
 msgstr "تغيير كلمة المرور"
 
 msgid "Changes saved."
 msgstr "تم حفظ التغييرات."
+
+msgid "Choose a category."
+msgstr "اختر فئة."
 
 msgid "Choose a password different from the current one."
 msgstr "اختر كلمة مرور مختلفة عن الحالية."
@@ -102,8 +158,17 @@ msgstr "اختر كلمة مرور مختلفة عن الحالية."
 msgid "Choose a role."
 msgstr "اختر دورًا."
 
+msgid "Close for maintenance"
+msgstr "إغلاق للصيانة"
+
+msgid "Close the room"
+msgstr "إغلاق الغرفة"
+
 msgid "Colour theme"
 msgstr "سمة الألوان"
+
+msgid "Create a room category first, then add rooms."
+msgstr "أنشئ فئة غرف أولًا، ثم أضف الغرف."
 
 msgid "Create account"
 msgstr "إنشاء الحساب"
@@ -132,14 +197,33 @@ msgstr "معطّل"
 msgid "Deactivating signs the person out everywhere, immediately."
 msgstr "يؤدي التعطيل إلى تسجيل خروج الشخص من كل مكان فورًا."
 
+msgid "Description"
+msgstr "الوصف"
+
 msgid "Details"
 msgstr "التفاصيل"
 
 msgid "Done"
 msgstr "مكتمل"
 
+msgid "Edit room"
+msgstr "تعديل الغرفة"
+
+msgid "End now"
+msgstr "إنهاء الآن"
+
 msgid "Enter a name of 1 to 100 characters."
 msgstr "أدخل اسمًا من 1 إلى 100 حرف."
+
+msgid "Enter a name of 1 to 50 characters."
+msgstr "أدخل اسمًا من 1 إلى 50 حرفًا."
+
+msgid "Enter a nightly rate above 0 and at most 100,000 DT."
+msgstr "أدخل سعرًا لليلة أكبر من 0 ولا يتجاوز 100,000 د.ت."
+
+#, python-format
+msgid "Enter a reason of at most %(max_length)s characters."
+msgstr "أدخل سببًا لا يتجاوز %(max_length)s حرفًا."
 
 msgid "Enter a valid date."
 msgstr "أدخل تاريخًا صالحًا."
@@ -155,6 +239,12 @@ msgstr "الجميع"
 
 msgid "Filter"
 msgstr "تصفية"
+
+msgid "First closed night"
+msgstr "أول ليلة مغلقة"
+
+msgid "For example 204 or B-12."
+msgstr "مثل 204 أو B-12."
 
 msgid "Form expired"
 msgstr "انتهت صلاحية النموذج"
@@ -186,6 +276,9 @@ msgstr "التحصين والتقرير والعرض التوضيحي"
 msgid "Hotel time"
 msgstr "توقيت الفندق"
 
+msgid "In service"
+msgstr "في الخدمة"
+
 msgid "Incident reference:"
 msgstr "مرجع الحادثة:"
 
@@ -203,6 +296,9 @@ msgstr "اسم المستخدم أو كلمة المرور غير صحيحة، �
 msgid "Language"
 msgstr "اللغة"
 
+msgid "Last closed night"
+msgstr "آخر ليلة مغلقة"
+
 msgid "Light"
 msgstr "فاتح"
 
@@ -212,11 +308,32 @@ msgstr "مقفل"
 msgid "Main"
 msgstr "القائمة الرئيسية"
 
+msgid "Maintenance"
+msgstr "صيانة"
+
+msgid "Maintenance can't start in the past."
+msgstr "لا يمكن أن تبدأ الصيانة في الماضي."
+
+msgid "Maintenance cancelled."
+msgstr "تم إلغاء الصيانة."
+
+msgid "Maintenance ended: the room is available again from today."
+msgstr "انتهت الصيانة: الغرفة متاحة مجددًا ابتداءً من اليوم."
+
+msgid "Maintenance history"
+msgstr "سجل الصيانة"
+
 msgid "Manager"
 msgstr "مدير"
 
 msgid "Match system"
 msgstr "حسب النظام"
+
+msgid "Name"
+msgstr "الاسم"
+
+msgid "New category"
+msgstr "فئة جديدة"
 
 msgid "New password"
 msgstr "كلمة المرور الجديدة"
@@ -227,14 +344,29 @@ msgstr "التالي"
 msgid "Next page"
 msgstr "الصفحة التالية"
 
+msgid "Nightly rate"
+msgstr "سعر الليلة"
+
+msgid "Nightly rate (DT, before tax)"
+msgstr "سعر الليلة (د.ت، قبل الضرائب)"
+
 msgid "No account exists yet."
 msgstr "لا يوجد أي حساب بعد."
 
 msgid "No entries match these filters."
 msgstr "لا توجد إدخالات تطابق هذه المرشحات."
 
+msgid "No rooms yet."
+msgstr "لا توجد غرف بعد."
+
 msgid "Not allowed"
 msgstr "غير مسموح"
+
+msgid "Notes"
+msgstr "ملاحظات"
+
+msgid "Out of service"
+msgstr "خارج الخدمة"
 
 #, python-format
 msgid "Page %(page)s of %(pages)s"
@@ -261,6 +393,9 @@ msgstr "خارطة طريق المشروع"
 msgid "Reactivate account"
 msgstr "إعادة تفعيل الحساب"
 
+msgid "Reason"
+msgstr "السبب"
+
 msgid "Reception and management"
 msgstr "الاستقبال والإدارة"
 
@@ -269,6 +404,9 @@ msgstr "موظف استقبال"
 
 msgid "Record"
 msgstr "السجل"
+
+msgid "Reopens on"
+msgstr "تُفتح من جديد في"
 
 msgid "Repeat the new password"
 msgstr "أعد كتابة كلمة المرور الجديدة"
@@ -288,8 +426,36 @@ msgstr "إعادة تعيين كلمة المرور"
 msgid "Role"
 msgstr "الدور"
 
+msgid "Room"
+msgstr "الغرفة"
+
+#, python-format
+msgid "Room %(number)s"
+msgstr "الغرفة %(number)s"
+
+#, python-format
+msgid "Room %(number)s added."
+msgstr "تمت إضافة الغرفة %(number)s."
+
+msgid "Room categories"
+msgstr "فئات الغرف"
+
+#, python-format
+msgid "Room closed from %(first)s; it reopens on %(reopens)s."
+msgstr "أُغلقت الغرفة ابتداءً من %(first)s، وتُفتح من جديد في %(reopens)s."
+
+msgid "Room number"
+msgstr "رقم الغرفة"
+
+msgid "Rooms"
+msgstr "الغرف"
+
 msgid "Rooms, guests, staff and audit log"
 msgstr "الغرف والنزلاء والموظفون وسجل التدقيق"
+
+#, python-format
+msgid "Rooms: %(count)s"
+msgstr "عدد الغرف: %(count)s"
 
 msgid "Save changes"
 msgstr "حفظ التغييرات"
@@ -345,6 +511,9 @@ msgstr "البيانات المرسلة كبيرة جدًا."
 msgid "The departure date must be after the arrival date."
 msgstr "يجب أن يكون تاريخ المغادرة بعد تاريخ الوصول."
 
+msgid "The first day guests can stay again."
+msgstr "أول يوم يمكن فيه للنزلاء الإقامة مجددًا."
+
 msgid "The first manager account already exists."
 msgstr "حساب المدير الأول موجود بالفعل."
 
@@ -360,8 +529,15 @@ msgstr "الصفحة المطلوبة غير موجودة."
 msgid "The password must not contain the username."
 msgstr "يجب ألا تحتوي كلمة المرور على اسم المستخدم."
 
+msgid "The reopening day must be after the first closed night."
+msgstr "يجب أن يكون يوم إعادة الفتح بعد أول ليلة مغلقة."
+
 msgid "The request couldn't be understood."
 msgstr "تعذّر فهم الطلب."
+
+#, python-format
+msgid "The room is already closed on %(count)s of these nights (%(first)s to %(last)s)."
+msgstr "الغرفة مغلقة بالفعل في %(count)s من هذه الليالي (من %(first)s إلى %(last)s)."
 
 msgid "The two passwords are different."
 msgstr "كلمتا المرور غير متطابقتين."
@@ -378,6 +554,9 @@ msgstr "يتعارض هذا التغيير مع بيانات موجودة."
 msgid "This form expired or was sent from another site. Reload the page and try again."
 msgstr "انتهت صلاحية هذا النموذج أو أُرسل من موقع آخر. أعد تحميل الصفحة وحاول مرة أخرى."
 
+msgid "This maintenance period is already over."
+msgstr "انتهت فترة الصيانة هذه بالفعل."
+
 msgid "This operation isn't allowed."
 msgstr "هذه العملية غير مسموح بها."
 
@@ -390,6 +569,9 @@ msgstr "كلمة المرور هذه شائعة جدًا. اختر كلمة يص
 msgid "This password repeats the same characters too much."
 msgstr "كلمة المرور هذه تكرر الأحرف نفسها كثيرًا."
 
+msgid "This room has never been closed for maintenance."
+msgstr "لم تُغلق هذه الغرفة للصيانة من قبل."
+
 msgid "This username is already used."
 msgstr "اسم المستخدم هذا مستخدم بالفعل."
 
@@ -400,6 +582,9 @@ msgstr "المنطقة الزمنية: %(tz)s"
 msgid "To"
 msgstr "إلى"
 
+msgid "Tonight"
+msgstr "الليلة"
+
 msgid "Too large"
 msgstr "كبير جدًا"
 
@@ -408,6 +593,15 @@ msgstr "محاولات تسجيل دخول فاشلة كثيرة من هذا ا�
 
 msgid "Unlock"
 msgstr "فتح القفل"
+
+msgid "Untick to take the room out of service (it can no longer be booked)."
+msgstr "أزل التحديد لإخراج الغرفة من الخدمة (لن يمكن حجزها بعد ذلك)."
+
+msgid "Up to 3 decimals, for example 180 or 180.500."
+msgstr "حتى 3 أرقام عشرية، مثل 180 أو 180.500."
+
+msgid "Use 1 to 10 letters, digits or hyphens, for example 204 or B-12."
+msgstr "استخدم من 1 إلى 10 أحرف أو أرقام أو شرطات، مثل 204 أو B-12."
 
 msgid "Use 3 to 32 characters: letters, digits, dots, hyphens or underscores."
 msgstr "استخدم من 3 إلى 32 حرفًا: أحرف لاتينية أو أرقام أو نقاط أو شرطات أو شرطات سفلية."

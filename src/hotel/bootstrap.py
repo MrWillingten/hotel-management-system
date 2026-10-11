@@ -18,6 +18,7 @@ from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.audit import AuditService
 from hotel.services.auth import AuthService
 from hotel.services.passwords import PasswordHasher, ScryptParams
+from hotel.services.rooms import RoomService
 from hotel.services.users import UserService
 
 
@@ -36,6 +37,7 @@ class Services:
     auth: AuthService
     audit: AuditService
     users: UserService
+    rooms: RoomService
 
 
 def build_services(settings: Settings, *, clock: Clock | None = None) -> Services:
@@ -55,4 +57,5 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
         auth=AuthService(uow_factory, clock, hasher, policy),
         audit=AuditService(uow_factory, clock),
         users=UserService(uow_factory, clock, hasher, policy),
+        rooms=RoomService(uow_factory, clock),
     )

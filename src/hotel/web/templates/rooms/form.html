@@ -1,0 +1,36 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors, select, textarea, checkbox -%}
+{%- set editing = room is not none -%}
+{%- set v = values if values else {} -%}
+{% block title %}{{ _("Edit room") if editing else _("Add a room") }}{% endblock %}
+{% block page_title %}{{ _("Edit room") if editing else _("Add a room") }}{% endblock %}
+{% block content %}
+<section class="panel panel--narrow">
+  {%- if not categories %}
+  <div class="alert alert--warning"><p>{{ _("Create a room category first, then add rooms.") }}</p></div>
+  {%- endif %}
+  {{ form_errors(errors) }}
+  <form class="stack" method="post" novalidate>
+    {{ csrf() }}
+    {%- if editing %}<input type="hidden" name="version" value="{{ room.version }}">{% endif %}
+    {{ field("number", _("Room number"), value=v.get("number", room.number if editing else ""),
+             error=errors.number, maxlength=10, autofocus=not editing, hint=_("For example 204 or B-12.")) }}
+    {{ select("category_id", _("Category"), categories | options,
+              v.get("category_id", room.category_id if editing else ""), errors.category_id) }}
+    {{ field("capacity", _("Capacity (guests)"), value=v.get("capacity", room.capacity if editing else 2),
+             type="number", error=errors.capacity) }}
+    {{ field("nightly_rate", _("Nightly rate (DT, before tax)"),
+             value=v.get("nightly_rate", room.nightly_rate if editing else ""), error=errors.nightly_rate,
+             hint=_("Up to 3 decimals, for example 180 or 180.500.")) }}
+    {{ textarea("notes", _("Notes"), value=v.get("notes", room.notes if editing else ""), error=errors.notes, maxlength=500) }}
+    {%- if editing %}
+    {{ checkbox("in_service", _("In service"), checked=(v.get("in_service") == "on") if values else room.in_service,
+                hint=_("Untick to take the room out of service (it can no longer be booked).")) }}
+    {%- endif %}
+    <div class="form-actions">
+      <button class="button button--primary" type="submit">{{ _("Save changes") if editing else _("Add room") }}</button>
+      <a class="button button--ghost" href="{{ url_for('rooms.detail', room_id=room.id) if editing else url_for('rooms.index') }}">{{ _("Cancel") }}</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

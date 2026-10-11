@@ -1,0 +1,53 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/rooms.html" import status_badge -%}
+{% block title %}{{ _("Rooms") }}{% endblock %}
+{% block page_title %}{{ _("Rooms") }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <form class="inline-filter" method="get">
+    <label class="field__label" for="f-category">{{ _("Category") }}</label>
+    <select class="field__input" id="f-category" name="category">
+      <option value="">{{ _("All categories") }}</option>
+      {%- for c in categories %}
+      <option value="{{ c.id }}" {%- if category_id == c.id %} selected{% endif %}>{{ c.name }}</option>
+      {%- endfor %}
+    </select>
+    <button class="button button--ghost button--small" type="submit">{{ _("Filter") }}</button>
+  </form>
+  {%- if current_user.is_manager %}
+  <div class="page-actions__buttons">
+    <a class="button button--ghost" href="{{ url_for('rooms.categories') }}">{{ _("Categories") }}</a>
+    <a class="button button--primary" href="{{ url_for('rooms.create') }}">{{ _("Add a room") }}</a>
+  </div>
+  {%- endif %}
+</div>
+
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">{{ _("Room") }}</th>
+        <th scope="col">{{ _("Category") }}</th>
+        <th scope="col" class="num">{{ _("Capacity") }}</th>
+        <th scope="col" class="num">{{ _("Nightly rate") }}</th>
+        <th scope="col">{{ _("Tonight") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for item in rooms %}
+      <tr>
+        <td dir="ltr"><a href="{{ url_for('rooms.detail', room_id=item.room.id) }}">{{ item.room.number }}</a></td>
+        <td>{{ item.room.category_name }}</td>
+        <td class="num">{{ item.room.capacity }}</td>
+        <td class="num">{{ item.room.nightly_rate | money }}</td>
+        <td>{{ status_badge(item.status) }}</td>
+      </tr>
+      {%- else %}
+      <tr><td colspan="5" class="table__empty">
+        {%- if categories %}{{ _("No rooms yet.") }}{% else %}{{ _("Create a room category first, then add rooms.") }}{% endif -%}
+      </td></tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

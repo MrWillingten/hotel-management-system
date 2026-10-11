@@ -1,0 +1,37 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors -%}
+{% block title %}{{ _("Room categories") }}{% endblock %}
+{% block page_title %}{{ _("Room categories") }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <p class="muted">{{ _("Categories group rooms such as Standard, Deluxe or Suite.") }}</p>
+  <a class="button button--ghost" href="{{ url_for('rooms.index') }}">{{ _("All rooms") }}</a>
+</div>
+{{ form_errors(errors) }}
+<div class="grid grid--two">
+  {%- for c in categories %}
+  <section class="panel">
+    <form class="stack" method="post" novalidate>
+      {{ csrf() }}
+      <input type="hidden" name="id" value="{{ c.id }}">
+      <input type="hidden" name="version" value="{{ c.version }}">
+      {{ field("name", _("Name"), value=c.name, maxlength=50) }}
+      {{ field("description", _("Description"), value=c.description, required=False, maxlength=300) }}
+      <div class="form-actions">
+        <button class="button button--ghost button--small" type="submit">{{ _("Save changes") }}</button>
+        <span class="muted">{{ _("Rooms: %(count)s", count=c.room_count) }}</span>
+      </div>
+    </form>
+  </section>
+  {%- endfor %}
+  <section class="panel panel--accent">
+    <h2 class="panel__title">{{ _("New category") }}</h2>
+    <form class="stack" method="post" novalidate>
+      {{ csrf() }}
+      {{ field("name", _("Name"), value=values.get("name", "") if not values.get("id") else "", error=errors.name if not values.get("id") else none, maxlength=50) }}
+      {{ field("description", _("Description"), value=values.get("description", "") if not values.get("id") else "", required=False, maxlength=300) }}
+      <button class="button button--primary" type="submit">{{ _("Add category") }}</button>
+    </form>
+  </section>
+</div>
+{% endblock %}

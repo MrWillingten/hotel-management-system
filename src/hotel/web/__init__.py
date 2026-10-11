@@ -8,16 +8,17 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 from flask import Flask, g, request, url_for
-from flask_babel import Babel, get_locale
+from flask_babel import Babel, format_decimal, get_locale
 from flask_wtf.csrf import CSRFProtect
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from hotel import __version__
 from hotel.bootstrap import Services, build_services
 from hotel.config import LANGUAGES, ConfigurationError, Settings
+from hotel.domain.money import Money
 from hotel.secret_key import load_or_create_secret_key
 from hotel.web import errors, security
-from hotel.web.blueprints import account, audit, auth, dashboard, preferences, staff
+from hotel.web.blueprints import account, audit, auth, dashboard, preferences, rooms, staff
 from hotel.web.context import SERVICES_KEY
 from hotel.web.preferences import current_theme, select_locale, text_direction
 
@@ -66,8 +67,28 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
     babel.init_app(app, locale_selector=select_locale)
     security.install(app)
     errors.install(app)
-    for blueprint in (account.bp, audit.bp, auth.bp, dashboard.bp, preferences.bp, staff.bp):
+    for blueprint in (
+        account.bp,
+        audit.bp,
+        auth.bp,
+        dashboard.bp,
+        preferences.bp,
+        rooms.bp,
+        staff.bp,
+    ):
         app.register_blueprint(blueprint)
+
+    @app.template_filter("money")
+    def money_filter(amount: Money) -> str:
+        """180500 millimes -> "180.500 DT" (en), "180,500 DT" (fr), "180.500 د.ت" (ar)."""
+        number = format_decimal(amount.to_decimal(), format="#,##0.000")
+        symbol = "د.ت" if str(get_locale()).startswith("ar") else "DT"
+        return f"{number}\u00a0{symbol}"
+
+    @app.template_filter("options")
+    def options_filter(items, value: str = "id", label: str = "name") -> list[tuple]:
+        """Records -> (value, label) pairs for the select() form macro."""
+        return [(getattr(item, value), getattr(item, label)) for item in items]
 
     @app.template_global()
     def page_url(page: int) -> str:

@@ -1,6 +1,7 @@
 # ADR 0004 – One row per room per night (`room_night`)
 
-**Status:** accepted (design); implemented in Sprint 3
+**Status:** accepted. Sprint 2 created the table for maintenance nights;
+Sprint 3 adds reservation nights.
 
 ## Context
 Preventing double bookings only in Python means one forgotten check, or two

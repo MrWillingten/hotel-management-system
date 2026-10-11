@@ -44,10 +44,10 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
                 created_at, last_seen_at, expires_at, ip, user_agent)
 ✅ login_failure(id PK, ip, username, at)          INDEX (ip, at)
 
-   room_category(id PK, name UQ, description)
-   room(id PK, number UQ, category_id FK, capacity CK>0, nightly_rate_mill CK≥0,
+✅ room_category(id PK, name UQ, description)
+✅ room(id PK, number UQ, category_id FK, capacity CK>0, nightly_rate_mill CK≥0,
         in_service, notes, version)
-   maintenance(id PK, room_id FK, start_date, end_date, reason, created_by FK,
+✅ maintenance(id PK, room_id FK, start_date, end_date, reason, created_by FK,
                CK end_date > start_date)
    guest(id PK, first_name, last_name, id_doc_type CK∈{CIN,PASSPORT}, id_doc_number,
          nationality, phone, email, is_vip, do_not_rent, notes, is_active, created_at,
@@ -58,9 +58,9 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
                checked_out_at, cancelled_at, version, CK departure > arrival)
    reservation_room(reservation_id FK, room_id FK, adults CK≥1, children CK≥0,
                     PK(reservation_id, room_id))
-   room_night(room_id FK, night, reservation_id FK NULL, maintenance_id FK NULL,
-              rate_mill, UQ(room_id, night),
-              CK exactly one of reservation_id / maintenance_id is set)
+✅ room_night(room_id FK, night, maintenance_id FK, PK(room_id, night))
+              Sprint 3 rebuilds it to: + reservation_id FK NULL, rate_mill,
+              CK exactly one of reservation_id / maintenance_id is set
    service(id PK, name UQ, unit_price_mill CK≥0, is_active)
    service_charge(id PK, reservation_id FK, service_id FK, quantity CK 1..99,
                   unit_price_mill, charge_date, created_by FK)
@@ -75,7 +75,7 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
            subtotal_mill, discount_mill, tax_mill, total_mill, paid_mill, balance_mill)
    invoice_line(id PK, invoice_id FK, line_no, kind, description, quantity,
                 unit_mill, amount_mill, UQ(invoice_id, line_no))
-   audit_log(id PK, at, user_id FK NULL, action, entity, entity_id, details, ip,
+✅ audit_log(id PK, at, user_id FK NULL, action, entity, entity_id, details, ip,
              prev_hash, hash)
    setting(key PK, value)
    counter(name PK, year, value)                    gap-free invoice numbers
