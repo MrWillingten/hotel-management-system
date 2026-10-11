@@ -22,3 +22,45 @@
   {%- endif %}
 </div>
 {%- endmacro %}
+
+{%- macro form_errors(errors) -%}
+{%- if errors and errors.get("__all__") %}
+<div class="alert alert--danger" role="alert"><p>{{ errors["__all__"] }}</p></div>
+{%- elif errors %}
+<div class="alert alert--danger" role="alert"><p>{{ _("Some fields need your attention.") }}</p></div>
+{%- endif %}
+{%- endmacro %}
+
+{%- macro select(name, label, options, selected=None, error=None) -%}
+{#- options: list of (value, label) pairs -#}
+<div class="field{% if error %} field--invalid{% endif %}">
+  <label class="field__label" for="f-{{ name }}">{{ label }}</label>
+  <select class="field__input" id="f-{{ name }}" name="{{ name }}"
+          {%- if error %} aria-invalid="true" aria-describedby="f-{{ name }}-error"{% endif %}>
+    {%- for value, text in options %}
+    <option value="{{ value }}" {%- if value | string == selected | string %} selected{% endif %}>{{ text }}</option>
+    {%- endfor %}
+  </select>
+  {%- if error %}<p class="field__error" id="f-{{ name }}-error">{{ error }}</p>{% endif %}
+</div>
+{%- endmacro %}
+
+{%- macro role_select(selected, error=None) -%}
+{{ select("role", _("Role"), [("RECEPTIONIST", _("Receptionist")), ("MANAGER", _("Manager"))], selected, error) }}
+{%- endmacro %}
+
+{%- macro textarea(name, label, value="", error=None, maxlength=1000, hint=None) -%}
+<div class="field{% if error %} field--invalid{% endif %}">
+  <label class="field__label" for="f-{{ name }}">{{ label }}</label>
+  <textarea class="field__input" id="f-{{ name }}" name="{{ name }}" maxlength="{{ maxlength }}"
+            {%- if error %} aria-invalid="true"{% endif %}>{{ value or "" }}</textarea>
+  {%- if error %}<p class="field__error">{{ error }}</p>{% elif hint %}<p class="field__hint">{{ hint }}</p>{% endif %}
+</div>
+{%- endmacro %}
+
+{%- macro checkbox(name, label, checked=False, hint=None) -%}
+<label class="check">
+  <input type="checkbox" name="{{ name }}" {%- if checked %} checked{% endif %}>
+  <span>{{ label }}{% if hint %}<span class="field__hint">{{ hint }}</span>{% endif %}</span>
+</label>
+{%- endmacro %}

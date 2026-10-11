@@ -17,7 +17,7 @@ from hotel.bootstrap import Services, build_services
 from hotel.config import LANGUAGES, ConfigurationError, Settings
 from hotel.secret_key import load_or_create_secret_key
 from hotel.web import errors, security
-from hotel.web.blueprints import audit, auth, dashboard, preferences
+from hotel.web.blueprints import account, audit, auth, dashboard, preferences, staff
 from hotel.web.context import SERVICES_KEY
 from hotel.web.preferences import current_theme, select_locale, text_direction
 
@@ -66,7 +66,7 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
     babel.init_app(app, locale_selector=select_locale)
     security.install(app)
     errors.install(app)
-    for blueprint in (audit.bp, auth.bp, dashboard.bp, preferences.bp):
+    for blueprint in (account.bp, audit.bp, auth.bp, dashboard.bp, preferences.bp, staff.bp):
         app.register_blueprint(blueprint)
 
     @app.template_global()

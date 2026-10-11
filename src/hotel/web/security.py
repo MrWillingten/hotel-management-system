@@ -73,6 +73,12 @@ def load_current_user() -> None:
     g.clear_auth_cookie = token is not None and g.user is None
 
 
+# A user with a temporary password can only do this until it is replaced.
+_ALLOWED_BEFORE_PASSWORD_CHANGE = frozenset(
+    {"account.change_password", "auth.logout", "preferences.set_theme", "preferences.set_language"}
+)
+
+
 def enforce_access_policy() -> Response | None:
     endpoint = request.endpoint
     if endpoint is None or endpoint == "static":
@@ -86,6 +92,8 @@ def enforce_access_policy() -> Response | None:
     if g.user is None:
         target = request.full_path.rstrip("?") if request.method == "GET" else None
         return redirect(url_for("auth.login", next=target))
+    if g.user.must_change_password and endpoint not in _ALLOWED_BEFORE_PASSWORD_CHANGE:
+        return redirect(url_for("account.change_password"))
     if policy.roles is not None and g.user.role not in policy.roles:
         abort(403)
     return None

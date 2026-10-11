@@ -12,24 +12,13 @@ from typing import Any
 
 
 class HotelError(Exception):
-    """Base class for every expected, explainable failure."""
+    """Base class for every expected, explainable failure.
 
-    code = "error"
-
-    def __init__(self, code: str | None = None, /, **params: Any) -> None:
-        self.code = code or type(self).code
-        self.params = params
-        super().__init__(f"{self.code} {params}" if params else self.code)
-
-
-class ValidationError(HotelError):
-    """Input has the wrong shape or breaks a simple constraint.
-
-    `fields` maps a form field name to an error code, so a form can show each
-    message next to the field it concerns.
+    `fields` optionally maps a form field name to an error code, so a form can
+    show each message next to the field it concerns.
     """
 
-    code = "validation"
+    code = "error"
 
     def __init__(
         self,
@@ -39,8 +28,16 @@ class ValidationError(HotelError):
         fields: dict[str, str] | None = None,
         **params: Any,
     ) -> None:
-        super().__init__(code, **params)
+        self.code = code or type(self).code
+        self.params = params
         self.fields = fields or {}
+        super().__init__(f"{self.code} {params}" if params else self.code)
+
+
+class ValidationError(HotelError):
+    """Input has the wrong shape or breaks a simple constraint."""
+
+    code = "validation"
 
 
 class NotFoundError(HotelError):

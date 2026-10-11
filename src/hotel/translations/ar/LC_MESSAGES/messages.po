@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 00:55+0100\n"
+"POT-Creation-Date: 2026-10-11 00:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -23,11 +23,39 @@ msgstr ""
 msgid "%(greeting)s, %(name)s"
 msgstr "%(greeting)s، %(name)s"
 
+msgid "3 to 32 characters: letters, digits, dots, hyphens or underscores."
+msgstr "من 3 إلى 32 حرفًا: أحرف لاتينية أو أرقام أو نقاط أو شرطات أو شرطات سفلية."
+
+msgid "Access"
+msgstr "الوصول"
+
 msgid "Access denied"
 msgstr "تم رفض الوصول"
 
+#, python-format
+msgid "Account %(username)s created. Give them the temporary password in person."
+msgstr "تم إنشاء الحساب %(username)s. سلّم كلمة المرور المؤقتة لصاحبه شخصيًا."
+
+msgid "Account deactivated and signed out."
+msgstr "تم تعطيل الحساب وتسجيل خروجه."
+
+msgid "Account reactivated."
+msgstr "تمت إعادة تفعيل الحساب."
+
+msgid "Account unlocked."
+msgstr "تم فتح قفل الحساب."
+
+msgid "Accounts are deactivated, never deleted, so the audit log keeps its meaning."
+msgstr "تُعطَّل الحسابات ولا تُحذف أبدًا، حتى يحتفظ سجل التدقيق بمعناه."
+
 msgid "Action"
 msgstr "الإجراء"
+
+msgid "Active"
+msgstr "نشط"
+
+msgid "Add a staff member"
+msgstr "إضافة موظف"
 
 msgid "Address"
 msgstr "العنوان"
@@ -44,8 +72,14 @@ msgstr "تحتوي المبالغ على 3 أرقام عشرية كحد أقصى
 msgid "An unexpected error occurred. It has been logged."
 msgstr "حدث خطأ غير متوقع. تم تسجيله."
 
+msgid "At least 12 characters. A short sentence is easy to remember and hard to guess."
+msgstr "12 حرفًا على الأقل. الجملة القصيرة سهلة التذكر وصعبة التخمين."
+
 msgid "Audit log"
 msgstr "سجل التدقيق"
+
+msgid "Back to staff"
+msgstr "العودة إلى الموظفين"
 
 msgid "Back to the dashboard"
 msgstr "العودة إلى لوحة القيادة"
@@ -53,11 +87,32 @@ msgstr "العودة إلى لوحة القيادة"
 msgid "Bad request"
 msgstr "طلب غير صالح"
 
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Change password"
+msgstr "تغيير كلمة المرور"
+
+msgid "Changes saved."
+msgstr "تم حفظ التغييرات."
+
+msgid "Choose a password different from the current one."
+msgstr "اختر كلمة مرور مختلفة عن الحالية."
+
+msgid "Choose a role."
+msgstr "اختر دورًا."
+
 msgid "Colour theme"
 msgstr "سمة الألوان"
 
+msgid "Create account"
+msgstr "إنشاء الحساب"
+
 msgid "Create the first manager account from a terminal, in the project folder:"
 msgstr "أنشئ أول حساب مدير من الطرفية، داخل مجلد المشروع:"
+
+msgid "Current password"
+msgstr "كلمة المرور الحالية"
 
 msgid "Dark"
 msgstr "داكن"
@@ -67,6 +122,15 @@ msgstr "لوحة القيادة"
 
 msgid "Database schema"
 msgstr "مخطط قاعدة البيانات"
+
+msgid "Deactivate account"
+msgstr "تعطيل الحساب"
+
+msgid "Deactivated"
+msgstr "معطّل"
+
+msgid "Deactivating signs the person out everywhere, immediately."
+msgstr "يؤدي التعطيل إلى تسجيل خروج الشخص من كل مكان فورًا."
 
 msgid "Details"
 msgstr "التفاصيل"
@@ -104,6 +168,9 @@ msgstr "من"
 msgid "Front desk and billing"
 msgstr "الاستقبال والفوترة"
 
+msgid "Full name"
+msgstr "الاسم الكامل"
+
 msgid "Good afternoon"
 msgstr "طاب يومك"
 
@@ -139,6 +206,9 @@ msgstr "اللغة"
 msgid "Light"
 msgstr "فاتح"
 
+msgid "Locked"
+msgstr "مقفل"
+
 msgid "Main"
 msgstr "القائمة الرئيسية"
 
@@ -147,6 +217,9 @@ msgstr "مدير"
 
 msgid "Match system"
 msgstr "حسب النظام"
+
+msgid "New password"
+msgstr "كلمة المرور الجديدة"
 
 msgid "Next"
 msgstr "التالي"
@@ -185,6 +258,9 @@ msgstr "السابقة"
 msgid "Project roadmap"
 msgstr "خارطة طريق المشروع"
 
+msgid "Reactivate account"
+msgstr "إعادة تفعيل الحساب"
+
 msgid "Reception and management"
 msgstr "الاستقبال والإدارة"
 
@@ -194,14 +270,32 @@ msgstr "موظف استقبال"
 msgid "Record"
 msgstr "السجل"
 
+msgid "Repeat the new password"
+msgstr "أعد كتابة كلمة المرور الجديدة"
+
+msgid "Repeat the temporary password"
+msgstr "أعد كتابة كلمة المرور المؤقتة"
+
 msgid "Reports, operations and translations"
 msgstr "التقارير والعمليات والترجمات"
 
 msgid "Reservations and availability"
 msgstr "الحجوزات والتوفر"
 
+msgid "Reset password"
+msgstr "إعادة تعيين كلمة المرور"
+
+msgid "Role"
+msgstr "الدور"
+
 msgid "Rooms, guests, staff and audit log"
 msgstr "الغرف والنزلاء والموظفون وسجل التدقيق"
+
+msgid "Save changes"
+msgstr "حفظ التغييرات"
+
+msgid "Set temporary password"
+msgstr "تعيين كلمة مرور مؤقتة"
 
 msgid "Sign in"
 msgstr "تسجيل الدخول"
@@ -224,8 +318,26 @@ msgstr "حدث خطأ ما"
 msgid "Something went wrong. Try again."
 msgstr "حدث خطأ ما. حاول مرة أخرى."
 
+msgid "Staff"
+msgstr "الموظفون"
+
+msgid "Staff member"
+msgstr "موظف"
+
+msgid "Status"
+msgstr "الحالة"
+
 msgid "System"
 msgstr "النظام"
+
+msgid "Temporary password"
+msgstr "كلمة مرور مؤقتة"
+
+msgid "Temporary password set. They must choose a new one at their next sign-in."
+msgstr "تم تعيين كلمة مرور مؤقتة. يجب على صاحب الحساب اختيار كلمة جديدة عند تسجيل الدخول القادم."
+
+msgid "The current password is not correct."
+msgstr "كلمة المرور الحالية غير صحيحة."
 
 msgid "The data sent was too large."
 msgstr "البيانات المرسلة كبيرة جدًا."
@@ -239,6 +351,9 @@ msgstr "حساب المدير الأول موجود بالفعل."
 msgid "The front desk figures will appear here once reservations are available."
 msgstr "ستظهر أرقام الاستقبال هنا بمجرد توفر الحجوزات."
 
+msgid "The hotel must keep at least one active manager."
+msgstr "يجب أن يحتفظ الفندق بمدير نشط واحد على الأقل."
+
 msgid "The page you asked for doesn't exist."
 msgstr "الصفحة المطلوبة غير موجودة."
 
@@ -247,6 +362,12 @@ msgstr "يجب ألا تحتوي كلمة المرور على اسم المست�
 
 msgid "The request couldn't be understood."
 msgstr "تعذّر فهم الطلب."
+
+msgid "The two passwords are different."
+msgstr "كلمتا المرور غير متطابقتين."
+
+msgid "They will have to replace it at their first sign-in."
+msgstr "سيتعين على صاحب الحساب استبدالها عند أول تسجيل دخول."
 
 msgid "This action can't be done this way."
 msgstr "لا يمكن تنفيذ هذا الإجراء بهذه الطريقة."
@@ -269,6 +390,9 @@ msgstr "كلمة المرور هذه شائعة جدًا. اختر كلمة يص
 msgid "This password repeats the same characters too much."
 msgstr "كلمة المرور هذه تكرر الأحرف نفسها كثيرًا."
 
+msgid "This username is already used."
+msgstr "اسم المستخدم هذا مستخدم بالفعل."
+
 #, python-format
 msgid "Time zone: %(tz)s"
 msgstr "المنطقة الزمنية: %(tz)s"
@@ -281,6 +405,9 @@ msgstr "كبير جدًا"
 
 msgid "Too many failed sign-in attempts from this computer. Wait a few minutes and try again."
 msgstr "محاولات تسجيل دخول فاشلة كثيرة من هذا الجهاز. انتظر بضع دقائق ثم حاول مرة أخرى."
+
+msgid "Unlock"
+msgstr "فتح القفل"
 
 msgid "Use 3 to 32 characters: letters, digits, dots, hyphens or underscores."
 msgstr "استخدم من 3 إلى 32 حرفًا: أحرف لاتينية أو أرقام أو نقاط أو شرطات أو شرطات سفلية."
@@ -315,6 +442,9 @@ msgstr "مرحبًا، %(name)s."
 msgid "When"
 msgstr "التاريخ"
 
+msgid "You can't deactivate your own account."
+msgstr "لا يمكنك تعطيل حسابك الخاص."
+
 msgid "You don't have permission to do that."
 msgstr "ليست لديك صلاحية للقيام بذلك."
 
@@ -327,6 +457,15 @@ msgstr "تم تسجيل خروجك."
 #, python-format
 msgid "You'll be signed out after %(minutes)s minutes without activity."
 msgstr "سيتم تسجيل خروجك بعد %(minutes)s دقيقة من عدم النشاط."
+
+msgid "You're using a temporary password. Choose your own password to continue."
+msgstr "أنت تستخدم كلمة مرور مؤقتة. اختر كلمة مرور خاصة بك للمتابعة."
+
+msgid "Your other open sessions will be signed out."
+msgstr "سيتم تسجيل خروج جلساتك المفتوحة الأخرى."
+
+msgid "Your password has been changed."
+msgstr "تم تغيير كلمة المرور الخاصة بك."
 
 msgid "Your session"
 msgstr "جلستك"

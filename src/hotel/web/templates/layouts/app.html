@@ -21,6 +21,7 @@
       {{ nav_link("dashboard.index", _("Dashboard"), "home") }}
       {%- if current_user and current_user.is_manager %}
       <p class="nav__heading">{{ _("Administration") }}</p>
+      {{ nav_link("staff.index", _("Staff"), "users") }}
       {{ nav_link("audit.index", _("Audit log"), "shield") }}
       {%- endif %}
     </nav>
@@ -35,13 +36,13 @@
       <div class="topbar__actions">
         {% include "partials/preferences.html" %}
         {%- if current_user %}
-        <div class="user-chip">
+        <a class="user-chip" href="{{ url_for('account.change_password') }}" title="{{ _('Change password') }}">
           <span class="user-chip__avatar" aria-hidden="true">{{ current_user.full_name[:1] }}</span>
           <span class="user-chip__text">
             <span class="user-chip__name">{{ current_user.full_name }}</span>
             <span class="user-chip__role">{{ _("Manager") if current_user.is_manager else _("Receptionist") }}</span>
           </span>
-        </div>
+        </a>
         <form method="post" action="{{ url_for('auth.logout') }}">
           {{ csrf() }}
           <button class="icon-button" type="submit" title="{{ _('Sign out') }}">

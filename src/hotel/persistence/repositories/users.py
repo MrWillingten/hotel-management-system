@@ -52,6 +52,11 @@ class UserRepository(BaseRepository):
     def list_all(self) -> list[User]:
         return [_to_user(row) for row in self._fetch_all(_SELECT_ALL)]
 
+    def count_active_managers(self) -> int:
+        return self._fetch_one(
+            "SELECT COUNT(*) FROM app_user WHERE role = 'MANAGER' AND is_active = 1"
+        )[0]
+
     def count(self) -> int:
         return self._fetch_one("SELECT COUNT(*) FROM app_user")[0]
 

@@ -10,7 +10,7 @@ import unicodedata
 from collections.abc import Mapping
 from datetime import date
 
-from hotel.domain.errors import ValidationError
+from hotel.domain.errors import HotelError, ValidationError
 from hotel.domain.money import Money
 from hotel.domain.paging import PageRequest
 from hotel.web.messages import message_for
@@ -20,7 +20,7 @@ class FormErrors(dict[str, str]):
     """Field name -> translated message, filled from a ValidationError."""
 
     @classmethod
-    def from_error(cls, error: ValidationError) -> FormErrors:
+    def from_error(cls, error: HotelError) -> FormErrors:
         errors = cls()
         for field, code in error.fields.items():
             errors[field] = message_for(code, error.params)

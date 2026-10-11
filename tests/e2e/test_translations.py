@@ -70,6 +70,7 @@ def test_placeholders_are_kept(language):
                 "%(count)s",
                 "%(page)s",
                 "%(pages)s",
+                "%(username)s",
                 "%(tz)s",
                 "%(minutes)s",
                 "%(min_length)s",

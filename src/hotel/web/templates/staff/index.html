@@ -1,0 +1,33 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/icons.html" import icon -%}
+{%- from "macros/staff.html" import status_badges -%}
+{% block title %}{{ _("Staff") }}{% endblock %}
+{% block page_title %}{{ _("Staff") }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <p class="muted">{{ _("Accounts are deactivated, never deleted, so the audit log keeps its meaning.") }}</p>
+  <a class="button button--primary" href="{{ url_for('staff.create') }}">{{ _("Add a staff member") }}</a>
+</div>
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">{{ _("Username") }}</th>
+        <th scope="col">{{ _("Full name") }}</th>
+        <th scope="col">{{ _("Role") }}</th>
+        <th scope="col">{{ _("Status") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for user in users %}
+      <tr>
+        <td dir="ltr"><a href="{{ url_for('staff.edit', user_id=user.id) }}">{{ user.username }}</a></td>
+        <td>{{ user.full_name }}</td>
+        <td>{{ _("Manager") if user.is_manager else _("Receptionist") }}</td>
+        <td>{{ status_badges(user, now) }}</td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

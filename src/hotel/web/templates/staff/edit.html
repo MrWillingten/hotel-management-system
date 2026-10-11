@@ -1,0 +1,63 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, field, form_errors, role_select -%}
+{%- from "macros/staff.html" import status_badges -%}
+{% block title %}{{ user.username }}{% endblock %}
+{% block page_title %}{{ _("Staff member") }}{% endblock %}
+{% block content %}
+<div class="page-actions">
+  <div>
+    <h2 class="section-title" dir="ltr">{{ user.username }}</h2>
+    {{ status_badges(user, now) }}
+  </div>
+  <a class="button button--ghost" href="{{ url_for('staff.index') }}">{{ _("Back to staff") }}</a>
+</div>
+
+<div class="grid grid--two">
+  <section class="panel">
+    <h3 class="panel__title">{{ _("Details") }}</h3>
+    {{ form_errors(errors) }}
+    <form class="stack" method="post" novalidate>
+      {{ csrf() }}
+      <input type="hidden" name="version" value="{{ user.version }}">
+      {{ field("full_name", _("Full name"), value=user.full_name, error=errors.full_name, maxlength=100) }}
+      {{ role_select(user.role.value, errors.role) }}
+      <button class="button button--primary" type="submit">{{ _("Save changes") }}</button>
+    </form>
+  </section>
+
+  <div class="stack">
+    <section class="panel">
+      <h3 class="panel__title">{{ _("Reset password") }}</h3>
+      <form class="stack" method="post" action="{{ url_for('staff.reset_password', user_id=user.id) }}" novalidate>
+        {{ csrf() }}
+        {{ field("password", _("Temporary password"), type="password", autocomplete="new-password", maxlength=128) }}
+        {{ field("confirm", _("Repeat the temporary password"), type="password", autocomplete="new-password", maxlength=128) }}
+        <button class="button button--ghost" type="submit">{{ _("Set temporary password") }}</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h3 class="panel__title">{{ _("Access") }}</h3>
+      <div class="form-actions">
+        {%- if user.is_locked(now) %}
+        <form method="post" action="{{ url_for('staff.unlock', user_id=user.id) }}">
+          {{ csrf() }}
+          <button class="button button--ghost" type="submit">{{ _("Unlock") }}</button>
+        </form>
+        {%- endif %}
+        <form method="post" action="{{ url_for('staff.set_active', user_id=user.id) }}">
+          {{ csrf() }}
+          <input type="hidden" name="version" value="{{ user.version }}">
+          {%- if user.is_active %}
+          <button class="button button--danger" type="submit">{{ _("Deactivate account") }}</button>
+          {%- else %}
+          <input type="hidden" name="active" value="on">
+          <button class="button button--primary" type="submit">{{ _("Reactivate account") }}</button>
+          {%- endif %}
+        </form>
+      </div>
+      <p class="muted">{{ _("Deactivating signs the person out everywhere, immediately.") }}</p>
+    </section>
+  </div>
+</div>
+{% endblock %}

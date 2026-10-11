@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 00:55+0100\n"
+"POT-Creation-Date: 2026-10-11 00:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,10 +21,40 @@ msgstr ""
 msgid "%(greeting)s, %(name)s"
 msgstr ""
 
+msgid "3 to 32 characters: letters, digits, dots, hyphens or underscores."
+msgstr ""
+
+msgid "Access"
+msgstr ""
+
 msgid "Access denied"
 msgstr ""
 
+#, python-format
+msgid "Account %(username)s created. Give them the temporary password in person."
+msgstr ""
+
+msgid "Account deactivated and signed out."
+msgstr ""
+
+msgid "Account reactivated."
+msgstr ""
+
+msgid "Account unlocked."
+msgstr ""
+
+msgid ""
+"Accounts are deactivated, never deleted, so the audit log keeps its "
+"meaning."
+msgstr ""
+
 msgid "Action"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Add a staff member"
 msgstr ""
 
 msgid "Address"
@@ -42,7 +72,15 @@ msgstr ""
 msgid "An unexpected error occurred. It has been logged."
 msgstr ""
 
+msgid ""
+"At least 12 characters. A short sentence is easy to remember and hard to "
+"guess."
+msgstr ""
+
 msgid "Audit log"
+msgstr ""
+
+msgid "Back to staff"
 msgstr ""
 
 msgid "Back to the dashboard"
@@ -51,10 +89,31 @@ msgstr ""
 msgid "Bad request"
 msgstr ""
 
+msgid "Cancel"
+msgstr ""
+
+msgid "Change password"
+msgstr ""
+
+msgid "Changes saved."
+msgstr ""
+
+msgid "Choose a password different from the current one."
+msgstr ""
+
+msgid "Choose a role."
+msgstr ""
+
 msgid "Colour theme"
 msgstr ""
 
+msgid "Create account"
+msgstr ""
+
 msgid "Create the first manager account from a terminal, in the project folder:"
+msgstr ""
+
+msgid "Current password"
 msgstr ""
 
 msgid "Dark"
@@ -64,6 +123,15 @@ msgid "Dashboard"
 msgstr ""
 
 msgid "Database schema"
+msgstr ""
+
+msgid "Deactivate account"
+msgstr ""
+
+msgid "Deactivated"
+msgstr ""
+
+msgid "Deactivating signs the person out everywhere, immediately."
 msgstr ""
 
 msgid "Details"
@@ -100,6 +168,9 @@ msgid "From"
 msgstr ""
 
 msgid "Front desk and billing"
+msgstr ""
+
+msgid "Full name"
 msgstr ""
 
 msgid "Good afternoon"
@@ -139,6 +210,9 @@ msgstr ""
 msgid "Light"
 msgstr ""
 
+msgid "Locked"
+msgstr ""
+
 msgid "Main"
 msgstr ""
 
@@ -146,6 +220,9 @@ msgid "Manager"
 msgstr ""
 
 msgid "Match system"
+msgstr ""
+
+msgid "New password"
 msgstr ""
 
 msgid "Next"
@@ -185,6 +262,9 @@ msgstr ""
 msgid "Project roadmap"
 msgstr ""
 
+msgid "Reactivate account"
+msgstr ""
+
 msgid "Reception and management"
 msgstr ""
 
@@ -194,13 +274,31 @@ msgstr ""
 msgid "Record"
 msgstr ""
 
+msgid "Repeat the new password"
+msgstr ""
+
+msgid "Repeat the temporary password"
+msgstr ""
+
 msgid "Reports, operations and translations"
 msgstr ""
 
 msgid "Reservations and availability"
 msgstr ""
 
+msgid "Reset password"
+msgstr ""
+
+msgid "Role"
+msgstr ""
+
 msgid "Rooms, guests, staff and audit log"
+msgstr ""
+
+msgid "Save changes"
+msgstr ""
+
+msgid "Set temporary password"
 msgstr ""
 
 msgid "Sign in"
@@ -224,7 +322,25 @@ msgstr ""
 msgid "Something went wrong. Try again."
 msgstr ""
 
+msgid "Staff"
+msgstr ""
+
+msgid "Staff member"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
 msgid "System"
+msgstr ""
+
+msgid "Temporary password"
+msgstr ""
+
+msgid "Temporary password set. They must choose a new one at their next sign-in."
+msgstr ""
+
+msgid "The current password is not correct."
 msgstr ""
 
 msgid "The data sent was too large."
@@ -239,6 +355,9 @@ msgstr ""
 msgid "The front desk figures will appear here once reservations are available."
 msgstr ""
 
+msgid "The hotel must keep at least one active manager."
+msgstr ""
+
 msgid "The page you asked for doesn't exist."
 msgstr ""
 
@@ -246,6 +365,12 @@ msgid "The password must not contain the username."
 msgstr ""
 
 msgid "The request couldn't be understood."
+msgstr ""
+
+msgid "The two passwords are different."
+msgstr ""
+
+msgid "They will have to replace it at their first sign-in."
 msgstr ""
 
 msgid "This action can't be done this way."
@@ -271,6 +396,9 @@ msgstr ""
 msgid "This password repeats the same characters too much."
 msgstr ""
 
+msgid "This username is already used."
+msgstr ""
+
 #, python-format
 msgid "Time zone: %(tz)s"
 msgstr ""
@@ -284,6 +412,9 @@ msgstr ""
 msgid ""
 "Too many failed sign-in attempts from this computer. Wait a few minutes "
 "and try again."
+msgstr ""
+
+msgid "Unlock"
 msgstr ""
 
 msgid "Use 3 to 32 characters: letters, digits, dots, hyphens or underscores."
@@ -319,6 +450,9 @@ msgstr ""
 msgid "When"
 msgstr ""
 
+msgid "You can't deactivate your own account."
+msgstr ""
+
 msgid "You don't have permission to do that."
 msgstr ""
 
@@ -330,6 +464,15 @@ msgstr ""
 
 #, python-format
 msgid "You'll be signed out after %(minutes)s minutes without activity."
+msgstr ""
+
+msgid "You're using a temporary password. Choose your own password to continue."
+msgstr ""
+
+msgid "Your other open sessions will be signed out."
+msgstr ""
+
+msgid "Your password has been changed."
 msgstr ""
 
 msgid "Your session"
