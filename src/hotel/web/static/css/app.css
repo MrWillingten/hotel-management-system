@@ -1166,3 +1166,4 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 .onboarding__item--done .onboarding__tick { border-color: var(--success); background: var(--success); }
 .onboarding__item--done .onboarding__tick .icon { inline-size: 0.8rem; block-size: 0.8rem; }
 .onboarding__item--done span { color: var(--text-muted); text-decoration: line-through; }
+.invoice-doc__exemptions ul { margin: 0; padding-inline-start: var(--space-5); color: var(--text-muted); }

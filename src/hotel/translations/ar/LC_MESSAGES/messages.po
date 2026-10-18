@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-18 20:48+0100\n"
+"POT-Creation-Date: 2026-10-18 21:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -343,6 +343,9 @@ msgstr "توجد غرفة أخرى بهذا الرقم بالفعل."
 
 msgid "Applies to"
 msgstr "تُطبَّق على"
+
+msgid "Apply the tax again"
+msgstr "إعادة تطبيق الضريبة"
 
 msgid "Arrival"
 msgstr "الوصول"
@@ -828,6 +831,9 @@ msgstr "معطّل"
 msgid "Deactivating signs the person out everywhere, immediately."
 msgstr "يؤدي التعطيل إلى تسجيل خروج الشخص من كل مكان فورًا."
 
+msgid "Decided by the guest's nationality. A manager can also exempt one stay from a tax, on its bill."
+msgstr "يُحدَّد حسب جنسية النزيل. ويمكن للمدير أيضًا إعفاء إقامة من ضريبة، من كشف حسابها."
+
 msgid "Departure"
 msgstr "المغادرة"
 
@@ -1018,6 +1024,9 @@ msgstr "كل ما يخص إقامة واحدة وكل الإجراءات علي�
 msgid "Example:"
 msgstr "مثال:"
 
+msgid "Exempt this stay"
+msgstr "إعفاء هذه الإقامة"
+
 msgid "Expired"
 msgstr "منتهي الصلاحية"
 
@@ -1083,6 +1092,9 @@ msgstr "مثلاً: الأداء على القيمة المضافة أو الم�
 
 msgid "For example: occupancy dashboard"
 msgstr "مثلًا: لوحة متابعة الإشغال"
+
+msgid "For example: resident in Tunisia, diplomat, child under the age limit."
+msgstr "مثلًا: مقيم في تونس، دبلوماسي، طفل دون السن المحددة."
 
 msgid "Form expired"
 msgstr "انتهت صلاحية النموذج"
@@ -1157,11 +1169,26 @@ msgstr "عدد النزلاء الذين أُخفيت هويتهم: %(count)s."
 msgid "Guests found: %(total)s"
 msgstr "عدد النزلاء الذين تم العثور عليهم: %(total)s"
 
+#, python-format
+msgid "Guests from %(country)s only"
+msgstr "النزلاء من %(country)s فقط"
+
+msgid ""
+"Guests from this country are nationals for taxes that only concern foreign guests (or only "
+"nationals)."
+msgstr ""
+"يُعدّ النزلاء من هذا البلد مواطنين بالنسبة للضرائب التي تخص النزلاء الأجانب فقط (أو المواطنين "
+"فقط)."
+
 msgid "Guests in one room"
 msgstr "عدد الأشخاص في الغرفة"
 
 msgid "Guests in the house"
 msgstr "النزلاء المقيمون"
+
+#, python-format
+msgid "Guests not from %(country)s"
+msgstr "النزلاء من خارج %(country)s"
 
 msgid ""
 "Guests who never came become no-shows, guests still in after their departure are listed, and the "
@@ -1390,6 +1417,9 @@ msgstr "يُعدّ المديرون الغرف التي يبيعها الفند�
 
 msgid "Managers: a percentage or fixed amount on accommodation, with a reason."
 msgstr "للمديرين: نسبة مئوية أو مبلغ ثابت على الإقامة، مع ذكر السبب."
+
+msgid "Managers: exempt this stay from one tax, with a reason, until check-out."
+msgstr "للمديرين: إعفاء هذه الإقامة من ضريبة، مع ذكر السبب، حتى المغادرة."
 
 msgid "Managers: when the guest paid more than the total."
 msgstr "للمديرين: عندما يدفع النزيل أكثر من المجموع."
@@ -2304,6 +2334,12 @@ msgstr "خذ عربونًا بقيمة 100 د.ت بالبطاقة مع رقم ا
 msgid "Take the tour"
 msgstr "ابدأ الجولة"
 
+msgid "Tax"
+msgstr "الضريبة"
+
+msgid "Tax exemptions"
+msgstr "الإعفاءات الضريبية"
+
 #, python-format
 msgid "Tax rule %(name)s added."
 msgstr "تمت إضافة الضريبة %(name)s."
@@ -2409,6 +2445,12 @@ msgstr "يجب أن يحتفظ الفندق بمدير نشط واحد على ا
 msgid "The hotel owes the guest a refund. Ask a manager to record it."
 msgstr "على الفندق رد مبلغ للنزيل. اطلب من المدير تسجيله."
 
+msgid "The hotel's country"
+msgstr "بلد الفندق"
+
+msgid "The invoice is issued: its taxes can no longer change."
+msgstr "صدرت الفاتورة: لم يعد بالإمكان تغيير ضرائبها."
+
 msgid "The last night must not be before the first night."
 msgstr "لا يمكن أن تسبق الليلة الأخيرة الليلة الأولى."
 
@@ -2449,6 +2491,12 @@ msgstr "استغرق تسجيل الدخول وقتًا طويلًا أو فشل
 
 msgid "The stay is already over: this reservation can no longer be checked in."
 msgstr "انتهت الإقامة بالفعل: لم يعد ممكناً تسجيل الوصول لهذا الحجز."
+
+msgid "The stay is exempt from this tax."
+msgstr "الإقامة معفاة من هذه الضريبة."
+
+msgid "The tax applies to this stay again."
+msgstr "تُطبَّق الضريبة على هذه الإقامة من جديد."
 
 msgid "The token was revoked. Programs using it can no longer read data."
 msgstr "تم إلغاء الرمز. لم يعد بإمكان البرامج التي تستخدمه قراءة البيانات."
@@ -2562,6 +2610,9 @@ msgid ""
 "This short tour shows where everything is. It takes about two minutes; you can skip it and reopen"
 " it from Help."
 msgstr "تريك هذه الجولة القصيرة مكان كل شيء. تستغرق نحو دقيقتين؛ ويمكنك تخطيها وإعادة فتحها من «المساعدة»."
+
+msgid "This stay is already exempt from this tax."
+msgstr "هذه الإقامة معفاة من هذه الضريبة بالفعل."
 
 msgid "This username is already used."
 msgstr "اسم المستخدم هذا مستخدم بالفعل."
@@ -2799,6 +2850,9 @@ msgstr "أثناء إقامة النزيل: وجبات فطور، نقل… مع
 
 msgid "Who did what and when; altered or removed entries are detected and shown."
 msgstr "من فعل ماذا ومتى؛ وتُكتشف الإدخالات المعدّلة أو المحذوفة وتُعرض."
+
+msgid "Who pays"
+msgstr "من يدفع"
 
 msgid "With a temporary password replaced at first sign-in."
 msgstr "بكلمة مرور مؤقتة تُستبدل عند أول تسجيل دخول."

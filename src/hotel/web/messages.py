@@ -41,6 +41,8 @@ MESSAGES = {
         "The guests already used that room during this stay. Choose another one."
     ),
     "reservation.move_nothing_left": _l("No night is left to move in this room."),
+    "tax.already_exempt": _l("This stay is already exempt from this tax."),
+    "tax.bill_closed": _l("The invoice is issued: its taxes can no longer change."),
     "api_token.name_invalid": _l("Enter a name of 1 to 60 characters."),
     "api_token.lifetime_invalid": _l("Choose one of the proposed durations."),
     "api_token.too_many": _l("You already have %(max)s active tokens. Revoke one first."),

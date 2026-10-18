@@ -83,6 +83,7 @@ line, staff user, user session, audit log entry, setting. See
 | E | Maintenance vs. bookings | Scheduling maintenance over a confirmed reservation is refused with the list of affected reservations. |
 | F | Early departure / no-show | Early departure: only the nights actually stayed are charged (at least one); the others are released. No-show: recorded after the arrival time, charged like a late cancellation. |
 | G | **Taxes** | **In scope.** Configurable tax rules (percentage, e.g. VAT; per adult per night, e.g. tourist tax). Prices are stored tax-exclusive; each tax is its own invoice line, copied onto the invoice when issued. Real rates must be verified with current Tunisian regulations. |
+| G2 | Who pays a tax (18 Oct) | Each rule taxes everyone, foreign guests only or nationals only, by the guest's nationality compared with the hotel's country (setting, default TN; a CIN without nationality counts as Tunisian). A manager can exempt one stay from one tax with a reason until the invoice is issued. The real rules (who pays the tourist tax, age limits) are configured by the hotel, not hard-coded. |
 | H | Occupancy rate | Room-nights sold ÷ room-nights available, excluding rooms under maintenance. |
 
 ## 6. Non-functional requirements

@@ -1,7 +1,7 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/forms.html" import csrf, form_errors, checkbox -%}
 {%- from "macros/taxes.html" import rule_fields -%}
-{%- set current = {"name": rule.name, "kind": rule.kind, "applies_to": rule.applies_to,
+{%- set current = {"name": rule.name, "kind": rule.kind, "applies_to": rule.applies_to, "payers": rule.payers,
                    "rate": ("%g" | format(rule.rate_bp / 100)) if rule.kind == "PERCENT" else rule.amount_per | string} -%}
 {% block title %}{{ rule.name }}{% endblock %}
 {% block page_title %}{{ _("Edit tax rule") }}{% endblock %}
@@ -11,7 +11,7 @@
   <form class="stack" method="post" novalidate>
     {{ csrf() }}
     <input type="hidden" name="version" value="{{ rule.version }}">
-    {{ rule_fields(values or current, errors) }}
+    {{ rule_fields(values or current, errors, home_country_name) }}
     {{ checkbox("is_active", _("Active"), checked=(values.get("is_active") == "on") if values else rule.is_active,
                 hint=_("Issued invoices keep the tax they were issued with.")) }}
     <div class="form-actions">

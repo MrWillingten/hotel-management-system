@@ -8,6 +8,7 @@ from flask_babel import gettext as _
 from hotel.domain.billing import FixedDiscount, PaymentMethod, PercentDiscount
 from hotel.domain.enums import Role
 from hotel.domain.errors import HotelError, ValidationError
+from hotel.domain.taxes import TaxExemption
 from hotel.web import forms
 from hotel.web.context import current_actor, services
 from hotel.web.formatting import money
@@ -47,6 +48,8 @@ def bill(reservation_id: int):
         reservation=services().reservations.get(actor, reservation_id),
         bill=services().billing.bill(actor, reservation_id),
         discounts=services().billing.discounts(actor, reservation_id),
+        exemptions=services().billing.exemptions(actor, reservation_id),
+        exemptible=services().billing.exemptible_taxes(actor, reservation_id),
         settings=services().hotel_settings.get(actor),
         methods=list(PaymentMethod),
         form_token=services().form_tokens.issue(actor),
@@ -125,4 +128,38 @@ def remove_discount(discount_id: int):
         flash(message_for(exc.code, exc.params), "danger")
     else:
         flash(_("Discount removed."), "success")
+    return _to_bill(reservation_id)
+
+
+# ---------------------------------------------------------------- tax exemptions (story 6.16)
+@bp.post("/<int:reservation_id>/tax-exemptions")
+@roles_required(Role.MANAGER)
+def exempt_from_tax(reservation_id: int):
+    try:
+        services().billing.exempt_from_tax(
+            current_actor(),
+            TaxExemption(
+                id=None,
+                reservation_id=reservation_id,
+                tax_rule_id=forms.integer(request.form, "tax_rule_id"),
+                reason=forms.text(request.form, "exemption_reason", max_length=200),
+            ),
+        )
+    except HotelError as exc:
+        flash(message_for(exc.code, exc.params), "danger")
+    else:
+        flash(_("The stay is exempt from this tax."), "success")
+    return _to_bill(reservation_id)
+
+
+@bp.post("/tax-exemptions/<int:exemption_id>/remove")
+@roles_required(Role.MANAGER)
+def remove_exemption(exemption_id: int):
+    reservation_id = forms.integer(request.form, "reservation_id")
+    try:
+        services().billing.remove_exemption(current_actor(), exemption_id)
+    except HotelError as exc:
+        flash(message_for(exc.code, exc.params), "danger")
+    else:
+        flash(_("The tax applies to this stay again."), "success")
     return _to_bill(reservation_id)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-18 20:48+0100\n"
+"POT-Creation-Date: 2026-10-18 21:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -358,6 +358,9 @@ msgstr "Une autre chambre porte déjà ce numéro."
 
 msgid "Applies to"
 msgstr "S'applique à"
+
+msgid "Apply the tax again"
+msgstr "Appliquer à nouveau la taxe"
 
 msgid "Arrival"
 msgstr "Arrivée"
@@ -853,6 +856,11 @@ msgstr "Désactivé"
 msgid "Deactivating signs the person out everywhere, immediately."
 msgstr "La désactivation déconnecte immédiatement la personne partout."
 
+msgid "Decided by the guest's nationality. A manager can also exempt one stay from a tax, on its bill."
+msgstr ""
+"Selon la nationalité du client. Un gérant peut aussi exonérer un séjour d’une taxe, depuis sa "
+"note."
+
 msgid "Departure"
 msgstr "Départ"
 
@@ -1045,6 +1053,9 @@ msgstr "Tout sur un séjour, et toutes les actions possibles."
 msgid "Example:"
 msgstr "Exemple :"
 
+msgid "Exempt this stay"
+msgstr "Exonérer ce séjour"
+
 msgid "Expired"
 msgstr "Expiré"
 
@@ -1110,6 +1121,9 @@ msgstr "Par exemple TVA ou taxe de séjour."
 
 msgid "For example: occupancy dashboard"
 msgstr "Par exemple : tableau de bord d’occupation"
+
+msgid "For example: resident in Tunisia, diplomat, child under the age limit."
+msgstr "Par exemple : résident en Tunisie, diplomate, enfant sous la limite d’âge."
 
 msgid "Form expired"
 msgstr "Formulaire expiré"
@@ -1186,11 +1200,26 @@ msgstr "Clients anonymisés : %(count)s."
 msgid "Guests found: %(total)s"
 msgstr "Clients trouvés : %(total)s"
 
+#, python-format
+msgid "Guests from %(country)s only"
+msgstr "Clients de %(country)s uniquement"
+
+msgid ""
+"Guests from this country are nationals for taxes that only concern foreign guests (or only "
+"nationals)."
+msgstr ""
+"Les clients de ce pays sont des nationaux pour les taxes qui ne concernent que les clients "
+"étrangers (ou que les nationaux)."
+
 msgid "Guests in one room"
 msgstr "Personnes par chambre"
 
 msgid "Guests in the house"
 msgstr "Clients présents"
+
+#, python-format
+msgid "Guests not from %(country)s"
+msgstr "Clients hors %(country)s"
 
 msgid ""
 "Guests who never came become no-shows, guests still in after their departure are listed, and the "
@@ -1427,6 +1456,9 @@ msgstr "Les gérants configurent les chambres que l’hôtel vend et leurs prix.
 
 msgid "Managers: a percentage or fixed amount on accommodation, with a reason."
 msgstr "Gérants : un pourcentage ou un montant fixe sur l’hébergement, avec un motif."
+
+msgid "Managers: exempt this stay from one tax, with a reason, until check-out."
+msgstr "Gérants : exonérez ce séjour d’une taxe, avec un motif, jusqu’au départ."
 
 msgid "Managers: when the guest paid more than the total."
 msgstr "Gérants : quand le client a payé plus que le total."
@@ -2351,6 +2383,12 @@ msgstr "Prenez un acompte de 100 DT par carte avec le numéro du ticket comme r�
 msgid "Take the tour"
 msgstr "Faire la visite"
 
+msgid "Tax"
+msgstr "Taxe"
+
+msgid "Tax exemptions"
+msgstr "Exonérations de taxe"
+
 #, python-format
 msgid "Tax rule %(name)s added."
 msgstr "Taxe %(name)s ajoutée."
@@ -2464,6 +2502,12 @@ msgstr "L'hôtel doit garder au moins un gestionnaire actif."
 msgid "The hotel owes the guest a refund. Ask a manager to record it."
 msgstr "L'hôtel doit un remboursement au client. Demandez à un gestionnaire de l'enregistrer."
 
+msgid "The hotel's country"
+msgstr "Pays de l’hôtel"
+
+msgid "The invoice is issued: its taxes can no longer change."
+msgstr "La facture est émise : ses taxes ne peuvent plus changer."
+
 msgid "The last night must not be before the first night."
 msgstr "La dernière nuit ne peut pas précéder la première."
 
@@ -2504,6 +2548,12 @@ msgstr "La connexion a pris trop de temps ou a échoué trop souvent. Recommence
 
 msgid "The stay is already over: this reservation can no longer be checked in."
 msgstr "Le séjour est déjà terminé : l'arrivée ne peut plus être enregistrée."
+
+msgid "The stay is exempt from this tax."
+msgstr "Le séjour est exonéré de cette taxe."
+
+msgid "The tax applies to this stay again."
+msgstr "La taxe s’applique de nouveau à ce séjour."
 
 msgid "The token was revoked. Programs using it can no longer read data."
 msgstr "Le jeton a été révoqué. Les programmes qui l’utilisent ne peuvent plus lire les données."
@@ -2619,6 +2669,9 @@ msgid ""
 msgstr ""
 "Cette courte visite montre où tout se trouve. Elle prend environ deux minutes ; vous pouvez la "
 "passer et la rouvrir depuis l’Aide."
+
+msgid "This stay is already exempt from this tax."
+msgstr "Ce séjour est déjà exonéré de cette taxe."
 
 msgid "This username is already used."
 msgstr "Ce nom d'utilisateur est déjà utilisé."
@@ -2869,6 +2922,9 @@ msgstr "Pendant le séjour : petits-déjeuners, transferts… avec une quantité
 
 msgid "Who did what and when; altered or removed entries are detected and shown."
 msgstr "Qui a fait quoi et quand ; les entrées modifiées ou supprimées sont détectées et signalées."
+
+msgid "Who pays"
+msgstr "Qui paie"
 
 msgid "With a temporary password replaced at first sign-in."
 msgstr "Avec un mot de passe temporaire remplacé à la première connexion."

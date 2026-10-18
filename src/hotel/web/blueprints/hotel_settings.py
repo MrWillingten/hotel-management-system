@@ -3,14 +3,16 @@
 from __future__ import annotations
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_babel import get_locale
 from flask_babel import gettext as _
 
 from hotel.domain.enums import Role
 from hotel.domain.errors import HotelError, NotFoundError, ValidationError
 from hotel.domain.settings import HotelSettings
-from hotel.domain.taxes import PerAdultNightTax, PercentTax, TaxBase, TaxKind, TaxRule
+from hotel.domain.taxes import PerAdultNightTax, PercentTax, TaxBase, TaxKind, TaxPayers, TaxRule
 from hotel.web import forms
 from hotel.web.context import current_actor, services
+from hotel.web.countries import country_code, country_name, country_options
 from hotel.web.security import roles_required
 
 bp = Blueprint("settings", __name__, url_prefix="/settings")
@@ -28,6 +30,7 @@ def _hotel_settings(data) -> HotelSettings:
         anonymise_after_months=forms.integer(data, "anonymise_after_months"),
         # Checkboxes named weekend_<weekday>; only 0-6 can ever be stored.
         weekend_nights=",".join(str(d) for d in range(7) if forms.checkbox(data, f"weekend_{d}")),
+        home_country=country_code(forms.text(data, "home_country", max_length=60)) or "TN",
     )
 
 
@@ -37,11 +40,13 @@ def _tax_rule(data, *, version: int = 1, is_active: bool = True) -> TaxRule:
     try:
         kind = TaxKind(data.get("kind", ""))
         applies_to = TaxBase(data.get("applies_to", ""))
+        payers = TaxPayers(data.get("payers", "EVERYONE"))
     except ValueError:
         raise ValidationError("tax.kind_invalid", fields={"kind": "tax.kind_invalid"}) from None
     common = {
         "name": forms.text(data, "name", max_length=60),
         "applies_to": applies_to,
+        "payers": payers,
         "is_active": is_active,
         "version": version,
     }
@@ -52,9 +57,12 @@ def _tax_rule(data, *, version: int = 1, is_active: bool = True) -> TaxRule:
 
 def _page(errors=None, values=None, *, tax_errors=None, tax_values=None, status=200):
     actor = current_actor()
+    settings = services().hotel_settings.get(actor)
     return render_template(
         "settings/index.html",
-        settings=services().hotel_settings.get(actor),
+        settings=settings,
+        countries=country_options(_locale()),
+        home_country_name=country_name(settings.home_country, _locale()),
         rules=services().hotel_settings.tax_rules(actor),
         errors=errors or forms.FormErrors(),
         values=values or {},
@@ -117,6 +125,15 @@ def edit_tax(rule_id: int):
         else:
             flash(_("Changes saved."), "success")
             return redirect(url_for("settings.index"))
+    home = services().hotel_settings.get(actor).home_country
     return render_template(
-        "settings/tax.html", rule=rules[rule_id], errors=errors, values=values
+        "settings/tax.html",
+        rule=rules[rule_id],
+        errors=errors,
+        values=values,
+        home_country_name=country_name(home, _locale()),
     ), (400 if errors else 200)
+
+
+def _locale() -> str:
+    return str(get_locale() or "en")

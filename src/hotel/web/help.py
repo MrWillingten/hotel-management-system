@@ -171,6 +171,10 @@ TOPICS: list[HelpTopic] = [
                 _l("Managers: a percentage or fixed amount on accommodation, with a reason."),
             ),
             (_l("Refund the guest"), _l("Managers: when the guest paid more than the total.")),
+            (
+                _l("Tax exemptions"),
+                _l("Managers: exempt this stay from one tax, with a reason, until check-out."),
+            ),
         ],
         _l("Take a 100 DT deposit by card with the slip number as reference."),
     ),

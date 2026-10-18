@@ -225,6 +225,7 @@ The running bill of a stay, shown the same way the invoice will be.
 | **Record a deposit / Record a payment** | Records money received: amount, method (cash, card, bank transfer) and an optional reference. It is never more than the balance due, so a typing mistake can't create a refund to chase. | 100 DT deposit by card, slip no. 5521. |
 | **Payments** list | Every payment and refund, with who recorded it. Payments can never be edited or deleted; a mistake is corrected by a refund. | |
 | **Refund the guest** *(manager)* | Pays money back when the guest paid too much. | A cancellation fee of 54 DT is taken from a 100 DT deposit: refund 46 DT. |
+| **Tax exemptions** *(manager)* | Exempts this stay from one tax, with a reason, until check-out. The exemption is listed on the bill and on the invoice. **Apply the tax again** undoes it. | A Tunisian resident with a foreign passport: exempt from the tourist tax, reason "Resident in Tunisia". |
 | **Grant a discount** *(manager)* | A percentage or fixed amount on the accommodation, with a required reason. All discounts together are capped at 30 % of the accommodation. **Remove** cancels one, and stays visible. | 10 % "Returning guest". |
 
 ### Guests
@@ -376,10 +377,15 @@ transfer, laundry, minibar, spa…
 | Weekend surcharge and weekend nights | Extra % on chosen nights (the night *starting* on that day). | 0 %, Saturday and Sunday nights |
 | Anonymise guests after | Months without a stay before a guest is *proposed* for anonymisation. | 24 |
 
+**The hotel's country** decides who counts as a national for taxes (Tunisia
+by default).
+
 **Tax rules → Add tax rule / Edit**:
 
 * a **percentage** on accommodation or extras (VAT), or an **amount per
   adult per night** (tourist tax);
+* **Who pays**: everyone, guests not from the hotel's country, or guests
+  from it only (decided by the guest's nationality);
 * untick *Active* to stop applying a tax.
 
 Issued invoices keep the tax they were issued with. *The demo rates are

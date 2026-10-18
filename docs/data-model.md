@@ -54,6 +54,8 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
                    attempts CK≥0)                   → password accepted, code pending
 ✅ api_token(id PK, user_id FK ON DELETE CASCADE, name CK 1..60, token_hash UQ CK len=64,
              prefix, created_at, expires_at, last_used_at, revoked_at)   → JSON API (6.3)
+✅ tax_exemption(id PK, reservation_id FK ON DELETE CASCADE, tax_rule_id FK, reason CK 1..200,
+                 created_at, created_by FK app_user, UQ(reservation_id, tax_rule_id))   → 6.16
 ✅ onboarding(user_id PK FK ON DELETE CASCADE, tour_done_at, checklist_dismissed_at)
                                                     → walk-through (6.14); ticks come from audit_log
 

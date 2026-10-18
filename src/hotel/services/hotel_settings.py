@@ -72,6 +72,7 @@ class HotelSettingsService:
                 entity_id=rule.id,
                 name=rule.name,
                 kind=rule.kind.value,
+                payers=rule.payers.value,
             )
             return rule
 
@@ -96,5 +97,6 @@ class HotelSettingsService:
                 entity_id=rule_id,
                 name=rule.name,
                 active=rule.is_active,
+                payers=rule.payers.value,
             )
             return rule

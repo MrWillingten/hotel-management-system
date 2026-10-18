@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-18 20:48+0100\n"
+"POT-Creation-Date: 2026-10-18 21:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -344,6 +344,9 @@ msgid "Another room already has this number."
 msgstr ""
 
 msgid "Applies to"
+msgstr ""
+
+msgid "Apply the tax again"
 msgstr ""
 
 msgid "Arrival"
@@ -843,6 +846,11 @@ msgstr ""
 msgid "Deactivating signs the person out everywhere, immediately."
 msgstr ""
 
+msgid ""
+"Decided by the guest's nationality. A manager can also exempt one stay "
+"from a tax, on its bill."
+msgstr ""
+
 msgid "Departure"
 msgstr ""
 
@@ -1035,6 +1043,9 @@ msgstr ""
 msgid "Example:"
 msgstr ""
 
+msgid "Exempt this stay"
+msgstr ""
+
 msgid "Expired"
 msgstr ""
 
@@ -1099,6 +1110,9 @@ msgid "For example VAT or Tourist tax."
 msgstr ""
 
 msgid "For example: occupancy dashboard"
+msgstr ""
+
+msgid "For example: resident in Tunisia, diplomat, child under the age limit."
 msgstr ""
 
 msgid "Form expired"
@@ -1176,10 +1190,23 @@ msgstr ""
 msgid "Guests found: %(total)s"
 msgstr ""
 
+#, python-format
+msgid "Guests from %(country)s only"
+msgstr ""
+
+msgid ""
+"Guests from this country are nationals for taxes that only concern "
+"foreign guests (or only nationals)."
+msgstr ""
+
 msgid "Guests in one room"
 msgstr ""
 
 msgid "Guests in the house"
+msgstr ""
+
+#, python-format
+msgid "Guests not from %(country)s"
 msgstr ""
 
 msgid ""
@@ -1410,6 +1437,9 @@ msgid "Managers set up the rooms the hotel sells and their prices."
 msgstr ""
 
 msgid "Managers: a percentage or fixed amount on accommodation, with a reason."
+msgstr ""
+
+msgid "Managers: exempt this stay from one tax, with a reason, until check-out."
 msgstr ""
 
 msgid "Managers: when the guest paid more than the total."
@@ -2330,6 +2360,12 @@ msgstr ""
 msgid "Take the tour"
 msgstr ""
 
+msgid "Tax"
+msgstr ""
+
+msgid "Tax exemptions"
+msgstr ""
+
 #, python-format
 msgid "Tax rule %(name)s added."
 msgstr ""
@@ -2443,6 +2479,12 @@ msgstr ""
 msgid "The hotel owes the guest a refund. Ask a manager to record it."
 msgstr ""
 
+msgid "The hotel's country"
+msgstr ""
+
+msgid "The invoice is issued: its taxes can no longer change."
+msgstr ""
+
 msgid "The last night must not be before the first night."
 msgstr ""
 
@@ -2486,6 +2528,12 @@ msgid "The sign-in took too long or failed too often. Start again."
 msgstr ""
 
 msgid "The stay is already over: this reservation can no longer be checked in."
+msgstr ""
+
+msgid "The stay is exempt from this tax."
+msgstr ""
+
+msgid "The tax applies to this stay again."
 msgstr ""
 
 msgid "The token was revoked. Programs using it can no longer read data."
@@ -2605,6 +2653,9 @@ msgstr ""
 msgid ""
 "This short tour shows where everything is. It takes about two minutes; "
 "you can skip it and reopen it from Help."
+msgstr ""
+
+msgid "This stay is already exempt from this tax."
 msgstr ""
 
 msgid "This username is already used."
@@ -2851,6 +2902,9 @@ msgid ""
 msgstr ""
 
 msgid "Who did what and when; altered or removed entries are detected and shown."
+msgstr ""
+
+msgid "Who pays"
 msgstr ""
 
 msgid "With a temporary password replaced at first sign-in."

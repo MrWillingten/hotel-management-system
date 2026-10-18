@@ -54,6 +54,17 @@
     {%- endif %}
   </div>
 
+  {%- if exemptions %}
+  <section class="invoice-doc__exemptions">
+    <h3>{{ _("Tax exemptions") }}</h3>
+    <ul>
+      {%- for e in exemptions %}
+      <li>{{ e.tax_name }}: {{ e.reason }}</li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endif %}
+
   {%- if invoice.payments %}
   <section class="invoice-doc__payments">
     <h3>{{ _("Payments received") }}</h3>

@@ -15,6 +15,7 @@ from __future__ import annotations
 import unicodedata
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from datetime import datetime
 from enum import StrEnum
 
 from hotel.domain.errors import ValidationError
@@ -26,6 +27,15 @@ MAX_PER_ADULT_NIGHT = Money.from_dinars(1_000)
 class TaxKind(StrEnum):
     PERCENT = "PERCENT"
     PER_ADULT_NIGHT = "PER_ADULT_NIGHT"
+
+
+class TaxPayers(StrEnum):
+    """Who a rule taxes (story 6.16): a tourist tax, for example, may only
+    concern guests who are not nationals of the hotel's country."""
+
+    EVERYONE = "EVERYONE"
+    FOREIGN = "FOREIGN"  # guests from another country than the hotel's
+    NATIONALS = "NATIONALS"  # guests from the hotel's country
 
 
 class TaxBase(StrEnum):
@@ -49,8 +59,17 @@ class TaxRule(ABC):
     id: int | None = None
     name: str
     applies_to: TaxBase = TaxBase.ACCOMMODATION
+    payers: TaxPayers = TaxPayers.EVERYONE
     is_active: bool = True
     version: int = 1
+
+    def concerns(self, national: bool) -> bool:
+        """Does this rule tax a guest who is (or is not) a national of the hotel's country?"""
+        if self.payers is TaxPayers.FOREIGN:
+            return not national
+        if self.payers is TaxPayers.NATIONALS:
+            return national
+        return True
 
     @property
     @abstractmethod
@@ -122,3 +141,52 @@ class PerAdultNightTax(TaxRule):
             raise ValidationError("tax.per_night_on_services")
         if self.amount_per.millimes <= 0 or self.amount_per > MAX_PER_ADULT_NIGHT:
             raise ValidationError("tax.amount_invalid", fields={"rate": "tax.amount_invalid"})
+
+
+def is_national(nationality: str | None, id_doc_type: str, home_country: str) -> bool:
+    """Is the guest a national of the hotel's country?
+
+    The nationality decides. When it was not recorded, a Tunisian identity
+    card (CIN) can only belong to a Tunisian, so it counts as national when
+    the hotel is in Tunisia; anyone else counts as foreign.
+    """
+    if nationality:
+        return nationality == home_country
+    return id_doc_type == "CIN" and home_country == "TN"
+
+
+def taxes_for_stay(
+    rules: list[TaxRule], *, national: bool, exempt_rule_ids: set[int]
+) -> list[TaxRule]:
+    """The active rules this stay pays: those concerning the guest, minus exemptions."""
+    return [
+        rule
+        for rule in rules
+        if rule.is_active and rule.concerns(national) and rule.id not in exempt_rule_ids
+    ]
+
+
+MAX_EXEMPTION_REASON = 200
+
+
+@dataclass(slots=True)
+class TaxExemption:
+    """A manager's decision that one stay does not pay one tax (story 6.16)."""
+
+    id: int | None
+    reservation_id: int
+    tax_rule_id: int
+    reason: str
+    created_at: datetime | None = None
+    created_by_name: str = ""  # filled when read, for display
+    tax_name: str = ""
+
+    def validate(self) -> None:
+        reason = " ".join(unicodedata.normalize("NFC", self.reason).split())
+        if not 1 <= len(reason) <= MAX_EXEMPTION_REASON:
+            raise ValidationError(
+                "reason.invalid",
+                fields={"reason": "reason.invalid"},
+                max_length=MAX_EXEMPTION_REASON,
+            )
+        self.reason = reason
