@@ -2,7 +2,8 @@
 {%- from "macros/forms.html" import csrf, field, form_errors, select, textarea, checkbox -%}
 {%- set editing = guest is not none -%}
 {%- set v = values if values else {} -%}
-{%- macro val(name, default="") -%}{{ v.get(name, (guest[name] if editing and guest[name] is not none else default)) }}{%- endmacro -%}
+{%- set shown = shown or {} -%}
+{%- macro val(name, default="") -%}{{ v.get(name, shown[name] if name in shown else (guest[name] if editing and guest[name] is not none else default)) }}{%- endmacro -%}
 {% block title %}{{ _("Edit guest") if editing else _("Register a guest") }}{% endblock %}
 {% block page_title %}{{ _("Edit guest") if editing else _("Register a guest") }}{% endblock %}
 {% block content %}
@@ -14,7 +15,7 @@
     <ul>
       {%- for d in duplicates %}
       <li><a href="{{ url_for('guests.detail', guest_id=d.id) }}">{{ d.full_name }}</a>
-        <span class="muted" dir="ltr">{{ d.id_doc_type }} {{ d.masked_doc_number }} · {{ d.phone or d.email or "" }}</span></li>
+        <span class="muted" dir="ltr">{{ d.id_doc_type }} {{ d.masked_doc_number }} · {{ d.phone | phone or d.email or "" }}</span></li>
       {%- endfor %}
     </ul>
   </div>
@@ -31,13 +32,24 @@
       {{ select("id_doc_type", _("Identity document"), [("CIN", _("National ID card (CIN)")), ("PASSPORT", _("Passport"))],
                 val("id_doc_type", "CIN"), errors.id_doc_type) }}
       {{ field("id_doc_number", _("Document number"), value=val("id_doc_number"), error=errors.id_doc_number,
-               maxlength=20, autocomplete="off", hint=_("CIN: 8 digits. Passport: 5 to 20 letters or digits.")) }}
+               maxlength=12, autocomplete="off", pattern="[A-Za-z0-9 .\\-/]{6,12}",
+               hint=_("CIN: 8 digits. Passport: 6 to 9 letters and digits, with at least one digit.")) }}
     </div>
-    {{ select("nationality", _("Nationality"), [("", "—")] + countries, val("nationality"), errors.nationality) }}
+    {#- Suggestions while typing come from the browser's own <datalist>: no script. -#}
+    {{ field("nationality", _("Nationality"), value=val("nationality"), error=errors.nationality, required=False,
+             maxlength=60, autocomplete="off", datalist="countries",
+             hint=_("Start typing a country, in any language, and pick it from the list.")) }}
+    <datalist id="countries">
+      {%- for code, name in countries %}
+      <option value="{{ name }}"></option>
+      {%- endfor %}
+    </datalist>
     <div class="grid grid--fields">
       {{ field("phone", _("Phone"), value=val("phone"), type="tel", error=errors.phone, required=False,
-               maxlength=25, hint=_("With the country code for foreign numbers, e.g. +33 6 12 34 56 78.")) }}
-      {{ field("email", _("E-mail"), value=val("email"), type="email", error=errors.email, required=False, maxlength=254) }}
+               maxlength=25, autocomplete="off", inputmode="tel", pattern="[0-9 +().\\-/]{8,25}",
+               hint=_("Tunisian numbers: 8 digits. Foreign numbers: with + and the country code, e.g. +33 6 12 34 56 78.")) }}
+      {{ field("email", _("E-mail"), value=val("email"), type="email", error=errors.email, required=False,
+               maxlength=254, autocomplete="off", placeholder="name@example.com") }}
     </div>
     {{ textarea("notes", _("Notes"), value=val("notes"), error=errors.notes, maxlength=500,
                 hint=_("Preferences useful to the staff. No sensitive information.")) }}

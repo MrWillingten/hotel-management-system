@@ -36,20 +36,36 @@ def test_invalid_names(name):
 def test_documents():
     assert normalize_doc_number(IdDocType.CIN, " 0912 3456 ") == "09123456"
     assert normalize_doc_number(IdDocType.PASSPORT, "x-12.345/6") == "X123456"
+    assert normalize_doc_number(IdDocType.PASSPORT, "ab 1234567") == "AB1234567"
+    assert normalize_doc_number(IdDocType.PASSPORT, "123456789") == "123456789"  # e.g. US
     for bad in ("1234567", "123456789", "ABCDEFGH"):
         with pytest.raises(ValidationError, match="cin_invalid"):
             normalize_doc_number(IdDocType.CIN, bad)
+
+
+@pytest.mark.parametrize(
+    "bad",
+    [
+        "AB1",  # too short
+        "ABCDEFG",  # letters only: not a passport number
+        "A1234567890",  # longer than the 9 characters of ICAO 9303
+        "AB12345!",  # symbols
+        "AB 12345É",  # accented letters
+    ],
+)
+def test_invalid_passports(bad):
     with pytest.raises(ValidationError, match="passport_invalid"):
-        normalize_doc_number(IdDocType.PASSPORT, "AB1")
+        normalize_doc_number(IdDocType.PASSPORT, bad)
 
 
 @pytest.mark.parametrize(
     ("raw", "phone"),
     [
-        ("20 123 456", "20123456"),
+        ("20 123 456", "+21620123456"),  # without a code: Tunisian
         ("+216 20-123-456", "+21620123456"),
-        ("00 33 6 12 34 56 78", "+33612345678"),
-        ("(71) 123.456", "71123456"),
+        ("00 33 6 12 34 56 78", "+33612345678"),  # 00 works like +
+        ("(71) 123.456", "+21671123456"),  # Tunis landline
+        ("+1 202-555-0143", "+12025550143"),
         ("", None),
     ],
 )
@@ -57,7 +73,19 @@ def test_phones(raw, phone):
     assert normalize_phone(raw) == phone
 
 
-@pytest.mark.parametrize("raw", ["123", "call me", "+1 234 567 890 123 456", "20 12x 456"])
+@pytest.mark.parametrize(
+    "raw",
+    [
+        "123",
+        "call me",
+        "+1 234 567 890 123 456",
+        "20 12x 456",
+        "12 345 678",  # no Tunisian number starts with 1
+        "2012345",  # 7 digits
+        "+33 1",  # France, far too short
+        "+999 12345678",  # no such country code
+    ],
+)
 def test_invalid_phones(raw):
     with pytest.raises(ValidationError):
         normalize_phone(raw)
@@ -66,13 +94,32 @@ def test_invalid_phones(raw):
 def test_emails_and_countries():
     assert normalize_email(" Amira@Example.TN ") == "amira@example.tn"
     assert normalize_email("") is None
-    for bad in ("amira", "a@b", "a b@c.d", "x" * 250 + "@a.tn"):
+    assert normalize_email("first.last+hotel@mail.example.co.uk") == (
+        "first.last+hotel@mail.example.co.uk"
+    )
+    assert normalize_email("amira@café.tn") == "amira@xn--caf-dma.tn"  # ASCII form for mail servers
+    bad_emails = (
+        "amira",
+        "a@b",
+        "a b@c.d",
+        "x" * 250 + "@a.tn",
+        "a..b@example.tn",  # double dot
+        ".a@example.tn",
+        "a@example..tn",
+        "a@-example.tn",  # label starting with a hyphen
+        "a@example.t",  # one-letter top-level domain
+        "a@example.123",
+        "a@@example.tn",
+        "x" * 65 + "@example.tn",  # local part over 64
+    )
+    for bad in bad_emails:
         with pytest.raises(ValidationError):
             normalize_email(bad)
     assert normalize_country("tn") == "TN"
     assert normalize_country("") is None
-    with pytest.raises(ValidationError):
-        normalize_country("TUN")
+    for bad in ("TUN", "ZZ", "EU", "Tunisia"):
+        with pytest.raises(ValidationError):
+            normalize_country(bad)
 
 
 def test_details_are_cleaned_together():

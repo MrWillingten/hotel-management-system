@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 20:10+0100\n"
+"POT-Creation-Date: 2026-10-18 20:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,7 +98,7 @@ msgstr ""
 msgid "A no-show can only be recorded after the check-in time on %(arrival)s."
 msgstr ""
 
-msgid "A passport number has 5 to 20 letters or digits."
+msgid "A passport number has 6 to 9 letters and digits, with at least one digit."
 msgstr ""
 
 msgid ""
@@ -496,7 +496,9 @@ msgid ""
 "offers the move."
 msgstr ""
 
-msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
+msgid ""
+"CIN: 8 digits. Passport: 6 to 9 letters and digits, with at least one "
+"digit."
 msgstr ""
 
 msgid "CSV"
@@ -688,9 +690,6 @@ msgid "Choose / Register a new guest"
 msgstr ""
 
 msgid "Choose a category."
-msgstr ""
-
-msgid "Choose a country from the list."
 msgstr ""
 
 #, python-format
@@ -969,9 +968,6 @@ msgstr ""
 msgid "Enter a percentage between 0 and 100, for example 20 or 7.5."
 msgstr ""
 
-msgid "Enter a phone number of 8 to 15 digits."
-msgstr ""
-
 msgid "Enter a price above 0 and at most 10,000 DT."
 msgstr ""
 
@@ -985,7 +981,7 @@ msgstr ""
 msgid "Enter a valid date."
 msgstr ""
 
-msgid "Enter a valid e-mail address."
+msgid "Enter a valid e-mail address, such as name@example.com."
 msgstr ""
 
 msgid "Enter a whole number."
@@ -2303,6 +2299,9 @@ msgstr ""
 msgid "Start again with the password"
 msgstr ""
 
+msgid "Start typing a country, in any language, and pick it from the list."
+msgstr ""
+
 msgid "Starts a booking for that room from that night."
 msgstr ""
 
@@ -2564,6 +2563,11 @@ msgid ""
 "force at that moment."
 msgstr ""
 
+msgid ""
+"This is not a valid phone number. Tunisian numbers have 8 digits; foreign"
+" numbers start with + and the country code, e.g. +33 6 12 34 56 78."
+msgstr ""
+
 msgid "This is recorded in the audit log."
 msgstr ""
 
@@ -2661,6 +2665,11 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
+msgid ""
+"Tunisian numbers: 8 digits. Foreign numbers: with + and the country code,"
+" e.g. +33 6 12 34 56 78."
+msgstr ""
+
 msgid "Turn off"
 msgstr ""
 
@@ -2699,6 +2708,9 @@ msgid "Unit price"
 msgstr ""
 
 msgid "Unit price (DT, before tax)"
+msgstr ""
+
+msgid "Unknown country. Start typing its name and choose it from the suggestions."
 msgstr ""
 
 msgid "Unlock"
@@ -2842,9 +2854,6 @@ msgid "Who did what and when; altered or removed entries are detected and shown.
 msgstr ""
 
 msgid "With a temporary password replaced at first sign-in."
-msgstr ""
-
-msgid "With the country code for foreign numbers, e.g. +33 6 12 34 56 78."
 msgstr ""
 
 msgid ""

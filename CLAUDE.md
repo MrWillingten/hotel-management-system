@@ -161,7 +161,8 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
   payments/refunds on the reservation.
 - Demo tax rates (VAT 7 %, 19 % on services, 3 DT/adult/night) are examples
   to verify against Tunisian regulations.
-- Phone numbers are stored normalised and shown unformatted.
+- Phone numbers stored before 6.15 may lack +216 (shown formatted anyway; duplicate
+  detection compares the stored form).
 - Daily automatic backup runs at start-up only; long-running servers need a
   scheduled `hotel backup` (documented in `docs/deployment.md`).
 - No JavaScript at all (CSP): printing is the browser's Ctrl+P.

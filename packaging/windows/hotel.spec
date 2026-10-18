@@ -14,7 +14,10 @@ a = Analysis(
     pathex=[],
     datas=datas,
     # Imported lazily inside functions, so PyInstaller cannot see them by itself.
-    hiddenimports=collect_submodules("hotel") + collect_submodules("waitress"),
+    # phonenumbers loads each country's data module by name, only when needed.
+    hiddenimports=collect_submodules("hotel")
+    + collect_submodules("waitress")
+    + collect_submodules("phonenumbers"),
     excludes=["tkinter", "pytest", "hypothesis"],
     noarchive=False,
 )

@@ -42,7 +42,7 @@
       <tr>
         <td><a href="{{ url_for('guests.detail', guest_id=guest.id) }}">{{ guest.last_name }}, {{ guest.first_name }}</a> {{ flags(guest) }}</td>
         <td dir="ltr">{{ guest.id_doc_type }} {{ guest.masked_doc_number }}</td>
-        <td dir="ltr">{{ guest.phone or "—" }}</td>
+        <td dir="ltr">{{ guest.phone | phone or "—" }}</td>
         <td dir="ltr">{{ guest.email or "—" }}</td>
         <td>{{ guest.created_at | dateformat("medium") }}</td>
       </tr>

@@ -38,7 +38,7 @@
   <div class="chosen">
     <div>
       <a href="{{ url_for('guests.detail', guest_id=guest.id) }}"><strong>{{ guest.full_name }}</strong></a> {{ flags(guest) }}
-      <p class="muted" dir="ltr">{{ guest.id_doc_type }} {{ guest.masked_doc_number }} · {{ guest.phone or guest.email or "" }}</p>
+      <p class="muted" dir="ltr">{{ guest.id_doc_type }} {{ guest.masked_doc_number }} · {{ guest.phone | phone or guest.email or "" }}</p>
     </div>
     <a class="button button--ghost button--small" href="{{ url_for('reservations.new', arrival=values.arrival, departure=values.departure, guests=values.guests, category=values.category) }}">{{ _("Change guest") }}</a>
   </div>

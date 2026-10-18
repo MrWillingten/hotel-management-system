@@ -75,11 +75,17 @@ def test_same_document_is_refused(services, rita, amira):
 
 def test_scenario_4_2_returning_guest_is_flagged(services, rita, amira):
     """Same name and phone, different passport: probably the same person."""
+    # Typed without +216 it is still the same number as Amira's (+216 20 123 456).
     returning = GuestDetails("amira", "BEN SALAH", "PASSPORT", "TN998877", phone="20123456")
     returning_with_code = GuestDetails(
         "Amira", "Ben Salah", "PASSPORT", "TN112233", phone="+216 20 123 456"
     )
-    services.guests.register(rita, returning)  # different digits: not flagged
+    with pytest.raises(ProbableDuplicateError):
+        services.guests.register(rita, returning)
+    # Same name, another number: not flagged.
+    services.guests.register(
+        rita, GuestDetails("Amira", "Ben Salah", "PASSPORT", "TN445566", phone="+216 98 765 432")
+    )
     with pytest.raises(ProbableDuplicateError) as caught:
         services.guests.register(
             rita,

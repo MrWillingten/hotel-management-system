@@ -756,6 +756,10 @@ packaging==26.3 \
     #   pip-requirements-parser
     #   pytest
     #   virtualenv
+phonenumberslite==9.0.41 \
+    --hash=sha256:33347389a9105f4f5bd002d60ad9e721e5233950aa6219fb35c20ea2acf8e68f \
+    --hash=sha256:9e4249c9bf1fbdd294f152cf79450d45112b36f1e7c77cd4ee6763699d231393
+    # via hotel (pyproject.toml)
 pip==26.2.1 \
     --hash=sha256:71138adf1f4ca900cdb7d289c21b7494329f2332b6d85f0e1c42108c0384ed3e \
     --hash=sha256:f6ad667e89a1fe78046c8f13232b247200f5258d7828f3f7883d660878e0813f

@@ -164,6 +164,17 @@ Decisions (11 Oct): Great Vibes for the signature; tour + checklist; guide
 as a repo document plus a translated in-app Help page. Order: 6.10 → 6.11 →
 6.12 → 6.13 → 6.14, then the report.
 
+**Corrections requested by the student (18 Oct), before the report:**
+
+| ID | Story | Acceptance criteria |
+|---|---|---|
+| 6.15 | Real checks on guest details | Passport 6–9 letters and digits with at least one digit (ICAO 9303 length); CIN 8 digits; phone numbers checked and stored in E.164 with Google's `phonenumbers` (Tunisian numbers may be typed without +216); e-mail structure, length and domain checked, stored lower case; nationality typed with country suggestions in the interface language (HTML `datalist`, no JavaScript), stored as an ISO code; browser hints (`type`, `pattern`, `inputmode`) on top of the server checks |
+| 6.16 | Taxes by guest and per stay | Each tax rule has "who pays": everyone, foreign guests only, or nationals of the hotel's country only (new setting, default TN); a manager can exempt one stay from one tax with a reason until the invoice is issued; shown on the bill and audited |
+| 6.17 | Delete or archive | Guests, rooms, extra services, tax rules and staff: deleted when never used, otherwise archived (hidden from lists, forms and suggestions, history kept, restorable); the page says which and why; manager-only, confirmed, audited |
+
+Decisions (18 Oct): delete-if-unused-else-archive; who pays + per-stay
+exemptions; `phonenumbers` (Google's library) for phone numbers.
+
 **The report is written along the way:** each sprint's Definition of Done
 includes updating its report section; leaving 40–50 pages for the last week
 would fail.

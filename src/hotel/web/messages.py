@@ -89,10 +89,17 @@ MESSAGES = {
     "guest.name_invalid": _l("Use 1 to %(max_length)s letters, spaces, hyphens or apostrophes."),
     "guest.doc_type_invalid": _l("Choose a document type."),
     "guest.cin_invalid": _l("A CIN number has exactly 8 digits."),
-    "guest.passport_invalid": _l("A passport number has 5 to 20 letters or digits."),
-    "guest.phone_invalid": _l("Enter a phone number of 8 to 15 digits."),
-    "guest.email_invalid": _l("Enter a valid e-mail address."),
-    "guest.nationality_invalid": _l("Choose a country from the list."),
+    "guest.passport_invalid": _l(
+        "A passport number has 6 to 9 letters and digits, with at least one digit."
+    ),
+    "guest.phone_invalid": _l(
+        "This is not a valid phone number. Tunisian numbers have 8 digits; foreign numbers "
+        "start with + and the country code, e.g. +33 6 12 34 56 78."
+    ),
+    "guest.email_invalid": _l("Enter a valid e-mail address, such as name@example.com."),
+    "guest.nationality_invalid": _l(
+        "Unknown country. Start typing its name and choose it from the suggestions."
+    ),
     "guest.document_taken": _l("A guest with this identity document is already registered."),
     "guest.probable_duplicate": _l(
         "A guest with the same name and phone or e-mail already exists."

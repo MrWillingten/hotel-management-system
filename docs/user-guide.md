@@ -238,8 +238,16 @@ and capitals don't matter.
 | **Search** | Finds existing guests. **Always search first**, so returning guests aren't registered twice. | "dupont" |
 | **Anonymise old guests** *(manager)* | See [managers](#anonymise-old-guests). | |
 
-**Register / edit a guest:** first and last name, identity document (CIN: 8
-digits, or passport), nationality, phone, e-mail, notes.
+**Register / edit a guest:** first and last name, identity document,
+nationality, phone, e-mail and notes. Each one is checked:
+
+* **CIN:** 8 digits.
+* **Passport:** 6 to 9 letters and digits, with at least one digit.
+* **Nationality:** start typing a country in any language ("Tun", "Tunisie",
+  "تونس") and pick it from the suggestions.
+* **Phone:** a Tunisian number with its 8 digits, or a foreign one with `+`
+  and the country code. Numbers that cannot exist are refused.
+* **E-mail:** a real address shape, such as `name@example.com`.
 
 * If someone similar already exists, the form shows **"Is it one of these
   guests?"**: open that record instead.

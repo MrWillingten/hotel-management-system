@@ -16,6 +16,7 @@ dependencies = [
     "waitress>=3.0,<4",       # production WSGI server that runs on Windows and Linux
     "tzdata>=2024.1",         # time-zone database (Windows ships none)
     "segno>=1.6,<2",          # QR codes for two-factor enrolment (pure Python, no dependencies)
+    "phonenumberslite>=9,<10",  # Google's phone-number rules, without geo/carrier data (1 MB)
 ]
 
 [project.optional-dependencies]

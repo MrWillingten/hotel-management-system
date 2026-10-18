@@ -9,15 +9,26 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from enum import StrEnum
 
+import phonenumbers
+
 from hotel.domain.errors import ValidationError
 
 MAX_NAME = 60
 MAX_NOTES = 500
 _NAME_PUNCTUATION = frozenset(" -'’.")
 _CIN = re.compile(r"^\d{8}$")  # Tunisian national identity card: 8 digits
-_PASSPORT = re.compile(r"^[A-Z0-9]{5,20}$")
-_EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
-_COUNTRY = re.compile(r"^[A-Z]{2}$")
+# Passport numbers (ICAO 9303): at most 9 letters and digits. Real ones always
+# contain digits, so a word such as "ABCDEFG" is a typing mistake, not a passport.
+_PASSPORT = re.compile(r"^(?=.*\d)[A-Z0-9]{6,9}$")
+# E-mail: a practical subset of RFC 5321, the addresses people really use.
+_EMAIL_LOCAL = re.compile(r"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*$")
+_DOMAIN_LABEL = re.compile(r"^(?!-)[a-z0-9-]{1,63}(?<!-)$")
+_TLD = re.compile(r"^([a-z]{2,63}|xn--[a-z0-9-]{1,59})$")
+# Phone numbers typed without a country code are Tunisian (the hotel's country).
+HOME_REGION = "TN"
+# Countries a guest can come from: every region Google's phone-number data knows
+# (ISO 3166-1 alpha-2 codes, 245 of them), so nationality and phone agree.
+COUNTRY_CODES = frozenset(phonenumbers.SUPPORTED_REGIONS)
 
 
 class IdDocType(StrEnum):
@@ -55,32 +66,73 @@ def normalize_doc_number(doc_type: IdDocType, raw: str) -> str:
 
 
 def normalize_phone(raw: str) -> str | None:
+    """A real, dialable number, stored in E.164 form ("+21620123456").
+
+    Google's libphonenumber knows, for every country, which lengths and
+    prefixes exist (mobile, landline...). A number without a country code is
+    read as Tunisian; "00" works like "+". Letters and impossible numbers
+    (wrong length, unused prefix) are refused.
+    """
     text = unicodedata.normalize("NFKC", raw).strip()
     if not text:
         return None
-    plus = text.startswith("+") or text.startswith("00")
-    digits = re.sub(r"\D", "", text)
-    if text.startswith("00"):
-        digits = digits[2:]
-    if re.sub(r"[\d\s\-.()+]", "", text) or not 8 <= len(digits) <= 15:
+    if re.search(r"[^\d\s\-.()+/]", text):  # no letters: "0800-HOTEL" is not stored
         raise _invalid("phone", "guest.phone_invalid")
-    return ("+" if plus else "") + digits
+    try:
+        number = phonenumbers.parse(text, HOME_REGION)
+    except phonenumbers.NumberParseException:
+        raise _invalid("phone", "guest.phone_invalid") from None
+    if not phonenumbers.is_valid_number(number):
+        raise _invalid("phone", "guest.phone_invalid")
+    return phonenumbers.format_number(number, phonenumbers.PhoneNumberFormat.E164)
+
+
+def display_phone(stored: str | None) -> str:
+    """ "+21620123456" -> "+216 20 123 456"; anything unreadable is shown as stored."""
+    if not stored:
+        return ""
+    try:
+        number = phonenumbers.parse(stored, HOME_REGION)
+    except phonenumbers.NumberParseException:
+        return stored
+    return phonenumbers.format_number(number, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
 
 
 def normalize_email(raw: str) -> str | None:
+    """Checked part by part: "name@domain.tld", no spaces, no double dots.
+
+    International domain names ("café.tn") are stored in their ASCII form
+    ("xn--caf-dma.tn"), which is what mail servers use.
+    """
     email = unicodedata.normalize("NFKC", raw).strip().lower()
     if not email:
         return None
-    if len(email) > 254 or not _EMAIL.fullmatch(email):
+    local, at, domain = email.rpartition("@")
+    try:
+        domain = domain.encode("idna").decode("ascii")
+    except UnicodeError:
+        raise _invalid("email", "guest.email_invalid") from None
+    labels = domain.split(".")
+    email = f"{local}@{domain}"
+    if (
+        not at
+        or len(email) > 254
+        or not 1 <= len(local) <= 64
+        or not _EMAIL_LOCAL.fullmatch(local)
+        or len(labels) < 2
+        or not all(_DOMAIN_LABEL.fullmatch(label) for label in labels)
+        or not _TLD.fullmatch(labels[-1])
+    ):
         raise _invalid("email", "guest.email_invalid")
     return email
 
 
 def normalize_country(raw: str) -> str | None:
+    """An ISO 3166-1 alpha-2 code of a real country ("TN", "FR")."""
     code = raw.strip().upper()
     if not code:
         return None
-    if not _COUNTRY.fullmatch(code):
+    if code not in COUNTRY_CODES:
         raise _invalid("nationality", "guest.nationality_invalid")
     return code
 
