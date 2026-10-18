@@ -73,6 +73,13 @@ class AuditRepository(BaseRepository):
         )
         return replace(chained, id=cursor.lastrowid)
 
+    def actions_of(self, user_id: int) -> set[str]:
+        """Every kind of action this user has done at least once (story 6.14)."""
+        rows = self._fetch_all(
+            "SELECT DISTINCT action FROM audit_log WHERE user_id = ?", (user_id,)
+        )
+        return {row["action"] for row in rows}
+
     def iterate(self) -> Iterator[AuditEntry]:
         for row in self._conn.execute(f"{_SELECT} ORDER BY id"):
             yield _to_entry(row)

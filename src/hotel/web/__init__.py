@@ -39,6 +39,7 @@ from hotel.web.blueprints import (
     reservations,
     rooms,
     staff,
+    welcome,
 )
 from hotel.web.context import SERVICES_KEY
 from hotel.web.formatting import money_html, percent
@@ -110,6 +111,7 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
         reservations.bp,
         rooms.bp,
         staff.bp,
+        welcome.bp,
     ):
         app.register_blueprint(blueprint)
 

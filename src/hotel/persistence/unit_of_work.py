@@ -27,6 +27,7 @@ from hotel.persistence.repositories.guests import GuestRepository
 from hotel.persistence.repositories.invoices import InvoiceRepository
 from hotel.persistence.repositories.login_failures import LoginFailureRepository
 from hotel.persistence.repositories.night_audit import SnapshotRepository
+from hotel.persistence.repositories.onboarding import OnboardingRepository
 from hotel.persistence.repositories.rates import RatePeriodRepository
 from hotel.persistence.repositories.reports import ReportRepository
 from hotel.persistence.repositories.reservations import CounterRepository, ReservationRepository
@@ -70,6 +71,7 @@ class UnitOfWork:
     recovery_codes: RecoveryCodeRepository
     login_challenges: LoginChallengeRepository
     api_tokens: ApiTokenRepository
+    onboarding: OnboardingRepository
 
     def __init__(self, database_path: Path) -> None:
         self._database_path = database_path
@@ -104,6 +106,7 @@ class UnitOfWork:
         self.recovery_codes = RecoveryCodeRepository(self._conn)
         self.login_challenges = LoginChallengeRepository(self._conn)
         self.api_tokens = ApiTokenRepository(self._conn)
+        self.onboarding = OnboardingRepository(self._conn)
         return self
 
     def __exit__(

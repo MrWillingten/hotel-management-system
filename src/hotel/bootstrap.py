@@ -28,6 +28,7 @@ from hotel.services.guests import GuestService
 from hotel.services.hotel_settings import HotelSettingsService
 from hotel.services.invoices import InvoiceService
 from hotel.services.night_audit import NightAuditService
+from hotel.services.onboarding import OnboardingService
 from hotel.services.passwords import PasswordHasher, ScryptParams
 from hotel.services.reports import ReportService
 from hotel.services.reservations import ReservationService
@@ -65,6 +66,7 @@ class Services:
     night_audit: NightAuditService
     two_factor: TwoFactorService
     api_tokens: ApiTokenService
+    onboarding: OnboardingService
 
     def is_healthy(self) -> bool:
         """True when the database answers (used by the /health page)."""
@@ -121,4 +123,5 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
         night_audit=NightAuditService(uow_factory, clock, reservations, reports),
         two_factor=TwoFactorService(uow_factory, clock),
         api_tokens=ApiTokenService(uow_factory, clock),
+        onboarding=OnboardingService(uow_factory, clock),
     )

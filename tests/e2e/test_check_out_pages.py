@@ -33,6 +33,11 @@ def test_check_out_flow_and_invoice_page(client, services, hotel, clock):
     assert "Invoice F-2026-00001 issued." in invoice_page
     assert "Room 204" in invoice_page
     assert "Ctrl+P" in invoice_page
+    # Story 6.13: a branded sheet with the guest, the stay and a payment stamp.
+    assert 'class="invoice-doc"' in invoice_page
+    assert "Billed to" in invoice_page
+    assert "Nights: 1" in invoice_page
+    assert "invoice-doc__stamp--due" in invoice_page  # 180 DT still due
     detail = client.get(f"/reservations/{r.id}").get_data(as_text=True)
     assert "Invoice F-2026-00001" in detail
     assert "Unpaid after departure" in client.get("/").get_data(as_text=True)
@@ -63,6 +68,10 @@ def test_settled_check_out_has_no_warning(client, services, hotel):
     page = client.get(f"/reservations/{r.id}/check-out").get_data(as_text=True)
     assert "still due" not in page
     assert "Early departure" not in page
+    response = _post(client, f"/reservations/{r.id}/check-out", {"version": r.version})
+    invoice_page = client.get(response.headers["Location"]).get_data(as_text=True)
+    assert "Paid in full" in invoice_page
+    assert "Payments received" in invoice_page
 
 
 def test_unknown_invoice_is_a_404(client, manager):
@@ -76,3 +85,5 @@ def test_print_stylesheet_hides_the_interface(client):
     text = css.get_data(as_text=True)
     css.close()
     assert "@media print" in text
+    assert "size: A4" in text  # invoices print on A4 with page numbers
+    assert "counter(pages)" in text

@@ -1,0 +1,48 @@
+{#- Dashboard cards for new accounts (story 6.14): the tour invitation and the
+    "Getting started" checklist, which ticks itself from the audit log. -#}
+{%- from "macros/forms.html" import csrf -%}
+{%- from "macros/icons.html" import icon -%}
+{%- if onboarding.show_welcome or onboarding.show_checklist %}
+<div class="onboarding">
+  {%- if onboarding.show_welcome %}
+  <section class="panel onboarding__welcome">
+    <div class="onboarding__icon">{{ icon("star") }}</div>
+    <div>
+      <h2 class="panel__title">{{ _("Welcome, %(name)s!", name=current_user.full_name) }}</h2>
+      <p>{{ _("New here? A two-minute tour shows where everything is.") }}</p>
+    </div>
+    <div class="onboarding__actions">
+      <a class="button button--primary" href="{{ url_for('welcome.tour', step=1) }}">{{ _("Take the tour") }}</a>
+      <form method="post" action="{{ url_for('welcome.done') }}">
+        {{ csrf() }}
+        <button class="button button--ghost" type="submit">{{ _("Not now") }}</button>
+      </form>
+    </div>
+  </section>
+  {%- endif %}
+  {%- if onboarding.show_checklist %}
+  {%- set done, total = onboarding.progress %}
+  <section class="panel onboarding__checklist">
+    <div class="panel__head">
+      <h2 class="panel__title">{{ _("Getting started") }}</h2>
+      <span class="muted">{{ _("%(done)s of %(total)s done", done=done, total=total) }}</span>
+    </div>
+    <progress class="onboarding__bar" max="{{ total }}" value="{{ done }}">{{ done }} / {{ total }}</progress>
+    <ul class="onboarding__items">
+      {%- for item, ticked in onboarding.items %}
+      {%- set label, endpoint = checklist_text[item.key] %}
+      <li class="{{ 'onboarding__item--done' if ticked else '' }}">
+        <span class="onboarding__tick" aria-hidden="true">{% if ticked %}{{ icon("check") }}{% endif %}</span>
+        {%- if ticked %}<span>{{ label }} <span class="visually-hidden">({{ _("done") }})</span></span>
+        {%- else %}<a href="{{ url_for(endpoint) }}">{{ label }}</a>{% endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+    <form method="post" action="{{ url_for('welcome.dismiss_checklist') }}">
+      {{ csrf() }}
+      <button class="button button--ghost button--small" type="submit">{{ _("Hide this list") }}</button>
+    </form>
+  </section>
+  {%- endif %}
+</div>
+{%- endif %}

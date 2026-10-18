@@ -7,6 +7,7 @@ from flask_babel import lazy_gettext as _l
 
 from hotel.web.context import current_actor, services
 from hotel.web.security import login_required
+from hotel.web.tour import CHECKLIST_TEXT
 
 bp = Blueprint("dashboard", __name__)
 
@@ -30,4 +31,6 @@ def index():
         now=now,
         day=svc.front_desk.day(current_actor()),
         schema_version=svc.schema_version,
+        onboarding=svc.onboarding.state(current_actor()),
+        checklist_text=CHECKLIST_TEXT,
     )
