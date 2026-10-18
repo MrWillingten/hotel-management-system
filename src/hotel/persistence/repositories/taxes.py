@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sqlite3
+from datetime import datetime
 
 from hotel.domain.errors import ConflictError, StaleDataError
 from hotel.domain.money import Money
@@ -17,8 +18,8 @@ from hotel.persistence.convert import datetime_from_db, datetime_to_db
 from hotel.persistence.repositories.base import BaseRepository
 
 _SELECT = (
-    "SELECT id, name, kind, rate_bp, amount_mill, applies_to, payers, is_active, version "
-    "FROM tax_rule"
+    "SELECT id, name, kind, rate_bp, amount_mill, applies_to, payers, is_active, version, "
+    "archived_at FROM tax_rule"
 )
 
 
@@ -30,6 +31,7 @@ def _to_rule(row: sqlite3.Row) -> TaxRule:
         "payers": TaxPayers(row["payers"]),
         "is_active": bool(row["is_active"]),
         "version": row["version"],
+        "archived_at": datetime_from_db(row["archived_at"]),
     }
     if row["kind"] == TaxKind.PERCENT:
         return PercentTax(rate_bp=row["rate_bp"], **common)
@@ -51,10 +53,42 @@ def _values(rule: TaxRule) -> tuple:
 
 
 class TaxRuleRepository(BaseRepository):
-    def list(self, *, active_only: bool = False) -> list[TaxRule]:
-        where = " WHERE is_active = 1" if active_only else ""
+    def list(self, *, active_only: bool = False, archived: bool = False) -> list[TaxRule]:
+        """Rules in use; archived ones (story 6.17) only when asked for, and then alone."""
+        if archived:
+            where = " WHERE archived_at IS NOT NULL"
+        elif active_only:
+            where = " WHERE is_active = 1"
+        else:
+            where = " WHERE archived_at IS NULL"
         rows = self._fetch_all(f"{_SELECT}{where} ORDER BY is_active DESC, id")
         return [_to_rule(r) for r in rows]
+
+    # ------------------------------------------------------------ delete or archive (6.17)
+    def count_exemptions(self, rule_id: int) -> int:
+        return self._fetch_one(
+            "SELECT COUNT(*) FROM tax_exemption WHERE tax_rule_id = ?", (rule_id,)
+        )[0]
+
+    def count_archived(self) -> int:
+        return self._fetch_one("SELECT COUNT(*) FROM tax_rule WHERE archived_at IS NOT NULL")[0]
+
+    def archive(self, rule_id: int, now: datetime | None) -> None:
+        """`now` archives (and deactivates), None restores (still inactive)."""
+        if now is None:
+            self._execute(
+                "UPDATE tax_rule SET archived_at = NULL, version = version + 1 WHERE id = ?",
+                (rule_id,),
+            )
+        else:
+            self._execute(
+                "UPDATE tax_rule SET archived_at = ?, is_active = 0, version = version + 1 "
+                "WHERE id = ?",
+                (datetime_to_db(now), rule_id),
+            )
+
+    def delete(self, rule_id: int) -> None:
+        self._execute("DELETE FROM tax_rule WHERE id = ?", (rule_id,))
 
     def get(self, rule_id: int) -> TaxRule | None:
         row = self._fetch_one(f"{_SELECT} WHERE id = ?", (rule_id,))

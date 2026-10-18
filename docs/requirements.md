@@ -65,7 +65,7 @@ line, staff user, user session, audit log entry, setting. See
 23. The room status for a date is derived: unavailable (maintenance/out of service) > occupied > reserved > available.
 24. Money is in Tunisian dinars with 3 decimals (millimes), stored as integer millimes, never as floats.
 25. A receptionist searches for an existing guest before registering a new one; probable duplicates are flagged.
-26. Records with history (guests, rooms, services, users) are deactivated, never deleted.
+26. Records with history (guests, rooms, services, tax rules, users) are archived, never deleted: hidden from lists and forms, history kept, restorable. A record that was never used may be deleted (story 6.17, decided 18 Oct).
 
 ## 5. Decisions on ambiguous points
 

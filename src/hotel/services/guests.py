@@ -16,6 +16,7 @@ from hotel.domain.errors import (
 )
 from hotel.domain.guests import Guest, GuestDetails, IdDocType, months_before
 from hotel.domain.paging import Page, PageRequest
+from hotel.domain.removal import RemovalAction, RemovalPlan, plan_removal
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.audit import record
 from hotel.services.authorization import require_role, require_staff
@@ -40,11 +41,68 @@ class GuestService:
         self._clock = clock
 
     def search(
-        self, actor: Actor, query: str, request: PageRequest, *, sort: str = "name"
+        self,
+        actor: Actor,
+        query: str,
+        request: PageRequest,
+        *,
+        sort: str = "name",
+        archived: bool = False,
     ) -> Page[Guest]:
         require_staff(actor)
         with self._uow() as uow:
-            return uow.guests.search(query.strip()[:100], request, sort=sort)
+            return uow.guests.search(query.strip()[:100], request, sort=sort, archived=archived)
+
+    # ------------------------------------------------------------ delete or archive (6.17)
+    def count_archived(self, actor: Actor) -> int:
+        require_staff(actor)
+        with self._uow() as uow:
+            return uow.guests.count_archived()
+
+    def stay_counts(self, actor: Actor, guest_id: int) -> tuple[int, int]:
+        """(all stays, current or future stays) of a guest."""
+        require_staff(actor)
+        with self._uow() as uow:
+            return uow.guests.count_stays(guest_id)
+
+    def removal_plan(self, actor: Actor, guest_id: int) -> RemovalPlan:
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            return self._plan(uow, self._load(uow, guest_id))
+
+    def remove(self, actor: Actor, guest_id: int) -> RemovalAction:
+        """Delete a guest who never booked; archive one with a history (story 6.17)."""
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            guest = self._load(uow, guest_id)
+            plan = self._plan(uow, guest)
+            if not plan.allowed:
+                raise BusinessRuleViolation(plan.blocked, **plan.params)
+            if plan.action is RemovalAction.DELETE:
+                uow.guests.delete(guest_id)
+            elif not guest.is_archived:
+                uow.guests.archive(guest_id, self._clock.now())
+            # No name in the details: the audit log never holds guests' personal data.
+            action = "guest.deleted" if plan.action is RemovalAction.DELETE else "guest.archived"
+            record(uow, self._clock, actor, action, entity="guest", entity_id=guest_id)
+            return plan.action
+
+    def restore(self, actor: Actor, guest_id: int) -> Guest:
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            guest = self._load(uow, guest_id)
+            if guest.is_archived:
+                uow.guests.archive(guest_id, None)
+                record(
+                    uow, self._clock, actor, "guest.restored", entity="guest", entity_id=guest_id
+                )
+            return uow.guests.get(guest_id)
+
+    @staticmethod
+    def _plan(uow: UnitOfWork, guest: Guest) -> RemovalPlan:
+        stays, current = uow.guests.count_stays(guest.id)
+        # A guest with a booking to come or in the house cannot disappear from the lists.
+        return plan_removal(stays, blocked="guest.has_current_stays" if current else None)
 
     def get(self, actor: Actor, guest_id: int) -> Guest:
         require_staff(actor)
@@ -206,6 +264,8 @@ class GuestService:
             raise StaleDataError(entity="guest", id=guest_id)
         if for_change and guest.is_anonymised:
             raise BusinessRuleViolation("guest.anonymised")
+        if for_change and guest.is_archived:
+            raise BusinessRuleViolation("guest.archived")
         return guest
 
     @staticmethod

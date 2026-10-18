@@ -73,6 +73,14 @@ All notable changes are recorded here. The format follows
   bill until the invoice is issued; exemptions are listed on the invoice and
   audited. The demo tourist tax now concerns foreign guests only.
   Migration 0019.
+- Delete or archive (story 6.17): managers can remove guests, rooms, extra
+  services, tax rules and staff accounts ("Remove…"). A record never used is
+  deleted; one with history is archived: hidden from lists, forms and
+  suggestions, history intact, restorable (archived lists under
+  "Archived: n"). Removal is refused while it would break something current
+  (a room with future bookings, a guest with a stay to come, oneself, the
+  last manager). The confirmation page says which and why; every removal is
+  audited. Migration 0020.
 
 ### Security (story 6.6)
 - OWASP ASVS 5.0 Level 1 self-assessment (`docs/asvs.md`): 58 requirements

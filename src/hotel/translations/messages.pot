@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-18 21:01+0100\n"
+"POT-Creation-Date: 2026-10-18 21:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -173,10 +173,21 @@ msgstr ""
 msgid "Account %(username)s created. Give them the temporary password in person."
 msgstr ""
 
+msgid "Account archived and deactivated. You can find it under Archived."
+msgstr ""
+
 msgid "Account deactivated and signed out."
 msgstr ""
 
+msgid "Account deleted."
+msgstr ""
+
 msgid "Account reactivated."
+msgstr ""
+
+msgid ""
+"Account restored. It is still deactivated: reactivate it to let the "
+"person in."
 msgstr ""
 
 msgid "Account unlocked."
@@ -188,15 +199,14 @@ msgid ""
 "your password or set up two-factor sign-in."
 msgstr ""
 
-msgid ""
-"Accounts are deactivated, never deleted, so the audit log keeps its "
-"meaning."
-msgstr ""
-
 msgid "Action"
 msgstr ""
 
 msgid "Actions"
+msgstr ""
+
+#, python-format
+msgid "Actions in the audit log: %(count)s"
 msgstr ""
 
 msgid "Active"
@@ -316,6 +326,11 @@ msgstr ""
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr ""
 
+msgid ""
+"An account that was never used can be deleted; one with a history is "
+"archived, so the audit log keeps its meaning."
+msgstr ""
+
 msgid "An amount per adult per night can only apply to the accommodation."
 msgstr ""
 
@@ -347,6 +362,26 @@ msgid "Applies to"
 msgstr ""
 
 msgid "Apply the tax again"
+msgstr ""
+
+msgid "Archive"
+msgstr ""
+
+msgid "Archived guests: hidden from searches and bookings, history kept."
+msgstr ""
+
+#, python-format
+msgid "Archived on %(date)s: hidden from lists and forms, history kept."
+msgstr ""
+
+msgid ""
+"Archived records disappear from lists, forms and suggestions, but their "
+"history stays intact (invoices, past stays, audit log). You can restore "
+"it at any time from the archived list."
+msgstr ""
+
+#, python-format
+msgid "Archived: %(count)s"
 msgstr ""
 
 msgid "Arrival"
@@ -415,6 +450,9 @@ msgid "Back"
 msgstr ""
 
 msgid "Back to staff"
+msgstr ""
+
+msgid "Back to the current list"
 msgstr ""
 
 msgid "Back to the dashboard"
@@ -633,6 +671,10 @@ msgstr ""
 msgid "Charged: %(quantity)s × %(name)s."
 msgstr ""
 
+#, python-format
+msgid "Charges to stays: %(count)s"
+msgstr ""
+
 msgid "Check a guest in"
 msgstr ""
 
@@ -849,6 +891,9 @@ msgstr ""
 msgid ""
 "Decided by the guest's nationality. A manager can also exempt one stay "
 "from a tax, on its bill."
+msgstr ""
+
+msgid "Delete permanently"
 msgstr ""
 
 msgid "Departure"
@@ -1179,6 +1224,15 @@ msgstr ""
 msgid "Guest %(name)s registered."
 msgstr ""
 
+msgid "Guest archived. You can find them under Archived."
+msgstr ""
+
+msgid "Guest deleted."
+msgstr ""
+
+msgid "Guest restored."
+msgstr ""
+
 msgid "Guests"
 msgstr ""
 
@@ -1243,6 +1297,9 @@ msgid "Housekeeping moves rooms from To clean to Ready."
 msgstr ""
 
 msgid "I have saved them"
+msgstr ""
+
+msgid "I understand."
 msgstr ""
 
 #, python-format
@@ -1324,6 +1381,14 @@ msgid "Issued invoices keep the tax they were issued with."
 msgstr ""
 
 msgid "Issued on"
+msgstr ""
+
+msgid "It has a history, so it will be archived, not deleted."
+msgstr ""
+
+msgid ""
+"It was never used, so it will be deleted permanently. This cannot be "
+"undone."
 msgstr ""
 
 msgid ""
@@ -1768,6 +1833,11 @@ msgid "On"
 msgstr ""
 
 msgid ""
+"On a guest, room, service, tax or account: deletes it if it was never "
+"used, otherwise archives it (hidden, history kept, restorable)."
+msgstr ""
+
+msgid ""
 "One of these guests can no longer be anonymised (a new booking?). Reload "
 "the list."
 msgstr ""
@@ -1998,10 +2068,29 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
+#, python-format
+msgid "Remove %(name)s"
+msgstr ""
+
+#, python-format
+msgid "Remove room %(number)s"
+msgstr ""
+
+#, python-format
+msgid "Remove the account %(username)s"
+msgstr ""
+
+#, python-format
+msgid "Remove the tax %(name)s"
+msgstr ""
+
 msgid "Remove this room"
 msgstr ""
 
 msgid "Removed"
+msgstr ""
+
+msgid "Remove…"
 msgstr ""
 
 msgid "Reopens on"
@@ -2053,6 +2142,9 @@ msgid "Reset password"
 msgstr ""
 
 msgid "Restart the tour"
+msgstr ""
+
+msgid "Restore"
 msgstr ""
 
 msgid "Reveals a masked document number; the reveal is audited."
@@ -2136,6 +2228,9 @@ msgstr ""
 msgid "Room %(room)s will be marked to clean."
 msgstr ""
 
+msgid "Room archived and out of service. You can find it under Archived."
+msgstr ""
+
 msgid "Room categories"
 msgstr ""
 
@@ -2143,7 +2238,13 @@ msgstr ""
 msgid "Room closed from %(first)s; it reopens on %(reopens)s."
 msgstr ""
 
+msgid "Room deleted."
+msgstr ""
+
 msgid "Room number"
+msgstr ""
+
+msgid "Room restored. It is still out of service: edit it to put it back."
 msgstr ""
 
 msgid "Room value"
@@ -2226,6 +2327,15 @@ msgid "Sends a room back."
 msgstr ""
 
 msgid "Service"
+msgstr ""
+
+msgid "Service archived. You can find it under Archived."
+msgstr ""
+
+msgid "Service deleted."
+msgstr ""
+
+msgid "Service restored. It is still inactive: edit it to charge it again."
 msgstr ""
 
 msgid "Set it up now"
@@ -2342,6 +2452,18 @@ msgid "Stay"
 msgstr ""
 
 #, python-format
+msgid "Stays and maintenance periods: %(count)s"
+msgstr ""
+
+#, python-format
+msgid "Stays exempted from it: %(count)s"
+msgstr ""
+
+#, python-format
+msgid "Stays: %(count)s"
+msgstr ""
+
+#, python-format
 msgid "Step %(number)s of %(total)s"
 msgstr ""
 
@@ -2368,6 +2490,15 @@ msgstr ""
 
 #, python-format
 msgid "Tax rule %(name)s added."
+msgstr ""
+
+msgid "Tax rule archived and inactive. You can find it under Archived."
+msgstr ""
+
+msgid "Tax rule deleted. Issued invoices keep their own copy of it."
+msgstr ""
+
+msgid "Tax rule restored. It is still inactive: edit it to apply it again."
 msgstr ""
 
 msgid "Tax rules"
@@ -2548,6 +2679,9 @@ msgstr ""
 msgid "They will have to replace it at their first sign-in."
 msgstr ""
 
+msgid "This account is archived. Restore it first."
+msgstr ""
+
 msgid "This action can't be done this way."
 msgstr ""
 
@@ -2592,6 +2726,14 @@ msgstr ""
 msgid ""
 "This form was already submitted. Check the reservation list before trying"
 " again."
+msgstr ""
+
+msgid ""
+"This guest has a stay in progress or to come. Cancel it or wait until it "
+"is over."
+msgstr ""
+
+msgid "This guest is archived. Restore them first."
 msgstr ""
 
 msgid "This guest is marked do-not-rent: new reservations are refused."
@@ -2643,11 +2785,17 @@ msgstr ""
 msgid "This room has never been closed for maintenance."
 msgstr ""
 
+msgid "This room is archived. Restore it first."
+msgstr ""
+
 msgid "This room is not part of the stay any more."
 msgstr ""
 
 #, python-format
 msgid "This room still has bookings (%(codes)s). Move or cancel them first."
+msgstr ""
+
+msgid "This service is archived. Restore it first."
 msgstr ""
 
 msgid ""
@@ -2656,6 +2804,9 @@ msgid ""
 msgstr ""
 
 msgid "This stay is already exempt from this tax."
+msgstr ""
+
+msgid "This tax rule is archived. Restore it first."
 msgstr ""
 
 msgid "This username is already used."
@@ -2671,6 +2822,9 @@ msgid ""
 msgstr ""
 
 msgid "Thursday"
+msgstr ""
+
+msgid "Tick the box to confirm."
 msgstr ""
 
 msgid "Tick the box to confirm: this cannot be undone."
@@ -2930,6 +3084,9 @@ msgid "You can reopen this tour from Help at any time."
 msgstr ""
 
 msgid "You can't deactivate your own account."
+msgstr ""
+
+msgid "You cannot remove your own account."
 msgstr ""
 
 msgid "You don't have permission to do that."

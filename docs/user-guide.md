@@ -429,6 +429,29 @@ document, contact); this cannot be undone. Invoices keep their copy, as
 the law requires.
 *Why:* personal data shouldn't be kept longer than needed (data protection).
 
+### Removing records (Remove…)
+
+Guests, rooms, extra services, tax rules and staff accounts have a
+**Remove…** button for managers (on the record's page or edit page). The
+confirmation page says what will happen and why:
+
+* **Never used**, for example a guest registered by mistake who never booked:
+  **deleted permanently**.
+* **Used**, for example a room with past stays or a service already charged:
+  **archived**. It disappears from lists, forms and suggestions, but its
+  history (invoices, stays, audit log) stays intact.
+  * Archived records are listed under **Archived: n** above each list, and
+    **Restore** brings them back.
+  * A restored room, service, tax or account is still out of service or
+    inactive until you switch it back on.
+* **Not possible now**, with the reason: a room with bookings to come, a
+  guest with a stay in progress or to come, your own account, or the last
+  manager.
+
+*Example:* the hotel stops selling "Spa access". **Extra services → Edit →
+Remove…** archives it: the stays it was charged to keep their lines, and it
+no longer appears when charging.
+
 ### Manager-only buttons on other pages
 
 * **Grant a discount**, **Refund the guest**: on the bill.

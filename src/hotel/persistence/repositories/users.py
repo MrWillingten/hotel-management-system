@@ -16,19 +16,19 @@ from hotel.persistence.repositories.base import BaseRepository
 _SELECT_BY_ID = (
     "SELECT id, username, full_name, password_hash, role, is_active, must_change_password, "
     "failed_attempts, locked_until, created_at, version, totp_secret, "
-    "totp_pending_secret, totp_last_step, totp_enabled_at, totp_grace_until "
+    "totp_pending_secret, totp_last_step, totp_enabled_at, totp_grace_until, archived_at "
     "FROM app_user WHERE id = ?"
 )
 _SELECT_ALL = (
     "SELECT id, username, full_name, password_hash, role, is_active, must_change_password, "
     "failed_attempts, locked_until, created_at, version, totp_secret, "
-    "totp_pending_secret, totp_last_step, totp_enabled_at, totp_grace_until "
+    "totp_pending_secret, totp_last_step, totp_enabled_at, totp_grace_until, archived_at "
     "FROM app_user ORDER BY username"
 )
 _SELECT_BY_USERNAME = (
     "SELECT id, username, full_name, password_hash, role, is_active, must_change_password, "
     "failed_attempts, locked_until, created_at, version, totp_secret, "
-    "totp_pending_secret, totp_last_step, totp_enabled_at, totp_grace_until "
+    "totp_pending_secret, totp_last_step, totp_enabled_at, totp_grace_until, archived_at "
     "FROM app_user WHERE username = ?"
 )
 
@@ -53,6 +53,7 @@ def _to_user(row: sqlite3.Row) -> User:
             enabled_at=datetime_from_db(row["totp_enabled_at"]),
             grace_until=datetime_from_db(row["totp_grace_until"]),
         ),
+        archived_at=datetime_from_db(row["archived_at"]),
     )
 
 
@@ -65,8 +66,47 @@ class UserRepository(BaseRepository):
         row = self._fetch_one(_SELECT_BY_USERNAME, (username,))
         return _to_user(row) if row else None
 
-    def list_all(self) -> list[User]:
-        return [_to_user(row) for row in self._fetch_all(_SELECT_ALL)]
+    def list_all(self, *, archived: bool = False) -> list[User]:
+        """Accounts in use; archived ones (story 6.17) only when asked for, and then alone."""
+        return [
+            user
+            for user in (_to_user(row) for row in self._fetch_all(_SELECT_ALL))
+            if user.is_archived == archived
+        ]
+
+    # ------------------------------------------------------------ delete or archive (6.17)
+    def count_actions(self, user_id: int) -> int:
+        """Entries of the audit log written by this person (every action is audited)."""
+        return self._fetch_one("SELECT COUNT(*) FROM audit_log WHERE user_id = ?", (user_id,))[0]
+
+    def count_archived(self) -> int:
+        return self._fetch_one("SELECT COUNT(*) FROM app_user WHERE archived_at IS NOT NULL")[0]
+
+    def archive(self, user_id: int, now: datetime | None) -> None:
+        """`now` archives (and deactivates), None restores (still deactivated)."""
+        if now is None:
+            self._execute(
+                "UPDATE app_user SET archived_at = NULL, version = version + 1 WHERE id = ?",
+                (user_id,),
+            )
+        else:
+            self._execute(
+                "UPDATE app_user SET archived_at = ?, is_active = 0, version = version + 1 "
+                "WHERE id = ?",
+                (datetime_to_db(now), user_id),
+            )
+
+    def delete(self, user_id: int) -> bool:
+        """Sessions, tokens, recovery codes and onboarding go with it (ON DELETE CASCADE).
+
+        Returns False, changing nothing, if a record still points to the
+        account (a foreign key): the caller then archives it instead.
+        """
+        try:
+            self._execute("DELETE FROM app_user WHERE id = ?", (user_id,))
+        except sqlite3.IntegrityError:
+            return False
+        return True
 
     def count_active_managers(self) -> int:
         return self._fetch_one(

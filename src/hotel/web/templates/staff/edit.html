@@ -1,6 +1,7 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/forms.html" import csrf, field, form_errors, role_select -%}
 {%- from "macros/staff.html" import status_badges -%}
+{%- from "macros/archive.html" import archived_banner, remove_link with context -%}
 {% block title %}{{ user.username }}{% endblock %}
 {% block page_title %}{{ _("Staff member") }}{% endblock %}
 {% block content %}
@@ -9,8 +10,12 @@
     <h2 class="section-title" dir="ltr">{{ user.username }}</h2>
     {{ status_badges(user, now) }}
   </div>
-  <a class="button button--ghost" href="{{ url_for('staff.index') }}">{{ _("Back to staff") }}</a>
+  <div class="page-actions__buttons">
+    <a class="button button--ghost" href="{{ url_for('staff.index') }}">{{ _("Back to staff") }}</a>
+    {{ remove_link(user, url_for("staff.remove", user_id=user.id)) }}
+  </div>
 </div>
+{{ archived_banner(user, url_for("staff.restore", user_id=user.id)) }}
 
 <div class="grid grid--two">
   <section class="panel">

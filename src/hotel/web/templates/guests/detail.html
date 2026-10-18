@@ -2,6 +2,7 @@
 {%- from "macros/forms.html" import csrf, field, form_errors, checkbox -%}
 {%- from "macros/guests.html" import flags -%}
 {%- from "macros/icons.html" import icon -%}
+{%- from "macros/archive.html" import archived_banner, remove_link with context -%}
 {%- from "macros/reservations.html" import status_badge, stay -%}
 {% block title %}{{ guest.full_name }}{% endblock %}
 {% block page_title %}{{ guest.full_name }}{% endblock %}
@@ -10,11 +11,13 @@
   <div class="badge-row">{{ flags(guest) }}</div>
   <div class="page-actions__buttons">
     <a class="button button--ghost" href="{{ url_for('guests.index') }}">{{ _("All guests") }}</a>
-    {%- if not guest.is_anonymised %}
+    {%- if not guest.is_anonymised and not guest.is_archived %}
     <a class="button button--primary" href="{{ url_for('guests.edit', guest_id=guest.id) }}">{{ _("Edit guest") }}</a>
     {%- endif %}
+    {{ remove_link(guest, url_for("guests.remove", guest_id=guest.id)) }}
   </div>
 </div>
+{{ archived_banner(guest, url_for("guests.restore", guest_id=guest.id)) }}
 
 {%- if guest.do_not_rent %}
 <div class="alert alert--danger" role="alert">{{ icon("ban") }}

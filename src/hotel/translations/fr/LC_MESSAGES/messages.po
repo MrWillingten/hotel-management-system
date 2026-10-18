@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-18 21:01+0100\n"
+"POT-Creation-Date: 2026-10-18 21:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -179,11 +179,20 @@ msgstr "Total hébergement (hors taxes)"
 msgid "Account %(username)s created. Give them the temporary password in person."
 msgstr "Compte %(username)s créé. Remettez-lui le mot de passe temporaire en personne."
 
+msgid "Account archived and deactivated. You can find it under Archived."
+msgstr "Compte archivé et désactivé. Vous le retrouverez dans « Archivés »."
+
 msgid "Account deactivated and signed out."
 msgstr "Compte désactivé et déconnecté."
 
+msgid "Account deleted."
+msgstr "Compte supprimé."
+
 msgid "Account reactivated."
 msgstr "Compte réactivé."
+
+msgid "Account restored. It is still deactivated: reactivate it to let the person in."
+msgstr "Compte restauré. Il est encore désactivé : réactivez-le pour permettre la connexion."
 
 msgid "Account unlocked."
 msgstr "Compte déverrouillé."
@@ -196,14 +205,15 @@ msgstr ""
 "première connexion. Cliquez sur votre nom dans la barre du haut pour changer votre mot de passe "
 "ou activer la connexion en deux étapes."
 
-msgid "Accounts are deactivated, never deleted, so the audit log keeps its meaning."
-msgstr "Les comptes sont désactivés, jamais supprimés, pour que le journal d'audit garde son sens."
-
 msgid "Action"
 msgstr "Action"
 
 msgid "Actions"
 msgstr "Actions"
+
+#, python-format
+msgid "Actions in the audit log: %(count)s"
+msgstr "Actions dans le journal d'audit : %(count)s"
 
 msgid "Active"
 msgstr "Actif"
@@ -329,6 +339,13 @@ msgstr ""
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr "Les montants ont au plus 3 décimales (millimes)."
 
+msgid ""
+"An account that was never used can be deleted; one with a history is archived, so the audit log "
+"keeps its meaning."
+msgstr ""
+"Un compte jamais utilisé peut être supprimé ; un compte avec un historique est archivé, pour que "
+"le journal d'audit garde son sens."
+
 msgid "An amount per adult per night can only apply to the accommodation."
 msgstr "Un montant par adulte et par nuit ne peut s'appliquer qu'à l'hébergement."
 
@@ -361,6 +378,28 @@ msgstr "S'applique à"
 
 msgid "Apply the tax again"
 msgstr "Appliquer à nouveau la taxe"
+
+msgid "Archive"
+msgstr "Archiver"
+
+msgid "Archived guests: hidden from searches and bookings, history kept."
+msgstr "Clients archivés : absents des recherches et des réservations, historique conservé."
+
+#, python-format
+msgid "Archived on %(date)s: hidden from lists and forms, history kept."
+msgstr "Archivé le %(date)s : absent des listes et des formulaires, historique conservé."
+
+msgid ""
+"Archived records disappear from lists, forms and suggestions, but their history stays intact "
+"(invoices, past stays, audit log). You can restore it at any time from the archived list."
+msgstr ""
+"Les éléments archivés disparaissent des listes, formulaires et suggestions, mais leur historique "
+"reste intact (factures, séjours passés, journal d'audit). Vous pouvez le restaurer à tout moment "
+"depuis la liste des archivés."
+
+#, python-format
+msgid "Archived: %(count)s"
+msgstr "Archivés : %(count)s"
 
 msgid "Arrival"
 msgstr "Arrivée"
@@ -427,6 +466,9 @@ msgstr "Retour"
 
 msgid "Back to staff"
 msgstr "Retour au personnel"
+
+msgid "Back to the current list"
+msgstr "Retour à la liste actuelle"
 
 msgid "Back to the dashboard"
 msgstr "Retour au tableau de bord"
@@ -639,6 +681,10 @@ msgstr "Prestation annulée."
 #, python-format
 msgid "Charged: %(quantity)s × %(name)s."
 msgstr "Facturé : %(quantity)s × %(name)s."
+
+#, python-format
+msgid "Charges to stays: %(count)s"
+msgstr "Facturations sur des séjours : %(count)s"
 
 msgid "Check a guest in"
 msgstr "Enregistrer l’arrivée d’un client"
@@ -860,6 +906,9 @@ msgid "Decided by the guest's nationality. A manager can also exempt one stay fr
 msgstr ""
 "Selon la nationalité du client. Un gérant peut aussi exonérer un séjour d’une taxe, depuis sa "
 "note."
+
+msgid "Delete permanently"
+msgstr "Supprimer définitivement"
 
 msgid "Departure"
 msgstr "Départ"
@@ -1189,6 +1238,15 @@ msgstr "Client"
 msgid "Guest %(name)s registered."
 msgstr "Client %(name)s enregistré."
 
+msgid "Guest archived. You can find them under Archived."
+msgstr "Client archivé. Vous le retrouverez dans « Archivés »."
+
+msgid "Guest deleted."
+msgstr "Client supprimé."
+
+msgid "Guest restored."
+msgstr "Client restauré."
+
 msgid "Guests"
 msgstr "Clients"
 
@@ -1261,6 +1319,9 @@ msgstr "Le ménage fait passer les chambres de « À nettoyer » à « Prête »
 
 msgid "I have saved them"
 msgstr "Je les ai conservés"
+
+msgid "I understand."
+msgstr "J’ai compris."
 
 #, python-format
 msgid "I understand: erase the personal data of these %(count)s guests."
@@ -1341,6 +1402,12 @@ msgstr "Les factures émises conservent la taxe avec laquelle elles ont été é
 
 msgid "Issued on"
 msgstr "Émise le"
+
+msgid "It has a history, so it will be archived, not deleted."
+msgstr "Il a un historique : il sera archivé, pas supprimé."
+
+msgid "It was never used, so it will be deleted permanently. This cannot be undone."
+msgstr "Il n’a jamais été utilisé : il sera supprimé définitivement. C’est irréversible."
 
 msgid "Karim, 10–13 July, 2 adults: Find rooms → Book 204 → Review → Confirm booking."
 msgstr ""
@@ -1792,6 +1859,13 @@ msgstr "De l'hébergement ; également facturés en cas de non-présentation."
 msgid "On"
 msgstr "Activée"
 
+msgid ""
+"On a guest, room, service, tax or account: deletes it if it was never used, otherwise archives it"
+" (hidden, history kept, restorable)."
+msgstr ""
+"Sur un client, une chambre, un service, une taxe ou un compte : le supprime s’il n’a jamais "
+"servi, sinon l’archive (masqué, historique conservé, restaurable)."
+
 msgid "One of these guests can no longer be anonymised (a new booking?). Reload the list."
 msgstr "L'un de ces clients ne peut plus être anonymisé (nouvelle réservation ?). Rechargez la liste."
 
@@ -2027,11 +2101,30 @@ msgstr "Rechargez la page et scannez le nouveau code QR."
 msgid "Remove"
 msgstr "Retirer"
 
+#, python-format
+msgid "Remove %(name)s"
+msgstr "Retirer %(name)s"
+
+#, python-format
+msgid "Remove room %(number)s"
+msgstr "Retirer la chambre %(number)s"
+
+#, python-format
+msgid "Remove the account %(username)s"
+msgstr "Retirer le compte %(username)s"
+
+#, python-format
+msgid "Remove the tax %(name)s"
+msgstr "Retirer la taxe %(name)s"
+
 msgid "Remove this room"
 msgstr "Retirer cette chambre"
 
 msgid "Removed"
 msgstr "Retirée"
+
+msgid "Remove…"
+msgstr "Retirer…"
 
 msgid "Reopens on"
 msgstr "Réouverture le"
@@ -2083,6 +2176,9 @@ msgstr "Réinitialiser le mot de passe"
 
 msgid "Restart the tour"
 msgstr "Relancer la visite"
+
+msgid "Restore"
+msgstr "Restaurer"
 
 msgid "Reveals a masked document number; the reveal is audited."
 msgstr "Révèle un numéro de pièce masqué ; l’affichage est journalisé."
@@ -2163,6 +2259,9 @@ msgstr "La chambre %(room)s est encore occupée (%(code)s). Enregistrez d'abord 
 msgid "Room %(room)s will be marked to clean."
 msgstr "La chambre %(room)s sera marquée à nettoyer."
 
+msgid "Room archived and out of service. You can find it under Archived."
+msgstr "Chambre archivée et hors service. Vous la retrouverez dans « Archivés »."
+
 msgid "Room categories"
 msgstr "Catégories de chambres"
 
@@ -2170,8 +2269,14 @@ msgstr "Catégories de chambres"
 msgid "Room closed from %(first)s; it reopens on %(reopens)s."
 msgstr "Chambre fermée à partir du %(first)s ; réouverture le %(reopens)s."
 
+msgid "Room deleted."
+msgstr "Chambre supprimée."
+
 msgid "Room number"
 msgstr "Numéro de chambre"
+
+msgid "Room restored. It is still out of service: edit it to put it back."
+msgstr "Chambre restaurée. Elle est encore hors service : modifiez-la pour la remettre en service."
 
 msgid "Room value"
 msgstr "Valeur des chambres"
@@ -2252,6 +2357,15 @@ msgstr "Renvoie une chambre au ménage."
 
 msgid "Service"
 msgstr "Service"
+
+msgid "Service archived. You can find it under Archived."
+msgstr "Service archivé. Vous le retrouverez dans « Archivés »."
+
+msgid "Service deleted."
+msgstr "Service supprimé."
+
+msgid "Service restored. It is still inactive: edit it to charge it again."
+msgstr "Service restauré. Il est encore inactif : modifiez-le pour le facturer à nouveau."
 
 msgid "Set it up now"
 msgstr "L’activer maintenant"
@@ -2365,6 +2479,18 @@ msgid "Stay"
 msgstr "Séjour"
 
 #, python-format
+msgid "Stays and maintenance periods: %(count)s"
+msgstr "Séjours et périodes de maintenance : %(count)s"
+
+#, python-format
+msgid "Stays exempted from it: %(count)s"
+msgstr "Séjours exonérés : %(count)s"
+
+#, python-format
+msgid "Stays: %(count)s"
+msgstr "Séjours : %(count)s"
+
+#, python-format
 msgid "Step %(number)s of %(total)s"
 msgstr "Étape %(number)s sur %(total)s"
 
@@ -2392,6 +2518,15 @@ msgstr "Exonérations de taxe"
 #, python-format
 msgid "Tax rule %(name)s added."
 msgstr "Taxe %(name)s ajoutée."
+
+msgid "Tax rule archived and inactive. You can find it under Archived."
+msgstr "Taxe archivée et inactive. Vous la retrouverez dans « Archivés »."
+
+msgid "Tax rule deleted. Issued invoices keep their own copy of it."
+msgstr "Taxe supprimée. Les factures émises en gardent leur propre copie."
+
+msgid "Tax rule restored. It is still inactive: edit it to apply it again."
+msgstr "Taxe restaurée. Elle est encore inactive : modifiez-la pour l’appliquer à nouveau."
 
 msgid "Tax rules"
 msgstr "Taxes"
@@ -2567,6 +2702,9 @@ msgstr "Les deux mots de passe sont différents."
 msgid "They will have to replace it at their first sign-in."
 msgstr "La personne devra le remplacer à sa première connexion."
 
+msgid "This account is archived. Restore it first."
+msgstr "Ce compte est archivé. Restaurez-le d’abord."
+
 msgid "This action can't be done this way."
 msgstr "Cette action ne peut pas être effectuée de cette façon."
 
@@ -2606,6 +2744,12 @@ msgstr "Ce formulaire a déjà été envoyé. Vérifiez la réservation avant de
 
 msgid "This form was already submitted. Check the reservation list before trying again."
 msgstr "Ce formulaire a déjà été envoyé. Vérifiez la liste des réservations avant de réessayer."
+
+msgid "This guest has a stay in progress or to come. Cancel it or wait until it is over."
+msgstr "Ce client a un séjour en cours ou à venir. Annulez-le ou attendez qu’il soit terminé."
+
+msgid "This guest is archived. Restore them first."
+msgstr "Ce client est archivé. Restaurez-le d’abord."
 
 msgid "This guest is marked do-not-rent: new reservations are refused."
 msgstr "Ce client est marqué « ne pas louer » : les nouvelles réservations sont refusées."
@@ -2656,12 +2800,18 @@ msgstr "Cette réservation ne peut plus être modifiée."
 msgid "This room has never been closed for maintenance."
 msgstr "Cette chambre n'a jamais été fermée pour maintenance."
 
+msgid "This room is archived. Restore it first."
+msgstr "Cette chambre est archivée. Restaurez-la d’abord."
+
 msgid "This room is not part of the stay any more."
 msgstr "Cette chambre ne fait plus partie du séjour."
 
 #, python-format
 msgid "This room still has bookings (%(codes)s). Move or cancel them first."
 msgstr "Cette chambre a encore des réservations (%(codes)s). Déplacez-les ou annulez-les d'abord."
+
+msgid "This service is archived. Restore it first."
+msgstr "Ce service est archivé. Restaurez-le d’abord."
 
 msgid ""
 "This short tour shows where everything is. It takes about two minutes; you can skip it and reopen"
@@ -2672,6 +2822,9 @@ msgstr ""
 
 msgid "This stay is already exempt from this tax."
 msgstr "Ce séjour est déjà exonéré de cette taxe."
+
+msgid "This tax rule is archived. Restore it first."
+msgstr "Cette taxe est archivée. Restaurez-la d’abord."
 
 msgid "This username is already used."
 msgstr "Ce nom d'utilisateur est déjà utilisé."
@@ -2689,6 +2842,9 @@ msgstr ""
 
 msgid "Thursday"
 msgstr "Jeudi"
+
+msgid "Tick the box to confirm."
+msgstr "Cochez la case pour confirmer."
 
 msgid "Tick the box to confirm: this cannot be undone."
 msgstr "Cochez la case pour confirmer : c'est irréversible."
@@ -2951,6 +3107,9 @@ msgstr "Vous pouvez rouvrir cette visite depuis l’Aide à tout moment."
 
 msgid "You can't deactivate your own account."
 msgstr "Vous ne pouvez pas désactiver votre propre compte."
+
+msgid "You cannot remove your own account."
+msgstr "Vous ne pouvez pas retirer votre propre compte."
 
 msgid "You don't have permission to do that."
 msgstr "Vous n'avez pas l'autorisation d'effectuer cette action."

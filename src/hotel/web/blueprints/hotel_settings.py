@@ -13,6 +13,7 @@ from hotel.domain.taxes import PerAdultNightTax, PercentTax, TaxBase, TaxKind, T
 from hotel.web import forms
 from hotel.web.context import current_actor, services
 from hotel.web.countries import country_code, country_name, country_options
+from hotel.web.removal import confirm_removal
 from hotel.web.security import roles_required
 
 bp = Blueprint("settings", __name__, url_prefix="/settings")
@@ -58,12 +59,15 @@ def _tax_rule(data, *, version: int = 1, is_active: bool = True) -> TaxRule:
 def _page(errors=None, values=None, *, tax_errors=None, tax_values=None, status=200):
     actor = current_actor()
     settings = services().hotel_settings.get(actor)
+    archived = request.args.get("archived") == "1"
     return render_template(
         "settings/index.html",
         settings=settings,
+        archived=archived,
+        archived_count=services().hotel_settings.count_archived_taxes(actor),
         countries=country_options(_locale()),
         home_country_name=country_name(settings.home_country, _locale()),
-        rules=services().hotel_settings.tax_rules(actor),
+        rules=services().hotel_settings.tax_rules(actor, archived=archived),
         errors=errors or forms.FormErrors(),
         values=values or {},
         tax_errors=tax_errors or forms.FormErrors(),
@@ -137,3 +141,33 @@ def edit_tax(rule_id: int):
 
 def _locale() -> str:
     return str(get_locale() or "en")
+
+
+# ---------------------------------------------------------------- delete or archive (6.17)
+@bp.route("/taxes/<int:rule_id>/remove", methods=["GET", "POST"])
+@roles_required(Role.MANAGER)
+def remove_tax(rule_id: int):
+    actor = current_actor()
+    rules = {r.id: r for r in services().hotel_settings.tax_rules(actor)}
+    if rule_id not in rules:  # unknown, or already archived
+        raise NotFoundError(entity="tax_rule", id=rule_id)
+    rule = rules[rule_id]
+    plan = services().hotel_settings.tax_removal_plan(actor, rule_id)
+    return confirm_removal(
+        plan=lambda: plan,
+        remove=lambda: services().hotel_settings.remove_tax_rule(actor, rule_id),
+        title=_("Remove the tax %(name)s", name=rule.name),
+        uses_label=_("Stays exempted from it: %(count)s", count=plan.uses),
+        back_url=url_for("settings.edit_tax", rule_id=rule_id),
+        list_url=url_for("settings.index"),
+        deleted=_("Tax rule deleted. Issued invoices keep their own copy of it."),
+        archived=_("Tax rule archived and inactive. You can find it under Archived."),
+    )
+
+
+@bp.post("/taxes/<int:rule_id>/restore")
+@roles_required(Role.MANAGER)
+def restore_tax(rule_id: int):
+    services().hotel_settings.restore_tax_rule(current_actor(), rule_id)
+    flash(_("Tax rule restored. It is still inactive: edit it to apply it again."), "success")
+    return redirect(url_for("settings.index"))

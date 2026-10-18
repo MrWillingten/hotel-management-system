@@ -109,6 +109,14 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
                   overdue_departures, created_at, created_by FK)   night audit (PK = run once)
 ```
 
+## Archiving (story 6.17)
+
+`guest`, `room`, `extra`, `tax_rule` and `app_user` have an `archived_at`
+column: NULL for records in use, the archiving instant otherwise. Archived
+records are left out of lists, forms and suggestions; archiving also takes a
+room out of service and deactivates a service, a tax rule or an account.
+A record that nothing refers to is deleted instead.
+
 ## Conventions
 
 * Timestamps: UTC ISO-8601 text **with microseconds**, so they sort correctly as text.

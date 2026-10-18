@@ -1,5 +1,6 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/forms.html" import csrf, field, form_errors, checkbox -%}
+{%- from "macros/archive.html" import remove_link with context -%}
 {%- set v = values if values else {} -%}
 {% block title %}{{ extra.name }}{% endblock %}
 {% block page_title %}{{ _("Edit service") }}{% endblock %}
@@ -17,6 +18,7 @@
     <div class="form-actions">
       <button class="button button--primary" type="submit">{{ _("Save changes") }}</button>
       <a class="button button--ghost" href="{{ url_for('extras.index') }}">{{ _("Cancel") }}</a>
+      {{ remove_link(extra, url_for("extras.remove", extra_id=extra.id)) }}
     </div>
   </form>
 </section>

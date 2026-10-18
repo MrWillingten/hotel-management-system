@@ -1,6 +1,7 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/forms.html" import checkbox, csrf, field, form_errors -%}
 {%- from "macros/taxes.html" import base_label, payers_label, rate, rule_fields -%}
+{%- from "macros/archive.html" import archived_toggle with context -%}
 {%- macro pct(bp) %}{{ "%g" | format(bp / 100) }}{% endmacro -%}
 {% block title %}{{ _("Settings and taxes") }}{% endblock %}
 {% block page_title %}{{ _("Settings and taxes") }}{% endblock %}
@@ -58,7 +59,10 @@
 </div>
 
 <section class="panel">
-  <h2 class="panel__title">{{ _("Tax rules") }}</h2>
+  <div class="panel__head">
+    <h2 class="panel__title">{{ _("Tax rules") }}</h2>
+    {{ archived_toggle("settings.index", archived, archived_count) }}
+  </div>
   <p class="muted">{{ _("Prices are entered before tax; each active rule becomes its own line on the bill. Check the rates against current regulations.") }}</p>
   <div class="table-wrap table-wrap--flat">
     <table class="table">
@@ -80,7 +84,15 @@
           <td>{{ base_label(rule.applies_to) }}</td>
           <td>{{ payers_label(rule.payers, home_country_name) }}</td>
           <td>{% if rule.is_active %}<span class="badge badge--success">{{ _("Active") }}</span>{% else %}<span class="badge badge--neutral">{{ _("Inactive") }}</span>{% endif %}</td>
-          <td><a class="button button--ghost button--small" href="{{ url_for('settings.edit_tax', rule_id=rule.id) }}">{{ _("Edit") }}</a></td>
+          <td>
+            {%- if rule.is_archived %}
+            <form method="post" action="{{ url_for('settings.restore_tax', rule_id=rule.id) }}">
+              {{ csrf() }}<button class="button button--ghost button--small" type="submit">{{ _("Restore") }}</button>
+            </form>
+            {%- else %}
+            <a class="button button--ghost button--small" href="{{ url_for('settings.edit_tax', rule_id=rule.id) }}">{{ _("Edit") }}</a>
+            {%- endif %}
+          </td>
         </tr>
         {%- else %}
         <tr><td colspan="6" class="table__empty">{{ _("No tax rules: bills will show no tax.") }}</td></tr>

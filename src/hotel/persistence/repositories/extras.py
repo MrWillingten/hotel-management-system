@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sqlite3
+from datetime import datetime
 
 from hotel.domain.errors import StaleDataError
 from hotel.domain.extras import Extra, ServiceCharge
@@ -8,7 +9,7 @@ from hotel.domain.money import Money
 from hotel.persistence.convert import date_from_db, date_to_db, datetime_from_db, datetime_to_db
 from hotel.persistence.repositories.base import BaseRepository
 
-_EXTRA = "SELECT id, name, unit_price_mill, is_active, version FROM extra"
+_EXTRA = "SELECT id, name, unit_price_mill, is_active, version, archived_at FROM extra"
 _CHARGE = (
     "SELECT id, reservation_id, extra_id, description, quantity, unit_price_mill, charge_date, "
     "created_by, created_at, voided_at, voided_by, void_reason FROM service_charge"
@@ -22,6 +23,7 @@ def _to_extra(row: sqlite3.Row) -> Extra:
         Money(row["unit_price_mill"]),
         bool(row["is_active"]),
         row["version"],
+        datetime_from_db(row["archived_at"]),
     )
 
 
@@ -43,12 +45,43 @@ def _to_charge(row: sqlite3.Row) -> ServiceCharge:
 
 
 class ExtraRepository(BaseRepository):
-    def list(self, *, active_only: bool = False) -> list[Extra]:
-        if active_only:
+    def list(self, *, active_only: bool = False, archived: bool = False) -> list[Extra]:
+        """The catalogue; archived services (story 6.17) only when asked for, and then alone."""
+        if archived:
+            rows = self._fetch_all(f"{_EXTRA} WHERE archived_at IS NOT NULL ORDER BY name")
+        elif active_only:
             rows = self._fetch_all(f"{_EXTRA} WHERE is_active = 1 ORDER BY name")
         else:
-            rows = self._fetch_all(f"{_EXTRA} ORDER BY is_active DESC, name")
+            rows = self._fetch_all(
+                f"{_EXTRA} WHERE archived_at IS NULL ORDER BY is_active DESC, name"
+            )
         return [_to_extra(r) for r in rows]
+
+    # ------------------------------------------------------------ delete or archive (6.17)
+    def count_charges(self, extra_id: int) -> int:
+        return self._fetch_one(
+            "SELECT COUNT(*) FROM service_charge WHERE extra_id = ?", (extra_id,)
+        )[0]
+
+    def count_archived(self) -> int:
+        return self._fetch_one("SELECT COUNT(*) FROM extra WHERE archived_at IS NOT NULL")[0]
+
+    def archive(self, extra_id: int, now: datetime | None) -> None:
+        """`now` archives (and deactivates), None restores (still inactive)."""
+        if now is None:
+            self._execute(
+                "UPDATE extra SET archived_at = NULL, version = version + 1 WHERE id = ?",
+                (extra_id,),
+            )
+        else:
+            self._execute(
+                "UPDATE extra SET archived_at = ?, is_active = 0, version = version + 1 "
+                "WHERE id = ?",
+                (datetime_to_db(now), extra_id),
+            )
+
+    def delete(self, extra_id: int) -> None:
+        self._execute("DELETE FROM extra WHERE id = ?", (extra_id,))
 
     def get(self, extra_id: int) -> Extra | None:
         row = self._fetch_one(f"{_EXTRA} WHERE id = ?", (extra_id,))

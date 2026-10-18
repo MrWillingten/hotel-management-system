@@ -2,6 +2,7 @@
 {%- from "macros/icons.html" import icon -%}
 {%- from "macros/paging.html" import pagination -%}
 {%- from "macros/guests.html" import flags -%}
+{%- from "macros/archive.html" import archived_toggle with context -%}
 {% block title %}{{ _("Guests") }}{% endblock %}
 {% block page_title %}{{ _("Guests") }}{% endblock %}
 {% block content %}
@@ -19,8 +20,10 @@
     {%- if current_user.is_manager %}
     <a class="button button--ghost" href="{{ url_for('guests.anonymise') }}">{{ _("Anonymise old guests") }}</a>
     {%- endif %}
+    {{ archived_toggle("guests.index", archived, archived_count) }}
   </div>
 </div>
+{%- if archived %}<p class="muted">{{ _("Archived guests: hidden from searches and bookings, history kept.") }}</p>{% endif %}
 
 <div class="table-wrap">
   <table class="table">

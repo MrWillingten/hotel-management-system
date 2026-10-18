@@ -62,6 +62,11 @@ class TaxRule(ABC):
     payers: TaxPayers = TaxPayers.EVERYONE
     is_active: bool = True
     version: int = 1
+    archived_at: datetime | None = None  # story 6.17
+
+    @property
+    def is_archived(self) -> bool:
+        return self.archived_at is not None
 
     def concerns(self, national: bool) -> bool:
         """Does this rule tax a guest who is (or is not) a national of the hotel's country?"""

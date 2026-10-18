@@ -1,5 +1,6 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/rooms.html" import housekeeping_badge, status_badge -%}
+{%- from "macros/archive.html" import archived_toggle with context -%}
 {% block title %}{{ _("Rooms") }}{% endblock %}
 {% block page_title %}{{ _("Rooms") }}{% endblock %}
 {% block content %}
@@ -14,13 +15,14 @@
     </select>
     <button class="button button--ghost button--small" type="submit">{{ _("Filter") }}</button>
   </form>
-  {%- if current_user.is_manager %}
   <div class="page-actions__buttons">
+    {{ archived_toggle("rooms.index", archived, archived_count) }}
+  {%- if current_user.is_manager %}
     <a class="button button--ghost" href="{{ url_for('rooms.categories') }}">{{ _("Categories") }}</a>
     <a class="button button--ghost" href="{{ url_for('rooms.rates') }}">{{ _("Seasonal rates") }}</a>
     <a class="button button--primary" href="{{ url_for('rooms.create') }}">{{ _("Add a room") }}</a>
-  </div>
   {%- endif %}
+  </div>
 </div>
 
 <div class="table-wrap">

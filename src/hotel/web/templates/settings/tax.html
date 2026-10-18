@@ -1,6 +1,7 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/forms.html" import csrf, form_errors, checkbox -%}
 {%- from "macros/taxes.html" import rule_fields -%}
+{%- from "macros/archive.html" import remove_link with context -%}
 {%- set current = {"name": rule.name, "kind": rule.kind, "applies_to": rule.applies_to, "payers": rule.payers,
                    "rate": ("%g" | format(rule.rate_bp / 100)) if rule.kind == "PERCENT" else rule.amount_per | string} -%}
 {% block title %}{{ rule.name }}{% endblock %}
@@ -17,6 +18,7 @@
     <div class="form-actions">
       <button class="button button--primary" type="submit">{{ _("Save changes") }}</button>
       <a class="button button--ghost" href="{{ url_for('settings.index') }}">{{ _("Cancel") }}</a>
+      {{ remove_link(rule, url_for("settings.remove_tax", rule_id=rule.id)) }}
     </div>
   </form>
 </section>

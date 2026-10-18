@@ -324,6 +324,13 @@ TOPICS: list[HelpTopic] = [
                 ),
             ),
             (
+                _l("Remove…"),
+                _l(
+                    "On a guest, room, service, tax or account: deletes it if it was never used, "
+                    "otherwise archives it (hidden, history kept, restorable)."
+                ),
+            ),
+            (
                 _l("Anonymise old guests"),
                 _l("Erases the personal data of guests without a stay for a long time."),
             ),

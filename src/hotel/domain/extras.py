@@ -35,13 +35,18 @@ def validate_unit_price(price: Money) -> Money:
 
 @dataclass(slots=True)
 class Extra:
-    """An item of the catalogue. Deactivated, never deleted (business rule BR26)."""
+    """An item of the catalogue. Deleted if never charged, otherwise archived (story 6.17)."""
 
     id: int | None
     name: str
     unit_price: Money
     is_active: bool = True
     version: int = 1
+    archived_at: datetime | None = None
+
+    @property
+    def is_archived(self) -> bool:
+        return self.archived_at is not None
 
 
 @dataclass(slots=True)

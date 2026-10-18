@@ -1,10 +1,12 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/forms.html" import csrf, field, form_errors -%}
+{%- from "macros/archive.html" import archived_toggle with context -%}
 {% block title %}{{ _("Extra services") }}{% endblock %}
 {% block page_title %}{{ _("Extra services") }}{% endblock %}
 {% block content %}
 <div class="page-actions">
   <p class="muted">{{ _("What can be charged to a stay: breakfast, airport transfer, laundry… Prices are before tax.") }}</p>
+  <div class="page-actions__buttons">{{ archived_toggle("extras.index", archived, archived_count) }}</div>
 </div>
 <div class="grid grid--two">
   <div class="table-wrap">
@@ -23,7 +25,15 @@
           <td>{{ extra.name }}</td>
           <td class="num">{{ extra.unit_price | money }}</td>
           <td>{% if extra.is_active %}<span class="badge badge--success">{{ _("Active") }}</span>{% else %}<span class="badge badge--neutral">{{ _("Inactive") }}</span>{% endif %}</td>
-          <td><a class="button button--ghost button--small" href="{{ url_for('extras.edit', extra_id=extra.id) }}">{{ _("Edit") }}</a></td>
+          <td>
+            {%- if extra.is_archived %}
+            <form method="post" action="{{ url_for('extras.restore', extra_id=extra.id) }}">
+              {{ csrf() }}<button class="button button--ghost button--small" type="submit">{{ _("Restore") }}</button>
+            </form>
+            {%- else %}
+            <a class="button button--ghost button--small" href="{{ url_for('extras.edit', extra_id=extra.id) }}">{{ _("Edit") }}</a>
+            {%- endif %}
+          </td>
         </tr>
         {%- else %}
         <tr><td colspan="4" class="table__empty">{{ _("The catalogue is empty.") }}</td></tr>
