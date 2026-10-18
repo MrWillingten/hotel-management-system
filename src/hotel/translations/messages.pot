@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 17:14+0100\n"
+"POT-Creation-Date: 2026-10-11 19:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,6 +61,22 @@ msgstr ""
 msgid "A category with this name already exists."
 msgstr ""
 
+msgid ""
+"A couple wants 12–14 July: room 205 is free both nights, so click it on "
+"the 12th."
+msgstr ""
+
+msgid "A different price for a category between two dates (e.g. summer)."
+msgstr ""
+
+msgid "A free cell"
+msgstr ""
+
+msgid ""
+"A grid of rooms and nights, two weeks at a time: what is free when, at a "
+"glance."
+msgstr ""
+
 msgid "A guest with the same name and phone or e-mail already exists."
 msgstr ""
 
@@ -86,6 +102,9 @@ msgid ""
 "kind."
 msgstr ""
 
+msgid "A percentage (VAT) or an amount per adult per night (tourist tax)."
+msgstr ""
+
 #, python-format
 msgid "A rate period lasts at most %(max)s nights."
 msgstr ""
@@ -100,6 +119,12 @@ msgstr ""
 msgid "A report covers at most %(max)s nights (two years)."
 msgstr ""
 
+msgid "A reservation"
+msgstr ""
+
+msgid "A second person checked it: the room is ready."
+msgstr ""
+
 msgid "A service with this name already exists."
 msgstr ""
 
@@ -111,6 +136,11 @@ msgid ""
 "A token lets another program (a spreadsheet, a dashboard) read rooms, "
 "availability, reservations and report figures through the read-only JSON "
 "API. It acts as you, but it can never change anything."
+msgstr ""
+
+msgid ""
+"A verified copy of the database; one is also made every day. Copy the "
+"backups to another device regularly."
 msgstr ""
 
 msgid "API tokens"
@@ -149,6 +179,12 @@ msgid "Account unlocked."
 msgstr ""
 
 msgid ""
+"Accounts are created by a manager with a temporary password, which you "
+"replace at your first sign-in. Click your name in the top bar to change "
+"your password or set up two-factor sign-in."
+msgstr ""
+
+msgid ""
 "Accounts are deactivated, never deleted, so the audit log keeps its "
 "meaning."
 msgstr ""
@@ -163,6 +199,9 @@ msgid "Active"
 msgstr ""
 
 msgid "Add a room"
+msgstr ""
+
+msgid "Add a room / Edit room"
 msgstr ""
 
 msgid "Add a staff member"
@@ -205,6 +244,25 @@ msgid "After"
 msgstr ""
 
 msgid ""
+"After 5 wrong passwords the account is locked for 15 minutes; a manager "
+"can unlock it."
+msgstr ""
+
+msgid ""
+"After a check-out, 204 is To clean; the cleaner marks it cleaned, you "
+"inspect it."
+msgstr ""
+
+msgid "After the arrival time, for a guest who never came; the rooms are freed."
+msgstr ""
+
+msgid ""
+"After the password, a six-digit code from an app on your phone. Required "
+"for managers. Keep the recovery codes safe: each one works once if the "
+"phone is lost."
+msgstr ""
+
+msgid ""
 "After your password, you will also type a six-digit code from an app on "
 "your phone (for example Google Authenticator, Microsoft Authenticator, "
 "Aegis or FreeOTP). A stolen password alone is then not enough to sign in."
@@ -228,6 +286,12 @@ msgstr ""
 msgid "All rooms"
 msgstr ""
 
+msgid "Always search first, so a returning guest is not registered twice."
+msgstr ""
+
+msgid "Amira arrives at 15:10: find her under Arrivals and press Check in."
+msgstr ""
+
 msgid "Amount"
 msgstr ""
 
@@ -237,10 +301,18 @@ msgstr ""
 msgid "Amount per adult per night"
 msgstr ""
 
+msgid ""
+"Amount, method and an optional reference; never more than the balance "
+"due. Payments are never edited or deleted."
+msgstr ""
+
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr ""
 
 msgid "An amount per adult per night can only apply to the accommodation."
+msgstr ""
+
+msgid "An employee leaves: open their account and deactivate it."
 msgstr ""
 
 msgid "An unexpected error occurred. It has been logged."
@@ -297,6 +369,9 @@ msgid "At most the balance due."
 msgstr ""
 
 msgid "Audit log"
+msgstr ""
+
+msgid "Audit log, backups and privacy"
 msgstr ""
 
 msgid "Automatic"
@@ -370,6 +445,9 @@ msgstr ""
 msgid "Bill and payments"
 msgstr ""
 
+msgid "Blocks a room between two dates; refused over existing bookings."
+msgstr ""
+
 msgid "Book"
 msgstr ""
 
@@ -388,11 +466,19 @@ msgid "Bookings open at most two years ahead."
 msgstr ""
 
 msgid ""
+"Breakfast goes from 15 to 18 DT: edit it; breakfasts already charged keep"
+" 15 DT."
+msgstr ""
+
+msgid ""
 "By default the guest keeps the price of every remaining night: the hotel "
 "offers the move."
 msgstr ""
 
 msgid "CIN: 8 digits. Passport: 5 to 20 letters or digits."
+msgstr ""
+
+msgid "CSV"
 msgstr ""
 
 msgid "Cancel"
@@ -527,6 +613,11 @@ msgstr ""
 msgid "Check out and issue the invoice"
 msgstr ""
 
+msgid ""
+"Check-in and check-out times, cancellation fee and window, discount cap, "
+"weekend surcharge, anonymisation delay."
+msgstr ""
+
 #, python-format
 msgid "Check-in from %(in)s · check-out by %(out)s"
 msgstr ""
@@ -555,6 +646,9 @@ msgid "Children"
 msgstr ""
 
 msgid "Choose"
+msgstr ""
+
+msgid "Choose / Register a new guest"
 msgstr ""
 
 msgid "Choose a category."
@@ -615,6 +709,12 @@ msgstr ""
 msgid "Closed days"
 msgstr ""
 
+msgid ""
+"Closes a finished day: guests who never came become no-shows and the "
+"day's figures are frozen. Missed days are closed automatically at start-"
+"up."
+msgstr ""
+
 msgid "Code"
 msgstr ""
 
@@ -622,6 +722,9 @@ msgid "Code or guest"
 msgstr ""
 
 msgid "Colour theme"
+msgstr ""
+
+msgid "Compare July 2026 with July 2025 before setting summer prices."
 msgstr ""
 
 msgid "Confirm booking"
@@ -754,10 +857,18 @@ msgstr ""
 msgid "Document number"
 msgstr ""
 
+msgid "Downloads a table for Excel or LibreOffice; exports are audited."
+msgstr ""
+
 msgid "Due from guests in the house"
 msgstr ""
 
 msgid "E-mail"
+msgstr ""
+
+msgid ""
+"EN, FR, ع and the sun/moon buttons in the top bar; remembered on this "
+"computer."
 msgstr ""
 
 msgid "Each room can only be selected once."
@@ -788,6 +899,11 @@ msgid "Edit tax rule"
 msgstr ""
 
 msgid "End now"
+msgstr ""
+
+msgid ""
+"Ends the session at once. Sessions also end after 30 minutes without "
+"activity."
 msgstr ""
 
 msgid "Enter a name of 1 to 100 characters."
@@ -842,13 +958,35 @@ msgstr ""
 msgid "Enter an amount such as 180 or 180.500."
 msgstr ""
 
+msgid "Erases the personal data of guests without a stay for a long time."
+msgstr ""
+
+msgid ""
+"Every guest once, found by name, document, phone or e-mail. Accents and "
+"capitals do not matter."
+msgstr ""
+
 msgid "Every invoice is paid."
+msgstr ""
+
+msgid "Every morning, check that yesterday is in the list of closed days."
 msgstr ""
 
 msgid "Every room is ready."
 msgstr ""
 
+msgid ""
+"Every room with its status tonight. Housekeeping: To clean → Cleaned, to "
+"inspect → Ready. Only a ready room should be given to a guest."
+msgstr ""
+
 msgid "Everyone"
+msgstr ""
+
+msgid "Everything about one stay, and every action on it."
+msgstr ""
+
+msgid "Example:"
 msgstr ""
 
 msgid "Expired"
@@ -864,6 +1002,9 @@ msgid "Extra services can be charged once the guest has checked in."
 msgstr ""
 
 msgid "Extra services can only be charged while the guest is checked in."
+msgstr ""
+
+msgid "Extra services, settings and taxes"
 msgstr ""
 
 msgid "File"
@@ -888,6 +1029,9 @@ msgid "Fixed amount (DT)"
 msgstr ""
 
 msgid "Flags"
+msgstr ""
+
+msgid "For a forgotten password or a lock."
 msgstr ""
 
 msgid "For example 204 or B-12."
@@ -915,6 +1059,11 @@ msgid ""
 msgstr ""
 
 msgid "Free cancellation until (hours before arrival)"
+msgstr ""
+
+msgid ""
+"Free until 48 hours before arrival, then a fee (20 % by default). The "
+"exact fee is shown before you confirm."
 msgstr ""
 
 msgid "Friday"
@@ -946,6 +1095,9 @@ msgid "Grant"
 msgstr ""
 
 msgid "Grant a discount"
+msgstr ""
+
+msgid "Group rooms (Standard, Deluxe…); needed before adding rooms."
 msgstr ""
 
 msgid "Guest"
@@ -987,6 +1139,9 @@ msgid ""
 "accounting records. The limit is set in Settings."
 msgstr ""
 
+msgid "Help"
+msgstr ""
+
 msgid "Hotel rules"
 msgstr ""
 
@@ -1004,6 +1159,9 @@ msgid "Identity and contact"
 msgstr ""
 
 msgid "Identity document"
+msgstr ""
+
+msgid "If someone similar exists, the form proposes them first."
 msgstr ""
 
 msgid "In service"
@@ -1050,6 +1208,11 @@ msgstr ""
 msgid "Invoices"
 msgstr ""
 
+msgid ""
+"Invoices still owing money after the guest left; open one to record a "
+"payment."
+msgstr ""
+
 #, python-format
 msgid "Invoices: %(count)s"
 msgstr ""
@@ -1057,10 +1220,21 @@ msgstr ""
 msgid "Is it one of these guests?"
 msgstr ""
 
+msgid ""
+"Issued at check-out (and for cancellation or no-show fees), numbered "
+"without gaps, and never changed afterwards: corrections are payments or "
+"refunds."
+msgstr ""
+
 msgid "Issued invoices keep the tax they were issued with."
 msgstr ""
 
 msgid "Issued on"
+msgstr ""
+
+msgid ""
+"Karim, 10–13 July, 2 adults: Find rooms → Book 204 → Review → Confirm "
+"booking."
 msgstr ""
 
 msgid "Keep it"
@@ -1070,6 +1244,9 @@ msgid "Kind"
 msgstr ""
 
 msgid "Language"
+msgstr ""
+
+msgid "Language and theme"
 msgstr ""
 
 msgid "Last closed night"
@@ -1094,7 +1271,15 @@ msgstr ""
 msgid "Legend"
 msgstr ""
 
+msgid ""
+"Let another program read (never change) the hotel's figures; in your "
+"account."
+msgstr ""
+
 msgid "Light"
+msgstr ""
+
+msgid "Lists every room free on every night of the stay."
 msgstr ""
 
 msgid "Locked"
@@ -1127,6 +1312,12 @@ msgstr ""
 msgid "Manager"
 msgstr ""
 
+msgid "Managers"
+msgstr ""
+
+msgid "Managers create accounts; accounts are deactivated, never deleted."
+msgstr ""
+
 msgid "Managers must keep two-factor sign-in."
 msgstr ""
 
@@ -1140,6 +1331,15 @@ msgid "Managers must use two-factor sign-in. Set it up before %(date)s."
 msgstr ""
 
 msgid "Managers must use two-factor sign-in. Set it up now to continue."
+msgstr ""
+
+msgid "Managers set up the rooms the hotel sells and their prices."
+msgstr ""
+
+msgid "Managers: a percentage or fixed amount on accommodation, with a reason."
+msgstr ""
+
+msgid "Managers: when the guest paid more than the total."
 msgstr ""
 
 msgid "Manual"
@@ -1176,6 +1376,9 @@ msgstr ""
 msgid "Move the guests"
 msgstr ""
 
+msgid "Move through time."
+msgstr ""
+
 msgid "Move to another room"
 msgstr ""
 
@@ -1183,10 +1386,18 @@ msgstr ""
 msgid "Moved from room %(old)s to room %(new)s."
 msgstr ""
 
+msgid ""
+"Moves the guests to another room from tonight on, at the same price by "
+"default. The old room stays on the bill and goes to the cleaning list."
+msgstr ""
+
 msgid "My account"
 msgstr ""
 
 msgid "Name"
+msgstr ""
+
+msgid "Name and price; a new price applies to future charges only."
 msgstr ""
 
 msgid "Name, phone, e-mail or document number"
@@ -1202,6 +1413,11 @@ msgid "New category"
 msgstr ""
 
 msgid "New dates"
+msgstr ""
+
+msgid ""
+"New dates, rooms or occupants; availability and price are checked again. "
+"Nights already booked keep their price."
 msgstr ""
 
 msgid "New password"
@@ -1238,6 +1454,12 @@ msgid "Newest arrivals first."
 msgstr ""
 
 msgid "Next page"
+msgstr ""
+
+msgid "Next to a departure: opens the final bill and the invoice."
+msgstr ""
+
+msgid "Next to an arrival: records that the guest has arrived."
 msgstr ""
 
 msgid "Next week"
@@ -1394,6 +1616,9 @@ msgstr ""
 msgid "Number or guest"
 msgstr ""
 
+msgid "Number, category, capacity, nightly price."
+msgstr ""
+
 msgid "Occupancy"
 msgstr ""
 
@@ -1404,6 +1629,12 @@ msgid "Occupancy per month"
 msgstr ""
 
 msgid "Occupancy tonight"
+msgstr ""
+
+msgid ""
+"Occupancy, average daily rate, revenue per available room, money invoiced"
+" and received, cancellations, outstanding balances, for any range up to "
+"two years."
 msgstr ""
 
 msgid "Occupied"
@@ -1424,6 +1655,12 @@ msgid "Only a confirmed reservation can be cancelled."
 msgstr ""
 
 msgid "Only a day that is over can be closed."
+msgstr ""
+
+msgid "Open an invoice and press Ctrl+P."
+msgstr ""
+
+msgid "Open this page"
 msgstr ""
 
 msgid ""
@@ -1454,6 +1691,9 @@ msgid "Pages"
 msgstr ""
 
 msgid "Paid"
+msgstr ""
+
+msgid "Paint 204 from 3 to 6 July: room page → Close for maintenance."
 msgstr ""
 
 msgid "Passport"
@@ -1489,6 +1729,9 @@ msgstr ""
 msgid "Previous week"
 msgstr ""
 
+msgid "Previous week, Today, Next week"
+msgstr ""
+
 msgid "Price locked at booking"
 msgstr ""
 
@@ -1501,6 +1744,9 @@ msgstr ""
 msgid ""
 "Prices in Tunisian dinars. Issued by %(name)s. This invoice can no longer"
 " be changed; later payments appear on the reservation."
+msgstr ""
+
+msgid "Print or save as PDF"
 msgstr ""
 
 msgid ""
@@ -1528,6 +1774,11 @@ msgstr ""
 msgid "Rate: %(rate)s"
 msgstr ""
 
+msgid ""
+"Re-print last week's invoice for a company: search its number or the "
+"guest's name."
+msgstr ""
+
 msgid "Reactivate account"
 msgstr ""
 
@@ -1551,6 +1802,9 @@ msgid "Record"
 msgstr ""
 
 msgid "Record a deposit"
+msgstr ""
+
+msgid "Record a deposit / payment"
 msgstr ""
 
 msgid "Record a no-show"
@@ -1662,6 +1916,9 @@ msgstr ""
 msgid "Reset password"
 msgstr ""
 
+msgid "Reveals a masked document number; the reveal is audited."
+msgstr ""
+
 msgid "Revenue"
 msgstr ""
 
@@ -1753,6 +2010,9 @@ msgstr ""
 msgid "Rooms"
 msgstr ""
 
+msgid "Rooms and housekeeping"
+msgstr ""
+
 #, python-format
 msgid "Rooms and nights from %(start)s"
 msgstr ""
@@ -1761,6 +2021,12 @@ msgid "Rooms free for the same dates:"
 msgstr ""
 
 msgid "Rooms not ready"
+msgstr ""
+
+msgid "Rooms that are not ready, with a button to move each to its next state."
+msgstr ""
+
+msgid "Rooms, prices and maintenance"
 msgstr ""
 
 #, python-format
@@ -1788,6 +2054,9 @@ msgstr ""
 msgid "Search guests"
 msgstr ""
 
+msgid "Search “dupont” before registering Lucas Dupont: he may already be there."
+msgstr ""
+
 msgid "Seasonal rates"
 msgstr ""
 
@@ -1800,6 +2069,9 @@ msgstr ""
 msgid "Sellable"
 msgstr ""
 
+msgid "Sends a room back."
+msgstr ""
+
 msgid "Service"
 msgstr ""
 
@@ -1807,6 +2079,12 @@ msgid "Set it up now"
 msgstr ""
 
 msgid "Set temporary password"
+msgstr ""
+
+msgid "Set temporary password / Unlock"
+msgstr ""
+
+msgid "Settings"
 msgstr ""
 
 msgid "Settings and taxes"
@@ -1821,6 +2099,9 @@ msgstr ""
 msgid "Show the figures"
 msgstr ""
 
+msgid "Shows each night and the total; Confirm booking saves it (only once)."
+msgstr ""
+
 msgid "Sign in"
 msgstr ""
 
@@ -1828,6 +2109,12 @@ msgid "Sign out"
 msgstr ""
 
 msgid "Sign-in code"
+msgstr ""
+
+msgid "Signing in and your account"
+msgstr ""
+
+msgid "Signs the person out everywhere, at once."
 msgstr ""
 
 #, python-format
@@ -1875,6 +2162,9 @@ msgstr ""
 msgid "Start again with the password"
 msgstr ""
 
+msgid "Starts a booking for that room from that night."
+msgstr ""
+
 msgid "Status"
 msgstr ""
 
@@ -1888,6 +2178,9 @@ msgid "Subtotal before discounts and taxes"
 msgstr ""
 
 msgid "Sunday"
+msgstr ""
+
+msgid "Take a 100 DT deposit by card with the slip number as reference."
 msgstr ""
 
 #, python-format
@@ -1914,6 +2207,11 @@ msgstr ""
 msgid "That is more than the guest overpaid (%(credit)s DT)."
 msgstr ""
 
+msgid ""
+"The air conditioning breaks in 204: press Move, choose 205, keep the "
+"price."
+msgstr ""
+
 msgid "The arrival date can't be in the past."
 msgstr ""
 
@@ -1930,6 +2228,12 @@ msgid "The bill is settled."
 msgstr ""
 
 msgid "The catalogue is empty."
+msgstr ""
+
+msgid "The catalogue of chargeable services, the hotel's rules and its taxes."
+msgstr ""
+
+msgid "The cleaner has finished."
 msgstr ""
 
 msgid "The current password is not correct."
@@ -2003,6 +2307,9 @@ msgid ""
 "(%(first)s to %(last)s)."
 msgstr ""
 
+msgid "The running bill of a stay, exactly as the invoice will show it."
+msgstr ""
+
 msgid "The sign-in took too long or failed too often. Start again."
 msgstr ""
 
@@ -2010,6 +2317,9 @@ msgid "The stay is already over: this reservation can no longer be checked in."
 msgstr ""
 
 msgid "The token was revoked. Programs using it can no longer read data."
+msgstr ""
+
+msgid "The tools that keep the hotel's data trustworthy and safe."
 msgstr ""
 
 msgid "The two passwords are different."
@@ -2121,6 +2431,12 @@ msgstr ""
 msgid "This value is out of the allowed range."
 msgstr ""
 
+msgid ""
+"Three steps: the stay (dates, guests, category), the guest, then the "
+"rooms. Each night's price is locked when you book; later price changes "
+"never alter the booking."
+msgstr ""
+
 msgid "Thursday"
 msgstr ""
 
@@ -2153,6 +2469,9 @@ msgstr ""
 msgid ""
 "Too many failed sign-in attempts from this computer. Wait a few minutes "
 "and try again."
+msgstr ""
+
+msgid "Topics"
 msgstr ""
 
 msgid "Total"
@@ -2250,6 +2569,9 @@ msgstr ""
 msgid "VIP"
 msgstr ""
 
+msgid "VIP for special attention; Do not rent (managers) refuses new bookings."
+msgstr ""
+
 msgid "VIP guest"
 msgstr ""
 
@@ -2304,10 +2626,31 @@ msgid ""
 "Prices are before tax."
 msgstr ""
 
+msgid ""
+"What each page is for, its main buttons and an example. Only what your "
+"role can use is shown."
+msgstr ""
+
 msgid "What is it for?"
 msgstr ""
 
+msgid ""
+"What needs attention today: arrivals, departures, guests in the house, "
+"rooms to clean."
+msgstr ""
+
 msgid "When"
+msgstr ""
+
+msgid ""
+"While the guest is checked in: breakfasts, transfers… with a quantity and"
+" date."
+msgstr ""
+
+msgid "Who did what and when; altered or removed entries are detected and shown."
+msgstr ""
+
+msgid "With a temporary password replaced at first sign-in."
 msgstr ""
 
 msgid "With the country code for foreign numbers, e.g. +33 6 12 34 56 78."
@@ -2317,6 +2660,9 @@ msgid ""
 "Write these codes down or print them, and keep them somewhere safe away "
 "from your phone. Each one works once, if the phone is lost. They will not"
 " be shown again."
+msgstr ""
+
+msgid "Yesterday by default; running it twice changes nothing."
 msgstr ""
 
 #, python-format
@@ -2349,5 +2695,8 @@ msgstr ""
 
 #, python-format
 msgid "on %(base)s"
+msgstr ""
+
+msgid "“Who refunded 46 DT on R-2026-00031?”: filter the audit log by action."
 msgstr ""
 

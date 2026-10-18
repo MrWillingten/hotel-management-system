@@ -24,6 +24,7 @@
       {{ nav_link("guests.index", _("Guests"), "user") }}
       {{ nav_link("invoices.index", _("Invoices"), "archive") }}
       {{ nav_link("rooms.index", _("Rooms"), "bed") }}
+      {{ nav_link("help.index", _("Help"), "info") }}
       {%- if current_user and current_user.is_manager %}
       <p class="nav__heading">{{ _("Administration") }}</p>
       {{ nav_link("reports.index", _("Reports"), "grid") }}
