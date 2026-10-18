@@ -57,6 +57,16 @@ All notable changes are recorded here. The format follows
   time (register a guest, book, check in, take a payment, check out; for
   managers also add a room, add staff, two-factor, backup). Migration 0018.
 
+### Changed (corrections requested 18 Oct)
+- Real checks on guest details (story 6.15): passport numbers need 6–9
+  letters and digits including a digit; phone numbers are checked against
+  each country's real numbering plan with Google's libphonenumber
+  (`phonenumberslite`, new dependency) and stored as E.164, shown spaced
+  (`+216 20 123 456`); e-mail addresses are checked part by part; the
+  nationality is typed with country suggestions in the interface language
+  (no JavaScript: an HTML `datalist`) and stored as its ISO code. Clearer
+  error messages; demo data uses valid numbers for each country.
+
 ### Security (story 6.6)
 - OWASP ASVS 5.0 Level 1 self-assessment (`docs/asvs.md`): 58 requirements
   met, 12 not applicable. Gaps fixed: every cookie is `__Host-` prefixed

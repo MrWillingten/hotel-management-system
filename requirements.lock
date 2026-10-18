@@ -194,6 +194,10 @@ markupsafe==3.0.4 \
     #   jinja2
     #   werkzeug
     #   wtforms
+phonenumberslite==9.0.41 \
+    --hash=sha256:33347389a9105f4f5bd002d60ad9e721e5233950aa6219fb35c20ea2acf8e68f \
+    --hash=sha256:9e4249c9bf1fbdd294f152cf79450d45112b36f1e7c77cd4ee6763699d231393
+    # via hotel (pyproject.toml)
 pytz==2026.5 \
     --hash=sha256:e658af3757f9e26a9d25dd2aff38335acd92bc9104f890a894b2c1ba28311b03 \
     --hash=sha256:fa23724b9c486543b9ff54a327ee7569ac83ade54bb9afd0fc18676620401c86

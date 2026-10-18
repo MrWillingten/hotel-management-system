@@ -208,6 +208,10 @@ pefile==2024.8.26 \
     --hash=sha256:3ff6c5d8b43e8c37bb6e6dd5085658d658a7a0bdcd20b6a07b1fcfc1c4e9d632 \
     --hash=sha256:76f8b485dcd3b1bb8166f1128d395fa3d87af26360c2358fb75b80019b957c6f
     # via pyinstaller
+phonenumberslite==9.0.41 \
+    --hash=sha256:33347389a9105f4f5bd002d60ad9e721e5233950aa6219fb35c20ea2acf8e68f \
+    --hash=sha256:9e4249c9bf1fbdd294f152cf79450d45112b36f1e7c77cd4ee6763699d231393
+    # via hotel (pyproject.toml)
 pyinstaller==6.22.3 \
     --hash=sha256:020d4fe0627f5c73dfbcfad1a6578ef354d5fe4bdccd9d8e5a615528f5a45d2b \
     --hash=sha256:052f4a1cd4f81092ccb7a18fe8ebc9ecf832a5917317e39fb3775af4e959b253 \

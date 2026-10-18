@@ -40,7 +40,7 @@
         </dd>
       </div>
       <div><dt>{{ _("Nationality") }}</dt><dd>{{ country or "—" }}</dd></div>
-      <div><dt>{{ _("Phone") }}</dt><dd dir="ltr">{{ guest.phone or "—" }}</dd></div>
+      <div><dt>{{ _("Phone") }}</dt><dd dir="ltr">{{ guest.phone | phone or "—" }}</dd></div>
       <div><dt>{{ _("E-mail") }}</dt><dd dir="ltr">{{ guest.email or "—" }}</dd></div>
       <div><dt>{{ _("Registered") }}</dt><dd>{{ guest.created_at | dateformat("long") }}</dd></div>
     </dl>

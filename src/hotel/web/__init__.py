@@ -16,6 +16,7 @@ from hotel import __version__
 from hotel.bootstrap import Services, build_services
 from hotel.config import LANGUAGES, ConfigurationError, Settings, cli_command
 from hotel.demo import is_demo
+from hotel.domain.guests import display_phone
 from hotel.secret_key import load_or_create_secret_key
 from hotel.web import errors, security
 from hotel.web.blueprints import (
@@ -117,6 +118,7 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
 
     app.add_template_filter(money_html, "money")
     app.add_template_filter(percent, "percent")
+    app.add_template_filter(display_phone, "phone")
 
     @app.template_filter("options")
     def options_filter(items, value: str = "id", label: str = "name") -> list[tuple]:

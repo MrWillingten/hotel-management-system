@@ -12,6 +12,8 @@ import secrets
 from dataclasses import dataclass, field, replace
 from datetime import datetime, time, timedelta
 
+import phonenumbers
+
 from hotel.bootstrap import Services, build_services
 from hotel.domain.actor import Actor
 from hotel.domain.billing import PaymentMethod, PercentDiscount
@@ -432,22 +434,36 @@ def _fictional_guest(rng: random.Random, index: int, used_documents: set[str]) -
         if number not in used_documents:
             used_documents.add(number)
             break
-    if tunisian:
-        phone = f"+216 {rng.choice('2459')}{rng.randrange(1_000_000, 9_999_999)}"
-    else:
-        code = rng.choice(["33", "39", "49", "44", "34"])
-        phone = f"+{code} {rng.randrange(600_000_000, 799_999_999)}"
+    nationality = "TN" if tunisian else rng.choice(FOREIGN_COUNTRIES)
     local = search_key(f"{first}.{last}").replace(" ", "")
     return GuestDetails(
         first_name=first,
         last_name=last,
         id_doc_type="CIN" if tunisian else "PASSPORT",
         id_doc_number=number,
-        nationality="TN" if tunisian else rng.choice(FOREIGN_COUNTRIES),
-        phone=phone,
+        nationality=nationality,
+        phone=_fictional_phone(rng, nationality),
         email=f"{local}{index}@example.com" if rng.random() < 0.7 else "",
         notes=rng.choice(NOTES),
     )
+
+
+def _fictional_phone(rng: random.Random, region: str) -> str:
+    """A mobile number that is valid in that country but invented.
+
+    Google's example number for the country keeps a real prefix and length;
+    only its last four digits are drawn at random (and checked again).
+    """
+    example = phonenumbers.example_number_for_type(region, phonenumbers.PhoneNumberType.MOBILE)
+    national = str(example.national_number)
+    for _ in range(20):
+        candidate = phonenumbers.parse(
+            f"+{example.country_code}{national[:-4]}{rng.randrange(10_000):04d}"
+        )
+        if phonenumbers.is_valid_number(candidate):
+            example = candidate
+            break
+    return phonenumbers.format_number(example, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
 
 
 def is_demo(services: Services) -> bool:

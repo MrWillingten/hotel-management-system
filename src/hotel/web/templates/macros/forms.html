@@ -5,13 +5,18 @@
 {%- endmacro %}
 
 {%- macro field(name, label, value="", type="text", error=None, autocomplete=None,
-                required=True, autofocus=False, hint=None, maxlength=None) -%}
+                required=True, autofocus=False, hint=None, maxlength=None,
+                datalist=None, inputmode=None, pattern=None, placeholder=None) -%}
 <div class="field{% if error %} field--invalid{% endif %}">
   <label class="field__label" for="f-{{ name }}">{{ label }}</label>
   <input class="field__input" id="f-{{ name }}" name="{{ name }}" type="{{ type }}"
          {%- if type != "password" %} value="{{ value }}"{% endif %}
          {%- if autocomplete %} autocomplete="{{ autocomplete }}"{% endif %}
          {%- if maxlength %} maxlength="{{ maxlength }}"{% endif %}
+         {%- if datalist %} list="{{ datalist }}"{% endif %}
+         {%- if inputmode %} inputmode="{{ inputmode }}"{% endif %}
+         {%- if pattern %} pattern="{{ pattern }}"{% endif %}
+         {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
          {%- if required %} required{% endif %}
          {%- if autofocus %} autofocus{% endif %}
          {%- if error %} aria-invalid="true" aria-describedby="f-{{ name }}-error"{% elif hint %} aria-describedby="f-{{ name }}-hint"{% endif %}>

@@ -119,10 +119,10 @@ capped at 1 MB.
 | Username | 3–32 characters `a-z 0-9 . _ -`, stored lower case (NFKC) |
 | Password | 12–128 characters, not mostly one character, not containing the username, not in the common list; any characters allowed |
 | Full name; guest first/last name | 1–100 characters; 1–60 letters (any alphabet) with spaces, hyphens, apostrophes and dots |
-| Identity document | CIN: 8 digits; passport: 5–20 letters or digits; unique per type |
-| Phone | 8–15 digits, optional `+`, spaces, dots, dashes, brackets |
-| E-mail | one `@`, a dot in the domain, no spaces |
-| Country | ISO 3166 two-letter code |
+| Identity document | CIN: 8 digits; passport: 6–9 letters and digits with at least one digit (ICAO 9303); unique per type |
+| Phone | Must be a real number for its country (Google's libphonenumber: lengths and prefixes); without a code it is Tunisian; `00` = `+`; no letters; stored as E.164 |
+| E-mail | local part ≤ 64 (letters, digits, `.!#$%&'*+/=?^_`{\|}~-`, no leading, trailing or double dot); domain labels ≤ 63 (no leading/trailing hyphen), alphabetic or punycode top-level domain; ≤ 254 in total; stored lower case, international domains in ASCII (IDNA) |
+| Country | One of the 245 ISO 3166-1 codes known to libphonenumber; typed as a name in English, French or Arabic (suggested by a `<datalist>`) or as the code |
 | Room number | 1–10 characters `A-Z 0-9 -`, starting with a letter or digit, unique |
 | Capacity | 1–10 guests; occupants per room ≤ capacity (BR7) |
 | Amounts | `123`, `123.5`, `123,500` (≤ 3 decimals, ≤ 9 integer digits); stored as integer millimes; rates ≤ 100,000 DT; payments ≤ 1,000,000 DT; never negative |

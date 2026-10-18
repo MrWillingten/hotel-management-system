@@ -8,11 +8,12 @@ from flask_babel import gettext as _
 
 from hotel.domain.enums import Role
 from hotel.domain.errors import HotelError
-from hotel.domain.guests import GuestDetails
+from hotel.domain.guests import GuestDetails, display_phone
 from hotel.persistence.repositories.guests import SORT_ORDERS
 from hotel.services.guests import ProbableDuplicateError
 from hotel.web import forms
 from hotel.web.context import current_actor, services
+from hotel.web.countries import country_code, country_name, country_options
 from hotel.web.messages import message_for
 from hotel.web.security import is_safe_redirect_target, login_required, roles_required
 
@@ -25,20 +26,15 @@ def _details(data) -> GuestDetails:
         last_name=forms.text(data, "last_name", max_length=80),
         id_doc_type=forms.text(data, "id_doc_type", max_length=10),
         id_doc_number=forms.text(data, "id_doc_number", max_length=40),
-        nationality=forms.text(data, "nationality", max_length=2),
+        nationality=country_code(forms.text(data, "nationality", max_length=60)),
         phone=forms.text(data, "phone", max_length=40),
         email=forms.text(data, "email", max_length=254),
         notes=forms.text(data, "notes", max_length=600),
     )
 
 
-def country_options() -> list[tuple[str, str]]:
-    """Two-letter country codes with their names in the interface language."""
-    territories = get_locale().territories
-    pairs = [
-        (code, name) for code, name in territories.items() if len(code) == 2 and code.isalpha()
-    ]
-    return sorted(pairs, key=lambda pair: pair[1])
+def _locale() -> str:
+    return str(get_locale() or "en")
 
 
 @bp.get("/")
@@ -85,7 +81,8 @@ def create():
         values=request.form,
         errors=errors,
         duplicates=duplicates,
-        countries=country_options(),
+        countries=country_options(_locale()),
+        shown={},
     ), (400 if errors else 200)
 
 
@@ -113,19 +110,23 @@ def edit(guest_id: int):
         values=request.form if request.method == "POST" else None,
         errors=errors,
         duplicates=[],
-        countries=country_options(),
+        countries=country_options(_locale()),
+        # Stored values shown the way people type them: a country name, a spaced number.
+        shown={
+            "nationality": country_name(guest.nationality, _locale()),
+            "phone": display_phone(guest.phone),
+        },
     ), (400 if errors else 200)
 
 
 def _detail_page(guest_id: int, *, revealed: str | None = None, errors=None, status: int = 200):
     guest = services().guests.get(current_actor(), guest_id)
-    names = dict(country_options())
     return render_template(
         "guests/detail.html",
         guest=guest,
         reservations=services().reservations.for_guest(current_actor(), guest_id),
         revealed=revealed,
-        country=names.get(guest.nationality or "", guest.nationality),
+        country=country_name(guest.nationality, _locale()),
         errors=errors or forms.FormErrors(),
     ), status
 
