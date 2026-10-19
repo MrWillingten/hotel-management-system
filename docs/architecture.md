@@ -23,6 +23,8 @@ why the business logic can be tested and used without a web server.
 
 ## Package layout
 
+Every folder and file is described in [project-structure.md](project-structure.md).
+
 | Path | Responsibility |
 |---|---|
 | `src/hotel/config.py` | Settings from environment variables; production is the default |

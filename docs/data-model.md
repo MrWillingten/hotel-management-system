@@ -28,11 +28,16 @@ erDiagram
     APP_USER ||--o{ API_TOKEN : "lets programs read with"
     APP_USER ||--o{ AUDIT_LOG : performs
     APP_USER ||--o{ RESERVATION : creates
+    APP_USER ||--o| ONBOARDING : "is guided by"
+    APP_USER ||--o{ FORM_TOKEN : "submits forms with"
+    ROOM_CATEGORY ||--o{ RATE_PERIOD : "is priced by"
+    RESERVATION ||--o{ TAX_EXEMPTION : "is exempted by"
+    TAX_RULE ||--o{ TAX_EXEMPTION : "is waived by"
 ```
 
-`TAX_RULE`, `SETTING`, `COUNTER` and `LOGIN_FAILURE` stand alone. Invoices copy
-tax values instead of referencing `TAX_RULE`, so changing a rate never alters an
-issued invoice.
+`SETTING`, `COUNTER`, `LOGIN_FAILURE` and `DAILY_SNAPSHOT` stand
+alone. Invoices copy tax values instead of referencing `TAX_RULE`, so changing a
+rate never alters an issued invoice.
 
 ## Relational schema
 

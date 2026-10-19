@@ -153,6 +153,8 @@ Read more in [docs/architecture.md](docs/architecture.md).
 
 | Document | Contents |
 |---|---|
+| [project-structure.md](docs/project-structure.md) | **Every folder and file and what it does** |
+| [checkpoints.md](docs/checkpoints.md) | The professor's checkpoints CP1–CP4 and where each is answered; task allocation |
 | [requirements.md](docs/requirements.md) | Actors, business rules, decisions on ambiguous points, scenarios |
 | [architecture.md](docs/architecture.md) | Layers, modules, request lifecycle, error handling |
 | [data-model.md](docs/data-model.md) | ERD and relational schema |
