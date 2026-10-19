@@ -83,4 +83,4 @@ a traceback under a short incident id; the user only sees the id.
 ## Diagrams
 
 UML use case diagrams, the domain class diagrams and the layer diagram are in
-[diagrams/](diagrams/README.md); the class diagrams are generated from the code.
+[diagrams/](diagrams/README.md) as draw.io files; the class diagrams were read from the code.
