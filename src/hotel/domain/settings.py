@@ -6,6 +6,7 @@ from dataclasses import asdict, dataclass, fields, replace
 from datetime import time, timedelta
 
 from hotel.domain.errors import ValidationError
+from hotel.domain.guests import COUNTRY_CODES
 from hotel.domain.money import BASIS_POINTS_PER_UNIT
 from hotel.domain.reservations import CancellationPolicy
 
@@ -23,6 +24,8 @@ class HotelSettings:
     weekend_surcharge_bp: int = 0  # story 5.6; 0 = no weekend price
     weekend_nights: str = "5,6"  # date.weekday() numbers: Saturday and Sunday nights
     anonymise_after_months: int = 24  # story 5.7, decision with the student
+    # The hotel's country: decides who is a national for taxes (story 6.16).
+    home_country: str = "TN"
 
     # Allowed ranges, checked by validated(): name -> (lowest, highest).
     _LIMITS = {  # noqa: RUF012 - class constant, not a field (no annotation)
@@ -44,6 +47,8 @@ class HotelSettings:
         days = [d for d in self.weekend_nights.split(",") if d]  # "" means no weekend
         if any(d not in {"0", "1", "2", "3", "4", "5", "6"} for d in days):
             problems["weekend_nights"] = "settings.out_of_range"
+        if self.home_country not in COUNTRY_CODES:
+            problems["home_country"] = "guest.nationality_invalid"
         if problems:
             raise ValidationError("settings.invalid", fields=problems)
         return self

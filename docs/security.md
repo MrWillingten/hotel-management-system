@@ -95,12 +95,13 @@ application's routes (`e2e/test_route_policy.py` fails if one is missing).
 | Reservations: book, change, move rooms (keeping the price), cancel, check in, no-show, check out | | ✅ | ✅ |
 | Extras charged to a stay; payments; bills and invoices (read) | | ✅ | ✅ |
 | Own password; own two-factor sign-in (managers cannot turn it off) | | ✅ | ✅ |
-| Move rooms at the new room's price; void a charge; discounts; refunds | | | ✅ |
+| Move rooms at the new room's price; void a charge; discounts; refunds; tax exemptions for a stay | | | ✅ |
 | Rooms, categories, prices and rate periods, maintenance | | | ✅ |
 | Extras catalogue, hotel settings, tax rules | | | ✅ |
 | Staff accounts (create, edit, deactivate, reset password, unlock) | | | ✅ |
 | Reports and CSV exports, night audit, audit log, backups | | | ✅ |
 | Guest anonymisation | | | ✅ |
+| Remove (delete if never used, otherwise archive) and restore guests, rooms, services, tax rules, accounts | | | ✅ |
 | Own API tokens; the read-only JSON API with such a token | | | ✅ |
 | Command line (`create-manager`, `reset-password`, `reset-totp`, `restore`…) | whoever can run commands on the server: they already own the data | | |
 

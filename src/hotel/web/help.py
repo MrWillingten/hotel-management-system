@@ -171,6 +171,10 @@ TOPICS: list[HelpTopic] = [
                 _l("Managers: a percentage or fixed amount on accommodation, with a reason."),
             ),
             (_l("Refund the guest"), _l("Managers: when the guest paid more than the total.")),
+            (
+                _l("Tax exemptions"),
+                _l("Managers: exempt this stay from one tax, with a reason, until check-out."),
+            ),
         ],
         _l("Take a 100 DT deposit by card with the slip number as reference."),
     ),
@@ -317,6 +321,13 @@ TOPICS: list[HelpTopic] = [
                 _l(
                     "A verified copy of the database; one is also made every day. Copy the backups "
                     "to another device regularly."
+                ),
+            ),
+            (
+                _l("Remove…"),
+                _l(
+                    "On a guest, room, service, tax or account: deletes it if it was never used, "
+                    "otherwise archives it (hidden, history kept, restorable)."
                 ),
             ),
             (

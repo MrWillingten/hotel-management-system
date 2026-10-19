@@ -26,7 +26,7 @@ from hotel.domain.paging import PageRequest
 from hotel.domain.period import StayPeriod
 from hotel.domain.reservations import RoomRequest
 from hotel.domain.rooms import Housekeeping
-from hotel.domain.taxes import PerAdultNightTax, PercentTax, TaxBase
+from hotel.domain.taxes import PerAdultNightTax, PercentTax, TaxBase, TaxPayers
 
 DEMO_FLAG = "demo_data"
 
@@ -216,8 +216,12 @@ def _demo_catalogue(services: Services, boss: Actor) -> None:
     taxes.create_tax_rule(
         boss, PercentTax(name="VAT on services", rate_bp=1900, applies_to=TaxBase.SERVICES)
     )
+    # Example only (story 6.16): a tourist tax that concerns foreign guests.
     taxes.create_tax_rule(
-        boss, PerAdultNightTax(name="Tourist tax", amount_per=Money.from_dinars(3))
+        boss,
+        PerAdultNightTax(
+            name="Tourist tax", amount_per=Money.from_dinars(3), payers=TaxPayers.FOREIGN
+        ),
     )
 
 

@@ -225,6 +225,7 @@ The running bill of a stay, shown the same way the invoice will be.
 | **Record a deposit / Record a payment** | Records money received: amount, method (cash, card, bank transfer) and an optional reference. It is never more than the balance due, so a typing mistake can't create a refund to chase. | 100 DT deposit by card, slip no. 5521. |
 | **Payments** list | Every payment and refund, with who recorded it. Payments can never be edited or deleted; a mistake is corrected by a refund. | |
 | **Refund the guest** *(manager)* | Pays money back when the guest paid too much. | A cancellation fee of 54 DT is taken from a 100 DT deposit: refund 46 DT. |
+| **Tax exemptions** *(manager)* | Exempts this stay from one tax, with a reason, until check-out. The exemption is listed on the bill and on the invoice. **Apply the tax again** undoes it. | A Tunisian resident with a foreign passport: exempt from the tourist tax, reason "Resident in Tunisia". |
 | **Grant a discount** *(manager)* | A percentage or fixed amount on the accommodation, with a required reason. All discounts together are capped at 30 % of the accommodation. **Remove** cancels one, and stays visible. | 10 % "Returning guest". |
 
 ### Guests
@@ -376,10 +377,15 @@ transfer, laundry, minibar, spa…
 | Weekend surcharge and weekend nights | Extra % on chosen nights (the night *starting* on that day). | 0 %, Saturday and Sunday nights |
 | Anonymise guests after | Months without a stay before a guest is *proposed* for anonymisation. | 24 |
 
+**The hotel's country** decides who counts as a national for taxes (Tunisia
+by default).
+
 **Tax rules → Add tax rule / Edit**:
 
 * a **percentage** on accommodation or extras (VAT), or an **amount per
   adult per night** (tourist tax);
+* **Who pays**: everyone, guests not from the hotel's country, or guests
+  from it only (decided by the guest's nationality);
 * untick *Active* to stop applying a tax.
 
 Issued invoices keep the tax they were issued with. *The demo rates are
@@ -422,6 +428,29 @@ understand…** and **Anonymise** to erase their personal data (name,
 document, contact); this cannot be undone. Invoices keep their copy, as
 the law requires.
 *Why:* personal data shouldn't be kept longer than needed (data protection).
+
+### Removing records (Remove…)
+
+Guests, rooms, extra services, tax rules and staff accounts have a
+**Remove…** button for managers (on the record's page or edit page). The
+confirmation page says what will happen and why:
+
+* **Never used**, for example a guest registered by mistake who never booked:
+  **deleted permanently**.
+* **Used**, for example a room with past stays or a service already charged:
+  **archived**. It disappears from lists, forms and suggestions, but its
+  history (invoices, stays, audit log) stays intact.
+  * Archived records are listed under **Archived: n** above each list, and
+    **Restore** brings them back.
+  * A restored room, service, tax or account is still out of service or
+    inactive until you switch it back on.
+* **Not possible now**, with the reason: a room with bookings to come, a
+  guest with a stay in progress or to come, your own account, or the last
+  manager.
+
+*Example:* the hotel stops selling "Spa access". **Extra services → Edit →
+Remove…** archives it: the stays it was charged to keep their lines, and it
+no longer appears when charging.
 
 ### Manager-only buttons on other pages
 

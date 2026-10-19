@@ -7,7 +7,8 @@ from dataclasses import replace
 from hotel.domain.actor import Actor
 from hotel.domain.clock import Clock
 from hotel.domain.enums import Role
-from hotel.domain.errors import NotFoundError, StaleDataError
+from hotel.domain.errors import BusinessRuleViolation, NotFoundError, StaleDataError
+from hotel.domain.removal import RemovalAction, RemovalPlan, plan_removal
 from hotel.domain.settings import HotelSettings
 from hotel.domain.taxes import TaxRule
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
@@ -53,10 +54,64 @@ class HotelSettingsService:
             return new
 
     # ------------------------------------------------------------ tax rules
-    def tax_rules(self, actor: Actor) -> list[TaxRule]:
+    def tax_rules(self, actor: Actor, *, archived: bool = False) -> list[TaxRule]:
         require_staff(actor)
         with self._uow() as uow:
-            return uow.tax_rules.list()
+            return uow.tax_rules.list(archived=archived)
+
+    # ------------------------------------------------------------ delete or archive (6.17)
+    def count_archived_taxes(self, actor: Actor) -> int:
+        require_staff(actor)
+        with self._uow() as uow:
+            return uow.tax_rules.count_archived()
+
+    def tax_removal_plan(self, actor: Actor, rule_id: int) -> RemovalPlan:
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            self._load_rule(uow, rule_id)
+            return plan_removal(uow.tax_rules.count_exemptions(rule_id))
+
+    def remove_tax_rule(self, actor: Actor, rule_id: int) -> RemovalAction:
+        """Delete or archive. Issued invoices keep their own copy of every tax line
+        either way; only per-stay exemptions refer to the rule itself."""
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            rule = self._load_rule(uow, rule_id)
+            plan = plan_removal(uow.tax_rules.count_exemptions(rule_id))
+            if plan.action is RemovalAction.DELETE:
+                uow.tax_rules.delete(rule_id)
+            elif not rule.is_archived:
+                uow.tax_rules.archive(rule_id, self._clock.now())
+            action = "tax.deleted" if plan.action is RemovalAction.DELETE else "tax.archived"
+            record(
+                uow,
+                self._clock,
+                actor,
+                action,
+                entity="tax_rule",
+                entity_id=rule_id,
+                name=rule.name,
+            )
+            return plan.action
+
+    def restore_tax_rule(self, actor: Actor, rule_id: int) -> TaxRule:
+        """Back in the list, still inactive until a manager activates it."""
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            rule = self._load_rule(uow, rule_id)
+            if rule.is_archived:
+                uow.tax_rules.archive(rule_id, None)
+                record(
+                    uow, self._clock, actor, "tax.restored", entity="tax_rule", entity_id=rule_id
+                )
+            return uow.tax_rules.get(rule_id)
+
+    @staticmethod
+    def _load_rule(uow: UnitOfWork, rule_id: int) -> TaxRule:
+        rule = uow.tax_rules.get(rule_id)
+        if rule is None:
+            raise NotFoundError(entity="tax_rule", id=rule_id)
+        return rule
 
     def create_tax_rule(self, actor: Actor, rule: TaxRule) -> TaxRule:
         require_role(actor, Role.MANAGER)
@@ -72,6 +127,7 @@ class HotelSettingsService:
                 entity_id=rule.id,
                 name=rule.name,
                 kind=rule.kind.value,
+                payers=rule.payers.value,
             )
             return rule
 
@@ -85,6 +141,8 @@ class HotelSettingsService:
                 raise NotFoundError(entity="tax_rule", id=rule_id)
             if current.version != rule.version:
                 raise StaleDataError(entity="tax_rule", id=rule_id)
+            if current.is_archived:
+                raise BusinessRuleViolation("tax.archived")
             rule = replace(rule, id=rule_id)
             uow.tax_rules.update(rule)
             record(
@@ -96,5 +154,6 @@ class HotelSettingsService:
                 entity_id=rule_id,
                 name=rule.name,
                 active=rule.is_active,
+                payers=rule.payers.value,
             )
             return rule

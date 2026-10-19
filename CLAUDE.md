@@ -141,7 +141,15 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
    `@page` A4); 6.14 walk-through (`web/tour.py`, `blueprints/welcome.py`,
    `domain|services/onboarding.py`, checklist ticks from `audit.actions_of`,
    migration 0018). PRs #88 (6.10–6.12) and the 6.13–6.14 PR.
-   **NEXT:** ask the student to try the new UI; then 6.7 report. Freeze 27 Dec.
+   ✅ Corrections 6.15–6.17 (student, 18 Oct; roadmap "Corrections requested"):
+   6.15 guest checks (`domain/guests.py`: passport ICAO, `phonenumberslite`
+   E.164 + `phone` filter, e-mail parts, `COUNTRY_CODES`; `web/countries.py`
+   datalist names EN/FR/AR → ISO) PR #93; 6.16 tax `payers` + `home_country`
+   setting + `tax_exemption` (`taxes_for_stay` in `services/billing.applicable_taxes`)
+   and 6.17 delete-or-archive (`domain/removal.py`, `archived_at` on 5 tables,
+   `web/removal.confirm_removal`, macros `archive.html` imported *with context*)
+   PR #94. Migrations up to 0020.
+   **NEXT:** student tries the UI; then 6.7 report. Freeze 27 Dec.
    Running the app: `.venv/bin/python -m hotel run` (the student's `sh` kept
    /usr/bin/python after activation).
 5. 6.7 report: **English, LaTeX for Overleaf** in `report/`. The assistant

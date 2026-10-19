@@ -11,6 +11,7 @@ from hotel.domain.rooms import Housekeeping
 from hotel.web import forms
 from hotel.web.context import current_actor, services
 from hotel.web.messages import message_for
+from hotel.web.removal import confirm_removal
 from hotel.web.security import is_safe_redirect_target, login_required, roles_required
 
 bp = Blueprint("rooms", __name__, url_prefix="/rooms")
@@ -32,11 +33,14 @@ def index():
     rooms = services().rooms
     actor = current_actor()
     category_id = request.args.get("category", type=int)  # None if missing or not a number
+    archived = request.args.get("archived") == "1"
     return render_template(
         "rooms/index.html",
-        rooms=rooms.list_rooms(actor, category_id=category_id),
+        rooms=rooms.list_rooms(actor, category_id=category_id, archived=archived),
         categories=rooms.list_categories(actor),
         category_id=category_id,
+        archived=archived,
+        archived_count=rooms.count_archived(actor),
     )
 
 
@@ -258,3 +262,30 @@ def delete_rate(period_id: int):
     else:
         flash(_("Rate period removed. Existing bookings keep their prices."), "success")
     return redirect(url_for("rooms.rates"))
+
+
+# ---------------------------------------------------------------- delete or archive (6.17)
+@bp.route("/<int:room_id>/remove", methods=["GET", "POST"])
+@roles_required(Role.MANAGER)
+def remove(room_id: int):
+    actor = current_actor()
+    room = services().rooms.get_room(actor, room_id).room
+    plan = services().rooms.removal_plan(actor, room_id)
+    return confirm_removal(
+        plan=lambda: plan,
+        remove=lambda: services().rooms.remove(actor, room_id),
+        title=_("Remove room %(number)s", number=room.number),
+        uses_label=_("Stays and maintenance periods: %(count)s", count=plan.uses),
+        back_url=url_for("rooms.detail", room_id=room_id),
+        list_url=url_for("rooms.index"),
+        deleted=_("Room deleted."),
+        archived=_("Room archived and out of service. You can find it under Archived."),
+    )
+
+
+@bp.post("/<int:room_id>/restore")
+@roles_required(Role.MANAGER)
+def restore(room_id: int):
+    services().rooms.restore(current_actor(), room_id)
+    flash(_("Room restored. It is still out of service: edit it to put it back."), "success")
+    return redirect(url_for("rooms.detail", room_id=room_id))

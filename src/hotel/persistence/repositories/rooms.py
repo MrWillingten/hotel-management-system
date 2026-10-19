@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import sqlite3
-from datetime import date
+from datetime import date, datetime
 
 from hotel.domain.errors import StaleDataError
 from hotel.domain.money import Money
@@ -12,7 +12,8 @@ from hotel.persistence.repositories.base import BaseRepository
 
 _ROOM_SELECT = (
     "SELECT r.id, r.number, r.category_id, r.capacity, r.nightly_rate_mill, r.in_service, "
-    "r.notes, r.version, r.housekeeping, r.awaiting_inspection, c.name AS category_name "
+    "r.notes, r.version, r.housekeeping, r.awaiting_inspection, r.archived_at, "
+    "c.name AS category_name "
     "FROM room r JOIN room_category c ON c.id = r.category_id"
 )
 _MAINTENANCE_SELECT = (
@@ -32,6 +33,7 @@ def _to_room(row: sqlite3.Row) -> Room:
         version=row["version"],
         category_name=row["category_name"],
         housekeeping=_housekeeping(row["housekeeping"], row["awaiting_inspection"]),
+        archived_at=datetime_from_db(row["archived_at"]),
     )
 
 
@@ -57,7 +59,8 @@ class CategoryRepository(BaseRepository):
     def list_all(self) -> list[RoomCategory]:
         rows = self._fetch_all(
             "SELECT c.id, c.name, c.description, c.version, COUNT(r.id) AS room_count "
-            "FROM room_category c LEFT JOIN room r ON r.category_id = c.id "
+            "FROM room_category c LEFT JOIN room r "
+            "ON r.category_id = c.id AND r.archived_at IS NULL "
             "GROUP BY c.id ORDER BY c.name"
         )
         return [
@@ -102,15 +105,46 @@ class CategoryRepository(BaseRepository):
 
 
 class RoomRepository(BaseRepository):
-    def list(self, *, category_id: int | None = None) -> list[Room]:
+    def list(self, *, category_id: int | None = None, archived: bool = False) -> list[Room]:
+        """Rooms in use; archived ones (story 6.17) only when asked for, and then alone."""
+        where = "r.archived_at IS NOT NULL" if archived else "r.archived_at IS NULL"
         if category_id is None:
-            rows = self._fetch_all(f"{_ROOM_SELECT} ORDER BY r.number")
+            rows = self._fetch_all(f"{_ROOM_SELECT} WHERE {where} ORDER BY r.number")
         else:
             rows = self._fetch_all(
-                f"{_ROOM_SELECT} WHERE r.category_id = ? ORDER BY r.number",
+                f"{_ROOM_SELECT} WHERE {where} AND r.category_id = ? ORDER BY r.number",
                 (category_id,),
             )
         return [_to_room(r) for r in rows]
+
+    # ------------------------------------------------------------ delete or archive (6.17)
+    def count_history(self, room_id: int) -> int:
+        """Stays and maintenance periods that refer to this room."""
+        return self._fetch_one(
+            "SELECT (SELECT COUNT(*) FROM reservation_room WHERE room_id = ?) "
+            "+ (SELECT COUNT(*) FROM maintenance WHERE room_id = ?)",
+            (room_id, room_id),
+        )[0]
+
+    def count_archived(self) -> int:
+        return self._fetch_one("SELECT COUNT(*) FROM room WHERE archived_at IS NOT NULL")[0]
+
+    def archive(self, room_id: int, now: datetime | None) -> None:
+        """`now` archives (and takes the room out of service), None restores."""
+        if now is None:
+            self._execute(
+                "UPDATE room SET archived_at = NULL, version = version + 1 WHERE id = ?",
+                (room_id,),
+            )
+        else:
+            self._execute(
+                "UPDATE room SET archived_at = ?, in_service = 0, version = version + 1 "
+                "WHERE id = ?",
+                (datetime_to_db(now), room_id),
+            )
+
+    def delete(self, room_id: int) -> None:
+        self._execute("DELETE FROM room WHERE id = ?", (room_id,))
 
     def get(self, room_id: int) -> Room | None:
         row = self._fetch_one(f"{_ROOM_SELECT} WHERE r.id = ?", (room_id,))

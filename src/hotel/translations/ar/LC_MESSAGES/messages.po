@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-18 20:48+0100\n"
+"POT-Creation-Date: 2026-10-18 21:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -172,11 +172,20 @@ msgstr "مجموع الإقامة (قبل الضرائب)"
 msgid "Account %(username)s created. Give them the temporary password in person."
 msgstr "تم إنشاء الحساب %(username)s. سلّم كلمة المرور المؤقتة لصاحبه شخصيًا."
 
+msgid "Account archived and deactivated. You can find it under Archived."
+msgstr "تمت أرشفة الحساب وتعطيله. ستجده في «المؤرشفة»."
+
 msgid "Account deactivated and signed out."
 msgstr "تم تعطيل الحساب وتسجيل خروجه."
 
+msgid "Account deleted."
+msgstr "تم حذف الحساب."
+
 msgid "Account reactivated."
 msgstr "تمت إعادة تفعيل الحساب."
+
+msgid "Account restored. It is still deactivated: reactivate it to let the person in."
+msgstr "تمت استعادة الحساب. ما زال معطلًا: أعد تفعيله ليتمكن صاحبه من الدخول."
 
 msgid "Account unlocked."
 msgstr "تم فتح قفل الحساب."
@@ -188,14 +197,15 @@ msgstr ""
 "ينشئ المدير الحسابات بكلمة مرور مؤقتة تستبدلها عند أول تسجيل دخول. انقر على اسمك في الشريط العلوي"
 " لتغيير كلمة المرور أو لإعداد تسجيل الدخول بخطوتين."
 
-msgid "Accounts are deactivated, never deleted, so the audit log keeps its meaning."
-msgstr "تُعطَّل الحسابات ولا تُحذف أبدًا، حتى يحتفظ سجل التدقيق بمعناه."
-
 msgid "Action"
 msgstr "الإجراء"
 
 msgid "Actions"
 msgstr "الإجراءات"
+
+#, python-format
+msgid "Actions in the audit log: %(count)s"
+msgstr "الإجراءات في سجل التدقيق: %(count)s"
 
 msgid "Active"
 msgstr "نشط"
@@ -314,6 +324,13 @@ msgstr ""
 msgid "Amounts have at most 3 decimals (millimes)."
 msgstr "تحتوي المبالغ على 3 أرقام عشرية كحد أقصى (المليمات)."
 
+msgid ""
+"An account that was never used can be deleted; one with a history is archived, so the audit log "
+"keeps its meaning."
+msgstr ""
+"يمكن حذف الحساب الذي لم يُستخدم أبدًا؛ أما الحساب الذي له سجل فيُؤرشف، حتى يحتفظ سجل التدقيق "
+"بمعناه."
+
 msgid "An amount per adult per night can only apply to the accommodation."
 msgstr "لا يمكن تطبيق مبلغ لكل بالغ في الليلة إلا على الإقامة."
 
@@ -343,6 +360,30 @@ msgstr "توجد غرفة أخرى بهذا الرقم بالفعل."
 
 msgid "Applies to"
 msgstr "تُطبَّق على"
+
+msgid "Apply the tax again"
+msgstr "إعادة تطبيق الضريبة"
+
+msgid "Archive"
+msgstr "أرشفة"
+
+msgid "Archived guests: hidden from searches and bookings, history kept."
+msgstr "النزلاء المؤرشفون: مخفيون من البحث والحجوزات، مع الاحتفاظ بسجلهم."
+
+#, python-format
+msgid "Archived on %(date)s: hidden from lists and forms, history kept."
+msgstr "أُرشف في %(date)s: مخفي من القوائم والنماذج، مع الاحتفاظ بسجله."
+
+msgid ""
+"Archived records disappear from lists, forms and suggestions, but their history stays intact "
+"(invoices, past stays, audit log). You can restore it at any time from the archived list."
+msgstr ""
+"تختفي العناصر المؤرشفة من القوائم والنماذج والاقتراحات، لكن سجلها يبقى سليمًا (الفواتير، الإقامات"
+" السابقة، سجل التدقيق). يمكنك استعادته في أي وقت من قائمة المؤرشفة."
+
+#, python-format
+msgid "Archived: %(count)s"
+msgstr "المؤرشفة: %(count)s"
 
 msgid "Arrival"
 msgstr "الوصول"
@@ -407,6 +448,9 @@ msgstr "رجوع"
 
 msgid "Back to staff"
 msgstr "العودة إلى الموظفين"
+
+msgid "Back to the current list"
+msgstr "العودة إلى القائمة الحالية"
 
 msgid "Back to the dashboard"
 msgstr "العودة إلى لوحة القيادة"
@@ -615,6 +659,10 @@ msgstr "تم إلغاء الاحتساب."
 #, python-format
 msgid "Charged: %(quantity)s × %(name)s."
 msgstr "تم احتساب: %(quantity)s × %(name)s."
+
+#, python-format
+msgid "Charges to stays: %(count)s"
+msgstr "الاحتسابات على الإقامات: %(count)s"
 
 msgid "Check a guest in"
 msgstr "تسجيل وصول نزيل"
@@ -828,6 +876,12 @@ msgstr "معطّل"
 msgid "Deactivating signs the person out everywhere, immediately."
 msgstr "يؤدي التعطيل إلى تسجيل خروج الشخص من كل مكان فورًا."
 
+msgid "Decided by the guest's nationality. A manager can also exempt one stay from a tax, on its bill."
+msgstr "يُحدَّد حسب جنسية النزيل. ويمكن للمدير أيضًا إعفاء إقامة من ضريبة، من كشف حسابها."
+
+msgid "Delete permanently"
+msgstr "حذف نهائي"
+
 msgid "Departure"
 msgstr "المغادرة"
 
@@ -1018,6 +1072,9 @@ msgstr "كل ما يخص إقامة واحدة وكل الإجراءات علي�
 msgid "Example:"
 msgstr "مثال:"
 
+msgid "Exempt this stay"
+msgstr "إعفاء هذه الإقامة"
+
 msgid "Expired"
 msgstr "منتهي الصلاحية"
 
@@ -1084,6 +1141,9 @@ msgstr "مثلاً: الأداء على القيمة المضافة أو الم�
 msgid "For example: occupancy dashboard"
 msgstr "مثلًا: لوحة متابعة الإشغال"
 
+msgid "For example: resident in Tunisia, diplomat, child under the age limit."
+msgstr "مثلًا: مقيم في تونس، دبلوماسي، طفل دون السن المحددة."
+
 msgid "Form expired"
 msgstr "انتهت صلاحية النموذج"
 
@@ -1146,6 +1206,15 @@ msgstr "النزيل"
 msgid "Guest %(name)s registered."
 msgstr "تم تسجيل النزيل %(name)s."
 
+msgid "Guest archived. You can find them under Archived."
+msgstr "تمت أرشفة النزيل. ستجده في «المؤرشفة»."
+
+msgid "Guest deleted."
+msgstr "تم حذف النزيل."
+
+msgid "Guest restored."
+msgstr "تمت استعادة النزيل."
+
 msgid "Guests"
 msgstr "النزلاء"
 
@@ -1157,11 +1226,26 @@ msgstr "عدد النزلاء الذين أُخفيت هويتهم: %(count)s."
 msgid "Guests found: %(total)s"
 msgstr "عدد النزلاء الذين تم العثور عليهم: %(total)s"
 
+#, python-format
+msgid "Guests from %(country)s only"
+msgstr "النزلاء من %(country)s فقط"
+
+msgid ""
+"Guests from this country are nationals for taxes that only concern foreign guests (or only "
+"nationals)."
+msgstr ""
+"يُعدّ النزلاء من هذا البلد مواطنين بالنسبة للضرائب التي تخص النزلاء الأجانب فقط (أو المواطنين "
+"فقط)."
+
 msgid "Guests in one room"
 msgstr "عدد الأشخاص في الغرفة"
 
 msgid "Guests in the house"
 msgstr "النزلاء المقيمون"
+
+#, python-format
+msgid "Guests not from %(country)s"
+msgstr "النزلاء من خارج %(country)s"
 
 msgid ""
 "Guests who never came become no-shows, guests still in after their departure are listed, and the "
@@ -1201,6 +1285,9 @@ msgstr "ينقل قسم التنظيف الغرف من «للتنظيف» إلى
 
 msgid "I have saved them"
 msgstr "لقد حفظتها"
+
+msgid "I understand."
+msgstr "فهمت."
 
 #, python-format
 msgid "I understand: erase the personal data of these %(count)s guests."
@@ -1279,6 +1366,12 @@ msgstr "تحتفظ الفواتير الصادرة بالضريبة التي ص�
 
 msgid "Issued on"
 msgstr "تاريخ الإصدار"
+
+msgid "It has a history, so it will be archived, not deleted."
+msgstr "له سجل، لذلك سيُؤرشف ولن يُحذف."
+
+msgid "It was never used, so it will be deleted permanently. This cannot be undone."
+msgstr "لم يُستخدم أبدًا، لذلك سيُحذف نهائيًا. لا يمكن التراجع عن ذلك."
 
 msgid "Karim, 10–13 July, 2 adults: Find rooms → Book 204 → Review → Confirm booking."
 msgstr "كريم، من 10 إلى 13 يوليو، شخصان بالغان: البحث عن غرف ← حجز 204 ← مراجعة ← تأكيد الحجز."
@@ -1390,6 +1483,9 @@ msgstr "يُعدّ المديرون الغرف التي يبيعها الفند�
 
 msgid "Managers: a percentage or fixed amount on accommodation, with a reason."
 msgstr "للمديرين: نسبة مئوية أو مبلغ ثابت على الإقامة، مع ذكر السبب."
+
+msgid "Managers: exempt this stay from one tax, with a reason, until check-out."
+msgstr "للمديرين: إعفاء هذه الإقامة من ضريبة، مع ذكر السبب، حتى المغادرة."
 
 msgid "Managers: when the guest paid more than the total."
 msgstr "للمديرين: عندما يدفع النزيل أكثر من المجموع."
@@ -1721,6 +1817,13 @@ msgstr "من الإقامة؛ وتُحتسب أيضاً عند عدم الحضو
 msgid "On"
 msgstr "مفعّل"
 
+msgid ""
+"On a guest, room, service, tax or account: deletes it if it was never used, otherwise archives it"
+" (hidden, history kept, restorable)."
+msgstr ""
+"على نزيل أو غرفة أو خدمة أو ضريبة أو حساب: يحذفه إن لم يُستخدم أبدًا، وإلا يؤرشفه (مخفي، مع "
+"الاحتفاظ بسجله، وقابل للاستعادة)."
+
 msgid "One of these guests can no longer be anonymised (a new booking?). Reload the list."
 msgstr "لم يعد ممكناً إخفاء هوية أحد هؤلاء النزلاء (حجز جديد؟). أعد تحميل القائمة."
 
@@ -1952,11 +2055,30 @@ msgstr "أعد تحميل الصفحة وامسح رمز QR الجديد."
 msgid "Remove"
 msgstr "حذف"
 
+#, python-format
+msgid "Remove %(name)s"
+msgstr "إزالة %(name)s"
+
+#, python-format
+msgid "Remove room %(number)s"
+msgstr "إزالة الغرفة %(number)s"
+
+#, python-format
+msgid "Remove the account %(username)s"
+msgstr "إزالة الحساب %(username)s"
+
+#, python-format
+msgid "Remove the tax %(name)s"
+msgstr "إزالة الضريبة %(name)s"
+
 msgid "Remove this room"
 msgstr "إزالة هذه الغرفة"
 
 msgid "Removed"
 msgstr "محذوف"
+
+msgid "Remove…"
+msgstr "إزالة…"
 
 msgid "Reopens on"
 msgstr "تُفتح من جديد في"
@@ -2008,6 +2130,9 @@ msgstr "إعادة تعيين كلمة المرور"
 
 msgid "Restart the tour"
 msgstr "إعادة الجولة"
+
+msgid "Restore"
+msgstr "استعادة"
 
 msgid "Reveals a masked document number; the reveal is audited."
 msgstr "يكشف رقم وثيقة مخفيًا؛ ويُسجَّل الكشف."
@@ -2088,6 +2213,9 @@ msgstr "الغرفة %(room)s ما زالت مشغولة (%(code)s). سجّل م
 msgid "Room %(room)s will be marked to clean."
 msgstr "سيتم وضع علامة «للتنظيف» على الغرفة %(room)s."
 
+msgid "Room archived and out of service. You can find it under Archived."
+msgstr "تمت أرشفة الغرفة وإخراجها من الخدمة. ستجدها في «المؤرشفة»."
+
 msgid "Room categories"
 msgstr "فئات الغرف"
 
@@ -2095,8 +2223,14 @@ msgstr "فئات الغرف"
 msgid "Room closed from %(first)s; it reopens on %(reopens)s."
 msgstr "أُغلقت الغرفة ابتداءً من %(first)s، وتُفتح من جديد في %(reopens)s."
 
+msgid "Room deleted."
+msgstr "تم حذف الغرفة."
+
 msgid "Room number"
 msgstr "رقم الغرفة"
+
+msgid "Room restored. It is still out of service: edit it to put it back."
+msgstr "تمت استعادة الغرفة. ما زالت خارج الخدمة: عدّلها لإعادتها إلى الخدمة."
 
 msgid "Room value"
 msgstr "قيمة الغرف"
@@ -2177,6 +2311,15 @@ msgstr "يعيد الغرفة إلى التنظيف."
 
 msgid "Service"
 msgstr "الخدمة"
+
+msgid "Service archived. You can find it under Archived."
+msgstr "تمت أرشفة الخدمة. ستجدها في «المؤرشفة»."
+
+msgid "Service deleted."
+msgstr "تم حذف الخدمة."
+
+msgid "Service restored. It is still inactive: edit it to charge it again."
+msgstr "تمت استعادة الخدمة. ما زالت غير نشطة: عدّلها لاحتسابها من جديد."
 
 msgid "Set it up now"
 msgstr "فعّله الآن"
@@ -2286,6 +2429,18 @@ msgid "Stay"
 msgstr "الإقامة"
 
 #, python-format
+msgid "Stays and maintenance periods: %(count)s"
+msgstr "الإقامات وفترات الصيانة: %(count)s"
+
+#, python-format
+msgid "Stays exempted from it: %(count)s"
+msgstr "الإقامات المعفاة منها: %(count)s"
+
+#, python-format
+msgid "Stays: %(count)s"
+msgstr "الإقامات: %(count)s"
+
+#, python-format
 msgid "Step %(number)s of %(total)s"
 msgstr "الخطوة %(number)s من %(total)s"
 
@@ -2304,9 +2459,24 @@ msgstr "خذ عربونًا بقيمة 100 د.ت بالبطاقة مع رقم ا
 msgid "Take the tour"
 msgstr "ابدأ الجولة"
 
+msgid "Tax"
+msgstr "الضريبة"
+
+msgid "Tax exemptions"
+msgstr "الإعفاءات الضريبية"
+
 #, python-format
 msgid "Tax rule %(name)s added."
 msgstr "تمت إضافة الضريبة %(name)s."
+
+msgid "Tax rule archived and inactive. You can find it under Archived."
+msgstr "تمت أرشفة الضريبة وإيقافها. ستجدها في «المؤرشفة»."
+
+msgid "Tax rule deleted. Issued invoices keep their own copy of it."
+msgstr "تم حذف الضريبة. تحتفظ الفواتير الصادرة بنسختها الخاصة منها."
+
+msgid "Tax rule restored. It is still inactive: edit it to apply it again."
+msgstr "تمت استعادة الضريبة. ما زالت غير نشطة: عدّلها لتطبيقها من جديد."
 
 msgid "Tax rules"
 msgstr "الضرائب"
@@ -2409,6 +2579,12 @@ msgstr "يجب أن يحتفظ الفندق بمدير نشط واحد على ا
 msgid "The hotel owes the guest a refund. Ask a manager to record it."
 msgstr "على الفندق رد مبلغ للنزيل. اطلب من المدير تسجيله."
 
+msgid "The hotel's country"
+msgstr "بلد الفندق"
+
+msgid "The invoice is issued: its taxes can no longer change."
+msgstr "صدرت الفاتورة: لم يعد بالإمكان تغيير ضرائبها."
+
 msgid "The last night must not be before the first night."
 msgstr "لا يمكن أن تسبق الليلة الأخيرة الليلة الأولى."
 
@@ -2450,6 +2626,12 @@ msgstr "استغرق تسجيل الدخول وقتًا طويلًا أو فشل
 msgid "The stay is already over: this reservation can no longer be checked in."
 msgstr "انتهت الإقامة بالفعل: لم يعد ممكناً تسجيل الوصول لهذا الحجز."
 
+msgid "The stay is exempt from this tax."
+msgstr "الإقامة معفاة من هذه الضريبة."
+
+msgid "The tax applies to this stay again."
+msgstr "تُطبَّق الضريبة على هذه الإقامة من جديد."
+
 msgid "The token was revoked. Programs using it can no longer read data."
 msgstr "تم إلغاء الرمز. لم يعد بإمكان البرامج التي تستخدمه قراءة البيانات."
 
@@ -2461,6 +2643,9 @@ msgstr "كلمتا المرور غير متطابقتين."
 
 msgid "They will have to replace it at their first sign-in."
 msgstr "سيتعين على صاحب الحساب استبدالها عند أول تسجيل دخول."
+
+msgid "This account is archived. Restore it first."
+msgstr "هذا الحساب مؤرشف. استعده أولًا."
 
 msgid "This action can't be done this way."
 msgstr "لا يمكن تنفيذ هذا الإجراء بهذه الطريقة."
@@ -2501,6 +2686,12 @@ msgstr "تم إرسال هذا النموذج من قبل. تحقق من الح�
 
 msgid "This form was already submitted. Check the reservation list before trying again."
 msgstr "تم إرسال هذا النموذج من قبل. تحقق من قائمة الحجوزات قبل المحاولة مجددًا."
+
+msgid "This guest has a stay in progress or to come. Cancel it or wait until it is over."
+msgstr "لهذا النزيل إقامة جارية أو قادمة. ألغِها أو انتظر انتهاءها."
+
+msgid "This guest is archived. Restore them first."
+msgstr "هذا النزيل مؤرشف. استعده أولًا."
 
 msgid "This guest is marked do-not-rent: new reservations are refused."
 msgstr "هذا النزيل ممنوع من الحجز: تُرفض الحجوزات الجديدة."
@@ -2551,6 +2742,9 @@ msgstr "لم يعد بالإمكان تعديل هذا الحجز."
 msgid "This room has never been closed for maintenance."
 msgstr "لم تُغلق هذه الغرفة للصيانة من قبل."
 
+msgid "This room is archived. Restore it first."
+msgstr "هذه الغرفة مؤرشفة. استعدها أولًا."
+
 msgid "This room is not part of the stay any more."
 msgstr "هذه الغرفة لم تعد جزءًا من الإقامة."
 
@@ -2558,10 +2752,19 @@ msgstr "هذه الغرفة لم تعد جزءًا من الإقامة."
 msgid "This room still has bookings (%(codes)s). Move or cancel them first."
 msgstr "لا تزال لهذه الغرفة حجوزات (%(codes)s). انقلها أو ألغها أولًا."
 
+msgid "This service is archived. Restore it first."
+msgstr "هذه الخدمة مؤرشفة. استعدها أولًا."
+
 msgid ""
 "This short tour shows where everything is. It takes about two minutes; you can skip it and reopen"
 " it from Help."
 msgstr "تريك هذه الجولة القصيرة مكان كل شيء. تستغرق نحو دقيقتين؛ ويمكنك تخطيها وإعادة فتحها من «المساعدة»."
+
+msgid "This stay is already exempt from this tax."
+msgstr "هذه الإقامة معفاة من هذه الضريبة بالفعل."
+
+msgid "This tax rule is archived. Restore it first."
+msgstr "هذه الضريبة مؤرشفة. استعدها أولًا."
 
 msgid "This username is already used."
 msgstr "اسم المستخدم هذا مستخدم بالفعل."
@@ -2578,6 +2781,9 @@ msgstr ""
 
 msgid "Thursday"
 msgstr "الخميس"
+
+msgid "Tick the box to confirm."
+msgstr "ضع علامة في المربع للتأكيد."
 
 msgid "Tick the box to confirm: this cannot be undone."
 msgstr "ضع علامة في المربع للتأكيد: لا يمكن التراجع."
@@ -2800,6 +3006,9 @@ msgstr "أثناء إقامة النزيل: وجبات فطور، نقل… مع
 msgid "Who did what and when; altered or removed entries are detected and shown."
 msgstr "من فعل ماذا ومتى؛ وتُكتشف الإدخالات المعدّلة أو المحذوفة وتُعرض."
 
+msgid "Who pays"
+msgstr "من يدفع"
+
 msgid "With a temporary password replaced at first sign-in."
 msgstr "بكلمة مرور مؤقتة تُستبدل عند أول تسجيل دخول."
 
@@ -2825,6 +3034,9 @@ msgstr "يمكنك إعادة فتح هذه الجولة من «المساعدة
 
 msgid "You can't deactivate your own account."
 msgstr "لا يمكنك تعطيل حسابك الخاص."
+
+msgid "You cannot remove your own account."
+msgstr "لا يمكنك إزالة حسابك الخاص."
 
 msgid "You don't have permission to do that."
 msgstr "ليست لديك صلاحية للقيام بذلك."

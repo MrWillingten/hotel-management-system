@@ -207,6 +207,11 @@ class Guest:
     created_at: datetime | None = None
     version: int = 1
     anonymised_at: datetime | None = None
+    archived_at: datetime | None = None  # story 6.17
+
+    @property
+    def is_archived(self) -> bool:
+        return self.archived_at is not None
 
     @property
     def is_anonymised(self) -> bool:

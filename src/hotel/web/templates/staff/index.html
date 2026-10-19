@@ -1,12 +1,16 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/icons.html" import icon -%}
 {%- from "macros/staff.html" import status_badges -%}
+{%- from "macros/archive.html" import archived_toggle with context -%}
 {% block title %}{{ _("Staff") }}{% endblock %}
 {% block page_title %}{{ _("Staff") }}{% endblock %}
 {% block content %}
 <div class="page-actions">
-  <p class="muted">{{ _("Accounts are deactivated, never deleted, so the audit log keeps its meaning.") }}</p>
-  <a class="button button--primary" href="{{ url_for('staff.create') }}">{{ _("Add a staff member") }}</a>
+  <p class="muted">{{ _("An account that was never used can be deleted; one with a history is archived, so the audit log keeps its meaning.") }}</p>
+  <div class="page-actions__buttons">
+    {{ archived_toggle("staff.index", archived, archived_count) }}
+    <a class="button button--primary" href="{{ url_for('staff.create') }}">{{ _("Add a staff member") }}</a>
+  </div>
 </div>
 <div class="table-wrap">
   <table class="table">

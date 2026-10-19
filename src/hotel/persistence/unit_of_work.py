@@ -38,7 +38,7 @@ from hotel.persistence.repositories.rooms import (
 )
 from hotel.persistence.repositories.sessions import SessionRepository
 from hotel.persistence.repositories.settings import SettingRepository
-from hotel.persistence.repositories.taxes import TaxRuleRepository
+from hotel.persistence.repositories.taxes import TaxExemptionRepository, TaxRuleRepository
 from hotel.persistence.repositories.users import (
     LoginChallengeRepository,
     RecoveryCodeRepository,
@@ -72,6 +72,7 @@ class UnitOfWork:
     login_challenges: LoginChallengeRepository
     api_tokens: ApiTokenRepository
     onboarding: OnboardingRepository
+    tax_exemptions: TaxExemptionRepository
 
     def __init__(self, database_path: Path) -> None:
         self._database_path = database_path
@@ -107,6 +108,7 @@ class UnitOfWork:
         self.login_challenges = LoginChallengeRepository(self._conn)
         self.api_tokens = ApiTokenRepository(self._conn)
         self.onboarding = OnboardingRepository(self._conn)
+        self.tax_exemptions = TaxExemptionRepository(self._conn)
         return self
 
     def __exit__(

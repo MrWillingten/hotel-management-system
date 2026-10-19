@@ -9,9 +9,18 @@
 {{ _("Accommodation") if applies_to == "ACCOMMODATION" else _("Extra services") }}
 {%- endmacro %}
 
-{%- macro rule_fields(v, errors) -%}
+{#- Story 6.16: who pays the tax, by the guest's nationality. -#}
+{%- macro payers_label(payers, country) -%}
+{%- if payers == "FOREIGN" %}{{ _("Guests not from %(country)s", country=country) }}
+{%- elif payers == "NATIONALS" %}{{ _("Guests from %(country)s only", country=country) }}
+{%- else %}{{ _("Everyone") }}{% endif %}
+{%- endmacro %}
+
+{%- macro rule_fields(v, errors, country) -%}
 {{ field("name", _("Name"), value=v.get("name", ""), error=errors.name, maxlength=60, hint=_("For example VAT or Tourist tax.")) }}
 {{ select("kind", _("Kind"), [("PERCENT", _("Percentage")), ("PER_ADULT_NIGHT", _("Amount per adult per night"))], v.get("kind", "PERCENT"), errors.kind) }}
 {{ field("rate", _("Rate"), value=v.get("rate", ""), error=errors.rate, hint=_("A percentage (7 or 7.5) or an amount in dinars (3.000), depending on the kind.")) }}
 {{ select("applies_to", _("Applies to"), [("ACCOMMODATION", _("Accommodation")), ("SERVICES", _("Extra services"))], v.get("applies_to", "ACCOMMODATION"), errors.applies_to) }}
+{{ select("payers", _("Who pays"), [("EVERYONE", payers_label("EVERYONE", country)), ("FOREIGN", payers_label("FOREIGN", country)), ("NATIONALS", payers_label("NATIONALS", country))], v.get("payers", "EVERYONE"), errors.payers) }}
+<p class="field__hint">{{ _("Decided by the guest's nationality. A manager can also exempt one stay from a tax, on its bill.") }}</p>
 {%- endmacro %}

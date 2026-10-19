@@ -23,8 +23,9 @@ from hotel.domain.extras import (
     validate_void_reason,
 )
 from hotel.domain.money import Money
+from hotel.domain.removal import RemovalAction, RemovalPlan, plan_removal
 from hotel.domain.reservations import ReservationStatus
-from hotel.persistence.unit_of_work import UnitOfWorkFactory
+from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.audit import record
 from hotel.services.authorization import require_role, require_staff
 
@@ -35,10 +36,59 @@ class ExtrasService:
         self._clock = clock
 
     # ------------------------------------------------------------ catalogue
-    def catalogue(self, actor: Actor, *, active_only: bool = False) -> list[Extra]:
+    def catalogue(
+        self, actor: Actor, *, active_only: bool = False, archived: bool = False
+    ) -> list[Extra]:
         require_staff(actor)
         with self._uow() as uow:
-            return uow.extras.list(active_only=active_only)
+            return uow.extras.list(active_only=active_only, archived=archived)
+
+    # ------------------------------------------------------------ delete or archive (6.17)
+    def count_archived(self, actor: Actor) -> int:
+        require_staff(actor)
+        with self._uow() as uow:
+            return uow.extras.count_archived()
+
+    def removal_plan(self, actor: Actor, extra_id: int) -> RemovalPlan:
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            self._load(uow, extra_id)
+            return plan_removal(uow.extras.count_charges(extra_id))
+
+    def remove(self, actor: Actor, extra_id: int) -> RemovalAction:
+        """Delete a service never charged; archive one that was (its charges keep it)."""
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            extra = self._load(uow, extra_id)
+            plan = plan_removal(uow.extras.count_charges(extra_id))
+            if plan.action is RemovalAction.DELETE:
+                uow.extras.delete(extra_id)
+            elif not extra.is_archived:
+                uow.extras.archive(extra_id, self._clock.now())
+            action = "extra.deleted" if plan.action is RemovalAction.DELETE else "extra.archived"
+            record(
+                uow, self._clock, actor, action, entity="extra", entity_id=extra_id, name=extra.name
+            )
+            return plan.action
+
+    def restore(self, actor: Actor, extra_id: int) -> Extra:
+        """Back in the catalogue, still inactive until a manager activates it."""
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            extra = self._load(uow, extra_id)
+            if extra.is_archived:
+                uow.extras.archive(extra_id, None)
+                record(
+                    uow, self._clock, actor, "extra.restored", entity="extra", entity_id=extra_id
+                )
+            return uow.extras.get(extra_id)
+
+    @staticmethod
+    def _load(uow: UnitOfWork, extra_id: int) -> Extra:
+        extra = uow.extras.get(extra_id)
+        if extra is None:
+            raise NotFoundError(entity="extra", id=extra_id)
+        return extra
 
     def get(self, actor: Actor, extra_id: int) -> Extra:
         require_staff(actor)
@@ -86,6 +136,8 @@ class ExtrasService:
                 raise NotFoundError(entity="extra", id=extra_id)
             if extra.version != version:
                 raise StaleDataError(entity="extra", id=extra_id)
+            if extra.is_archived:
+                raise BusinessRuleViolation("extra.archived")
             if uow.extras.name_taken(name, except_id=extra_id):
                 raise ConflictError("extra.name_taken", fields={"name": "extra.name_taken"})
             before = str(extra.unit_price)

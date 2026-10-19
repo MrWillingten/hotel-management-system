@@ -66,6 +66,21 @@ All notable changes are recorded here. The format follows
   nationality is typed with country suggestions in the interface language
   (no JavaScript: an HTML `datalist`) and stored as its ISO code. Clearer
   error messages; demo data uses valid numbers for each country.
+- Taxes by guest and per stay (story 6.16): each tax rule says who pays
+  (everyone, foreign guests only, or nationals of the hotel's country only,
+  a new setting, Tunisia by default), decided by the guest's nationality
+  (or a CIN). Managers can exempt one stay from one tax with a reason on its
+  bill until the invoice is issued; exemptions are listed on the invoice and
+  audited. The demo tourist tax now concerns foreign guests only.
+  Migration 0019.
+- Delete or archive (story 6.17): managers can remove guests, rooms, extra
+  services, tax rules and staff accounts ("Remove…"). A record never used is
+  deleted; one with history is archived: hidden from lists, forms and
+  suggestions, history intact, restorable (archived lists under
+  "Archived: n"). Removal is refused while it would break something current
+  (a room with future bookings, a guest with a stay to come, oneself, the
+  last manager). The confirmation page says which and why; every removal is
+  audited. Migration 0020.
 
 ### Security (story 6.6)
 - OWASP ASVS 5.0 Level 1 self-assessment (`docs/asvs.md`): 58 requirements

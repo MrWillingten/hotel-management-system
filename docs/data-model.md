@@ -54,6 +54,8 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
                    attempts CK≥0)                   → password accepted, code pending
 ✅ api_token(id PK, user_id FK ON DELETE CASCADE, name CK 1..60, token_hash UQ CK len=64,
              prefix, created_at, expires_at, last_used_at, revoked_at)   → JSON API (6.3)
+✅ tax_exemption(id PK, reservation_id FK ON DELETE CASCADE, tax_rule_id FK, reason CK 1..200,
+                 created_at, created_by FK app_user, UQ(reservation_id, tax_rule_id))   → 6.16
 ✅ onboarding(user_id PK FK ON DELETE CASCADE, tour_done_at, checklist_dismissed_at)
                                                     → walk-through (6.14); ticks come from audit_log
 
@@ -106,6 +108,14 @@ Notation: `PK` primary key · `FK` foreign key · `UQ` unique · `CK` check ·
                   cash_mill, reservations_made, cancellations, no_shows,
                   overdue_departures, created_at, created_by FK)   night audit (PK = run once)
 ```
+
+## Archiving (story 6.17)
+
+`guest`, `room`, `extra`, `tax_rule` and `app_user` have an `archived_at`
+column: NULL for records in use, the archiving instant otherwise. Archived
+records are left out of lists, forms and suggestions; archiving also takes a
+room out of service and deactivates a service, a tax rule or an account.
+A record that nothing refers to is deleted instead.
 
 ## Conventions
 

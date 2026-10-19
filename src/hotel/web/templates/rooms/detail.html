@@ -1,6 +1,7 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/forms.html" import csrf, field, form_errors -%}
 {%- from "macros/rooms.html" import housekeeping_badge, housekeeping_button, status_badge -%}
+{%- from "macros/archive.html" import archived_banner, remove_link with context -%}
 {%- set room = overview.room -%}
 {% block title %}{{ _("Room %(number)s", number=room.number) }}{% endblock %}
 {% block page_title %}{{ _("Room %(number)s", number=room.number) }}{% endblock %}
@@ -10,11 +11,13 @@
   <div class="page-actions__buttons">
     <a class="button button--ghost" href="{{ url_for('rooms.index') }}">{{ _("All rooms") }}</a>
     {{ housekeeping_button(room) }}
-    {%- if current_user.is_manager %}
+    {%- if current_user.is_manager and not room.is_archived %}
     <a class="button button--primary" href="{{ url_for('rooms.edit', room_id=room.id) }}">{{ _("Edit room") }}</a>
     {%- endif %}
+    {{ remove_link(room, url_for("rooms.remove", room_id=room.id)) }}
   </div>
 </div>
+{{ archived_banner(room, url_for("rooms.restore", room_id=room.id)) }}
 
 <div class="grid grid--two">
   <section class="panel">

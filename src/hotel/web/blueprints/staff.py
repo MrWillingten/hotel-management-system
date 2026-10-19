@@ -10,6 +10,7 @@ from hotel.domain.errors import BusinessRuleViolation, ConflictError, Validation
 from hotel.web import forms
 from hotel.web.context import current_actor, services
 from hotel.web.messages import message_for
+from hotel.web.removal import confirm_removal
 from hotel.web.security import roles_required
 
 bp = Blueprint("staff", __name__, url_prefix="/staff")
@@ -32,8 +33,15 @@ def _temporary_password(data) -> str:
 @bp.get("/")
 @roles_required(Role.MANAGER)
 def index():
-    users = services().users.list_users(current_actor())
-    return render_template("staff/index.html", users=users, now=services().clock.now())
+    archived = request.args.get("archived") == "1"
+    users = services().users.list_users(current_actor(), archived=archived)
+    return render_template(
+        "staff/index.html",
+        users=users,
+        now=services().clock.now(),
+        archived=archived,
+        archived_count=services().users.count_archived(current_actor()),
+    )
 
 
 @bp.route("/new", methods=["GET", "POST"])
@@ -136,3 +144,33 @@ def unlock(user_id: int):
 
 def _errors(exc) -> forms.FormErrors:
     return forms.FormErrors.from_error(exc)
+
+
+# ---------------------------------------------------------------- delete or archive (6.17)
+@bp.route("/<int:user_id>/remove", methods=["GET", "POST"])
+@roles_required(Role.MANAGER)
+def remove(user_id: int):
+    actor = current_actor()
+    user = services().users.get_user(actor, user_id)
+    plan = services().users.removal_plan(actor, user_id)
+    return confirm_removal(
+        plan=lambda: plan,
+        remove=lambda: services().users.remove(actor, user_id),
+        title=_("Remove the account %(username)s", username=user.username),
+        uses_label=_("Actions in the audit log: %(count)s", count=plan.uses),
+        back_url=url_for("staff.edit", user_id=user_id),
+        list_url=url_for("staff.index"),
+        deleted=_("Account deleted."),
+        archived=_("Account archived and deactivated. You can find it under Archived."),
+    )
+
+
+@bp.post("/<int:user_id>/restore")
+@roles_required(Role.MANAGER)
+def restore(user_id: int):
+    services().users.restore(current_actor(), user_id)
+    flash(
+        _("Account restored. It is still deactivated: reactivate it to let the person in."),
+        "success",
+    )
+    return redirect(url_for("staff.edit", user_id=user_id))

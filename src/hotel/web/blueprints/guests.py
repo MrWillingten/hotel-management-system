@@ -15,6 +15,7 @@ from hotel.web import forms
 from hotel.web.context import current_actor, services
 from hotel.web.countries import country_code, country_name, country_options
 from hotel.web.messages import message_for
+from hotel.web.removal import confirm_removal
 from hotel.web.security import is_safe_redirect_target, login_required, roles_required
 
 bp = Blueprint("guests", __name__, url_prefix="/guests")
@@ -43,10 +44,18 @@ def index():
     query = request.args.get("q", "")[:100]
     sort = request.args.get("sort", "name")
     sort = sort if sort in SORT_ORDERS else "name"
+    archived = request.args.get("archived") == "1"
     page = services().guests.search(
-        current_actor(), query, forms.page_request(request.args), sort=sort
+        current_actor(), query, forms.page_request(request.args), sort=sort, archived=archived
     )
-    return render_template("guests/index.html", page=page, query=query, sort=sort)
+    return render_template(
+        "guests/index.html",
+        page=page,
+        query=query,
+        sort=sort,
+        archived=archived,
+        archived_count=services().guests.count_archived(current_actor()),
+    )
 
 
 @bp.route("/new", methods=["GET", "POST"])
@@ -184,3 +193,30 @@ def anonymise():
         return redirect(url_for("guests.anonymise"))
     cutoff, candidates = services().guests.anonymisation_candidates(actor)
     return render_template("guests/anonymise.html", cutoff=cutoff, candidates=candidates)
+
+
+# ---------------------------------------------------------------- delete or archive (6.17)
+@bp.route("/<int:guest_id>/remove", methods=["GET", "POST"])
+@roles_required(Role.MANAGER)
+def remove(guest_id: int):
+    actor = current_actor()
+    guest = services().guests.get(actor, guest_id)
+    stays, _current = services().guests.stay_counts(actor, guest_id)
+    return confirm_removal(
+        plan=lambda: services().guests.removal_plan(actor, guest_id),
+        remove=lambda: services().guests.remove(actor, guest_id),
+        title=_("Remove %(name)s", name=guest.full_name),
+        uses_label=_("Stays: %(count)s", count=stays),
+        back_url=url_for("guests.detail", guest_id=guest_id),
+        list_url=url_for("guests.index"),
+        deleted=_("Guest deleted."),
+        archived=_("Guest archived. You can find them under Archived."),
+    )
+
+
+@bp.post("/<int:guest_id>/restore")
+@roles_required(Role.MANAGER)
+def restore(guest_id: int):
+    services().guests.restore(current_actor(), guest_id)
+    flash(_("Guest restored."), "success")
+    return redirect(url_for("guests.detail", guest_id=guest_id))

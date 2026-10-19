@@ -23,8 +23,10 @@ def index():
 @login_required
 def detail(invoice_id: int):
     actor = current_actor()
+    invoice = services().invoices.get(actor, invoice_id)
     return render_template(
         "invoices/detail.html",
-        invoice=services().invoices.get(actor, invoice_id),
+        invoice=invoice,
         settings=services().hotel_settings.get(actor),
+        exemptions=services().billing.exemptions(actor, invoice.reservation_id),
     )

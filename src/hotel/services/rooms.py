@@ -7,10 +7,17 @@ from datetime import date, timedelta
 from hotel.domain.actor import Actor
 from hotel.domain.clock import Clock
 from hotel.domain.enums import Role
-from hotel.domain.errors import ConflictError, NotFoundError, StaleDataError, ValidationError
+from hotel.domain.errors import (
+    BusinessRuleViolation,
+    ConflictError,
+    NotFoundError,
+    StaleDataError,
+    ValidationError,
+)
 from hotel.domain.money import Money
 from hotel.domain.period import StayPeriod
 from hotel.domain.pricing import RatePeriod, validate_rate_period
+from hotel.domain.removal import RemovalAction, RemovalPlan, plan_removal
 from hotel.domain.rooms import (
     MAX_MAINTENANCE_NIGHTS,
     Housekeeping,
@@ -86,15 +93,71 @@ class RoomService:
             return category
 
     # ------------------------------------------------------------ rooms
-    def list_rooms(self, actor: Actor, *, category_id: int | None = None) -> list[RoomOverview]:
-        """Every room with what it is doing tonight."""
+    def list_rooms(
+        self, actor: Actor, *, category_id: int | None = None, archived: bool = False
+    ) -> list[RoomOverview]:
+        """Every room with what it is doing tonight (archived rooms only when asked for)."""
         require_staff(actor)
         with self._uow() as uow:
             states = self._states(uow)
             return [
                 RoomOverview(room, self._status(room, states))
-                for room in uow.rooms.list(category_id=category_id)
+                for room in uow.rooms.list(category_id=category_id, archived=archived)
             ]
+
+    # ------------------------------------------------------------ delete or archive (6.17)
+    def count_archived(self, actor: Actor) -> int:
+        require_staff(actor)
+        with self._uow() as uow:
+            return uow.rooms.count_archived()
+
+    def removal_plan(self, actor: Actor, room_id: int) -> RemovalPlan:
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            return self._removal(uow, self._load(uow, room_id))
+
+    def remove(self, actor: Actor, room_id: int) -> RemovalAction:
+        """Delete a room that never hosted anyone; archive one with a history (story 6.17)."""
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            room = self._load(uow, room_id)
+            plan = self._removal(uow, room)
+            if not plan.allowed:
+                raise ConflictError(plan.blocked, **plan.params)
+            if plan.action is RemovalAction.DELETE:
+                uow.rooms.delete(room_id)
+            elif not room.is_archived:
+                uow.rooms.archive(room_id, self._clock.now())
+            action = "room.deleted" if plan.action is RemovalAction.DELETE else "room.archived"
+            record(
+                uow,
+                self._clock,
+                actor,
+                action,
+                entity="room",
+                entity_id=room_id,
+                number=room.number,
+            )
+            return plan.action
+
+    def restore(self, actor: Actor, room_id: int) -> Room:
+        """Back in the lists, still out of service until a manager puts it back."""
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            room = self._load(uow, room_id)
+            if room.is_archived:
+                uow.rooms.archive(room_id, None)
+                record(uow, self._clock, actor, "room.restored", entity="room", entity_id=room_id)
+            return uow.rooms.get(room_id)
+
+    def _removal(self, uow: UnitOfWork, room: Room) -> RemovalPlan:
+        bookings = uow.reservations.future_bookings_for_room(room.id, self._clock.today())
+        blocked = "room.has_future_bookings" if bookings else None
+        return plan_removal(
+            uow.rooms.count_history(room.id),
+            blocked=blocked,
+            codes=", ".join(b.code for b in bookings[:5]),
+        )
 
     def get_room(self, actor: Actor, room_id: int) -> RoomOverview:
         require_staff(actor)
@@ -176,6 +239,8 @@ class RoomService:
             room = self._load(uow, room_id)
             if room.version != version:
                 raise StaleDataError(entity="room", id=room_id)
+            if room.is_archived:
+                raise BusinessRuleViolation("room.archived")
             before = (
                 room.number,
                 room.category_id,

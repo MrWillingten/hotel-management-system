@@ -1,6 +1,7 @@
 {%- extends "layouts/app.html" -%}
 {%- from "macros/forms.html" import checkbox, csrf, field, form_errors -%}
-{%- from "macros/taxes.html" import base_label, rate, rule_fields -%}
+{%- from "macros/taxes.html" import base_label, payers_label, rate, rule_fields -%}
+{%- from "macros/archive.html" import archived_toggle with context -%}
 {%- macro pct(bp) %}{{ "%g" | format(bp / 100) }}{% endmacro -%}
 {% block title %}{{ _("Settings and taxes") }}{% endblock %}
 {% block page_title %}{{ _("Settings and taxes") }}{% endblock %}
@@ -29,6 +30,12 @@
                hint=_("Added to the room's rate on weekend nights, unless a seasonal rate applies. 0 = none.")) }}
       {{ field("anonymise_after_months", _("Anonymise guests after (months without a stay)"), type="number", value=values.get("anonymise_after_months", settings.anonymise_after_months), error=errors.anonymise_after_months,
                hint=_("Between 6 and 120. Only proposed to a manager, never automatic.")) }}
+      {{ field("home_country", _("The hotel's country"), value=values.get("home_country", home_country_name), error=errors.home_country,
+               maxlength=60, autocomplete="off", datalist="countries",
+               hint=_("Guests from this country are nationals for taxes that only concern foreign guests (or only nationals).")) }}
+      <datalist id="countries">
+        {%- for code, name in countries %}<option value="{{ name }}"></option>{% endfor %}
+      </datalist>
       <fieldset class="weekdays">
         <legend class="field__label">{{ _("Weekend nights (the night starting on…)") }}</legend>
         {%- set names = [_("Monday"), _("Tuesday"), _("Wednesday"), _("Thursday"), _("Friday"), _("Saturday"), _("Sunday")] %}
@@ -45,14 +52,17 @@
     {{ form_errors(tax_errors) }}
     <form class="stack" method="post" action="{{ url_for('settings.create_tax') }}" novalidate>
       {{ csrf() }}
-      {{ rule_fields(tax_values, tax_errors) }}
+      {{ rule_fields(tax_values, tax_errors, home_country_name) }}
       <button class="button button--primary" type="submit">{{ _("Add tax rule") }}</button>
     </form>
   </section>
 </div>
 
 <section class="panel">
-  <h2 class="panel__title">{{ _("Tax rules") }}</h2>
+  <div class="panel__head">
+    <h2 class="panel__title">{{ _("Tax rules") }}</h2>
+    {{ archived_toggle("settings.index", archived, archived_count) }}
+  </div>
   <p class="muted">{{ _("Prices are entered before tax; each active rule becomes its own line on the bill. Check the rates against current regulations.") }}</p>
   <div class="table-wrap table-wrap--flat">
     <table class="table">
@@ -61,6 +71,7 @@
           <th scope="col">{{ _("Name") }}</th>
           <th scope="col">{{ _("Rate") }}</th>
           <th scope="col">{{ _("Applies to") }}</th>
+          <th scope="col">{{ _("Who pays") }}</th>
           <th scope="col">{{ _("Status") }}</th>
           <th scope="col"><span class="visually-hidden">{{ _("Actions") }}</span></th>
         </tr>
@@ -71,11 +82,20 @@
           <td>{{ rule.name }}</td>
           <td>{{ rate(rule) }}</td>
           <td>{{ base_label(rule.applies_to) }}</td>
+          <td>{{ payers_label(rule.payers, home_country_name) }}</td>
           <td>{% if rule.is_active %}<span class="badge badge--success">{{ _("Active") }}</span>{% else %}<span class="badge badge--neutral">{{ _("Inactive") }}</span>{% endif %}</td>
-          <td><a class="button button--ghost button--small" href="{{ url_for('settings.edit_tax', rule_id=rule.id) }}">{{ _("Edit") }}</a></td>
+          <td>
+            {%- if rule.is_archived %}
+            <form method="post" action="{{ url_for('settings.restore_tax', rule_id=rule.id) }}">
+              {{ csrf() }}<button class="button button--ghost button--small" type="submit">{{ _("Restore") }}</button>
+            </form>
+            {%- else %}
+            <a class="button button--ghost button--small" href="{{ url_for('settings.edit_tax', rule_id=rule.id) }}">{{ _("Edit") }}</a>
+            {%- endif %}
+          </td>
         </tr>
         {%- else %}
-        <tr><td colspan="5" class="table__empty">{{ _("No tax rules: bills will show no tax.") }}</td></tr>
+        <tr><td colspan="6" class="table__empty">{{ _("No tax rules: bills will show no tax.") }}</td></tr>
         {%- endfor %}
       </tbody>
     </table>

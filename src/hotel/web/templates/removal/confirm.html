@@ -1,0 +1,37 @@
+{%- extends "layouts/app.html" -%}
+{%- from "macros/forms.html" import csrf, checkbox -%}
+{%- from "macros/icons.html" import icon -%}
+{% block title %}{{ title }}{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+{% block content %}
+<section class="panel panel--narrow stack">
+  {%- if problem %}
+  <div class="alert alert--danger" role="alert">{{ icon("ban") }}<p>{{ problem }}</p></div>
+  <p><a class="button button--ghost" href="{{ back_url }}">{{ _("Back") }}</a></p>
+  {%- elif plan.action == "DELETE" %}
+  <div class="alert alert--warning">{{ icon("alert") }}
+    <p>{{ _("It was never used, so it will be deleted permanently. This cannot be undone.") }}</p>
+  </div>
+  {%- else %}
+  <div class="alert alert--info">{{ icon("archive") }}
+    <div>
+      <p><strong>{{ _("It has a history, so it will be archived, not deleted.") }}</strong></p>
+      <p>{{ uses_label }}</p>
+      <p>{{ _("Archived records disappear from lists, forms and suggestions, but their history stays intact (invoices, past stays, audit log). You can restore it at any time from the archived list.") }}</p>
+    </div>
+  </div>
+  {%- endif %}
+  {%- if not problem %}
+  <form class="stack" method="post" novalidate>
+    {{ csrf() }}
+    {{ checkbox("confirm", _("I understand.")) }}
+    <div class="form-actions">
+      <button class="button button--danger" type="submit">
+        {{- _("Delete permanently") if plan.action == "DELETE" else _("Archive") -}}
+      </button>
+      <a class="button button--ghost" href="{{ back_url }}">{{ _("Cancel") }}</a>
+    </div>
+  </form>
+  {%- endif %}
+</section>
+{% endblock %}

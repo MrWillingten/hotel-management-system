@@ -65,7 +65,7 @@ line, staff user, user session, audit log entry, setting. See
 23. The room status for a date is derived: unavailable (maintenance/out of service) > occupied > reserved > available.
 24. Money is in Tunisian dinars with 3 decimals (millimes), stored as integer millimes, never as floats.
 25. A receptionist searches for an existing guest before registering a new one; probable duplicates are flagged.
-26. Records with history (guests, rooms, services, users) are deactivated, never deleted.
+26. Records with history (guests, rooms, services, tax rules, users) are archived, never deleted: hidden from lists and forms, history kept, restorable. A record that was never used may be deleted (story 6.17, decided 18 Oct).
 
 ## 5. Decisions on ambiguous points
 
@@ -83,6 +83,7 @@ line, staff user, user session, audit log entry, setting. See
 | E | Maintenance vs. bookings | Scheduling maintenance over a confirmed reservation is refused with the list of affected reservations. |
 | F | Early departure / no-show | Early departure: only the nights actually stayed are charged (at least one); the others are released. No-show: recorded after the arrival time, charged like a late cancellation. |
 | G | **Taxes** | **In scope.** Configurable tax rules (percentage, e.g. VAT; per adult per night, e.g. tourist tax). Prices are stored tax-exclusive; each tax is its own invoice line, copied onto the invoice when issued. Real rates must be verified with current Tunisian regulations. |
+| G2 | Who pays a tax (18 Oct) | Each rule taxes everyone, foreign guests only or nationals only, by the guest's nationality compared with the hotel's country (setting, default TN; a CIN without nationality counts as Tunisian). A manager can exempt one stay from one tax with a reason until the invoice is issued. The real rules (who pays the tourist tax, age limits) are configured by the hotel, not hard-coded. |
 | H | Occupancy rate | Room-nights sold ÷ room-nights available, excluding rooms under maintenance. |
 
 ## 6. Non-functional requirements

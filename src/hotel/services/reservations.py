@@ -658,6 +658,8 @@ class ReservationService:
             raise BusinessRuleViolation("reservation.guest_do_not_rent")
         if guest.is_anonymised:
             raise BusinessRuleViolation("guest.anonymised")
+        if guest.is_archived:
+            raise BusinessRuleViolation("guest.archived")
 
     def _check_rooms(
         self,

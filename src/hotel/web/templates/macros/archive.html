@@ -1,0 +1,34 @@
+{#- Shared bits of story 6.17 (delete or archive). -#}
+{%- from "macros/forms.html" import csrf -%}
+{%- from "macros/icons.html" import icon -%}
+
+{#- "Show archived (3)" / "Back to the list", above a list. -#}
+{%- macro archived_toggle(endpoint, showing, count) -%}
+{%- if showing %}
+<a class="button button--ghost button--small" href="{{ url_for(endpoint) }}">{{ _("Back to the current list") }}</a>
+{%- elif count %}
+<a class="button button--ghost button--small" href="{{ url_for(endpoint, archived=1) }}">{{ icon("archive") }}{{ _("Archived: %(count)s", count=count) }}</a>
+{%- endif %}
+{%- endmacro %}
+
+{#- The banner on an archived record's page, with Restore for managers. -#}
+{%- macro archived_banner(item, restore_url) -%}
+{%- if item.is_archived %}
+<div class="alert alert--info">{{ icon("archive") }}
+  <p>{{ _("Archived on %(date)s: hidden from lists and forms, history kept.", date=item.archived_at | dateformat("medium")) }}</p>
+  {%- if current_user.is_manager %}
+  <form method="post" action="{{ restore_url }}">
+    {{ csrf() }}
+    <button class="button button--ghost button--small" type="submit">{{ _("Restore") }}</button>
+  </form>
+  {%- endif %}
+</div>
+{%- endif %}
+{%- endmacro %}
+
+{#- The "Remove…" button on a record's page (managers). -#}
+{%- macro remove_link(item, url) -%}
+{%- if current_user.is_manager and not item.is_archived %}
+<a class="button button--ghost button--small button--danger-text" href="{{ url }}">{{ icon("ban") }}{{ _("Remove…") }}</a>
+{%- endif %}
+{%- endmacro %}

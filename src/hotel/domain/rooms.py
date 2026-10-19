@@ -110,6 +110,11 @@ class Room:
     version: int = 1
     category_name: str | None = None  # filled when read from the database
     housekeeping: Housekeeping = Housekeeping.INSPECTED
+    archived_at: datetime | None = None  # story 6.17
+
+    @property
+    def is_archived(self) -> bool:
+        return self.archived_at is not None
 
     def can_host(self, occupants: int) -> bool:
         return 1 <= occupants <= self.capacity  # business rule BR7

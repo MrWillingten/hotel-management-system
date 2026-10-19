@@ -111,4 +111,36 @@
     {%- endif %}
   </section>
 </div>
+
+{#- Story 6.16: taxes this stay does not pay, decided by a manager. -#}
+{%- if exemptions or (current_user.is_manager and open_bill and exemptible) %}
+<section class="panel">
+  <h2 class="panel__title">{{ _("Tax exemptions") }}</h2>
+  {%- if exemptions %}
+  <ul class="pick-list">
+    {%- for e in exemptions %}
+    <li>
+      <span><strong>{{ e.tax_name }}</strong> · {{ e.reason }}
+        <span class="muted">· {{ e.created_by_name }} · {{ e.created_at | datetimeformat("short") }}</span></span>
+      {%- if current_user.is_manager and open_bill %}
+      <form method="post" action="{{ url_for('billing.remove_exemption', exemption_id=e.id) }}">
+        {{ csrf() }}
+        <input type="hidden" name="reservation_id" value="{{ reservation.id }}">
+        <button class="button button--ghost button--small" type="submit">{{ _("Apply the tax again") }}</button>
+      </form>
+      {%- endif %}
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+  {%- if current_user.is_manager and open_bill and exemptible %}
+  <form class="stack" method="post" action="{{ url_for('billing.exempt_from_tax', reservation_id=reservation.id) }}" novalidate>
+    {{ csrf() }}
+    {{ select("tax_rule_id", _("Tax"), exemptible | options) }}
+    {{ field("exemption_reason", _("Reason"), maxlength=200, hint=_("For example: resident in Tunisia, diplomat, child under the age limit.")) }}
+    <button class="button button--ghost" type="submit">{{ _("Exempt this stay") }}</button>
+  </form>
+  {%- endif %}
+</section>
+{%- endif %}
 {% endblock %}

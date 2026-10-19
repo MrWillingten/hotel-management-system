@@ -20,6 +20,7 @@ from hotel.domain.enums import Role
 from hotel.domain.errors import BusinessRuleViolation, NotFoundError
 from hotel.domain.money import Money
 from hotel.domain.reservations import Reservation, ReservationStatus
+from hotel.domain.taxes import TaxExemption, TaxRule, is_national, taxes_for_stay
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.audit import record
 from hotel.services.authorization import require_role, require_staff
@@ -29,13 +30,24 @@ from hotel.services.hotel_settings import load_settings
 _OPEN_BILL = (ReservationStatus.CONFIRMED, ReservationStatus.CHECKED_IN)
 
 
+def applicable_taxes(uow: UnitOfWork, reservation: Reservation) -> list[TaxRule]:
+    """The taxes this stay pays (story 6.16): by the guest's nationality, minus exemptions."""
+    settings = load_settings(uow)
+    guest = uow.guests.get(reservation.guest_id)
+    national = is_national(guest.nationality, guest.id_doc_type, settings.home_country)
+    exempt = {e.tax_rule_id for e in uow.tax_exemptions.for_reservation(reservation.id)}
+    return taxes_for_stay(
+        uow.tax_rules.list(active_only=True), national=national, exempt_rule_ids=exempt
+    )
+
+
 def bill_for(uow: UnitOfWork, reservation: Reservation) -> Bill:
     """Everything stored for this reservation, priced by the domain (build_bill)."""
     return build_bill(
         reservation,
         charges=uow.charges.for_reservation(reservation.id),
         discounts=uow.discounts.for_reservation(reservation.id),
-        taxes=uow.tax_rules.list(active_only=True),
+        taxes=applicable_taxes(uow, reservation),
         payments=uow.payments.for_reservation(reservation.id),
         discount_cap_bp=load_settings(uow).discount_cap_bp,
     )
@@ -87,6 +99,67 @@ class BillingService:
                 amount=str(discount.amount(reservation.accommodation_total)),
             )
             return discount
+
+    # ------------------------------------------------------------ tax exemptions (6.16)
+    def exemptions(self, actor: Actor, reservation_id: int) -> list[TaxExemption]:
+        require_staff(actor)
+        with self._uow() as uow:
+            return uow.tax_exemptions.for_reservation(reservation_id)
+
+    def exemptible_taxes(self, actor: Actor, reservation_id: int) -> list[TaxRule]:
+        """The taxes this stay pays now, which a manager could exempt it from."""
+        require_staff(actor)
+        with self._uow() as uow:
+            return applicable_taxes(uow, self._load(uow, reservation_id))
+
+    def exempt_from_tax(self, actor: Actor, exemption: TaxExemption) -> TaxExemption:
+        """A manager decides that this stay does not pay this tax, with a reason.
+
+        Only while the bill is open: once the invoice is issued its taxes are
+        final (corrections are refunds, BR22).
+        """
+        require_role(actor, Role.MANAGER)
+        exemption.validate()
+        with self._uow() as uow:
+            reservation = self._load(uow, exemption.reservation_id)
+            if reservation.status not in _OPEN_BILL:
+                raise BusinessRuleViolation("tax.bill_closed")
+            rule = uow.tax_rules.get(exemption.tax_rule_id)
+            if rule is None or not rule.is_active:
+                raise NotFoundError(entity="tax_rule", id=exemption.tax_rule_id)
+            exemption.created_at = self._clock.now()
+            exemption = uow.tax_exemptions.add(exemption, actor.user_id)
+            record(
+                uow,
+                self._clock,
+                actor,
+                "tax.exempted",
+                entity="reservation",
+                entity_id=reservation.id,
+                tax=rule.name,
+                reason=exemption.reason,
+            )
+            return exemption
+
+    def remove_exemption(self, actor: Actor, exemption_id: int) -> None:
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            exemption = uow.tax_exemptions.get(exemption_id)
+            if exemption is None:
+                raise NotFoundError(entity="tax_exemption", id=exemption_id)
+            reservation = self._load(uow, exemption.reservation_id)
+            if reservation.status not in _OPEN_BILL:
+                raise BusinessRuleViolation("tax.bill_closed")
+            uow.tax_exemptions.delete(exemption_id)
+            record(
+                uow,
+                self._clock,
+                actor,
+                "tax.exemption_removed",
+                entity="reservation",
+                entity_id=reservation.id,
+                tax=exemption.tax_name,
+            )
 
     def remove_discount(self, actor: Actor, discount_id: int) -> None:
         require_role(actor, Role.MANAGER)
