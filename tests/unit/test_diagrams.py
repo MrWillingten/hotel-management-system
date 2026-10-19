@@ -22,6 +22,7 @@ def test_class_diagrams_are_up_to_date():
     stale = [
         name
         for name, text in generated.items()
-        if (DIAGRAMS / name).read_text(encoding="utf-8") != text
+        # Windows checkouts may turn line endings into CRLF: compare the text only.
+        if (DIAGRAMS / name).read_text(encoding="utf-8").replace("\r\n", "\n") != text
     ]
     assert not stale, f"Run `make -C docs/diagrams` to refresh: {stale}"
