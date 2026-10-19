@@ -24,8 +24,8 @@ one-line pointer here).
   `docs/roadmap.md` but is only used if the calendar forces it.
 - **Professor's Student Guide (received 19 Oct, `~/Downloads/Python_Semester_Project_Student_Gui.pdf`):**
   CP1 analysis 19/10, CP2 procedural prototype 02/11, CP3 OOP 16/11, CP4 integration
-  30/11, **final demo 14/12/2026**; deliverables include a **10-page printed report + PDF**
-  (supersedes the 40–50 pages below; confirm with the student). Map: `docs/checkpoints.md`.
+  30/11, **final demo 14/12/2026**; deliverables include a **printed report of 10 to at most 15 pages + PDF** (professor, 19 Oct)
+  (supersedes the 40–50 pages below). Map: `docs/checkpoints.md`.
 - Deadline ≈ end of Dec 2026 / early Jan 2027 (older plan; the guide's 14/12 demo wins). Code complete target
   **20 Dec**; Sprint 6 = stretch, freeze (27 Dec), report (40–50 pages,
   Times New Roman 12, 1.5 spacing), demo.

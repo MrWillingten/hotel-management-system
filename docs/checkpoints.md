@@ -13,7 +13,7 @@ each one is answered in the repository.
 
 Final deliverables: working Python OOP application ✅, source code in a Git
 repository ✅ ([GitHub](https://github.com/MrWillingten/hotel-management-system)),
-project documentation ✅ (`docs/`), 10-page printed report + PDF (to write),
+project documentation ✅ (`docs/`), printed report of 10–15 pages + PDF (to write),
 live demonstration.
 
 ---

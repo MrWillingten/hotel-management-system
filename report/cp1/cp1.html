@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>CP1 – Analysis</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+
+
+<div class="cover">
+  <div class="uni">ITEAM UNIVERSITY</div>
+  <div class="course">Python Programming · Semester Project · Academic Year 2026–2027</div>
+  <div class="rule"></div>
+  <div class="project">PROJECT 3</div>
+  <div class="title">Hotel Reservation and<br>Management System</div>
+  <div class="cp">Checkpoint 1 – Analysis</div>
+  <div class="rule2"></div>
+  <table class="meta">
+    <tr><td class="k">Student</td><td class="v">{{STUDENT}}</td></tr>
+    <tr><td class="k">Team</td><td class="v">Individual project</td></tr>
+    <tr><td class="k">Date</td><td class="v">19 October 2026</td></tr>
+    <tr><td class="k">Repository</td><td class="v">github.com/MrWillingten/hotel-management-system</td></tr>
+  </table>
+  <div class="contents">
+    <div>1. Introduction</div>
+    <div>2. Project requirements</div>
+    <div>3. Business rules</div>
+    <div>4. Entity–relationship diagram</div>
+    <div>5. Task allocation</div>
+  </div>
+</div>
+
+<!-- 1 ---------------------------------------------------------------- -->
+<div class="section">
+<h1>1. Introduction</h1>
+
+<h2>1.1 Why this project</h2>
+<p>I chose the third project, the Hotel Reservation and Management System, over the two other
+options because it involves many calculations and a real degree of mathematical complexity,
+which I wanted to get the hang of and apply in a fully functional application. In a hotel, the
+price of a stay is never a single number. It depends on the number of nights and on the rate
+of each of those nights, which can change with the season or at the weekend; on the number of
+guests; on the extra services they use, such as breakfasts or an airport transfer; on any
+discount granted; on taxes that apply to some guests but not to others; on the deposit already
+paid; and, when a booking is cancelled at the last minute, on a cancellation fee.</p>
+<p>Each of these amounts must be exact to the millime, and all of them must agree with one
+another on the final bill. A small mistake, such as counting one night too many or applying a
+tax twice, leads directly to a wrong invoice for a real customer. This combination of
+calculations that have to be correct and rules that have to be respected at every step is what
+made this project the most demanding of the three, and therefore the most interesting to me.</p>
+
+<h2>1.2 Aim of the project</h2>
+<p>My main aim is to show what a hotel management system can look like as a web application,
+equipped with the functions and features that a hotel needs in its daily work.</p>
+<p>For the <b>receptionist</b>, the application should help to keep registration data consistent:
+each guest is recorded only once, with an identity document, a phone number and an e-mail
+address that have been checked. It should show the upcoming arrivals and departures of the day,
+and it should support tasks that would be very hard to carry out reliably without it, such as
+finding which rooms are free on given dates, preventing a room from being booked twice for the
+same night, and producing a correct bill when the guest leaves.</p>
+<p>For the <b>manager</b>, the application should give full access to alter, change and modify the
+hotel's data and settings – rooms, prices, extra services, taxes and staff accounts – in order
+to maintain the system, while keeping up with the live status of the house and its incoming
+figures, such as occupancy and revenue, and with the other administration settings.</p>
+
+<h2>1.3 Scope of this document</h2>
+<p>This document covers Checkpoint 1 (Analysis). It presents the requirements of the system
+(section 2), the business rules it must enforce (section 3), the entity–relationship diagram of
+its data (section 4) and the allocation of the tasks over the semester (section 5).</p>
+</div>
+
+<!-- 2 ---------------------------------------------------------------- -->
+<div class="section">
+<h1>2. Project requirements</h1>
+
+<h2>2.1 Problem statement</h2>
+<p>A single hotel in Tunisia manages its reservations with spreadsheets, phone calls and paper.
+This causes double bookings, wrong bills and no clear view of occupancy or revenue. The system
+replaces these tools with one application used by the hotel staff. It keeps the rooms and the
+guests, books rooms for date ranges without conflicts, handles changes and cancellations,
+records arrivals and departures, adds extra services to a stay, produces an itemised bill with
+taxes, payments and balance, and gives the management statistics on occupancy and revenue.
+Data must survive a restart, and every invalid operation must be refused with a clear
+explanation.</p>
+
+<h2>2.2 Actors</h2>
+<table>
+<tr><th style="width:22%">Actor</th><th style="width:16%">Uses the system</th><th>Responsibilities</th></tr>
+<tr><td>Receptionist</td><td>Yes</td><td>Registers and finds guests; creates, modifies and cancels reservations; checks guests in and out; charges extra services; records deposits and payments; prints bills and invoices.</td></tr>
+<tr><td>Manager</td><td>Yes</td><td>Everything a receptionist does, plus rooms, prices, maintenance, extra services, discounts, taxes, settings, statistics and staff accounts.</td></tr>
+<tr><td>Guest</td><td>No (external)</td><td>The person the data is about; contacts the hotel by phone or in person. Guests do not sign in.</td></tr>
+<tr><td>System clock</td><td>Implicit</td><td>Defines "today", the 48-hour cancellation window and the day's arrivals and departures.</td></tr>
+</table>
+
+<h2>2.3 Functional requirements</h2>
+<table>
+<tr><th style="width:8%">#</th><th style="width:22%">Area</th><th>The system must…</th></tr>
+<tr><td class="n">FR1</td><td>Rooms</td><td>manage room categories and rooms (number, category, capacity, nightly rate), close a room for maintenance between two dates, and set seasonal rates.</td></tr>
+<tr><td class="n">FR2</td><td>Guests</td><td>register guests with checked details (name, identity document, nationality, phone, e-mail), find them quickly and warn about probable duplicates.</td></tr>
+<tr><td class="n">FR3</td><td>Availability</td><td>show which rooms are free for a period and suggest alternatives when the requested room is taken.</td></tr>
+<tr><td class="n">FR4</td><td>Reservations</td><td>book one or more rooms for a guest and a period, modify the dates, rooms or occupants, cancel (with a fee when late) and record no-shows.</td></tr>
+<tr><td class="n">FR5</td><td>Front desk</td><td>record check-in and check-out, list the day's arrivals and departures and follow the cleaning status of each room.</td></tr>
+<tr><td class="n">FR6</td><td>Extra services</td><td>keep a catalogue of services (breakfast, transfer…) and charge them to a stay.</td></tr>
+<tr><td class="n">FR7</td><td>Billing</td><td>compute the bill (nights, services, discounts, taxes), accept deposits, payments and refunds, show the balance and issue a numbered invoice at check-out.</td></tr>
+<tr><td class="n">FR8</td><td>Statistics</td><td>give the manager occupancy, revenue, cancellations, outstanding balances and availability over a chosen period.</td></tr>
+<tr><td class="n">FR9</td><td>Staff and security</td><td>let managers create staff accounts with a role, require signing in, restrict each page to the right role and keep a log of important actions.</td></tr>
+<tr><td class="n">FR10</td><td>Persistence</td><td>store all data permanently and allow backups.</td></tr>
+</table>
+
+<h2>2.4 Main entities</h2>
+<table>
+<tr><th style="width:26%">Entity</th><th>Meaning</th></tr>
+<tr><td>Room category / Room</td><td>A type of room (Standard, Deluxe…) and a physical room with its number, capacity and nightly rate.</td></tr>
+<tr><td>Maintenance period</td><td>Dates during which a room cannot be sold.</td></tr>
+<tr><td>Guest</td><td>A person staying at the hotel, identified by an identity document (CIN or passport).</td></tr>
+<tr><td>Reservation</td><td>A stay booked for a guest: dates, status, one or more rooms.</td></tr>
+<tr><td>Room night</td><td>One room on one night, with the price locked at booking time.</td></tr>
+<tr><td>Extra service / Service charge</td><td>A service the hotel sells, and one use of it charged to a stay.</td></tr>
+<tr><td>Payment / Discount</td><td>Money received or refunded, and a reduction granted by a manager.</td></tr>
+<tr><td>Tax rule</td><td>A tax (e.g. VAT, tourist tax) and who must pay it.</td></tr>
+<tr><td>Invoice / Invoice line</td><td>The final bill, frozen when the guest leaves.</td></tr>
+<tr><td>Staff user / Audit log</td><td>An employee account with a role, and the record of who did what.</td></tr>
+</table>
+
+<h2>2.5 Non-functional requirements</h2>
+<table>
+<tr><th style="width:22%">Area</th><th>Requirement</th></tr>
+<tr><td>Platform</td><td>Python 3.11 or later; runs on Windows and Linux; works without an Internet connection.</td></tr>
+<tr><td>Interface</td><td>Web interface; usable on a phone or a large screen; light and dark themes; English, French and Arabic (right to left).</td></tr>
+<tr><td>Persistence</td><td>Embedded SQLite database, no separate server; every operation saved completely or not at all.</td></tr>
+<tr><td>Security</td><td>Staff sign in; two roles; access denied unless allowed; protection against common web attacks; passwords never stored in clear.</td></tr>
+<tr><td>Quality</td><td>Object-oriented design in layers; automated tests; clear error messages.</td></tr>
+</table>
+
+<h2>2.6 Acceptance scenarios (from the project brief)</h2>
+<table>
+<tr><th style="width:44%">Scenario</th><th>Expected result</th></tr>
+<tr><td>Room 204 (Deluxe, 180 DT) is closed for maintenance for three days.</td><td>No reservation can cover that period.</td></tr>
+<tr><td>A returning guest calls the hotel.</td><td>The existing record is found, not duplicated.</td></tr>
+<tr><td>A request for 10–15 July, while the room is booked 12–14 July.</td><td>The conflict is refused and other rooms are suggested.</td></tr>
+<tr><td>A stay is extended from 3 to 5 nights.</td><td>Allowed only if the room is free for the extra nights.</td></tr>
+<tr><td>A guest with a confirmed reservation arrives, then leaves.</td><td>Check-in is recorded; the final statement includes the services.</td></tr>
+<tr><td>4 nights, 3 breakfasts and 1 airport transfer.</td><td>All charges appear on the final bill.</td></tr>
+<tr><td>3 nights × 150 DT, 80 DT of services, 100 DT deposit.</td><td>Total 530 DT before taxes, balance 430 DT, computed exactly.</td></tr>
+</table>
+</div>
+
+<!-- 3 ---------------------------------------------------------------- -->
+<div class="section">
+<h1>3. Business rules</h1>
+<p>Rules BR1–BR12 come from the project brief. Rules BR13–BR26 are my own design decisions,
+taken where the brief was incomplete or ambiguous.</p>
+
+<h2>3.1 Rules from the brief</h2>
+<table>
+<tr><th style="width:8%">#</th><th>Rule</th></tr>
+<tr><td class="n">BR1</td><td>Each room has a unique room number.</td></tr>
+<tr><td class="n">BR2</td><td>Guests are identifiable by their registration information.</td></tr>
+<tr><td class="n">BR3</td><td>A room cannot have overlapping confirmed reservations.</td></tr>
+<tr><td class="n">BR4</td><td>The departure date is later than the arrival date (at least one night).</td></tr>
+<tr><td class="n">BR5</td><td>A room under maintenance cannot be reserved for the affected period.</td></tr>
+<tr><td class="n">BR6</td><td>A reservation cannot be confirmed without an available room.</td></tr>
+<tr><td class="n">BR7</td><td>The number of occupants cannot exceed the room's capacity.</td></tr>
+<tr><td class="n">BR8</td><td>Accommodation cost = number of nights × applicable nightly rates.</td></tr>
+<tr><td class="n">BR9</td><td>Additional services are included in the final bill.</td></tr>
+<tr><td class="n">BR10</td><td>A guest may pay a deposit before arrival.</td></tr>
+<tr><td class="n">BR11</td><td>A 20 % cancellation fee applies when a confirmed reservation is cancelled less than 48 hours before arrival.</td></tr>
+<tr><td class="n">BR12</td><td>Invalid operations are rejected and clearly explained.</td></tr>
+</table>
+
+<h2>3.2 Derived rules (design decisions)</h2>
+<table>
+<tr><th style="width:8%">#</th><th>Rule</th></tr>
+<tr><td class="n">BR13</td><td>A stay is a half-open interval [arrival, departure): two stays overlap only if <i>arrival₁ &lt; departure₂</i> and <i>arrival₂ &lt; departure₁</i>, so a guest may arrive on the day another one leaves.</td></tr>
+<tr><td class="n">BR14</td><td>Number of nights = departure − arrival, in days.</td></tr>
+<tr><td class="n">BR15</td><td>Every active reservation (confirmed or checked in) blocks its rooms.</td></tr>
+<tr><td class="n">BR16</td><td>Life cycle: Confirmed → Checked in → Checked out; Confirmed → Cancelled; Confirmed → No-show. Any other change is refused.</td></tr>
+<tr><td class="n">BR17</td><td>Check-in is possible only for a confirmed reservation, on a valid date, and never while the previous guest of the room is still checked in.</td></tr>
+<tr><td class="n">BR18</td><td>A modification runs every availability check again, ignoring the reservation itself.</td></tr>
+<tr><td class="n">BR19</td><td>Extra services can be charged only while the guest is checked in, dated within the stay.</td></tr>
+<tr><td class="n">BR20</td><td>Prices are locked at booking time, night by night: a later price change never alters an existing reservation or invoice.</td></tr>
+<tr><td class="n">BR21</td><td>Payments and prices are positive; balance = total − paid; a negative balance means a refund is owed.</td></tr>
+<tr><td class="n">BR22</td><td>An issued invoice can never be changed; corrections are new payments or refunds.</td></tr>
+<tr><td class="n">BR23</td><td>The status of a room on a date is derived, by priority: unavailable (maintenance) &gt; occupied &gt; reserved &gt; available.</td></tr>
+<tr><td class="n">BR24</td><td>Money is in Tunisian dinars with three decimals and is stored as a whole number of millimes, never as a floating-point number.</td></tr>
+<tr><td class="n">BR25</td><td>The receptionist searches for an existing guest before registering a new one; probable duplicates are flagged.</td></tr>
+<tr><td class="n">BR26</td><td>A record that has a history (guest, room, service, tax, staff account) is archived, not deleted: hidden but kept and restorable. A record that was never used may be deleted.</td></tr>
+</table>
+
+<h2>3.3 Decisions on ambiguous points of the brief</h2>
+<table>
+<tr><th style="width:25%">Question</th><th>Decision</th></tr>
+<tr><td>Several rooms per reservation?</td><td>Yes: one reservation may hold several rooms, all with the same dates; adults and children are recorded per room.</td></tr>
+<tr><td>Cancellation fee</td><td>20 % of the accommodation (after discount, before tax). Exactly 48 hours before arrival means no fee. The reference time is the arrival date at the check-in time (14:00 by default). The fee is taken from the deposit first.</td></tr>
+<tr><td>Discounts</td><td>Granted by a manager only, as a percentage or a fixed amount, with a reason; the total is capped (30 % by default); on accommodation only.</td></tr>
+<tr><td>Guest identity</td><td>The document type (CIN or passport) and its number are unique; phone and e-mail are contact details.</td></tr>
+<tr><td>Early departure / no-show</td><td>Early departure: only the nights actually stayed are charged. No-show: recorded after the arrival time and charged like a late cancellation.</td></tr>
+<tr><td>Taxes</td><td>In scope and configurable: a percentage (e.g. VAT) or an amount per adult per night (e.g. tourist tax). Each rule says who pays: everyone, foreign guests only or nationals only. A manager may exempt one stay from one tax, with a reason.</td></tr>
+<tr><td>Occupancy rate</td><td>Room-nights sold ÷ room-nights available, rooms under maintenance excluded.</td></tr>
+</table>
+</div>
+
+
+<div class="erd">
+<h1>4. Entity–relationship diagram</h1>
+<img src="erd.png" alt="Entity-relationship diagram of the hotel database">
+<table class="legend"><tr>
+<td><b>Notation (crow's foot):</b></td>
+<td>‖ exactly one</td><td>o‖ zero or one</td><td>o&lt; zero or many</td><td>‖&lt; one or many</td>
+<td><b>PK</b> primary key · <b>FK</b> foreign key · <b>UQ</b> unique · <b>UQ¹</b> unique together</td>
+</tr></table>
+</div>
+
+
+<h2 class="after-erd">4.1 Reading the diagram</h2>
+<ul>
+<li><b>RESERVATION</b> is the centre of the model: a guest makes reservations, and every charge,
+payment, discount, tax exemption and the final invoice belong to one reservation.</li>
+<li><b>RESERVATION_ROOM</b> resolves the many-to-many relationship between reservations and
+rooms: one reservation may include several rooms, and a room is booked in many reservations
+over time. It also records the adults and children in each room.</li>
+<li><b>ROOM_NIGHT</b> holds one row per room and per night, with the primary key
+(room_id, night). Because a primary key cannot appear twice, the database itself makes double
+booking impossible (BR3, BR5): a night is taken either by a reservation or by a maintenance
+period, never by both. Each row also stores the price locked at booking (BR20).</li>
+<li><b>INVOICE</b> and <b>INVOICE_LINE</b> are a frozen copy of the bill: they copy amounts and
+tax values instead of referring to the current prices, so an issued invoice never changes
+(BR22). A reservation has at most one invoice.</li>
+<li><b>TAX_EXEMPTION</b> links a reservation and a tax rule when a manager exempts one stay from
+one tax, with the reason.</li>
+<li>All amounts are stored as whole numbers of millimes (BR24).</li>
+</ul>
+<p class="note">For readability, the diagram leaves out the technical tables used for security and
+operation: staff sessions, sign-in attempts, two-factor recovery codes, API tokens, one-time form
+tokens, the new-account walk-through, settings, invoice number counters and the daily figures
+frozen by the night audit. They are documented with the full relational schema in
+<code>docs/data-model.md</code> of the repository.</p>
+
+<!-- 5 ---------------------------------------------------------------- -->
+<div>
+<h1 style="margin-top:22px">5. Task allocation</h1>
+
+<h2>5.1 Roles</h2>
+<p>This is an individual project, so every role is held by the same person and the work is
+divided in time rather than between team members.</p>
+<table>
+<tr><th style="width:28%">Role</th><th>Tasks</th><th style="width:16%">Responsible</th></tr>
+<tr><td>Analyst</td><td>Study the brief, write the requirements and business rules, design the ER diagram.</td><td>{{STUDENT}}</td></tr>
+<tr><td>Designer</td><td>Choose the classes, the layers of the application and the database schema; justify the choices.</td><td>{{STUDENT}}</td></tr>
+<tr><td>Developer</td><td>Write the Python code, the database access and the user interface.</td><td>{{STUDENT}}</td></tr>
+<tr><td>Tester</td><td>Write and run automated tests for every business rule and scenario.</td><td>{{STUDENT}}</td></tr>
+<tr><td>Writer and presenter</td><td>Documentation, the final report and the live demonstration.</td><td>{{STUDENT}}</td></tr>
+</table>
+
+<div style="break-inside: avoid">
+<h2>5.2 Plan by checkpoint</h2>
+<table>
+<tr><th style="width:24%">Checkpoint</th><th style="width:13%">Date</th><th>Tasks</th></tr>
+<tr><td>CP1 – Analysis</td><td>19/10/2026</td><td>Requirements, actors, entities, business rules BR1–BR26, decisions on ambiguous points, ER diagram, this plan.</td></tr>
+<tr><td>CP2 – Procedural prototype</td><td>02/11/2026</td><td>Core calculations as Python functions working on lists and dictionaries: number of nights, overlap and availability check, bill total and balance, cancellation fee.</td></tr>
+<tr><td>CP3 – OOP development</td><td>16/11/2026</td><td>Classes for rooms, guests, reservations, bills, payments and taxes; encapsulation of the rules, inheritance and polymorphism (e.g. different kinds of taxes and discounts); state changes of a reservation.</td></tr>
+<tr><td>CP4 – Integration</td><td>30/11/2026</td><td>SQLite persistence, web interface, staff sign-in and roles, automated tests for every rule and scenario.</td></tr>
+<tr><td>Final demonstration</td><td>14/12/2026</td><td>Report (10–15 pages, printed and PDF), demonstration script and rehearsals.</td></tr>
+</table>
+
+</div>
+
+<h2>5.3 Organisation and tools</h2>
+<ul>
+<li><b>Git and GitHub</b> for the source code: every task is an issue, every change goes through a
+pull request, and each step is tagged as a version.</li>
+<li><b>Automatic checks</b> on every change: tests, code style and a security scan, on Windows and
+Linux.</li>
+<li><b>AI assistance:</b> an AI coding assistant (Claude Code) is used during the project. This is
+declared in the repository, every commit written with it is marked, and I make sure I can
+explain every part of the work.</li>
+</ul>
+<p>The work is ahead of this plan: the repository already contains a working application, which
+will be presented at the next checkpoints.</p>
+</div>
+
+</body></html>
