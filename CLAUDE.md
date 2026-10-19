@@ -151,7 +151,7 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
    and 6.17 delete-or-archive (`domain/removal.py`, `archived_at` on 5 tables,
    `web/removal.confirm_removal`, macros `archive.html` imported *with context*)
    PR #94. Migrations up to 0020.
-   ✅ UML diagrams (19 Oct, branch docs/uml-diagrams): use cases front desk +
+   ✅ UML diagrams (19 Oct, PR #95: squash-merge once CI is green): use cases front desk +
    management (hand-written DOT), classes domain ×2 + architecture (generated
    from code with `ast`). Graphviz only (no PlantUML installed); DOT routing
    fails if invisible rank chains cross clusters → keep layout hints out.
