@@ -22,7 +22,11 @@ one-line pointer here).
 - Scope decision: **everything** – must-haves, nice-to-haves and stretch
   goals, plus English/French/Arabic (RTL). Cut order exists in
   `docs/roadmap.md` but is only used if the calendar forces it.
-- Deadline ≈ end of Dec 2026 / early Jan 2027. Code complete target
+- **Professor's Student Guide (received 19 Oct, `~/Downloads/Python_Semester_Project_Student_Gui.pdf`):**
+  CP1 analysis 19/10, CP2 procedural prototype 02/11, CP3 OOP 16/11, CP4 integration
+  30/11, **final demo 14/12/2026**; deliverables include a **printed report of 10 to at most 15 pages + PDF** (professor, 19 Oct)
+  (supersedes the 40–50 pages below). Map: `docs/checkpoints.md`.
+- Deadline ≈ end of Dec 2026 / early Jan 2027 (older plan; the guide's 14/12 demo wins). Code complete target
   **20 Dec**; Sprint 6 = stretch, freeze (27 Dec), report (40–50 pages,
   Times New Roman 12, 1.5 spacing), demo.
 
@@ -35,6 +39,9 @@ one-line pointer here).
 | Threat review and control status | `docs/security.md` |
 | Sprints, stories, DoD, Git workflow, retrospectives | `docs/roadmap.md` |
 | What each release contains | `CHANGELOG.md` |
+| UML (2 use case, 3 class diagrams) | `docs/diagrams/*.drawio` (student's choice: editable at app.diagrams.net, export PDF for the report; update classes by hand after domain changes) |
+| Every page/button per role; Help page content | `docs/user-guide.md`, `web/help.py` |
+| Every folder/file explained; professor's checkpoints + task allocation | `docs/project-structure.md`, `docs/checkpoints.md` (update both when files/checkpoints change) |
 
 ### Architecture in one breath
 `web/ (Flask) → services/ → domain/ ← persistence/ (SQLite)`; `cli.py` uses the
@@ -149,7 +156,13 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
    and 6.17 delete-or-archive (`domain/removal.py`, `archived_at` on 5 tables,
    `web/removal.confirm_removal`, macros `archive.html` imported *with context*)
    PR #94. Migrations up to 0020.
-   **NEXT:** student tries the UI; then 6.7 report. Freeze 27 Dec.
+   ✅ UML diagrams (19 Oct, PR #95: squash-merge once CI is green): 5 draw.io files in
+   `docs/diagrams/` (student asked for files to upload; ERDPlus has no UML, draw.io chosen).
+   Graphviz versions replaced. Class content was read from code with `ast`, laid out by
+   Graphviz (splines=polyline → exact draw.io waypoints); use cases on a 2-column grid so
+   no line crosses an ellipse. Converter scripts were one-off (not in the repo).
+   **NEXT:** student tries the UI and checks the diagrams; then 6.7 report
+   (LaTeX/Overleaf in `report/`, PDFs exported from the draw.io files). Freeze 27 Dec.
    Running the app: `.venv/bin/python -m hotel run` (the student's `sh` kept
    /usr/bin/python after activation).
 5. 6.7 report: **English, LaTeX for Overleaf** in `report/`. The assistant

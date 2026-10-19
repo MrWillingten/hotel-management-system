@@ -23,6 +23,8 @@ why the business logic can be tested and used without a web server.
 
 ## Package layout
 
+Every folder and file is described in [project-structure.md](project-structure.md).
+
 | Path | Responsibility |
 |---|---|
 | `src/hotel/config.py` | Settings from environment variables; production is the default |
@@ -79,3 +81,8 @@ a traceback under a short incident id; the user only sees the id.
 | `NotFoundError` | 404 |
 | `ConflictError`, `StaleDataError`, `BusinessRuleViolation`, `InvalidStateTransitionError` | 409 |
 | anything else | 500, generic page + incident id |
+
+## Diagrams
+
+UML use case diagrams, the domain class diagrams and the layer diagram are in
+[diagrams/](diagrams/README.md) as draw.io files; the class diagrams were read from the code.
