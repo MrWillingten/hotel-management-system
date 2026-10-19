@@ -89,6 +89,7 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S101", "S104", "S105", "S106", "S311"]  # asserts, dummy passwords, test hosts
 "src/hotel/web/{help,tour}.py" = ["E501"]  # whole translatable sentences read better unsplit
+"docs/diagrams/class_diagrams.py" = ["E501"]  # Graphviz markup strings read better unsplit
 
 [tool.bandit]
 exclude_dirs = ["tests", ".venv"]

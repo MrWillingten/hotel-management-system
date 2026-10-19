@@ -1,0 +1,65 @@
+// UML use case diagram (2 of 2): management, the server and other programs.
+// Render: see docs/diagrams/README.md.
+// The Manager also does everything in use-cases-front-desk.dot (generalisation).
+
+digraph management {
+  graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.16, ranksep=0.6,
+         newrank=true, pad=0.25, bgcolor="white"];
+  node  [fontname="Helvetica", fontsize=10.5, shape=ellipse, style=filled,
+         fillcolor="#fdf6ee", color="#a0522d", penwidth=1.1, margin="0.05,0.03"];
+  edge  [arrowhead=none, color="#6b625a", penwidth=0.9];
+
+  node [shape=none, style="", margin=0];
+  manager  [label=<<TABLE BORDER="0" CELLSPACING="0"><TR><TD FIXEDSIZE="TRUE" WIDTH="40" HEIGHT="64"><IMG SRC="actor.png"/></TD></TR><TR><TD><B>Manager</B></TD></TR></TABLE>>];
+  operator [label=<<TABLE BORDER="0" CELLSPACING="0"><TR><TD FIXEDSIZE="TRUE" WIDTH="40" HEIGHT="64"><IMG SRC="actor.png"/></TD></TR><TR><TD><B>Server operator</B><BR/><FONT POINT-SIZE="9">(command line)</FONT></TD></TR></TABLE>>];
+  program  [label=<<TABLE BORDER="0" CELLSPACING="0"><TR><TD FIXEDSIZE="TRUE" WIDTH="40" HEIGHT="64"><IMG SRC="actor.png"/></TD></TR><TR><TD><B>External program</B><BR/><FONT POINT-SIZE="9">«system» API client</FONT></TD></TR></TABLE>>];
+  node [shape=ellipse, style=filled, margin="0.05,0.03"];
+
+  subgraph cluster_system {
+    label=<<B>Hotel Reservation and Management System</B>>; fontsize=14;
+    style=rounded; color="#3b2f2a"; penwidth=1.6; margin=12;
+
+    subgraph cluster_money {
+      label="Money and stays (managers only)"; style="rounded,dashed"; color="#b9aa98"; fontsize=11;
+      uc_discount [label="Grant a discount\n(capped)"]; uc_refund [label="Refund a guest"];
+      uc_void [label="Void a charge"]; uc_exempt [label="Exempt a stay\nfrom a tax"];
+      uc_upgrade [label="Move at the new\nroom's rate"]; uc_dnr [label="Flag a guest\n\"do not rent\""];
+    }
+    subgraph cluster_setup {
+      label="Hotel set-up"; style="rounded,dashed"; color="#b9aa98"; fontsize=11;
+      uc_rooms [label="Manage rooms, categories\nand maintenance"]; uc_rates [label="Manage seasonal rates"];
+      uc_catalogue [label="Manage extra services"]; uc_settings [label="Configure settings\nand tax rules"];
+      uc_staff [label="Manage staff accounts"]; uc_tokens [label="Manage API tokens"];
+      uc_remove [label="Remove a record"]; uc_delete [label="Delete it\n[never used]"];
+      uc_archive [label="Archive it\n[has a history]"]; uc_restore [label="Restore an\narchived record"];
+    }
+    subgraph cluster_oversight {
+      label="Oversight and data"; style="rounded,dashed"; color="#b9aa98"; fontsize=11;
+      uc_reports [label="View reports /\nexport CSV"]; uc_night [label="Close a day\n(night audit)"];
+      uc_auditlog [label="Read the audit log"]; uc_verify [label="Verify the audit chain"];
+      uc_backup [label="Make a backup"]; uc_anon [label="Anonymise old guests"];
+    }
+    subgraph cluster_server {
+      label="Server and integration"; style="rounded,dashed"; color="#b9aa98"; fontsize=11;
+      uc_api [label="Read data through\nthe JSON API"]; uc_firstmgr [label="Create the first manager"];
+      uc_resetpw [label="Reset a password\nor two-factor"]; uc_restoredb [label="Restore a backup"];
+      uc_run [label="Start the application"];
+    }
+  }
+
+  { rank=sink; operator program }
+
+  manager -> {uc_discount uc_refund uc_void uc_exempt uc_upgrade uc_dnr uc_rooms uc_rates
+              uc_catalogue uc_settings uc_staff uc_tokens uc_remove uc_restore uc_reports
+              uc_night uc_auditlog uc_verify uc_backup uc_anon};
+  {uc_firstmgr uc_resetpw uc_restoredb uc_run uc_backup uc_night uc_verify} -> operator;
+  uc_api -> program;
+
+  edge [style=dashed, arrowhead=vee, color="#a0522d", fontsize=8.5, fontcolor="#a0522d",
+        fontname="Helvetica", constraint=false];
+  uc_delete -> uc_remove [label="«extend»"];
+  uc_archive -> uc_remove [label="«extend»"];
+  uc_run -> uc_night [label="«include»\n[missed days]"];
+  uc_run -> uc_backup [label="«include»\n[daily]"];
+  uc_restoredb -> uc_backup [label="«include»\n[safety copy]"];
+}

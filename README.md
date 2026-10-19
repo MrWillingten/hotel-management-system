@@ -157,6 +157,7 @@ Read more in [docs/architecture.md](docs/architecture.md).
 | [architecture.md](docs/architecture.md) | Layers, modules, request lifecycle, error handling |
 | [data-model.md](docs/data-model.md) | ERD and relational schema |
 | [user-guide.md](docs/user-guide.md) | Every page and button, per role, with examples |
+| [diagrams/](docs/diagrams/README.md) | UML use case and class diagrams (SVG + PDF, class diagrams generated from the code) |
 | [security.md](docs/security.md) | Threat review and the status of each control |
 | [asvs.md](docs/asvs.md) | OWASP ASVS 5.0 Level 1 self-assessment |
 | [test-evidence.md](docs/test-evidence.md) | Which test proves each scenario and business rule |

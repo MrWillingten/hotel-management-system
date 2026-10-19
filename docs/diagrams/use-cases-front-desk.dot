@@ -1,0 +1,78 @@
+// UML use case diagram (1 of 2): the front desk.
+// Render: see docs/diagrams/README.md.
+// The Manager specialises the Receptionist (generalisation): everything here
+// is also available to managers. Manager-only cases: use-cases-management.dot.
+
+digraph front_desk {
+  graph [rankdir=LR, fontname="Helvetica", fontsize=12, nodesep=0.16, ranksep=0.55,
+         newrank=true, pad=0.25, bgcolor="white"];
+  node  [fontname="Helvetica", fontsize=10.5, shape=ellipse, style=filled,
+         fillcolor="#fdf6ee", color="#a0522d", penwidth=1.1, margin="0.05,0.03"];
+  edge  [arrowhead=none, color="#6b625a", penwidth=0.9];
+
+  node [shape=none, style="", margin=0];
+  receptionist [label=<<TABLE BORDER="0" CELLSPACING="0"><TR><TD FIXEDSIZE="TRUE" WIDTH="40" HEIGHT="64"><IMG SRC="actor.png"/></TD></TR><TR><TD><B>Receptionist</B></TD></TR></TABLE>>];
+  manager      [label=<<TABLE BORDER="0" CELLSPACING="0"><TR><TD FIXEDSIZE="TRUE" WIDTH="40" HEIGHT="64"><IMG SRC="actor.png"/></TD></TR><TR><TD><B>Manager</B></TD></TR></TABLE>>];
+  authapp      [label=<<TABLE BORDER="0" CELLSPACING="0"><TR><TD FIXEDSIZE="TRUE" WIDTH="40" HEIGHT="64"><IMG SRC="actor.png"/></TD></TR><TR><TD><B>Authenticator app</B><BR/><FONT POINT-SIZE="9">«system» on the phone</FONT></TD></TR></TABLE>>];
+  manager -> receptionist [arrowhead=onormal, arrowsize=1.3, color="#3b2f2a", penwidth=1.2];
+  node [shape=ellipse, style=filled, margin="0.05,0.03"];
+
+  subgraph cluster_system {
+    label=<<B>Hotel Reservation and Management System</B>>; fontsize=14;
+    style=rounded; color="#3b2f2a"; penwidth=1.6; margin=12;
+
+    subgraph cluster_access {
+      label="Access and account"; style="rounded,dashed"; color="#b9aa98"; fontsize=11;
+      uc_signin [label="Sign in"]; uc_signout [label="Sign out"];
+      uc_password [label="Change own password"]; uc_2fa [label="Set up two-factor sign-in"];
+      uc_prefs [label="Choose language and theme"]; uc_tour [label="Take the tour /\nread Help"];
+      uc_code [label="Enter a two-factor code"]; uc_recovery [label="Use a recovery code"];
+    }
+    subgraph cluster_front {
+      label="Stays"; style="rounded,dashed"; color="#b9aa98"; fontsize=11;
+      uc_dashboard [label="View today's dashboard"]; uc_avail [label="Check availability"];
+      uc_book [label="Book a stay"]; uc_change [label="Change a stay"];
+      uc_move [label="Move guests to\nanother room"]; uc_cancel [label="Cancel a stay"];
+      uc_checkin [label="Check a guest in"]; uc_noshow [label="Record a no-show"];
+      uc_checkout [label="Check a guest out"]; uc_extra [label="Charge an extra service"];
+      uc_house [label="Update housekeeping"];
+      uc_price [label="Lock the price\nof every night"]; uc_fee [label="Compute the\ncancellation fee"];
+    }
+    subgraph cluster_guests {
+      label="Guests"; style="rounded,dashed"; color="#b9aa98"; fontsize=11;
+      uc_findguest [label="Find or register a guest\n(checked details)"];
+      uc_editguest [label="Edit a guest"]; uc_reveal [label="Reveal an identity\ndocument (audited)"];
+    }
+    subgraph cluster_money {
+      label="Bills and invoices"; style="rounded,dashed"; color="#b9aa98"; fontsize=11;
+      uc_bill [label="View the bill"]; uc_pay [label="Record a deposit\nor a payment"];
+      uc_print [label="Print an invoice\n(A4 / PDF)"]; uc_invoice [label="Issue the invoice"];
+    }
+  }
+
+  // Two columns of use cases, then the included ones (layout only).
+  { rank=same; uc_signin uc_signout uc_password uc_2fa uc_dashboard uc_avail uc_book uc_change uc_move uc_cancel uc_checkin uc_noshow uc_checkout }
+  { rank=same; uc_prefs uc_tour uc_extra uc_house uc_editguest uc_reveal uc_bill uc_pay uc_print uc_code uc_recovery }
+  { rank=same; uc_price uc_fee uc_findguest uc_invoice }
+  uc_signin -> uc_prefs -> uc_price [style=invis];
+
+  receptionist -> {uc_signin uc_signout uc_password uc_2fa uc_prefs uc_tour
+                   uc_dashboard uc_avail uc_book uc_change uc_move uc_cancel uc_checkin
+                   uc_noshow uc_checkout uc_extra uc_house uc_findguest uc_editguest uc_reveal
+                   uc_bill uc_pay uc_print};
+  {uc_code uc_2fa} -> authapp;
+  { rank=sink; authapp }
+
+  edge [style=dashed, arrowhead=vee, color="#a0522d", fontsize=8.5, fontcolor="#a0522d",
+        fontname="Helvetica", constraint=false];
+  uc_book -> uc_findguest [label="«include»"];
+  uc_book -> uc_price [label="«include»"];
+  uc_change -> uc_price [label="«include»"];
+  uc_cancel -> uc_fee [label="«include»"];
+  uc_noshow -> uc_fee [label="«include»"];
+  uc_cancel -> uc_invoice [label="«include»\n[fee > 0]"];
+  uc_checkout -> uc_bill [label="«include»"];
+  uc_checkout -> uc_invoice [label="«include»"];
+  uc_code -> uc_signin [label="«extend»\n[two-factor on]"];
+  uc_recovery -> uc_code [label="«extend»\n[phone lost]"];
+}

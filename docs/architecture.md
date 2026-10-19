@@ -79,3 +79,8 @@ a traceback under a short incident id; the user only sees the id.
 | `NotFoundError` | 404 |
 | `ConflictError`, `StaleDataError`, `BusinessRuleViolation`, `InvalidStateTransitionError` | 409 |
 | anything else | 500, generic page + incident id |
+
+## Diagrams
+
+UML use case diagrams, the domain class diagrams and the layer diagram are in
+[diagrams/](diagrams/README.md); the class diagrams are generated from the code.
