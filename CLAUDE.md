@@ -165,8 +165,14 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
    cover has no repo link on purpose). ✅ CP2 (31 Oct, due 02/11, in person): `prototype/`
    functions + dict/list/tuple/set only, mirrors CP1 BRs/ERD/scenarios; `scenarios.py` +
    `tests/unit/test_prototype.py`. It was written after the app: say so honestly if asked.
-   UX research (Web Dev professor's feedback) → `docs/research/hotel-ux-research.md`, then pick
-   improvements with the student before the 14/12 demo.
+   UX research (Web Dev professor's feedback) → `docs/research/hotel-ux-research.md`.
+   ✅ Sprint 7 "Front-desk UX" (milestone #6, issues #97–#106, roadmap table): batch A PR #107
+   (merged), B #108, C #109 (stacked: after merging #108, `git rebase --onto origin/main
+   <old 7b tip> feat/7c-manager`). Map: in-house/arrival cards `services/front_desk.py`
+   (`balances`, `ArrivalCard`), `macros/billing.balance_badge`, search `blueprints/search.py`,
+   `ReservationService.stay_prices`, `services/attention.py`, `NightAuditService.preview`,
+   report `presets()`. Then close milestone; further options (housekeeping board, forward
+   look, shift log) only if time allows.
    **NEXT:** student tries the UI and checks the diagrams; then 6.7 report
    (LaTeX/Overleaf in `report/`, PDFs exported from the draw.io files). Freeze 27 Dec.
    Running the app: `.venv/bin/python -m hotel run` (the student's `sh` kept
