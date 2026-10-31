@@ -39,6 +39,9 @@ class FrontDeskDay:
     occupancy: Occupancy = Occupancy(0, 0)
     in_house_due: Money = field(default_factory=Money.zero)  # what guests in the house owe
     unpaid: list[tuple[int, str, str, Money]] = field(default_factory=list)  # after check-out
+    # Story 7.1/7.3: reservation id -> balance (negative = refund owed) of every stay in the
+    # house, so the in-house and departure rows show what is still due without a click.
+    balances: dict[int, Money] = field(default_factory=dict)
 
     @property
     def guests_in_house(self) -> int:
@@ -60,9 +63,8 @@ class FrontDeskService:
             sellable = [r for r in rooms if r.in_service and states.get(r.id) != "MAINTENANCE"]
             sold = sum(1 for r in sellable if states.get(r.id) in ("CONFIRMED", "CHECKED_IN"))
             in_house = uow.reservations.in_house()
-            due = Money.zero()
-            for reservation in in_house:
-                due += max(bill_for(uow, reservation).balance, Money.zero())
+            balances = {r.id: bill_for(uow, r).balance for r in in_house}
+            due = sum((max(b, Money.zero()) for b in balances.values()), Money.zero())
             return FrontDeskDay(
                 today=today,
                 arrivals=uow.reservations.arrivals(today),
@@ -73,4 +75,5 @@ class FrontDeskService:
                 occupancy=Occupancy(sold, len(sellable)),
                 in_house_due=due,
                 unpaid=uow.invoices.unpaid(),
+                balances=balances,
             )

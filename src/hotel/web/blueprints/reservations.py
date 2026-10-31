@@ -292,7 +292,12 @@ def check_in(reservation_id: int):
     except HotelError as exc:
         flash(message_for(exc.code, exc.params), "danger")
     else:
-        flash(_("%(name)s is checked in.", name=checked_in.guest_name), "success")
+        # Story 7.2: name the guest and the room, so a slip on the wrong row is noticed at once.
+        rooms = ", ".join(r.number for r in checked_in.current_rooms)
+        flash(
+            _("%(name)s is checked in, room %(rooms)s.", name=checked_in.guest_name, rooms=rooms),
+            "success",
+        )
     return _back_to(reservation_id)
 
 
@@ -302,6 +307,7 @@ def check_out(reservation_id: int):
     """Story 4.7: show the final bill, then check out and issue the invoice."""
     actor = current_actor()
     if request.method == "POST":
+        leaving = services().reservations.get(actor, reservation_id)
         try:
             invoice = services().invoices.check_out(
                 actor, reservation_id, version=forms.integer(request.form, "version")
@@ -309,7 +315,16 @@ def check_out(reservation_id: int):
         except HotelError as exc:
             flash(message_for(exc.code, exc.params), "danger")
             return redirect(url_for("reservations.detail", reservation_id=reservation_id))
-        flash(_("Checked out. Invoice %(number)s issued.", number=invoice.number), "success")
+        rooms = ", ".join(r.number for r in leaving.current_rooms)
+        flash(
+            _(
+                "%(name)s has checked out of room %(rooms)s. Invoice %(number)s issued.",
+                name=leaving.guest_name,
+                rooms=rooms,
+                number=invoice.number,
+            ),
+            "success",
+        )
         return redirect(url_for("invoices.detail", invoice_id=invoice.id))
     current = services().reservations.get(actor, reservation_id)
     try:

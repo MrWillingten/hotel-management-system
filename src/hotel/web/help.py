@@ -68,6 +68,7 @@ TOPICS: list[HelpTopic] = [
         [
             (_l("Check in"), _l("Next to an arrival: records that the guest has arrived.")),
             (_l("Check out"), _l("Next to a departure: opens the final bill and the invoice.")),
+            (_l("In house"), _l("Guests staying now, their room and what they still owe.")),
             (
                 _l("Unpaid after departure"),
                 _l(

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-18 21:15+0100\n"
+"POT-Creation-Date: 2026-10-31 11:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,11 @@ msgid "%(name)s added to the catalogue."
 msgstr ""
 
 #, python-format
-msgid "%(name)s is checked in."
+msgid "%(name)s has checked out of room %(rooms)s. Invoice %(number)s issued."
+msgstr ""
+
+#, python-format
+msgid "%(name)s is checked in, room %(rooms)s."
 msgstr ""
 
 #, python-format
@@ -483,6 +487,10 @@ msgstr ""
 msgid "Balance due"
 msgstr ""
 
+#, python-format
+msgid "Balance due: %(amount)s"
+msgstr ""
+
 msgid "Bank transfer"
 msgstr ""
 
@@ -719,10 +727,6 @@ msgid "Checked in"
 msgstr ""
 
 msgid "Checked out"
-msgstr ""
-
-#, python-format
-msgid "Checked out. Invoice %(number)s issued."
 msgstr ""
 
 msgid "Children"
@@ -1263,6 +1267,9 @@ msgstr ""
 msgid "Guests not from %(country)s"
 msgstr ""
 
+msgid "Guests staying now, their room and what they still owe."
+msgstr ""
+
 msgid ""
 "Guests who never came become no-shows, guests still in after their "
 "departure are listed, and the day's figures are frozen. Running it twice "
@@ -1313,6 +1320,9 @@ msgid "Identity document"
 msgstr ""
 
 msgid "If someone similar exists, the form proposes them first."
+msgstr ""
+
+msgid "In house"
 msgstr ""
 
 msgid "In service"
@@ -1421,6 +1431,10 @@ msgid "Last used"
 msgstr ""
 
 msgid "Late"
+msgstr ""
+
+#, python-format
+msgid "Leaves on %(date)s"
 msgstr ""
 
 #, python-format
@@ -1711,6 +1725,9 @@ msgstr ""
 msgid "No guest to anonymise."
 msgstr ""
 
+msgid "No guests in the house."
+msgstr ""
+
 msgid "No guests registered yet."
 msgstr ""
 
@@ -1860,6 +1877,9 @@ msgstr ""
 msgid ""
 "Open your authenticator app and type the six-digit code shown for this "
 "hotel."
+msgstr ""
+
+msgid "Other actions"
 msgstr ""
 
 msgid "Out of service"
@@ -2038,6 +2058,10 @@ msgid "Refund"
 msgstr ""
 
 msgid "Refund owed to the guest"
+msgstr ""
+
+#, python-format
+msgid "Refund owed: %(amount)s"
 msgstr ""
 
 msgid "Refund the guest"
@@ -2674,6 +2698,11 @@ msgid "The tools that keep the hotel's data trustworthy and safe."
 msgstr ""
 
 msgid "The two passwords are different."
+msgstr ""
+
+msgid ""
+"These end the reservation. The next page shows what it costs before you "
+"confirm."
 msgstr ""
 
 msgid "They will have to replace it at their first sign-in."

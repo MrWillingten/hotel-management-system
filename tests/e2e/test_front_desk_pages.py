@@ -22,7 +22,7 @@ def test_dashboard_lists_arrivals_and_checks_in(client, services, hotel):
     assert response.status_code == 302
     assert response.headers["Location"] == "/"
     page = client.get("/").get_data(as_text=True)
-    assert "is checked in." in page
+    assert "Amira Ben Salah is checked in, room 204." in page
     assert "No more arrivals expected today." in page
 
 

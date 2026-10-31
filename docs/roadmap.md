@@ -179,6 +179,30 @@ exemptions; `phonenumbers` (Google's library) for phone numbers.
 includes updating its report section; leaving 40–50 pages for the last week
 would fail.
 
+### Sprint 7 – Front-desk UX (31 Oct – 20 Nov)
+
+After the Web Development professor's review (31 Oct), a study of how hotel
+PMS products are designed and of front-desk/manager psychology
+([research/hotel-ux-research.md](research/hotel-ux-research.md)) gave a
+prioritised list. Chosen with the student: the ten Musts below, all without
+JavaScript, in three PRs. Milestone "Sprint 7" (#6), issues #97–#106.
+
+| ID | Story | Research |
+|---|---|---|
+| 7.1 | Dashboard cards lead to the right lists; **In house** list | R3, L5 |
+| 7.2 | Fewer wrong clicks: room number on Check in / Check out, messages name guest and room, one primary button, Cancel / No-show under "Other actions" | R11, L6 |
+| 7.3 | Balance due / Paid on departure and in-house rows | R2 |
+| 7.4 | Availability grid readable without colour (dotted = reserved), category filter | R7 a, b |
+| 7.5 | Arrival rows at a glance: room ready, VIP / returning, deposit | R1 |
+| 7.6 | Stay total while booking; dates default to today → tomorrow | R5 |
+| 7.7 | One search box in the top bar (code, room or guest) | R4, L2 |
+| 7.8 | "Needs attention" panel (exception-first) | M1 |
+| 7.9 | Report presets | M3 a |
+| 7.10 | Night audit preview | M4 |
+
+Batch A = 7.1–7.4, batch B = 7.5–7.7, batch C = 7.8–7.10. Not now (with
+reasons in the research): auto-refresh, keyboard shortcuts, group bookings.
+
 ## Cut order if late
 
 1. Moving a guest between rooms · 2. Windows executable · 3. Docker ·

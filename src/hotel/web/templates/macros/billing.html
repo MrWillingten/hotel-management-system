@@ -68,3 +68,16 @@
 {%- macro payment_method(method) -%}
 {{ {"CASH": _("Cash"), "CARD": _("Card"), "TRANSFER": _("Bank transfer")}.get(method, method) }}
 {%- endmacro %}
+
+{#- Story 7.3: what a stay still owes, readable without colour (words + amount).
+    The inner span keeps the text one flex item, so the space before the amount stays. -#}
+{%- macro balance_badge(balance) -%}
+{%- if balance is none -%}
+{%- elif balance.is_negative() -%}
+<span class="badge badge--info"><span>{{ _("Refund owed: %(amount)s", amount=-balance | money) }}</span></span>
+{%- elif balance.is_zero() -%}
+<span class="badge badge--success">{{ _("Paid") }}</span>
+{%- else -%}
+<span class="badge badge--warning"><span>{{ _("Balance due: %(amount)s", amount=balance | money) }}</span></span>
+{%- endif -%}
+{%- endmacro %}
