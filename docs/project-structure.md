@@ -13,6 +13,7 @@ Project/
 │   ├── web/              Flask: pages, forms, security, templates, CSS
 │   ├── translations/     French and Arabic texts
 │   └── data/             data files shipped with the app
+├── prototype/            CP2: the core rules as plain functions (no classes)
 ├── tests/                unit, integration and end-to-end tests
 ├── docs/                 analysis, design, security, diagrams, guides
 ├── scripts/              developer tools (translations)
@@ -210,7 +211,15 @@ Python 3.11 and 3.13 by CI.
 | `project-structure.md` | This file |
 | `screenshots/` | Pictures used by the README |
 
-## 5. Tools and delivery
+## 5. `prototype/` – Checkpoint 2
+
+| File | Purpose |
+|---|---|
+| `hotel_prototype.py` | The CP1 rules with functions, dicts, lists, tuples and sets only; terminal menu |
+| `scenarios.py` | The brief's scenarios, each checked with `assert` |
+| `README.md` | How the data is kept and which function enforces each business rule |
+
+## 6. Tools and delivery
 
 | Path | Purpose |
 |---|---|
