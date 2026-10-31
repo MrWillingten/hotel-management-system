@@ -24,13 +24,16 @@ def _greeting(hour: int) -> str:
 @login_required
 def index():
     svc = services()
+    actor = current_actor()
     now = svc.clock.local_now()
+    day = svc.front_desk.day(actor)
     return render_template(
         "dashboard/index.html",
         greeting=_greeting(now.hour),
         now=now,
-        day=svc.front_desk.day(current_actor()),
+        day=day,
+        attention=svc.attention.items(actor, day),
         schema_version=svc.schema_version,
-        onboarding=svc.onboarding.state(current_actor()),
+        onboarding=svc.onboarding.state(actor),
         checklist_text=CHECKLIST_TEXT,
     )

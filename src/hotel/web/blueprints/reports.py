@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+from datetime import date, timedelta
+
 from flask import Blueprint, Response, abort, render_template, request
 from flask_babel import format_date, get_locale
 from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _l
 
 from hotel.domain.enums import Role
 from hotel.domain.errors import HotelError
@@ -19,6 +22,21 @@ from hotel.web.security import roles_required
 bp = Blueprint("reports", __name__, url_prefix="/reports")
 
 DAILY_TABLE_LIMIT = 62  # longer ranges are shown per month
+
+
+def presets(today: date) -> list[tuple[object, date, date]]:
+    """Story 7.9: the ranges managers ask for most, one click instead of two dates."""
+    month_start = today.replace(day=1)
+    next_month = (month_start + timedelta(days=32)).replace(day=1)
+    last_month_end = month_start - timedelta(days=1)
+    yesterday = today - timedelta(days=1)
+    return [
+        (_l("Yesterday"), yesterday, yesterday),
+        (_l("This month"), month_start, next_month - timedelta(days=1)),
+        (_l("Last month"), last_month_end.replace(day=1), last_month_end),
+        (_l("Next 30 days"), today, today + timedelta(days=29)),
+        (_l("Year to date"), today.replace(month=1, day=1), today),
+    ]
 
 
 @bp.get("/")
@@ -49,6 +67,7 @@ def index():
         values=values,
         errors=errors,
         daily=daily,
+        presets=presets(services().clock.today()),
         charts=_charts(report, daily) if report else None,
     ), (400 if errors else 200)
 

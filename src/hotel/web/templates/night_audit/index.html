@@ -9,11 +9,29 @@
     <h2 class="panel__title">{{ _("Close a day") }}</h2>
     <p class="muted">{{ _("Guests who never came become no-shows, guests still in after their departure are listed, and the day's figures are frozen. Running it twice changes nothing; finished days are also closed automatically when the application starts.") }}</p>
     {{ form_errors(errors) }}
+    <form class="filters filters--flat" method="get" novalidate>
+      {{ field("day", _("Day"), type="date", value=day.isoformat(), error=errors.day) }}
+      <button class="button button--ghost" type="submit">{{ _("Preview") }}</button>
+    </form>
+    {%- if preview and preview.already_closed %}
+    <div class="alert alert--info">{{ icon("info") }}<p>{{ _("This day is already closed.") }}</p></div>
+    {%- elif preview %}
+    {#- Story 7.10: the consequences first, like the cancellation page shows the fee. #}
+    <h3 class="panel__subtitle">{{ _("Closing %(day)s will:", day=preview.day | dateformat("full")) }}</h3>
+    <dl class="facts" id="audit-preview">
+      <div><dt>{{ _("Record as no-shows") }}</dt>
+        <dd>{%- for r in preview.no_shows %}<a href="{{ url_for('reservations.detail', reservation_id=r.id) }}" dir="ltr">{{ r.code }}</a> {{ r.guest_name }}{% if not loop.last %}, {% endif %}{% else %}—{% endfor %}</dd></div>
+      <div><dt>{{ _("List as still checked in after departure") }}</dt>
+        <dd>{%- for r in preview.overdue %}<a href="{{ url_for('reservations.detail', reservation_id=r.id) }}" dir="ltr">{{ r.code }}</a> {{ r.guest_name }}{% if not loop.last %}, {% endif %}{% else %}—{% endfor %}</dd></div>
+      <div><dt>{{ _("Leave open (guests in the house who still owe)") }}</dt>
+        <dd>{{ _("Stays: %(count)s", count=preview.open_balances) }} · {{ preview.open_total | money }}</dd></div>
+    </dl>
     <form class="stack" method="post" novalidate>
       {{ csrf() }}
-      {{ field("day", _("Day"), type="date", value=yesterday.isoformat(), error=errors.day) }}
+      <input type="hidden" name="day" value="{{ preview.day.isoformat() }}">
       <button class="button button--primary" type="submit">{{ _("Close the day") }}</button>
     </form>
+    {%- endif %}
   </section>
 
   {%- if outcome %}

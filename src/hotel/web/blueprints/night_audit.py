@@ -15,21 +15,30 @@ from hotel.web.security import roles_required
 bp = Blueprint("night_audit", __name__, url_prefix="/night-audit")
 
 
-def _page(outcome=None, errors=None, status=200):
+def _page(outcome=None, errors=None, status=200, day=None):
     actor = current_actor()
+    today = services().clock.today()
+    day = day or today - timedelta(days=1)
+    # Story 7.10: show what closing the day will do; a day that is not over has no preview.
+    preview = services().night_audit.preview(actor, day) if day < today and not outcome else None
     return render_template(
         "night_audit/index.html",
         snapshots=services().night_audit.recent(actor),
         outcome=outcome,
         errors=errors or forms.FormErrors(),
-        yesterday=services().clock.today() - timedelta(days=1),
+        day=day,
+        preview=preview,
     ), status
 
 
 @bp.get("/")
 @roles_required(Role.MANAGER)
 def index():
-    return _page()
+    try:
+        day = forms.calendar_date(request.args, "day", required=False)
+    except HotelError:
+        day = None
+    return _page(day=day)
 
 
 @bp.post("/")

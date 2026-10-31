@@ -5,6 +5,14 @@
 {% block title %}{{ _("Reports") }}{% endblock %}
 {% block page_title %}{{ _("Reports") }}{% endblock %}
 {% block content %}
+<nav class="presets" aria-label="{{ _('Periods') }}">
+  {%- for label, first, last in presets %}
+  {%- set active = values.first == first.isoformat() and values.last == last.isoformat() %}
+  <a class="button button--small {{ 'button--primary' if active else 'button--ghost' }}"
+     href="{{ url_for('reports.index', first=first.isoformat(), last=last.isoformat(), day=values.day) }}"
+     {%- if active %} aria-current="true"{% endif %}>{{ label }}</a>
+  {%- endfor %}
+</nav>
 <form class="filters" method="get">
   {{ field("first", _("First night"), type="date", value=values.first, error=errors.first) }}
   {{ field("last", _("Last night"), type="date", value=values.last, error=errors.last) }}

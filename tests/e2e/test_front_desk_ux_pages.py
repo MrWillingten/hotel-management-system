@@ -172,3 +172,91 @@ def test_one_search_box_finds_codes_rooms_and_guests(signed_in, services, hotel)
     guest = signed_in.get("/search/?q=ben+salah")
     assert guest.headers["Location"] == "/guests/?q=ben+salah"
     assert signed_in.get("/search/?q=").headers["Location"] == "/"
+
+
+# ------------------------------------------------------------ batch C (7.8-7.10)
+def _attention(client) -> str:
+    page = client.get("/").get_data(as_text=True)
+    return page.split('id="attention"')[1].split("</section>")[0]
+
+
+def test_needs_attention_lists_the_desks_exceptions(client, services, hotel, clock):
+    services.backups.create(hotel.boss)  # the manager's own checks are quiet here
+    services.night_audit.run(hotel.boss)  # yesterday (7 July) closed
+    login(client)
+    assert "Nothing needs attention." in _attention(client)
+    book(services, hotel, stay(8, 10), "205")  # will not come in time
+    _in_house(services, hotel, stay(8, 9), "204")
+    clock.advance(timedelta(days=1))
+    services.rooms.set_housekeeping(hotel.rita, hotel.rooms["101"].id, _dirty())
+    book(services, hotel, stay(9, 11), "101", guest=hotel.karim)
+    login(client)  # a day later the session has expired
+    panel = _attention(client)
+    assert "Late arrivals not checked in: 1" in panel
+    assert "Rooms not ready for today's arrivals: 1" in panel
+    assert "Departures overdue" not in panel  # leaves today: not overdue yet
+    clock.advance(timedelta(days=1))
+    login(client)
+    assert "Departures overdue: 1" in _attention(client)
+    # Receptionists get the desk's exceptions only, never the manager's checks.
+    kinds = {
+        i.kind for i in services.attention.items(hotel.rita, services.front_desk.day(hotel.rita))
+    }
+    assert "overdue_departures" in kinds
+    assert not kinds & {"old_backup", "day_not_closed", "audit_chain_broken"}
+
+
+def _dirty():
+    from hotel.domain.rooms import Housekeeping
+
+    return Housekeeping.DIRTY
+
+
+def test_managers_also_see_audit_backup_and_chain(client, services, hotel, settings, clock):
+    from hotel.persistence.db import connect
+
+    login(client)
+    panel = _attention(client)
+    assert "No backup in the last 24 hours." in panel
+    assert "Yesterday is not closed yet (night audit)." in panel
+    services.backups.create(hotel.boss)
+    services.night_audit.run(hotel.boss)
+    panel = _attention(client)
+    assert "No backup" not in panel
+    assert "not closed" not in panel
+    conn = connect(settings.database_path)  # someone edits history behind the app's back
+    conn.execute("DROP TRIGGER audit_log_no_update")
+    conn.execute("UPDATE audit_log SET ip = '8.8.8.8' WHERE id = 2")
+    conn.close()
+    assert "The audit log was altered: check it now." in _attention(client)
+
+
+def test_report_presets(client, manager):
+    login(client)
+    page = client.get("/reports/").get_data(as_text=True)
+    assert 'href="/reports/?first=2026-07-07&amp;last=2026-07-07' in page  # Yesterday
+    assert "Year to date" in page
+    this_month = page.split("This month")[0].rsplit("<a", 1)[1]
+    assert 'aria-current="true"' in this_month  # the default range is This month
+    page = client.get("/reports/?first=2026-06-01&last=2026-06-30").get_data(as_text=True)
+    last_month = page.split("Last month")[0].rsplit("<a", 1)[1]
+    assert 'aria-current="true"' in last_month
+
+
+def test_night_audit_preview_before_closing(client, services, hotel, clock):
+    absent = book(services, hotel, stay(8, 9), "205")
+    clock.advance(timedelta(days=1))
+    login(client)
+    page = client.get("/night-audit/").get_data(as_text=True)
+    preview = page.split('id="audit-preview"')[1].split("</dl>")[0]
+    assert absent.code in preview.split("Record as no-shows")[1].split("</div>")[0]
+    # Only a preview: nothing has been recorded yet.
+    assert services.reservations.get(hotel.boss, absent.id).status == "CONFIRMED"
+    response = client.post(
+        "/night-audit/",
+        data={"csrf_token": csrf_token(client, "/night-audit/"), "day": "2026-07-08"},
+    )
+    assert "Day closed." in response.get_data(as_text=True)
+    assert services.reservations.get(hotel.boss, absent.id).status == "NO_SHOW"
+    page = client.get("/night-audit/?day=2026-07-08").get_data(as_text=True)
+    assert "This day is already closed." in page

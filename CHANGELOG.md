@@ -19,6 +19,12 @@ All notable changes are recorded here. The format follows
 - New reservation, step 3: the stay total (before tax) for each room.
 - Search box in the top bar: reservation code, invoice number, room number
   (an occupied room opens the guest's stay) or guest.
+- Dashboard **Needs attention** panel: late arrivals, rooms not ready for
+  today's arrivals, overdue departures, unpaid invoices; for managers also
+  a day not closed, no backup in 24 hours, an altered audit log.
+- Reports: presets (Yesterday, This month, Last month, Next 30 days, Year
+  to date).
+- Night audit: a preview of what closing the day will do, before the button.
 - CP2 procedural prototype (`prototype/`).
 
 ### Changed

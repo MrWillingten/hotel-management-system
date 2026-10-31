@@ -73,6 +73,10 @@ TOPICS: list[HelpTopic] = [
             "What needs attention today: arrivals, departures, guests in the house, rooms to clean."
         ),
         [
+            (
+                _l("Needs attention"),
+                _l("At the top, only what is wrong now (late arrivals, rooms not ready...)."),
+            ),
             (_l("Check in"), _l("Next to an arrival: records that the guest has arrived.")),
             (_l("Check out"), _l("Next to a departure: opens the final bill and the invoice.")),
             (_l("In house"), _l("Guests staying now, their room and what they still owe.")),
