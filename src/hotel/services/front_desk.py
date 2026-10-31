@@ -8,9 +8,9 @@ from datetime import date
 from hotel.domain.actor import Actor
 from hotel.domain.clock import Clock
 from hotel.domain.money import Money
-from hotel.domain.reservations import Reservation
+from hotel.domain.reservations import Reservation, ReservationStatus
 from hotel.domain.rooms import Room
-from hotel.persistence.unit_of_work import UnitOfWorkFactory
+from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.authorization import require_staff
 from hotel.services.billing import bill_for
 
@@ -29,6 +29,24 @@ class Occupancy:
 
 
 @dataclass(frozen=True, slots=True)
+class ArrivalCard:
+    """Story 7.5: what the receptionist needs before handing over the key, without a click."""
+
+    rooms: list[Room]  # the rooms the guest is about to get, with their housekeeping state
+    is_vip: bool = False
+    previous_stays: int = 0  # finished stays at the hotel: a returning guest
+    paid: Money = field(default_factory=Money.zero)  # deposit already received
+    note: str = ""  # the start of the reservation note
+
+    @property
+    def ready(self) -> bool:
+        return all(room.housekeeping.is_ready for room in self.rooms)
+
+
+NOTE_PREVIEW = 60  # characters of the reservation note shown on the arrival row
+
+
+@dataclass(frozen=True, slots=True)
 class FrontDeskDay:
     today: date
     arrivals: list[Reservation] = field(default_factory=list)
@@ -42,6 +60,7 @@ class FrontDeskDay:
     # Story 7.1/7.3: reservation id -> balance (negative = refund owed) of every stay in the
     # house, so the in-house and departure rows show what is still due without a click.
     balances: dict[int, Money] = field(default_factory=dict)
+    arrival_cards: dict[int, ArrivalCard] = field(default_factory=dict)  # reservation id -> card
 
     @property
     def guests_in_house(self) -> int:
@@ -65,9 +84,14 @@ class FrontDeskService:
             in_house = uow.reservations.in_house()
             balances = {r.id: bill_for(uow, r).balance for r in in_house}
             due = sum((max(b, Money.zero()) for b in balances.values()), Money.zero())
+            by_id = {room.id: room for room in rooms}
+            arrivals = uow.reservations.arrivals(today)
+            cards = {r.id: self._arrival_card(uow, r, by_id) for r in arrivals}
+            # Rooms that are ready first: they can be checked in now (stable: arrival order kept).
+            arrivals.sort(key=lambda r: not cards[r.id].ready)
             return FrontDeskDay(
                 today=today,
-                arrivals=uow.reservations.arrivals(today),
+                arrivals=arrivals,
                 departures=uow.reservations.departures(today),
                 in_house=in_house,
                 to_clean=[r for r in rooms if not r.housekeeping.is_ready],
@@ -76,4 +100,22 @@ class FrontDeskService:
                 in_house_due=due,
                 unpaid=uow.invoices.unpaid(),
                 balances=balances,
+                arrival_cards=cards,
             )
+
+    @staticmethod
+    def _arrival_card(
+        uow: UnitOfWork, reservation: Reservation, rooms: dict[int, Room]
+    ) -> ArrivalCard:
+        guest = uow.guests.get(reservation.guest_id)
+        stays = uow.reservations.for_guest(reservation.guest_id)
+        note = " ".join(reservation.notes.split())  # one line, whatever the guest typed
+        if len(note) > NOTE_PREVIEW:
+            note = note[: NOTE_PREVIEW - 1].rstrip() + "…"
+        return ArrivalCard(
+            rooms=[rooms[b.room_id] for b in reservation.current_rooms if b.room_id in rooms],
+            is_vip=bool(guest and guest.is_vip),
+            previous_stays=sum(1 for r in stays if r.status is ReservationStatus.CHECKED_OUT),
+            paid=bill_for(uow, reservation).paid,
+            note=note,
+        )

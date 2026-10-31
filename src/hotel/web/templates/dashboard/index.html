@@ -61,11 +61,23 @@
     {%- if day.arrivals %}
     <ul class="pick-list">
       {%- for r in day.arrivals %}
+      {%- set card = day.arrival_cards[r.id] %}
       <li>
         <span>
           <a href="{{ url_for('reservations.detail', reservation_id=r.id) }}"><strong>{{ r.guest_name }}</strong></a>
-          <span class="muted" dir="ltr">· {{ r.code }} · {{ r.rooms | map(attribute="number") | join(", ") }}</span>
+          <span class="muted" dir="ltr">· {{ r.code }}</span>
           {%- if r.period.arrival < day.today %} <span class="badge badge--warning">{{ _("Late") }}</span>{% endif %}
+          {#- Story 7.5: the four questions before handing over a key, answered on the row. #}
+          <span class="arrival-facts">
+            {%- for room in card.rooms %}
+            <span class="nowrap"><bdi>{{ room.number }}</bdi> {{ housekeeping_badge(room.housekeeping) }}</span>
+            {%- endfor %}
+            {%- if card.is_vip %}<span class="badge badge--accent">{{ icon("star") }}{{ _("VIP") }}</span>{% endif %}
+            {%- if card.previous_stays %}<span class="badge badge--neutral"><span>{{ _("Returning guest · stays: %(count)s", count=card.previous_stays) }}</span></span>{% endif %}
+            {%- if card.paid.is_zero() %}<span class="badge badge--neutral">{{ _("Nothing paid yet") }}</span>
+            {%- else %}<span class="badge badge--success"><span>{{ _("Deposit paid: %(amount)s", amount=card.paid | money) }}</span></span>{% endif %}
+          </span>
+          {%- if card.note %}<span class="arrival-note">{{ icon("info") }}<span>{{ card.note }}</span></span>{% endif %}
         </span>
         <form method="post" action="{{ url_for('reservations.check_in', reservation_id=r.id) }}">
           {{ csrf() }}

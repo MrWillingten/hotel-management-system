@@ -95,8 +95,10 @@ def _booking_page(errors=None, status=200, *, unavailable=None):
             )
         except HotelError as exc:
             errors.update(forms.FormErrors.from_error(exc))
+    prices = services().reservations.stay_prices(actor, period, rooms) if rooms else {}
     return render_template(
         "reservations/new.html",
+        prices=prices,
         values=values,
         guest=guest,
         matches=matches,

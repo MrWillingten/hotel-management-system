@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-31 11:53+0100\n"
+"POT-Creation-Date: 2026-10-31 12:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -795,6 +795,9 @@ msgstr "الرمز"
 msgid "Code or guest"
 msgstr "الرمز أو النزيل"
 
+msgid "Code, room or guest"
+msgstr "رمز أو غرفة أو نزيل"
+
 msgid "Colour theme"
 msgstr "سمة الألوان"
 
@@ -894,6 +897,10 @@ msgstr "المغادرون"
 
 msgid "Deposit"
 msgstr "عربون"
+
+#, python-format
+msgid "Deposit paid: %(amount)s"
+msgstr "العربون المدفوع: %(amount)s"
 
 msgid "Description"
 msgstr "الوصف"
@@ -1317,6 +1324,11 @@ msgstr "في الخدمة"
 
 msgid "In the app, add an account and scan this code:"
 msgstr "في التطبيق، أضف حسابًا وامسح هذا الرمز:"
+
+msgid ""
+"In the top bar: a reservation code, an invoice number, a room number or a guest's name, then "
+"Enter."
+msgstr "في الشريط العلوي: رمز حجز أو رقم فاتورة أو رقم غرفة أو اسم نزيل، ثم Enter."
 
 msgid "Inactive"
 msgstr "غير نشط"
@@ -1794,6 +1806,9 @@ msgstr ""
 msgid "Notes"
 msgstr "ملاحظات"
 
+msgid "Nothing paid yet"
+msgstr "لم يُدفع شيء بعد"
+
 msgid "Nothing to pay."
 msgstr "لا يوجد مبلغ مستحق."
 
@@ -2158,6 +2173,10 @@ msgstr "إعادة الجولة"
 msgid "Restore"
 msgstr "استعادة"
 
+#, python-format
+msgid "Returning guest · stays: %(count)s"
+msgstr "نزيل عائد · الإقامات: %(count)s"
+
 msgid "Reveals a masked document number; the reveal is audited."
 msgstr "يكشف رقم وثيقة مخفيًا؛ ويُسجَّل الكشف."
 
@@ -2309,6 +2328,9 @@ msgstr "حفظ التعديل"
 msgid "Search"
 msgstr "بحث"
 
+msgid "Search box"
+msgstr "مربع البحث"
+
 msgid "Search for the guest before registering them, so nobody is registered twice."
 msgstr "ابحث عن النزيل قبل تسجيله، حتى لا يُسجَّل أحد مرتين."
 
@@ -2451,6 +2473,9 @@ msgstr "الحالة"
 
 msgid "Stay"
 msgstr "الإقامة"
+
+msgid "Stay total (before tax)"
+msgstr "إجمالي الإقامة (قبل الضرائب)"
 
 #, python-format
 msgid "Stays and maintenance periods: %(count)s"

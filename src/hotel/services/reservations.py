@@ -166,6 +166,19 @@ class ReservationService:
                 if room.in_service and room.capacity >= min_capacity and room.id not in blocked
             ]
 
+    def stay_prices(self, actor: Actor, period: StayPeriod, rooms: list[Room]) -> dict[int, Money]:
+        """Story 7.6: room id -> price of every night of `period` (before tax), so a price can
+        be quoted on the phone before the guest is chosen. Same rules as booking (BR8)."""
+        require_staff(actor)
+        with self._uow() as uow:
+            pricing = self._pricing(uow)
+        return {
+            room.id: sum(
+                (pricing.rate_for(room, night) for night in period.each_night()), Money.zero()
+            )
+            for room in rooms
+        }
+
     # ------------------------------------------------------------ booking
     def quote(
         self, actor: Actor, *, guest_id: int, period: StayPeriod, rooms: list[RoomRequest]

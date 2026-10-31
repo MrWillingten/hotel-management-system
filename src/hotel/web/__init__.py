@@ -39,6 +39,7 @@ from hotel.web.blueprints import (
     reports,
     reservations,
     rooms,
+    search,
     staff,
     welcome,
 )
@@ -111,6 +112,7 @@ def create_app(settings: Settings | None = None, *, services: Services | None = 
         reports.bp,
         reservations.bp,
         rooms.bp,
+        search.bp,
         staff.bp,
         welcome.bp,
     ):

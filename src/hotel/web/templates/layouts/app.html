@@ -45,6 +45,16 @@
     <header class="topbar">
       <h1 class="topbar__title">{% block page_title %}{% endblock %}</h1>
       <div class="topbar__actions">
+        {%- if current_user %}
+        {#- Story 7.7: one box for a reservation code, a room number or a guest, on every page. #}
+        <form class="topbar-search no-print" role="search" method="get" action="{{ url_for('search.go') }}">
+          <label class="visually-hidden" for="topbar-q">{{ _("Search") }}</label>
+          <span class="search__icon">{{ icon("search") }}</span>
+          <input class="field__input topbar-search__input" id="topbar-q" name="q" type="search" maxlength="50"
+                 placeholder="{{ _('Code, room or guest') }}">
+          <button class="visually-hidden" type="submit">{{ _("Search") }}</button>
+        </form>
+        {%- endif %}
         {% include "partials/preferences.html" %}
         {%- if current_user %}
         <a class="user-chip" href="{{ url_for('account.change_password') }}" title="{{ _('Change password') }}">

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-31 11:53+0100\n"
+"POT-Creation-Date: 2026-10-31 12:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -819,6 +819,9 @@ msgstr "Code"
 msgid "Code or guest"
 msgstr "Code ou client"
 
+msgid "Code, room or guest"
+msgstr "Code, chambre ou client"
+
 msgid "Colour theme"
 msgstr "Thème de couleurs"
 
@@ -922,6 +925,10 @@ msgstr "Départs"
 
 msgid "Deposit"
 msgstr "Acompte"
+
+#, python-format
+msgid "Deposit paid: %(amount)s"
+msgstr "Acompte versé : %(amount)s"
 
 msgid "Description"
 msgstr "Description"
@@ -1351,6 +1358,13 @@ msgstr "En service"
 
 msgid "In the app, add an account and scan this code:"
 msgstr "Dans l’application, ajoutez un compte et scannez ce code :"
+
+msgid ""
+"In the top bar: a reservation code, an invoice number, a room number or a guest's name, then "
+"Enter."
+msgstr ""
+"Dans la barre du haut : un code de réservation, un numéro de facture, un numéro de chambre ou le "
+"nom d'un client, puis Entrée."
 
 msgid "Inactive"
 msgstr "Inactif"
@@ -1836,6 +1850,9 @@ msgstr ""
 msgid "Notes"
 msgstr "Remarques"
 
+msgid "Nothing paid yet"
+msgstr "Rien n'est encore payé"
+
 msgid "Nothing to pay."
 msgstr "Rien à payer."
 
@@ -2204,6 +2221,10 @@ msgstr "Relancer la visite"
 msgid "Restore"
 msgstr "Restaurer"
 
+#, python-format
+msgid "Returning guest · stays: %(count)s"
+msgstr "Client fidèle · séjours : %(count)s"
+
 msgid "Reveals a masked document number; the reveal is audited."
 msgstr "Révèle un numéro de pièce masqué ; l’affichage est journalisé."
 
@@ -2355,6 +2376,9 @@ msgstr "Enregistrer la modification"
 msgid "Search"
 msgstr "Rechercher"
 
+msgid "Search box"
+msgstr "Zone de recherche"
+
 msgid "Search for the guest before registering them, so nobody is registered twice."
 msgstr "Cherchez le client avant de l’enregistrer, pour que personne ne soit enregistré deux fois."
 
@@ -2501,6 +2525,9 @@ msgstr "Statut"
 
 msgid "Stay"
 msgstr "Séjour"
+
+msgid "Stay total (before tax)"
+msgstr "Total du séjour (hors taxes)"
 
 #, python-format
 msgid "Stays and maintenance periods: %(count)s"

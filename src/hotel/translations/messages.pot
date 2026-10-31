@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-31 11:53+0100\n"
+"POT-Creation-Date: 2026-10-31 12:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -805,6 +805,9 @@ msgstr ""
 msgid "Code or guest"
 msgstr ""
 
+msgid "Code, room or guest"
+msgstr ""
+
 msgid "Colour theme"
 msgstr ""
 
@@ -907,6 +910,10 @@ msgid "Departures"
 msgstr ""
 
 msgid "Deposit"
+msgstr ""
+
+#, python-format
+msgid "Deposit paid: %(amount)s"
 msgstr ""
 
 msgid "Description"
@@ -1329,6 +1336,11 @@ msgid "In service"
 msgstr ""
 
 msgid "In the app, add an account and scan this code:"
+msgstr ""
+
+msgid ""
+"In the top bar: a reservation code, an invoice number, a room number or a"
+" guest's name, then Enter."
 msgstr ""
 
 msgid "Inactive"
@@ -1810,6 +1822,9 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
+msgid "Nothing paid yet"
+msgstr ""
+
 msgid "Nothing to pay."
 msgstr ""
 
@@ -2171,6 +2186,10 @@ msgstr ""
 msgid "Restore"
 msgstr ""
 
+#, python-format
+msgid "Returning guest · stays: %(count)s"
+msgstr ""
+
 msgid "Reveals a masked document number; the reveal is audited."
 msgstr ""
 
@@ -2324,6 +2343,9 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+msgid "Search box"
+msgstr ""
+
 msgid ""
 "Search for the guest before registering them, so nobody is registered "
 "twice."
@@ -2473,6 +2495,9 @@ msgid "Status"
 msgstr ""
 
 msgid "Stay"
+msgstr ""
+
+msgid "Stay total (before tax)"
 msgstr ""
 
 #, python-format

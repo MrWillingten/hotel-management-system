@@ -13,6 +13,12 @@ All notable changes are recorded here. The format follows
 - Availability grid: filter by room category.
 - `docs/research/hotel-ux-research.md`: how hotel PMS products are designed,
   with the recommendations that shape Sprint 7.
+- Arrival rows show each room's housekeeping state, VIP, returning-guest
+  stays, the deposit paid (or "Nothing paid yet") and the start of the
+  note; rooms that are ready come first.
+- New reservation, step 3: the stay total (before tax) for each room.
+- Search box in the top bar: reservation code, invoice number, room number
+  (an occupied room opens the guest's stay) or guest.
 - CP2 procedural prototype (`prototype/`).
 
 ### Changed
