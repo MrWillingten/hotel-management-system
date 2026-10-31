@@ -6,7 +6,7 @@ each one is answered in the repository.
 | Checkpoint | Date | Expected | Status |
 |---|---|---|---|
 | CP1 – Analysis | 19/10/2026 | Requirements, business rules, ER diagram, task allocation | ✅ see below |
-| CP2 – Procedural prototype | 02/11/2026 | Working prototype with Python functions and collections | ✅ (see below) |
+| CP2 – Procedural prototype | 02/11/2026 | Working prototype with Python functions and collections | ✅ `prototype/` |
 | CP3 – OOP development | 16/11/2026 | Object-oriented design and implementation of core features | ✅ |
 | CP4 – Integration | 30/11/2026 | Integrated application, data persistence, testing | ✅ |
 | Final demonstration | 14/12/2026 | Present and demonstrate the completed application | Demo script in preparation |
@@ -59,18 +59,19 @@ commit written with it says so.
 
 ## CP2 – Procedural prototype
 
-The core rules are plain **functions over collections**, which can be shown
-on their own:
+[prototype/](../prototype/README.md): the core rules of CP1 written with
+functions, `dict`, `list`, `tuple` and `set` only (no classes, no database),
+with a terminal menu and the brief's scenarios checked:
 
-| Function | File | Collections used |
-|---|---|---|
-| `build_bill(...)` | `domain/billing.py` | lists of nights, charges, payments → bill lines |
-| `taxes_for_stay(rules, national, exempt_rule_ids)` | `domain/taxes.py` | list of rules, `set` of exempted ids |
-| `is_national(nationality, id_doc_type, home_country)` | `domain/taxes.py` | — |
-| `plan_removal(uses, ...)` | `domain/removal.py` | number of uses → delete or archive |
-| `normalize_phone`, `normalize_email`, `normalize_doc_number`, `normalize_country` | `domain/guests.py` | `frozenset` of country codes |
-| `search_key(text)` | `domain/guests.py` | accent-free text for searching |
-| `Pricing.rate_for(room, night)` | `domain/pricing.py` | list of seasonal rate periods |
+```
+python prototype/hotel_prototype.py
+python prototype/scenarios.py
+```
+
+Its README maps every CP1 business rule to the function that enforces it.
+The application itself also keeps several rules as plain functions
+(`build_bill`, `taxes_for_stay`, `plan_removal`, the guest checks in
+`domain/guests.py`).
 
 ## CP3 – OOP
 

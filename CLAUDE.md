@@ -161,6 +161,12 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
    Graphviz versions replaced. Class content was read from code with `ast`, laid out by
    Graphviz (splines=polyline → exact draw.io waypoints); use cases on a 2-column grid so
    no line crosses an ellipse. Converter scripts were one-off (not in the repo).
+   ✅ CP1 PDF sent (19 Oct): `report/cp1/` (HTML + WeasyPrint via `build.sh "Ahmed Amine Zouaoui" <python>`;
+   cover has no repo link on purpose). ✅ CP2 (31 Oct, due 02/11, in person): `prototype/`
+   functions + dict/list/tuple/set only, mirrors CP1 BRs/ERD/scenarios; `scenarios.py` +
+   `tests/unit/test_prototype.py`. It was written after the app: say so honestly if asked.
+   UX research (Web Dev professor's feedback) → `docs/research/hotel-ux-research.md`, then pick
+   improvements with the student before the 14/12 demo.
    **NEXT:** student tries the UI and checks the diagrams; then 6.7 report
    (LaTeX/Overleaf in `report/`, PDFs exported from the draw.io files). Freeze 27 Dec.
    Running the app: `.venv/bin/python -m hotel run` (the student's `sh` kept
