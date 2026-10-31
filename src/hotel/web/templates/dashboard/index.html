@@ -2,6 +2,7 @@
 {%- from "macros/icons.html" import icon -%}
 {%- from "macros/forms.html" import csrf -%}
 {%- from "macros/rooms.html" import housekeeping_badge, housekeeping_button -%}
+{%- from "macros/billing.html" import balance_badge -%}
 {% block title %}{{ _("Dashboard") }}{% endblock %}
 {% block page_title %}{{ _("Dashboard") }}{% endblock %}
 {% block content %}
@@ -26,12 +27,12 @@
     <h3 class="card__title">{{ _("Departures") }}</h3>
     <p class="card__value">{{ day.departures | length }}</p>
   </a>
-  <article class="card card--interactive">
+  <a class="card card--interactive card--link" href="#in-house">
     <div class="card__icon">{{ icon("users") }}</div>
     <h3 class="card__title">{{ _("Guests in the house") }}</h3>
     <p class="card__value">{{ day.guests_in_house }}</p>
     <p class="muted">{{ _("Reservations: %(count)s", count=day.in_house | length) }}</p>
-  </article>
+  </a>
   <article class="card card--interactive">
     <div class="card__icon">{{ icon("bed") }}</div>
     <h3 class="card__title">{{ _("Occupancy tonight") }}</h3>
@@ -41,7 +42,7 @@
     <p class="muted">{{ _("Under maintenance: %(rooms)s", rooms=day.under_maintenance | map(attribute="number") | join(", ")) }}</p>
     {%- endif %}
   </article>
-  <a class="card card--interactive card--link" href="#balances">
+  <a class="card card--interactive card--link" href="#in-house">
     <div class="card__icon">{{ icon("database") }}</div>
     <h3 class="card__title">{{ _("Due from guests in the house") }}</h3>
     {#- A narrow card may wrap between the amount and the currency, never inside them. #}
@@ -70,7 +71,8 @@
           {{ csrf() }}
           <input type="hidden" name="version" value="{{ r.version }}">
           <input type="hidden" name="next" value="{{ url_for('dashboard.index') }}">
-          <button class="button button--ghost button--small" type="submit">{{ _("Check in") }}</button>
+          {#- Story 7.2: the room number on the button, so the wrong row is noticed before the click. #}
+          <button class="button button--ghost button--small" type="submit"><span class="nowrap">{{ _("Check in") }} · <bdi>{{ r.current_rooms | map(attribute="number") | join(", ") }}</bdi></span></button>
         </form>
       </li>
       {%- endfor %}
@@ -90,8 +92,9 @@
           <a href="{{ url_for('reservations.detail', reservation_id=r.id) }}"><strong>{{ r.guest_name }}</strong></a>
           <span class="muted" dir="ltr">· {{ r.code }} · {{ r.rooms | map(attribute="number") | join(", ") }}</span>
           {%- if r.period.departure < day.today %} <span class="badge badge--danger">{{ _("Overdue") }}</span>{% endif %}
+          {{ balance_badge(day.balances.get(r.id)) }}
         </span>
-        <a class="button button--ghost button--small" href="{{ url_for('reservations.check_out', reservation_id=r.id) }}">{{ _("Check out") }}</a>
+        <a class="button button--ghost button--small" href="{{ url_for('reservations.check_out', reservation_id=r.id) }}"><span class="nowrap">{{ _("Check out") }} · <bdi>{{ r.current_rooms | map(attribute="number") | join(", ") }}</bdi></span></a>
       </li>
       {%- endfor %}
     </ul>
@@ -100,6 +103,26 @@
     {%- endif %}
   </section>
 </div>
+
+<section class="panel" id="in-house">
+  <h2 class="panel__title">{{ _("In house") }}</h2>
+  {%- if day.in_house %}
+  <ul class="pick-list">
+    {%- for r in day.in_house %}
+    <li>
+      <span>
+        <strong dir="ltr">{{ r.current_rooms | map(attribute="number") | join(", ") }}</strong> ·
+        <a href="{{ url_for('reservations.detail', reservation_id=r.id) }}"><strong>{{ r.guest_name }}</strong></a>
+        <span class="muted">· {{ _("Leaves on %(date)s", date=r.period.departure | dateformat("medium")) }}</span>
+      </span>
+      <a href="{{ url_for('billing.bill', reservation_id=r.id) }}">{{ balance_badge(day.balances.get(r.id)) }}</a>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- else %}
+  <p class="muted">{{ _("No guests in the house.") }}</p>
+  {%- endif %}
+</section>
 
 <div class="grid grid--two">
 <section class="panel" id="balances">

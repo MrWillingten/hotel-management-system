@@ -4,7 +4,30 @@ All notable changes are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased] – Sprint 6
+## [Unreleased] – Sprint 7 (front-desk UX)
+
+### Added
+- Dashboard **In house** list (room, guest, departure, balance); the
+  "Guests in the house" and "Due from guests in the house" cards lead to it.
+- Departure and in-house rows show **Balance due: …** or **Paid**.
+- Availability grid: filter by room category.
+- `docs/research/hotel-ux-research.md`: how hotel PMS products are designed,
+  with the recommendations that shape Sprint 7.
+- CP2 procedural prototype (`prototype/`).
+
+### Changed
+- Check in / Check out buttons on the dashboard show the room number, and
+  the success messages name the guest and the room.
+- Reservation page: one primary button per status; Cancel and No-show moved
+  to an "Other actions" block at the bottom.
+- Reserved nights on the grid are dotted, so they differ from occupied
+  nights without relying on colour (WCAG 1.4.1).
+
+### Fixed
+- "Due from guests in the house" linked to "Unpaid after departure", a
+  different list.
+
+## Sprint 6 (unreleased, part of v1.0.0)
 
 ### Added
 - Two-factor sign-in (TOTP, RFC 6238) under Account → Two-factor sign-in:

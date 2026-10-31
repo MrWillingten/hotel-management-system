@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-18 21:15+0100\n"
+"POT-Creation-Date: 2026-10-31 11:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -43,8 +43,12 @@ msgid "%(name)s added to the catalogue."
 msgstr "%(name)s ajouté au catalogue."
 
 #, python-format
-msgid "%(name)s is checked in."
-msgstr "Arrivée de %(name)s enregistrée."
+msgid "%(name)s has checked out of room %(rooms)s. Invoice %(number)s issued."
+msgstr "%(name)s a quitté la chambre %(rooms)s. Facture %(number)s émise."
+
+#, python-format
+msgid "%(name)s is checked in, room %(rooms)s."
+msgstr "%(name)s est enregistré(e), chambre %(rooms)s."
 
 #, python-format
 msgid "%(quantity)s × %(price)s"
@@ -498,6 +502,10 @@ msgstr "Requête invalide"
 msgid "Balance due"
 msgstr "Solde dû"
 
+#, python-format
+msgid "Balance due: %(amount)s"
+msgstr "Reste à payer : %(amount)s"
+
 msgid "Bank transfer"
 msgstr "Virement"
 
@@ -733,10 +741,6 @@ msgstr "En séjour"
 
 msgid "Checked out"
 msgstr "Départ effectué"
-
-#, python-format
-msgid "Checked out. Invoice %(number)s issued."
-msgstr "Départ enregistré. Facture %(number)s émise."
 
 msgid "Children"
 msgstr "Enfants"
@@ -1279,6 +1283,9 @@ msgstr "Clients présents"
 msgid "Guests not from %(country)s"
 msgstr "Clients hors %(country)s"
 
+msgid "Guests staying now, their room and what they still owe."
+msgstr "Les clients présents, leur chambre et ce qu'ils doivent encore."
+
 msgid ""
 "Guests who never came become no-shows, guests still in after their departure are listed, and the "
 "day's figures are frozen. Running it twice changes nothing; finished days are also closed "
@@ -1335,6 +1342,9 @@ msgstr "Pièce d'identité"
 
 msgid "If someone similar exists, the form proposes them first."
 msgstr "Si une personne semblable existe, le formulaire la propose d’abord."
+
+msgid "In house"
+msgstr "Clients présents"
 
 msgid "In service"
 msgstr "En service"
@@ -1440,6 +1450,10 @@ msgstr "Dernière utilisation"
 
 msgid "Late"
 msgstr "En retard"
+
+#, python-format
+msgid "Leaves on %(date)s"
+msgstr "Départ le %(date)s"
 
 #, python-format
 msgid "Left on %(date)s"
@@ -1735,6 +1749,9 @@ msgstr "Aucun client ne correspond à « %(query)s »."
 msgid "No guest to anonymise."
 msgstr "Aucun client à anonymiser."
 
+msgid "No guests in the house."
+msgstr "Aucun client présent."
+
 msgid "No guests registered yet."
 msgstr "Aucun client enregistré pour l'instant."
 
@@ -1888,6 +1905,9 @@ msgid "Open your authenticator app and type the six-digit code shown for this ho
 msgstr ""
 "Ouvrez votre application d’authentification et saisissez le code à six chiffres affiché pour cet "
 "hôtel."
+
+msgid "Other actions"
+msgstr "Autres actions"
 
 msgid "Out of service"
 msgstr "Hors service"
@@ -2072,6 +2092,10 @@ msgstr "Remboursement"
 
 msgid "Refund owed to the guest"
 msgstr "Remboursement dû au client"
+
+#, python-format
+msgid "Refund owed: %(amount)s"
+msgstr "À rembourser : %(amount)s"
 
 msgid "Refund the guest"
 msgstr "Rembourser le client"
@@ -2698,6 +2722,11 @@ msgstr "Les outils qui gardent les données de l’hôtel fiables et en sécurit
 
 msgid "The two passwords are different."
 msgstr "Les deux mots de passe sont différents."
+
+msgid "These end the reservation. The next page shows what it costs before you confirm."
+msgstr ""
+"Ces actions mettent fin à la réservation. La page suivante indique le coût avant votre "
+"confirmation."
 
 msgid "They will have to replace it at their first sign-in."
 msgstr "La personne devra le remplacer à sa première connexion."

@@ -23,14 +23,8 @@
       <button class="button button--primary" type="submit">{{ icon("check") }}{{ _("Check in") }}</button>
     </form>
     {%- endif %}
-    {%- if reservation.status == "CONFIRMED" and arrival_passed %}
-    <a class="button button--ghost" href="{{ url_for('reservations.no_show', reservation_id=reservation.id) }}">{{ _("Record a no-show") }}</a>
-    {%- endif %}
     {%- if reservation.status in ("CONFIRMED", "CHECKED_IN") %}
-    <a class="button button--primary" href="{{ url_for('reservations.edit', reservation_id=reservation.id) }}">{{ _("Change") }}</a>
-    {%- endif %}
-    {%- if reservation.status == "CONFIRMED" and not arrival_passed %}
-    <a class="button button--ghost" href="{{ url_for('reservations.cancel', reservation_id=reservation.id) }}">{{ _("Cancel reservation") }}</a>
+    <a class="button button--ghost" href="{{ url_for('reservations.edit', reservation_id=reservation.id) }}">{{ _("Change") }}</a>
     {%- endif %}
   </div>
 </div>
@@ -166,4 +160,21 @@
   <p class="muted">{{ _("The nights of this reservation were released when it was cancelled or marked as a no-show.") }}</p>
   {%- endif %}
 </section>
+{#- Story 7.2: actions that end a stay are kept apart from the everyday buttons. #}
+{%- set can_no_show = reservation.status == "CONFIRMED" and arrival_passed %}
+{%- set can_cancel = reservation.status == "CONFIRMED" and not arrival_passed %}
+{%- if can_no_show or can_cancel %}
+<section class="panel other-actions" id="other-actions">
+  <h2 class="panel__title">{{ _("Other actions") }}</h2>
+  <p class="muted">{{ _("These end the reservation. The next page shows what it costs before you confirm.") }}</p>
+  <div class="form-actions">
+    {%- if can_no_show %}
+    <a class="button button--danger-text" href="{{ url_for('reservations.no_show', reservation_id=reservation.id) }}">{{ _("Record a no-show") }}</a>
+    {%- endif %}
+    {%- if can_cancel %}
+    <a class="button button--danger-text" href="{{ url_for('reservations.cancel', reservation_id=reservation.id) }}">{{ _("Cancel reservation") }}</a>
+    {%- endif %}
+  </div>
+</section>
+{%- endif %}
 {% endblock %}

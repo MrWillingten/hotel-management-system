@@ -789,6 +789,8 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 /* Availability grid: colour AND text/legend, never colour alone */
 .legend { display: flex; flex-wrap: wrap; gap: var(--space-3); list-style: none; margin: 0; padding: 0; font-size: var(--text-sm); }
 .legend li { display: inline-flex; align-items: center; gap: var(--space-1); }
+.grid-filter { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.grid-filter select { max-width: 14rem; }
 .cell-swatch { width: 0.9rem; height: 0.9rem; border-radius: 3px; border: 1px solid var(--border-strong); }
 .grid-wrap { max-height: 75vh; }
 .availability { border-collapse: separate; border-spacing: 0; font-size: var(--text-xs); }
@@ -811,7 +813,12 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 .cell__text { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 6rem; font-weight: 600; }
 .cell--free { background: var(--surface); }
 .cell--past { background: var(--surface-sunken); }
-.cell--reserved { background: var(--info-soft); color: var(--info-text); }
+/* Story 7.4 (WCAG 1.4.1): reserved = dotted, occupied = solid, so they differ without colour. */
+.cell--reserved {
+  background-color: var(--info-soft); color: var(--info-text);
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--info-text) 55%, transparent) 1.1px, transparent 1.6px);
+  background-size: 6px 6px;
+}
 .cell--occupied { background: var(--accent-soft); color: var(--accent-soft-text); }
 .cell--maintenance { background: repeating-linear-gradient(135deg, var(--warning-soft) 0 6px, color-mix(in srgb, var(--warning-soft) 60%, var(--warning)) 6px 8px); }
 .cell--out_of_service { background: repeating-linear-gradient(45deg, var(--surface-sunken) 0 6px, var(--border) 6px 8px); }
@@ -821,6 +828,7 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 /* Dashboard (Sprint 4) */
 .grid--stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); }
 .dashboard-footer { font-size: var(--text-sm); text-align: center; }
+.nowrap { white-space: nowrap; }
 .charge-form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-3); margin-block-start: var(--space-3); }
 .charge-form .field { flex: 1 1 9rem; }
 .inline-form { display: flex; gap: var(--space-2); align-items: center; }

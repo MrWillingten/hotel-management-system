@@ -7,10 +7,21 @@
                   "MAINTENANCE": _("Maintenance"), "OUT_OF_SERVICE": _("Out of service"), "PAST": _("Past")} -%}
 <div class="page-actions">
   <nav class="form-actions" aria-label="{{ _('Weeks') }}">
-    <a class="button button--ghost button--small" href="{{ url_for('availability.index', start=previous) }}">{{ _("Previous week") }}</a>
-    <a class="button button--ghost button--small" href="{{ url_for('availability.index') }}">{{ _("Today") }}</a>
-    <a class="button button--ghost button--small" href="{{ url_for('availability.index', start=following) }}">{{ _("Next week") }}</a>
+    <a class="button button--ghost button--small" href="{{ url_for('availability.index', start=previous, category=category) }}">{{ _("Previous week") }}</a>
+    <a class="button button--ghost button--small" href="{{ url_for('availability.index', category=category) }}">{{ _("Today") }}</a>
+    <a class="button button--ghost button--small" href="{{ url_for('availability.index', start=following, category=category) }}">{{ _("Next week") }}</a>
   </nav>
+  <form class="grid-filter" method="get" action="{{ url_for('availability.index') }}">
+    <input type="hidden" name="start" value="{{ calendar.start.isoformat() }}">
+    <label for="f-category">{{ _("Category") }}</label>
+    <select class="field__input field__input--small" id="f-category" name="category">
+      <option value="">{{ _("All categories") }}</option>
+      {%- for c in categories %}
+      <option value="{{ c.id }}"{% if c.id == category %} selected{% endif %}>{{ c.name }}</option>
+      {%- endfor %}
+    </select>
+    <button class="button button--ghost button--small" type="submit">{{ _("Show") }}</button>
+  </form>
   <ul class="legend" aria-label="{{ _('Legend') }}">
     {%- for kind in ("FREE", "RESERVED", "OCCUPIED", "MAINTENANCE", "OUT_OF_SERVICE") %}
     <li><span class="cell-swatch cell--{{ kind | lower }}" aria-hidden="true"></span>{{ labels[kind] }}</li>
@@ -33,7 +44,7 @@
       </tr>
     </thead>
     <tbody>
-      {%- for row in calendar.rows %}
+      {%- for row in rows %}
       <tr>
         <th scope="row" class="availability__room">
           <a href="{{ url_for('rooms.detail', room_id=row.room.id) }}" dir="ltr">{{ row.room.number }}</a>

@@ -23,10 +23,20 @@ def index():
         start = forms.calendar_date(request.args, "start", required=False) or today
     except ValidationError:
         start = today
-    calendar = services().reservations.calendar(current_actor(), start, days=DAYS)
+    actor = current_actor()
+    calendar = services().reservations.calendar(actor, start, days=DAYS)
+    categories = services().rooms.list_categories(actor)
+    # Story 7.4: show one category only; an unknown or empty value shows every room.
+    category = request.args.get("category", type=int)
+    if category not in {c.id for c in categories}:
+        category = None
+    rows = [r for r in calendar.rows if category is None or r.room.category_id == category]
     return render_template(
         "availability/index.html",
         calendar=calendar,
+        rows=rows,
+        categories=categories,
+        category=category,
         previous=start - timedelta(days=7),
         following=start + timedelta(days=7),
         timedelta=timedelta,

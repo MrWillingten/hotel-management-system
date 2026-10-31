@@ -208,6 +208,7 @@ Python 3.11 and 3.13 by CI.
 | `api.md` | JSON API reference |
 | `deployment.md` | Installing, backups, Docker, HTTPS |
 | `translations.md` | How texts are translated and reviewed |
+| `research/hotel-ux-research.md` | How hotel PMS software is designed, front-desk and manager psychology, and the recommendations behind Sprint 7 |
 | `project-structure.md` | This file |
 | `screenshots/` | Pictures used by the README |
 

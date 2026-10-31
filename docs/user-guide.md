@@ -125,12 +125,13 @@ The first page after signing in: what needs attention **today**.
 | **New reservation** | Starts a booking. | A guest phones for next weekend. |
 | **Arrivals** card | Number of guests expected today; click to jump to the list. | "3": three stays start today. |
 | **Departures** card | Guests due to leave today. | |
-| **Guests in the house** card | Stays currently checked in. | |
+| **Guests in the house** card | Stays currently checked in; click to jump to the **In house** list. | |
 | **Occupancy tonight** | Rooms sold ÷ rooms that can be sold tonight (rooms under maintenance are left out). | "75 %", "Under maintenance: 204". |
-| **Due from guests in the house** | Money still owed by guests who are staying now. | |
+| **Due from guests in the house** | Money still owed by guests who are staying now; click to see who owes what in the **In house** list. | |
 | **Rooms not ready** | Rooms waiting for cleaning or inspection. | |
-| **Arrivals list → Check in** | Checks the guest in on the spot. "Late" means the arrival time has passed. | Amira arrives at 15:10: **Check in**. |
-| **Departures list → Check out** | Opens the check-out page with the final bill. "Overdue" means the guest should already have left. | |
+| **Arrivals list → Check in · 204** | Checks the guest in on the spot. The button shows the room number, so a click on the wrong row is noticed; the message after it names the guest and the room. "Late" means the arrival time has passed. | Amira arrives at 15:10: **Check in · 204**. |
+| **Departures list → Check out · 204** | Opens the check-out page with the final bill. Each row already shows **Balance due: …** or **Paid**, so you can prepare the payment while the guest walks up. "Overdue" means the guest should already have left. | |
+| **In house** | Every stay checked in now: room, guest, departure date and what is still due (click it to open the bill). | A guest calls from room 202: find them here. |
 | **Unpaid after departure** | Invoices still owing money after the guest left. Click to settle them. | A company pays by transfer a week later. |
 | **Housekeeping** | Rooms not ready, with a button to move each one to its next state (see [Rooms](#rooms)). | |
 
@@ -139,8 +140,11 @@ The first page after signing in: what needs attention **today**.
 A calendar grid: **rooms down the side, nights across the top**, two weeks
 at a time.
 
-* **Colours:** Free, Reserved, Occupied, Maintenance, Out of service, Past
-  (the legend is above the grid).
+* **Colours and patterns:** Free, Reserved (dotted), Occupied (solid),
+  Maintenance (stripes), Out of service, Past; the legend is above the grid.
+  The patterns make reserved and occupied nights different even without
+  colour.
+* **Category → Show:** shows one room category only (for example Deluxe).
 * **Previous week / Today / Next week:** moves through time.
 * **Clicking a free cell** starts a booking for that room from that night.
 
@@ -195,8 +199,8 @@ tax. **Confirm booking** saves it; **Back** changes something.
 | **Check in** | Marks the guest as arrived. Possible from the arrival day until the last night. It is refused if the previous guest of that room hasn't left. A warning appears if the room isn't *ready* yet. | The guest is at the desk. |
 | **Change** | Changes dates, rooms or the number of people; availability and price are checked again. Nights already booked keep their price; added nights use today's price. Once the guest is in the house, only the departure date and occupants can change. | Extending a stay from 3 to 5 nights. |
 | **Move** (next to a room) | Moves the guests to another room **from tonight on** (see below). | The air conditioning broke in 204. |
-| **Cancel reservation** | Cancels before arrival. It is free until 48 hours before the arrival time (14:00); after that it costs **20 %** of the accommodation. The page shows the exact fee before you confirm, and **Keep it** leaves the booking unchanged. | The guest calls to cancel. |
-| **Record a no-show** | After the arrival time, for a guest who never came. Charged like a late cancellation, and the rooms are freed. | 23:00, nobody arrived. |
+| **Other actions → Cancel reservation** | Kept at the bottom of the page, apart from the everyday buttons. Cancels before arrival. It is free until 48 hours before the arrival time (14:00); after that it costs **20 %** of the accommodation. The page shows the exact fee before you confirm, and **Keep it** leaves the booking unchanged. | The guest calls to cancel. |
+| **Other actions → Record a no-show** | After the arrival time, for a guest who never came. Charged like a late cancellation, and the rooms are freed. | 23:00, nobody arrived. |
 | **Check out** | Opens the final bill; **Check out and issue the invoice** finishes the stay. Leaving early charges only the nights spent. | The guest leaves. |
 | **Invoice F-2026-00012** | Appears after check-out (or after a fee was charged). | Re-printing an invoice. |
 | **Extra services** | Adds a service (breakfast, transfer…) with a quantity and date, only while the guest is checked in. Managers can **Void** a wrong line with a reason (the line stays visible, crossed out). | 2 breakfasts on 11 July. |

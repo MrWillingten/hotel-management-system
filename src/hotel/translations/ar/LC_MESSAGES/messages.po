@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-18 21:15+0100\n"
+"POT-Creation-Date: 2026-10-31 11:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -42,8 +42,12 @@ msgid "%(name)s added to the catalogue."
 msgstr "تمت إضافة %(name)s إلى الكتالوج."
 
 #, python-format
-msgid "%(name)s is checked in."
-msgstr "تم تسجيل وصول %(name)s."
+msgid "%(name)s has checked out of room %(rooms)s. Invoice %(number)s issued."
+msgstr "غادر %(name)s الغرفة %(rooms)s. صدرت الفاتورة %(number)s."
+
+#, python-format
+msgid "%(name)s is checked in, room %(rooms)s."
+msgstr "تم تسجيل وصول %(name)s، الغرفة %(rooms)s."
 
 #, python-format
 msgid "%(quantity)s × %(price)s"
@@ -480,6 +484,10 @@ msgstr "طلب غير صالح"
 msgid "Balance due"
 msgstr "الرصيد المستحق"
 
+#, python-format
+msgid "Balance due: %(amount)s"
+msgstr "المبلغ المستحق: %(amount)s"
+
 msgid "Bank transfer"
 msgstr "تحويل بنكي"
 
@@ -709,10 +717,6 @@ msgstr "تم تسجيل الوصول"
 
 msgid "Checked out"
 msgstr "تم تسجيل المغادرة"
-
-#, python-format
-msgid "Checked out. Invoice %(number)s issued."
-msgstr "تم تسجيل المغادرة. صدرت الفاتورة %(number)s."
 
 msgid "Children"
 msgstr "الأطفال"
@@ -1247,6 +1251,9 @@ msgstr "النزلاء المقيمون"
 msgid "Guests not from %(country)s"
 msgstr "النزلاء من خارج %(country)s"
 
+msgid "Guests staying now, their room and what they still owe."
+msgstr "النزلاء المقيمون حاليًا وغرفهم وما تبقى عليهم من مبالغ."
+
 msgid ""
 "Guests who never came become no-shows, guests still in after their departure are listed, and the "
 "day's figures are frozen. Running it twice changes nothing; finished days are also closed "
@@ -1301,6 +1308,9 @@ msgstr "وثيقة الهوية"
 
 msgid "If someone similar exists, the form proposes them first."
 msgstr "إذا وُجد شخص مشابه، يقترحه النموذج أولًا."
+
+msgid "In house"
+msgstr "النزلاء المقيمون"
 
 msgid "In service"
 msgstr "في الخدمة"
@@ -1402,6 +1412,10 @@ msgstr "آخر استخدام"
 
 msgid "Late"
 msgstr "متأخر"
+
+#, python-format
+msgid "Leaves on %(date)s"
+msgstr "يغادر في %(date)s"
 
 #, python-format
 msgid "Left on %(date)s"
@@ -1693,6 +1707,9 @@ msgstr "لا يوجد نزيل يطابق «%(query)s»."
 msgid "No guest to anonymise."
 msgstr "لا يوجد نزيل لإخفاء هويته."
 
+msgid "No guests in the house."
+msgstr "لا يوجد نزلاء مقيمون."
+
 msgid "No guests registered yet."
 msgstr "لا يوجد نزلاء مسجلون بعد."
 
@@ -1844,6 +1861,9 @@ msgstr "فتح هذه الصفحة"
 
 msgid "Open your authenticator app and type the six-digit code shown for this hotel."
 msgstr "افتح تطبيق المصادقة واكتب الرمز المكوّن من ستة أرقام الظاهر لهذا الفندق."
+
+msgid "Other actions"
+msgstr "إجراءات أخرى"
 
 msgid "Out of service"
 msgstr "خارج الخدمة"
@@ -2026,6 +2046,10 @@ msgstr "استرداد"
 
 msgid "Refund owed to the guest"
 msgstr "مبلغ مستحق الاسترداد للنزيل"
+
+#, python-format
+msgid "Refund owed: %(amount)s"
+msgstr "مبلغ مستحق الاسترداد: %(amount)s"
 
 msgid "Refund the guest"
 msgstr "رد المبلغ للنزيل"
@@ -2640,6 +2664,9 @@ msgstr "الأدوات التي تحافظ على موثوقية بيانات ا
 
 msgid "The two passwords are different."
 msgstr "كلمتا المرور غير متطابقتين."
+
+msgid "These end the reservation. The next page shows what it costs before you confirm."
+msgstr "تُنهي هذه الإجراءات الحجز. تعرض الصفحة التالية التكلفة قبل أن تؤكد."
 
 msgid "They will have to replace it at their first sign-in."
 msgstr "سيتعين على صاحب الحساب استبدالها عند أول تسجيل دخول."
