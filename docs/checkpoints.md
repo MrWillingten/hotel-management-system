@@ -68,7 +68,8 @@ python prototype/hotel_prototype.py
 python prototype/scenarios.py
 ```
 
-Its README maps every CP1 business rule to the function that enforces it.
+Its README maps every CP1 business rule to the function that enforces it. The CP2
+document (8 pages) is built from `report/cp2/` with `build.sh "Student Name"`.
 The application itself also keeps several rules as plain functions
 (`build_bill`, `taxes_for_stay`, `plan_removal`, the guest checks in
 `domain/guests.py`).
