@@ -27,7 +27,8 @@ TRANSITIONS = {
     "CONFIRMED": {"CHECKED_IN", "CANCELLED", "NO_SHOW"},
     "CHECKED_IN": {"CHECKED_OUT"},
 }
-ACTIVE = {"CONFIRMED", "CHECKED_IN"}  # BR15: statuses that hold a room
+# BR15: only active stays (confirmed or checked in) hold room nights, because cancel()
+# and no_show() release them: a night in room_nights is always a real obstacle.
 
 
 # ---------------------------------------------------------------- data

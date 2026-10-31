@@ -1,0 +1,52 @@
+@page { size: A4; margin: 20mm 20mm 18mm 20mm;
+  @bottom-center { content: "Hotel Reservation and Management System · CP2 – Procedural prototype · " counter(page);
+                   font-family: "Liberation Serif", serif; font-size: 9pt; color: #6b625a; } }
+@page :first { @bottom-center { content: none; } }
+@page wide { size: A4 landscape; margin: 12mm 12mm 14mm 12mm; }
+.erd { page: wide; }
+.after-erd { margin-top: 0; }
+body { font-family: "Liberation Serif", "Times New Roman", serif; font-size: 12pt; line-height: 1.5; color: #1d1a18; margin: 0; }
+h1 { font-size: 17pt; color: #3b2f2a; border-bottom: 1.5px solid #a0522d; padding-bottom: 3px; margin: 0 0 10px; page-break-after: avoid; }
+h2 { font-size: 13.5pt; color: #3b2f2a; margin: 16px 0 6px; page-break-after: avoid; }
+p { margin: 0 0 9px; text-align: justify; }
+table { width: 100%; border-collapse: collapse; margin: 6px 0 12px; font-size: 10.5pt; line-height: 1.3; page-break-inside: auto; }
+tr { page-break-inside: avoid; }
+th { background: #3b2f2a; color: #fff; text-align: left; padding: 4px 6px; font-weight: bold; }
+td { border-bottom: 1px solid #d9cbbb; padding: 4px 6px; vertical-align: top; }
+tr:nth-child(even) td { background: #faf5ef; }
+td.n { width: 42px; color: #a0522d; font-weight: bold; white-space: nowrap; }
+ul { margin: 0 0 9px; padding-left: 22px; }
+li { margin-bottom: 3px; text-align: justify; }
+.section { page-break-before: always; }
+.note { font-size: 10.5pt; color: #4a413b; }
+code { font-family: "Liberation Mono", monospace; font-size: 10pt; }
+
+/* cover */
+.cover { text-align: center; }
+.cover .uni { font-size: 14pt; letter-spacing: 2px; color: #3b2f2a; margin-top: 60px; }
+.cover .course { font-size: 12pt; color: #4a413b; margin-top: 4px; }
+.cover .rule { width: 60%; margin: 70px auto 30px; border-top: 2px solid #a0522d; }
+.cover .project { font-size: 13pt; color: #a0522d; letter-spacing: 1px; }
+.cover .title { font-size: 26pt; font-weight: bold; color: #3b2f2a; line-height: 1.25; margin: 14px 40px; }
+.cover .cp { font-size: 17pt; color: #3b2f2a; margin-top: 18px; }
+.cover .rule2 { width: 60%; margin: 30px auto 0; border-top: 2px solid #a0522d; }
+.cover table.meta { width: 62%; margin: 90px auto 0; font-size: 12pt; }
+.cover table.meta td { border: none; background: none; padding: 5px 8px; }
+.cover table.meta td.k { text-align: right; color: #6b625a; width: 40%; }
+.cover table.meta td.v { text-align: left; }
+.contents { width: 62%; margin: 60px auto 0; text-align: left; font-size: 11.5pt; }
+.contents div { border-bottom: 1px dotted #b9aa98; padding: 3px 0; }
+
+/* landscape ER page */
+.erd h1 { font-size: 16pt; margin-bottom: 6px; }
+.erd img { display: block; margin: 0 auto; max-width: 100%; max-height: 158mm; }
+.legend { font-size: 9.5pt; line-height: 1.35; margin-top: 4px; }
+.legend td { border: none; background: none !important; padding: 1px 8px 1px 0; }
+
+/* code excerpts */
+pre { font-family: "Liberation Mono", monospace; font-size: 7.9pt; line-height: 1.3; background: #faf5ef;
+      border: 1px solid #e4d6c6; border-inline-start: 3px solid #a0522d; padding: 7px 10px; margin: 6px 0 12px;
+      white-space: pre-wrap; page-break-inside: avoid; }
+pre.run { background: #1f1b18; color: #f3e7da; border-color: #3b2f2a; }
+.caption { font-size: 10pt; color: #6b625a; margin: -6px 0 12px; }
+.keep { break-inside: avoid; }

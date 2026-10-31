@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>CP2 – Procedural prototype</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+
+<div class="cover">
+  <div class="uni">ITEAM UNIVERSITY</div>
+  <div class="course">Python Programming · Semester Project · Academic Year 2026–2027</div>
+  <div class="rule"></div>
+  <div class="project">PROJECT 3</div>
+  <div class="title">Hotel Reservation and<br>Management System</div>
+  <div class="cp">Checkpoint 2 – Procedural prototype</div>
+  <div class="rule2"></div>
+  <table class="meta">
+    <tr><td class="k">Student</td><td class="v">{{STUDENT}}</td></tr>
+    <tr><td class="k">Team</td><td class="v">Individual project</td></tr>
+    <tr><td class="k">Date</td><td class="v">2 November 2026</td></tr>
+  </table>
+  <div class="contents">
+    <div>1. Introduction</div>
+    <div>2. Data structures</div>
+    <div>3. Main functions and business rules</div>
+    <div>4. Running the prototype</div>
+    <div>5. Testing</div>
+    <div>6. Towards CP3</div>
+  </div>
+</div>
+
+<!-- 1 ---------------------------------------------------------------- -->
+<div class="section">
+<h1>1. Introduction</h1>
+<p>Checkpoint 2 asks for an initial working prototype written with Python functions and
+collections. This prototype implements the core of the hotel described in the CP1 analysis
+using <b>only functions and Python's built-in collections</b> – <code>dict</code>,
+<code>list</code>, <code>tuple</code> and <code>set</code>. It has no classes, no database and no
+web interface: those belong to the next checkpoints (CP3 and CP4).</p>
+<p>The prototype follows CP1 directly. Its data mirrors the entities and the ER diagram, each
+function enforces business rules from section 3 of CP1 and names them in a comment, and the
+acceptance scenarios of CP1 section 2.6 are run with the same rooms, dates and amounts.</p>
+
+<h2>1.1 What the prototype covers</h2>
+<table>
+<tr><th style="width:30%">Area</th><th>Operations</th></tr>
+<tr><td>Rooms</td><td>Categories, rooms (unique numbers), closing a room for maintenance, room status on a day</td></tr>
+<tr><td>Guests</td><td>Search before registering, registration with a unique identity document</td></tr>
+<tr><td>Availability</td><td>Free rooms for a period and a number of people, alternatives when a room is taken</td></tr>
+<tr><td>Reservations</td><td>Booking one or more rooms, changing the dates, cancelling (with the 48-hour fee), no-show</td></tr>
+<tr><td>Front desk</td><td>Check-in, check-out</td></tr>
+<tr><td>Services and money</td><td>Extra services charged to a stay, deposits and payments, the bill with total and balance</td></tr>
+</table>
+<p class="note">Staff accounts, taxes, discounts, statistics and saving the data come with the
+object-oriented design (CP3) and the integration (CP4).</p>
+
+<h2>1.2 Files</h2>
+<table>
+<tr><th style="width:30%">File</th><th>Content</th></tr>
+<tr><td><code>hotel_prototype.py</code></td><td>The data, about 50 small functions and a terminal menu (about 630 lines, standard library only)</td></tr>
+<tr><td><code>scenarios.py</code></td><td>The acceptance scenarios of the brief, each checked automatically</td></tr>
+<tr><td><code>README.md</code></td><td>How to run it, and which function enforces each business rule</td></tr>
+</table>
+</div>
+
+<!-- 2 ---------------------------------------------------------------- -->
+<div class="section">
+<h1>2. Data structures</h1>
+<p>All the data lives in one dictionary, <code>hotel</code>. Each key is a table of the CP1 ER
+diagram, and each row is a dictionary with the same fields as the entity.</p>
+<pre>def new_hotel() -&gt; dict:
+    return {
+        "categories": {},    # id -&gt; category
+        "rooms": {},         # room number -&gt; room
+        "maintenance": {},   # id -&gt; maintenance period
+        "guests": {},        # id -&gt; guest
+        "reservations": {},  # id -&gt; reservation (with its list of rooms)
+        "room_nights": {},   # (room, night) -&gt; who holds that night, and its locked rate
+        "extras": {},        # id -&gt; extra service
+        "charges": [],       # service charges, in the order they were made
+        "payments": [],      # deposits and payments, in the order they were received
+        "next_id": {"category": 1, "maintenance": 1, "guest": 1, "reservation": 1, "extra": 1},
+    }</pre>
+
+<h2>2.1 Why each collection</h2>
+<table>
+<tr><th style="width:24%">Data</th><th style="width:22%">Collection</th><th>Reason</th></tr>
+<tr><td>Guests, reservations, categories, extras, maintenance</td><td><code>dict</code> id → row</td><td>A row is found at once from its id, without scanning a list.</td></tr>
+<tr><td>Rooms</td><td><code>dict</code> number → row</td><td>Room numbers are unique (BR1), so the number itself is the key; adding an existing number is detected with <code>in</code>.</td></tr>
+<tr><td>Room nights</td><td><code>dict</code> keyed by a <code>tuple</code> (room, night)</td><td>Like the primary key (room_id, night) of the ER diagram: a key exists only once, so the same room cannot be taken twice on the same night (BR3, BR5).</td></tr>
+<tr><td>Charges, payments</td><td><code>list</code> of rows</td><td>They are only added and read in order; a list keeps that order.</td></tr>
+<tr><td>Allowed status changes</td><td><code>dict</code> status → <code>set</code></td><td>Checking whether a change is allowed is a fast membership test (BR16).</td></tr>
+<tr><td>Rooms of a booking</td><td><code>list</code> of <code>tuple</code> (room, adults, children)</td><td>A fixed group of three values per room, one reservation holding several rooms (decision Q1).</td></tr>
+<tr><td>The menu</td><td><code>dict</code> choice → (label, function)</td><td>The whole menu is data: functions are values in Python and are called from the dictionary.</td></tr>
+</table>
+
+<h2>2.2 Money and dates</h2>
+<p>Amounts are whole numbers of <b>millimes</b> (1 DT = 1000 millimes), never floating-point
+numbers, so 0.1 + 0.2 rounding errors cannot happen (BR24). Dates use <code>datetime.date</code>
+from the standard library, and a stay is the half-open range [arrival, departure): the departure
+day is not a night (BR13, BR14). Amounts typed by the user are read as text:</p>
+<pre>def dinars(text: str) -&gt; int:
+    """'150' or '12.500' -&gt; millimes. Parsed as text, never as a float."""
+    text = text.strip()
+    whole, _, fraction = text.partition(".")
+    if not whole.isdigit() or (fraction and not fraction.isdigit()) or len(fraction) &gt; 3:
+        raise ValueError(f"'{text}' is not an amount in dinars (e.g. 150 or 12.500).")
+    return int(whole) * 1000 + int(fraction.ljust(3, "0"))</pre>
+</div>
+
+<!-- 3 ---------------------------------------------------------------- -->
+<div>
+<h1 style="margin-top:22px">3. Main functions and business rules</h1>
+<p>Every function receives the <code>hotel</code> dictionary and changes or reads it. When an
+operation breaks a rule, the function raises a <code>ValueError</code> whose message explains why;
+the menu catches it and prints <i>Refused: …</i> (BR12).</p>
+
+<p class="note">The excerpts below are copied from <code>hotel_prototype.py</code>; some are
+shortened (type hints and docstrings removed) to fit the page.</p>
+
+<h2>3.1 Function → rule map</h2>
+<table>
+<tr><th style="width:40%">CP1 rule</th><th>Function(s)</th></tr>
+<tr><td>BR1 unique room numbers</td><td><code>add_room</code></td></tr>
+<tr><td>BR2, BR25 identification, search before registering</td><td><code>register_guest</code>, <code>find_guests</code></td></tr>
+<tr><td>BR3, BR5, BR6 no double booking, maintenance, available room</td><td><code>is_free</code>, <code>available_rooms</code>, <code>book</code>, <code>close_for_maintenance</code></td></tr>
+<tr><td>BR4, BR13, BR14 dates and nights</td><td><code>check_period</code>, <code>overlaps</code>, <code>each_night</code>, <code>nights</code></td></tr>
+<tr><td>BR7 capacity</td><td><code>book</code></td></tr>
+<tr><td>BR8, BR9, BR21 accommodation, services, balance</td><td><code>accommodation</code>, <code>bill</code></td></tr>
+<tr><td>BR10 deposit</td><td><code>record_payment</code></td></tr>
+<tr><td>BR11 + Q2 cancellation fee</td><td><code>late_fee</code>, <code>cancel</code></td></tr>
+<tr><td>BR16 life cycle</td><td><code>TRANSITIONS</code>, <code>set_status</code></td></tr>
+<tr><td>BR17 check-in</td><td><code>check_in</code></td></tr>
+<tr><td>BR18 a change re-checks availability</td><td><code>change_dates</code></td></tr>
+<tr><td>BR19 services only while checked in</td><td><code>charge_extra</code></td></tr>
+<tr><td>BR20 price locked per night</td><td><code>book</code>, <code>change_dates</code></td></tr>
+<tr><td>BR23 status of a room on a day</td><td><code>room_status</code></td></tr>
+<tr><td>Decision F no-show</td><td><code>no_show</code></td></tr>
+</table>
+
+<div class="keep"><h2>3.2 Two stays overlap (BR13)</h2>
+<pre>def overlaps(arrival1: date, departure1: date, arrival2: date, departure2: date) -&gt; bool:
+    """BR13: half-open intervals overlap iff a1 &lt; d2 and a2 &lt; d1."""
+    return arrival1 &lt; departure2 and arrival2 &lt; departure1</pre>
+<p class="caption">A guest leaving on the 14th and another arriving on the 14th do not overlap.</p></div>
+
+<div class="keep"><h2>3.3 Is a room free? (BR3, BR5, BR18)</h2>
+<pre>def is_free(hotel, room, arrival, departure, ignore=None) -&gt; bool:
+    if not get_room(hotel, room)["in_service"]:
+        return False
+    for night in each_night(arrival, departure):
+        entry = hotel["room_nights"].get((room, night))
+        if entry is None:
+            continue
+        # A maintenance night has no reservation_id: it is never "this reservation".
+        if ignore is None or entry.get("reservation_id") != ignore:
+            return False
+    return True</pre>
+<p class="caption">One dictionary look-up per night. <code>ignore</code> lets a reservation that
+changes its dates ignore its own nights (BR18).</p></div>
+
+<div class="keep"><h2>3.4 The cancellation fee (BR11 and decision Q2)</h2>
+<pre>def late_fee(hotel, reservation, now) -&gt; int:
+    arrival_time = datetime.combine(reservation["arrival"], CHECK_IN_TIME)   # 14:00
+    if arrival_time - now &gt;= CANCELLATION_WINDOW:   # 48 hours; exactly 48:00 -&gt; no fee
+        return 0
+    return accommodation(hotel, reservation["id"]) * CANCELLATION_FEE_PERCENT // 100</pre>
+<p class="caption">Integer arithmetic on millimes: 20 % of 300 DT is exactly 60.000 DT.</p></div>
+
+<div class="keep"><h2>3.5 The reservation life cycle (BR16)</h2>
+<pre>TRANSITIONS = {
+    "CONFIRMED": {"CHECKED_IN", "CANCELLED", "NO_SHOW"},
+    "CHECKED_IN": {"CHECKED_OUT"},
+}
+
+def set_status(reservation: dict, new_status: str) -&gt; None:
+    if new_status not in TRANSITIONS.get(reservation["status"], set()):
+        raise ValueError(f"A {reservation['status']} reservation cannot become {new_status}.")
+    reservation["status"] = new_status</pre>
+<p class="caption">Any change that is not in the dictionary – for example checking out a guest
+who never checked in – is refused with a clear message.</p></div>
+</div>
+
+<!-- 4 ---------------------------------------------------------------- -->
+<div class="section">
+<h1>4. Running the prototype</h1>
+<p>The prototype needs only Python 3.11 or later. It starts with sample data matching the CP1
+scenarios: Standard rooms 101–103 (150 DT, 2 people), Deluxe rooms 203–204 (180 DT, 3 people),
+breakfast (15 DT) and airport transfer (40 DT).</p>
+<pre class="run">python prototype/hotel_prototype.py
+
+Hotel - procedural prototype (CP2)
+   1. Find or register a guest          7. Check in
+   2. Free rooms for dates              8. Charge an extra service
+   3. Book a stay                       9. Record a deposit or payment
+   4. List reservations                10. Show the bill
+   5. Change the dates                 11. Check out
+   6. Cancel a reservation             12. Close a room for maintenance
+   0. Quit</pre>
+<p class="caption">The menu (shown here in two columns).</p>
+
+<h2>4.1 A short session</h2>
+<p>A new guest is registered, booked for three nights in room 101, pays a 100 DT deposit, and
+the bill is displayed:</p>
+<pre class="run">Choice: 1   Search: ben salah   Nobody found. Register a new guest? y
+            ... Registered guest #1.
+Choice: 3   Guest id: 1   Arrival: 2027-07-01   Departure: 2027-07-04
+            Free rooms: 101, 102, 103, 203, 204
+            Room numbers: 101   Adults in room 101: 2
+            Booked: reservation #1 (R-2027-00001).
+Choice: 9   Reservation id: 1   Amount in DT: 100   Method: CARD   Payment recorded.
+Choice: 10  Reservation id: 1
+
+  Bill R-2027-00001
+    Room 101 - nights at 150.000 DT          x3       450.000 DT
+    Total                                             450.000 DT
+    Paid                                              100.000 DT
+    Balance                                           350.000 DT</pre>
+
+<h2>4.2 Invalid operations are refused and explained (BR12)</h2>
+<pre class="run">Choice: 9   Reservation id: 1   Amount in DT: -5
+  Refused: '-5' is not an amount in dinars (e.g. 150 or 12.500).
+Choice: 3   ... Room numbers: 101   (same dates, another guest)
+  Refused: Room 101 is not free for these dates. Free rooms: 102, 103, 203, 204.</pre>
+</div>
+
+<!-- 5 ---------------------------------------------------------------- -->
+<div class="section">
+<h1>5. Testing</h1>
+<p><code>scenarios.py</code> plays the acceptance scenarios of CP1 (section 2.6) on a fresh
+sample hotel and checks each expected result with <code>assert</code>. Its output:</p>
+<pre class="run">python prototype/scenarios.py
+
+PASS  Room 204 (Deluxe, 180 DT) closed for three days: no reservation can cover them.
+      -&gt; Room 204 is not free for these dates. Free rooms: 101, 102, 103, 203.
+PASS  A returning guest calls: the existing record is found, not duplicated.
+      -&gt; This document already belongs to Amira Ben Salah.
+PASS  Request 10-15 July while the room is booked 12-14 July: refused, alternatives given.
+      -&gt; Room 101 is not free for these dates. Free rooms: 102, 103, 203, 204.
+PASS  Extend a stay from 3 to 5 nights: allowed only if the room is free for the extra nights.
+      -&gt; Room 102 is not free for the new dates.
+PASS  Arrival, 4 nights, 3 breakfasts and 1 airport transfer, departure: all on the bill.
+      -&gt; Extra services are charged only while the guest is checked in.
+PASS  3 nights x 150 DT, 80 DT of services, 100 DT deposit: total 530 DT, balance 430 DT.
+      -&gt; total 530.000 DT, balance 430.000 DT
+PASS  BR11: 20 % fee under 48 hours before arrival at 14:00; exactly 48 hours is free.
+      -&gt; fee 60.000 DT
+PASS  Decision F and BR16: a no-show after the arrival time; no check-out without check-in.
+      -&gt; A CONFIRMED reservation cannot become CHECKED_OUT.
+PASS  BR20: a later price change never alters an existing reservation.
+      -&gt; 2 nights still at 180.000 DT
+
+All 9 scenarios passed.</pre>
+
+<h2>5.1 A bug found by the scenarios</h2>
+<p>The first version of <code>is_free</code> compared the night's reservation with the
+reservation to ignore using <code>entry.get("reservation_id") != ignore</code>. For a night
+closed for maintenance, the entry has no reservation, so <code>get</code> returned
+<code>None</code>; when no reservation was to be ignored, <code>ignore</code> was also
+<code>None</code>, and <code>None != None</code> is <code>False</code>. The night was therefore
+treated as free, and a room under maintenance could be booked – breaking BR5.</p>
+<p>The first scenario (room 204 closed for maintenance) failed and revealed it. The function now
+skips empty nights explicitly and treats any other taken night as an obstacle unless it belongs to
+the reservation being changed (section 3.3). This shows why each rule is checked by a scenario,
+not only by trying the menu by hand.</p>
+</div>
+
+<!-- 6 ---------------------------------------------------------------- -->
+<div>
+<h1 style="margin-top:22px">6. Towards CP3</h1>
+<p>The prototype shows that the rules work. Its limits are also visible: any part of the program
+can change any dictionary, a misspelt key such as <code>"arival"</code> is only discovered when the
+code runs, and the rules about a reservation are spread over several functions. The
+object-oriented design of CP3 answers these points by grouping each kind of data with the rules
+that protect it:</p>
+<table>
+<tr><th style="width:45%">In the prototype</th><th>In the object-oriented design (CP3)</th></tr>
+<tr><td>A reservation <code>dict</code> + <code>set_status</code>, <code>TRANSITIONS</code></td><td>A <code>Reservation</code> class whose methods allow only valid changes of status</td></tr>
+<tr><td><code>nights()</code>, <code>overlaps()</code>, <code>each_night()</code></td><td>A <code>StayPeriod</code> class (arrival, departure) with these operations</td></tr>
+<tr><td>Integers of millimes + <code>dinars()</code>, <code>fmt()</code></td><td>A <code>Money</code> class that cannot be mixed up with a plain number</td></tr>
+<tr><td><code>bill()</code> building a <code>dict</code></td><td>A bill built by a function from objects, then frozen in an invoice</td></tr>
+<tr><td><code>room_nights</code> keyed by (room, night)</td><td>The same idea as a database table whose primary key is (room_id, night) in CP4</td></tr>
+</table>
+<p>The same business rules, scenarios and numbers will be reused, so each checkpoint can be
+compared with the previous one.</p>
+</div>
+
+</body></html>
