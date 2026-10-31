@@ -315,6 +315,10 @@ img, svg { display: block; }
 }
 .topbar__title { font-family: var(--font-serif); font-size: var(--text-xl); }
 .topbar__actions { display: flex; align-items: center; gap: var(--space-3); margin-inline-start: auto; flex-wrap: wrap; }
+.topbar-search { position: relative; display: flex; align-items: center; }
+/* Two classes: wins over .field__input, which sets its own padding later in the file. */
+.topbar-search .topbar-search__input { min-height: 2.25rem; inline-size: 14rem; padding-block: var(--space-1); padding-inline-start: 2.25rem; }
+.topbar-search .search__icon { inset-inline-start: var(--space-2); }
 
 .content {
   display: flex;
@@ -587,6 +591,11 @@ img, svg { display: block; }
   font-weight: 600;
 }
 .user-chip__text { display: flex; flex-direction: column; line-height: 1.2; }
+/* Mid-size screens: room for the search box by showing the avatar without name and role. */
+@media (max-width: 75em) {
+  .topbar-search .topbar-search__input { inline-size: 12.5rem; }
+  .user-chip__text { display: none; }
+}
 .user-chip__name { font-weight: 600; font-size: var(--text-sm); }
 .user-chip__role { color: var(--text-muted); font-size: var(--text-xs); }
 
@@ -618,6 +627,8 @@ img, svg { display: block; }
   .topbar__title { flex-basis: 100%; }
   .topbar__actions { margin-inline-start: 0; width: 100%; }
   .topbar__actions form:last-child { margin-inline-start: auto; }
+  .topbar-search { flex: 1 1 100%; }
+  .topbar-search .topbar-search__input { inline-size: 100%; }
   .content { padding: var(--space-4); }
 
   .auth-layout { grid-template-columns: minmax(0, 1fr); }
@@ -829,6 +840,10 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 .grid--stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); }
 .dashboard-footer { font-size: var(--text-sm); text-align: center; }
 .nowrap { white-space: nowrap; }
+/* Story 7.5: badges under the guest's name on an arrival row. */
+.arrival-facts { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); margin-block-start: var(--space-1); font-size: var(--text-sm); }
+.arrival-note { display: flex; align-items: flex-start; gap: var(--space-1); margin-block-start: var(--space-1); font-size: var(--text-sm); color: var(--text-muted); }
+.arrival-note .icon { flex: none; inline-size: 1em; block-size: 1em; margin-block-start: 0.2em; }
 .charge-form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-3); margin-block-start: var(--space-3); }
 .charge-form .field { flex: 1 1 9rem; }
 .inline-form { display: flex; gap: var(--space-2); align-items: center; }

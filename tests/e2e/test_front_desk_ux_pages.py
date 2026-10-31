@@ -92,3 +92,83 @@ def test_reserved_and_occupied_differ_by_pattern_not_only_colour(client):
     response.close()  # static files are streamed: close the file handle
     reserved = css.split(".cell--reserved {")[1].split("}")[0]
     assert "background-image: radial-gradient" in reserved
+
+
+# ------------------------------------------------------------ batch B (7.5-7.7)
+NOTE = "Arrives late by train from Tunis, would like a quiet room facing the garden"
+
+
+def test_arrival_rows_answer_the_questions_before_the_key(client, services, hotel, clock):
+    from hotel.domain.rooms import Housekeeping
+
+    # A previous stay, finished: Amira is a returning guest.
+    first = _in_house(services, hotel, stay(8, 9), "205")
+    clock.advance(timedelta(days=1))
+    services.invoices.check_out(hotel.rita, first.id, version=first.version)
+    amira = services.guests.get(hotel.boss, hotel.amira.id)
+    services.guests.set_flags(
+        hotel.boss, amira.id, version=amira.version, is_vip=True, do_not_rent=False
+    )
+    booked = services.reservations.create(
+        hotel.rita,
+        guest_id=amira.id,
+        period=stay(9, 11),
+        rooms=[_request(hotel, "204")],
+        notes=NOTE,
+    )
+    services.billing.record_payment(
+        hotel.rita, booked.id, amount=Money.from_dinars(100), method=PaymentMethod.CARD
+    )
+    services.rooms.set_housekeeping(hotel.rita, hotel.rooms["204"].id, Housekeeping.DIRTY)
+    book(services, hotel, stay(9, 10), "101", guest=hotel.karim)  # its room is ready
+    login(client)
+    arrivals = client.get("/").get_data(as_text=True).split('id="arrivals"')[1]
+    arrivals = arrivals.split("</section>")[0]
+    assert "VIP" in arrivals
+    assert "Returning guest · stays: 1" in arrivals
+    assert f"Deposit paid: <bdi>100.000{NBSP}DT</bdi>" in arrivals
+    assert "Nothing paid yet" in arrivals  # Karim
+    assert "To clean" in arrivals
+    assert NOTE[:40] in arrivals
+    assert NOTE not in arrivals  # only the start of the note
+    # The room that is ready comes first: Karim can be checked in now.
+    assert arrivals.index("Karim Haddad") < arrivals.index("Amira Ben Salah")
+
+
+def _request(hotel, number, adults=1):
+    from hotel.domain.reservations import RoomRequest
+
+    return RoomRequest(hotel.rooms[number].id, adults)
+
+
+def test_step_three_quotes_the_whole_stay(signed_in, hotel):
+    page = signed_in.get(
+        "/reservations/new?arrival=2026-07-10&departure=2026-07-13&guests=1"
+    ).get_data(as_text=True)
+    assert "Stay total (before tax)" in page
+    assert "Nights: 3" in page
+    assert f"540.000{NBSP}DT" in page  # 3 x 180 DT for a Deluxe room
+    assert f"360.000{NBSP}DT" in page  # 3 x 120 DT for the Standard room
+
+
+def test_one_search_box_finds_codes_rooms_and_guests(signed_in, services, hotel):
+    r = book(services, hotel, stay(9, 10), "204")
+    page = signed_in.get("/").get_data(as_text=True)
+    assert 'action="/search/"' in page
+    found = signed_in.get(f"/search/?q={r.code.lower()}")
+    assert found.headers["Location"] == f"/reservations/{r.id}"
+    assert (
+        signed_in.get("/search/?q=R-2026-99999")
+        .headers["Location"]
+        .startswith("/reservations/?q=R-2026-99999")
+    )
+    room = signed_in.get("/search/?q=205")  # free tonight: the room page
+    assert room.headers["Location"] == f"/rooms/{hotel.rooms['205'].id}"
+    staying = _in_house(services, hotel, stay(8, 10), "101")
+    occupied = signed_in.get("/search/?q=101")  # occupied: the guest's stay
+    assert occupied.headers["Location"] == f"/reservations/{staying.id}"
+    invoice = signed_in.get("/search/?q=F-2026-00001")
+    assert invoice.headers["Location"] == "/invoices/?q=F-2026-00001"
+    guest = signed_in.get("/search/?q=ben+salah")
+    assert guest.headers["Location"] == "/guests/?q=ben+salah"
+    assert signed_in.get("/search/?q=").headers["Location"] == "/"

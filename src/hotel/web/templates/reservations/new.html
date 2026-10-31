@@ -2,6 +2,7 @@
 {%- from "macros/forms.html" import csrf, field, form_errors, select, textarea -%}
 {%- from "macros/icons.html" import icon -%}
 {%- from "macros/guests.html" import flags -%}
+{%- from "macros/reservations.html" import stay -%}
 {% block title %}{{ _("New reservation") }}{% endblock %}
 {% block page_title %}{{ _("New reservation") }}{% endblock %}
 {% block content %}
@@ -74,6 +75,8 @@
   {%- elif not rooms %}
   <p class="muted">{{ _("No room is free for every night of this stay.") }}</p>
   {%- else %}
+  {#- Story 7.6: the whole stay priced per room, to quote it while the guest is on the phone. #}
+  <p class="muted">{{ stay(period) }}</p>
   <form method="post" action="{{ url_for('reservations.review') }}" novalidate>
     {{ csrf() }}
     <input type="hidden" name="guest_id" value="{{ guest.id if guest else '' }}">
@@ -88,6 +91,7 @@
             <th scope="col">{{ _("Category") }}</th>
             <th scope="col" class="num">{{ _("Capacity") }}</th>
             <th scope="col" class="num">{{ _("Nightly rate") }}</th>
+            <th scope="col" class="num">{{ _("Stay total (before tax)") }}</th>
             <th scope="col">{{ _("Adults") }}</th>
             <th scope="col">{{ _("Children") }}</th>
           </tr>
@@ -102,6 +106,7 @@
             <td>{{ room.category_name }}</td>
             <td class="num">{{ room.capacity }}</td>
             <td class="num">{{ room.nightly_rate | money }}</td>
+            <td class="num"><strong>{{ prices[room.id] | money }}</strong></td>
             <td><input class="field__input field__input--tiny" type="number" min="1" max="{{ room.capacity }}" name="adults_{{ room.id }}"
                        value="{{ [wanted, room.capacity] | min }}" aria-label="{{ _('Adults') }}"></td>
             <td><input class="field__input field__input--tiny" type="number" min="0" max="{{ room.capacity }}" name="children_{{ room.id }}"

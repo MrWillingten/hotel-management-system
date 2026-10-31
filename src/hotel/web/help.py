@@ -42,6 +42,13 @@ TOPICS: list[HelpTopic] = [
                 ),
             ),
             (
+                _l("Search box"),
+                _l(
+                    "In the top bar: a reservation code, an invoice number, a room number or a "
+                    "guest's name, then Enter."
+                ),
+            ),
+            (
                 _l("Language and theme"),
                 _l(
                     "EN, FR, ع and the sun/moon buttons in the top bar; remembered on this computer."

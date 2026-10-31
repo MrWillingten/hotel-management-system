@@ -89,6 +89,11 @@ message and printed invoice is then in French.
 
 ### The top bar
 
+* **Search box (“Code, room or guest”):** type and press Enter, from any
+  page. A reservation code (R-2026-00042) opens that reservation; an
+  invoice number (F-2026-00001) the invoice list; a room number the stay of
+  the guest in it (or the room page if it is free); anything else searches
+  the guests. *Example:* a guest calls from room 204: type 204, Enter.
 * **Your name and role:** opens your account (password, two-factor and,
   for managers, API tokens).
 * **Sign out icon (→]):** ends your session at once, and the browser is told
@@ -129,7 +134,7 @@ The first page after signing in: what needs attention **today**.
 | **Occupancy tonight** | Rooms sold ÷ rooms that can be sold tonight (rooms under maintenance are left out). | "75 %", "Under maintenance: 204". |
 | **Due from guests in the house** | Money still owed by guests who are staying now; click to see who owes what in the **In house** list. | |
 | **Rooms not ready** | Rooms waiting for cleaning or inspection. | |
-| **Arrivals list → Check in · 204** | Checks the guest in on the spot. The button shows the room number, so a click on the wrong row is noticed; the message after it names the guest and the room. "Late" means the arrival time has passed. | Amira arrives at 15:10: **Check in · 204**. |
+| **Arrivals list → Check in · 204** | Under each name: each room with **Ready / To clean / Cleaned, to inspect**, **VIP**, **Returning guest · stays: 3**, **Deposit paid: …** or **Nothing paid yet**, and the start of the reservation note. Rooms that are ready come first. The button checks the guest in on the spot. The button shows the room number, so a click on the wrong row is noticed; the message after it names the guest and the room. "Late" means the arrival time has passed. | Amira arrives at 15:10: **Check in · 204**. |
 | **Departures list → Check out · 204** | Opens the check-out page with the final bill. Each row already shows **Balance due: …** or **Paid**, so you can prepare the payment while the guest walks up. "Overdue" means the guest should already have left. | |
 | **In house** | Every stay checked in now: room, guest, departure date and what is still due (click it to open the bill). | A guest calls from room 202: find them here. |
 | **Unpaid after departure** | Invoices still owing money after the guest left. Click to settle them. | A company pays by transfer a week later. |
@@ -168,8 +173,11 @@ you click 205 on the 12th.
 **New reservation**, in three steps:
 
 1. **Stay:** arrival, departure, number of guests in one room, and an
-   optional category. **Find rooms** lists every room free on *every*
-   night, with its capacity and price.
+   optional category (dates start as today → tomorrow). **Find rooms**
+   lists every room free on *every* night, with its capacity, its nightly
+   price and the **stay total (before tax)**, so you can quote the price
+   while the caller is still on the phone. The total includes seasonal and
+   weekend prices, which is why it can differ from nights × nightly price.
 2. **Guest:** search by name or document. **Choose** the right person, or
    **Register a new guest** if they're new. A guest marked *do-not-rent*
    is refused.
