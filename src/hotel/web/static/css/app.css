@@ -840,6 +840,17 @@ input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--ac
 .grid--stats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); }
 .dashboard-footer { font-size: var(--text-sm); text-align: center; }
 .nowrap { white-space: nowrap; }
+.panel__subtitle { font-size: var(--text-base); font-weight: 600; margin-block: var(--space-4) var(--space-2); }
+.presets { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block-end: var(--space-3); }
+/* Story 7.8: the "Needs attention" panel. Each line has an icon and words, not colour only. */
+.attention { border-inline-start: 4px solid var(--warning); }
+.attention--clear { border-inline-start-color: var(--success); }
+.attention--clear p { display: flex; align-items: center; gap: var(--space-2); margin: 0; }
+.attention__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.attention__item { display: flex; align-items: center; gap: var(--space-2); }
+.attention__item--warning .icon { color: var(--warning-text); }
+.attention__item--danger .icon { color: var(--danger-text); }
+.attention__item--danger a { color: var(--danger-text); font-weight: 600; }
 /* Story 7.5: badges under the guest's name on an arrival row. */
 .arrival-facts { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); margin-block-start: var(--space-1); font-size: var(--text-sm); }
 .arrival-note { display: flex; align-items: flex-start; gap: var(--space-1); margin-block-start: var(--space-1); font-size: var(--text-sm); color: var(--text-muted); }

@@ -17,6 +17,7 @@ from hotel.persistence.backup import create_backup
 from hotel.persistence.db import initialise_database
 from hotel.persistence.unit_of_work import UnitOfWork, UnitOfWorkFactory
 from hotel.services.api_tokens import ApiTokenService
+from hotel.services.attention import AttentionService
 from hotel.services.audit import AuditService
 from hotel.services.auth import AuthService
 from hotel.services.backups import BackupService
@@ -67,6 +68,7 @@ class Services:
     two_factor: TwoFactorService
     api_tokens: ApiTokenService
     onboarding: OnboardingService
+    attention: AttentionService
 
     def is_healthy(self) -> bool:
         """True when the database answers (used by the /health page)."""
@@ -101,17 +103,20 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
     policy = PasswordPolicy(common_passwords=load_common_passwords())
     reservations = ReservationService(uow_factory, clock)
     reports = ReportService(uow_factory, clock)
+    audit = AuditService(uow_factory, clock)
+    backups = BackupService(uow_factory, clock, settings.database_path, settings.backup_dir)
+    night_audit = NightAuditService(uow_factory, clock, reservations, reports)
     return Services(
         settings=settings,
         clock=clock,
         uow_factory=uow_factory,
         schema_version=schema_version,
         auth=AuthService(uow_factory, clock, hasher, policy),
-        audit=AuditService(uow_factory, clock),
+        audit=audit,
         users=UserService(uow_factory, clock, hasher, policy),
         rooms=RoomService(uow_factory, clock),
         guests=GuestService(uow_factory, clock),
-        backups=BackupService(uow_factory, clock, settings.database_path, settings.backup_dir),
+        backups=backups,
         reservations=reservations,
         form_tokens=FormTokenService(uow_factory, clock),
         front_desk=FrontDeskService(uow_factory, clock),
@@ -120,8 +125,9 @@ def build_services(settings: Settings, *, clock: Clock | None = None) -> Service
         billing=BillingService(uow_factory, clock),
         invoices=InvoiceService(uow_factory, clock),
         reports=reports,
-        night_audit=NightAuditService(uow_factory, clock, reservations, reports),
+        night_audit=night_audit,
         two_factor=TwoFactorService(uow_factory, clock),
         api_tokens=ApiTokenService(uow_factory, clock),
         onboarding=OnboardingService(uow_factory, clock),
+        attention=AttentionService(clock, night_audit, backups, audit),
     )

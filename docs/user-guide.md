@@ -127,6 +127,7 @@ The first page after signing in: what needs attention **today**.
 
 | Element | What it does | Example |
 |---|---|---|
+| **Needs attention** | At the top, only what is wrong now, each line a link: late arrivals not checked in, rooms not ready for today's arrivals, overdue departures, unpaid invoices after departure. Managers also see: yesterday not closed by the night audit, no backup in the last 24 hours, and the audit log altered (in red). When all is well: "Nothing needs attention." | "Rooms not ready for today's arrivals: 1" → click → the arrivals list. |
 | **New reservation** | Starts a booking. | A guest phones for next weekend. |
 | **Arrivals** card | Number of guests expected today; click to jump to the list. | "3": three stays start today. |
 | **Departures** card | Guests due to leave today. | |
@@ -332,8 +333,10 @@ order: rate period, then weekend surcharge, then the room's own price.
 
 ### Reports
 
-Figures for any range of up to two years: choose **First night**, **Last
-night** and **Availability on**, then **Show**.
+Figures for any range of up to two years. The page opens on **this month**.
+One click on **Yesterday**, **This month**, **Last month**, **Next 30 days**
+or **Year to date** fills both dates (the chosen one is highlighted); or
+choose **First night**, **Last night** and **Availability on**, then **Show**.
 
 | Figure | Meaning |
 |---|---|
@@ -358,7 +361,10 @@ Closes a finished day: the rooms of guests who never came are released
 (no-shows), and a **snapshot** of the day's figures is kept. Guests still
 in the house after their departure date are listed, not changed.
 
-* **Close the day** closes yesterday by default. Running it twice changes
+* The page first shows a **preview** of yesterday (or of the day chosen
+  with **Preview**): the reservations that will become no-shows, the guests
+  still in after their departure, and the stays that still owe money.
+  Nothing is changed until **Close the day**. Running it twice changes
   nothing.
 * When the application starts after being off, missed days are closed
   automatically ("Automatic" in the list).

@@ -14,6 +14,31 @@
   <a class="button button--primary" href="{{ url_for('reservations.new') }}">{{ icon("plus") }}{{ _("New reservation") }}</a>
 </section>
 
+{#- Story 7.8: exceptions first. Each line says what is wrong and links to where it is fixed. #}
+<section class="panel attention{% if not attention %} attention--clear{% endif %}" id="attention" aria-labelledby="attention-title">
+  <h2 class="panel__title" id="attention-title">{{ _("Needs attention") }}</h2>
+  {%- if attention %}
+  <ul class="attention__list">
+    {%- for item in attention %}
+    {%- set target = {
+      "overdue_departures": ("#departures", _("Departures overdue: %(count)s", count=item.count)),
+      "late_arrivals": ("#arrivals", _("Late arrivals not checked in: %(count)s", count=item.count)),
+      "rooms_not_ready": ("#arrivals", _("Rooms not ready for today's arrivals: %(count)s", count=item.count)),
+      "unpaid_invoices": ("#balances", _("Unpaid invoices after departure: %(count)s", count=item.count)),
+      "day_not_closed": (url_for("night_audit.index"), _("Yesterday is not closed yet (night audit).")),
+      "old_backup": (url_for("backups.index"), _("No backup in the last 24 hours.")),
+      "audit_chain_broken": (url_for("audit.index"), _("The audit log was altered: check it now.")),
+    }[item.kind] %}
+    <li class="attention__item attention__item--{{ item.level }}">
+      {{ icon("alert") }}<a href="{{ target[0] }}">{{ target[1] }}</a>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- else %}
+  <p class="muted">{{ icon("check") }} {{ _("Nothing needs attention.") }}</p>
+  {%- endif %}
+</section>
+
 {% include "partials/onboarding.html" %}
 
 <div class="grid grid--cards grid--stats">

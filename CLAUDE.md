@@ -193,6 +193,8 @@ SQLite), e2e (Flask client). Shared fixtures `hotel`, `signed_in` in
 - Daily automatic backup runs at start-up only; long-running servers need a
   scheduled `hotel backup` (documented in `docs/deployment.md`).
 - No JavaScript at all (CSP): printing is the browser's Ctrl+P.
+- The manager's "Needs attention" panel verifies the whole audit chain on each dashboard
+  load (21 ms for 2,205 entries; linear) — cache it if the log grows large.
 
 ### Bugs found and fixed (lessons)
 - Regenerating `requirements-dev.lock` with a newer uv dropped `typing-extensions`

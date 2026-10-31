@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-31 12:01+0100\n"
+"POT-Creation-Date: 2026-10-31 12:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -420,6 +420,9 @@ msgstr ""
 msgid "At most the balance due."
 msgstr ""
 
+msgid "At the top, only what is wrong now (late arrivals, rooms not ready...)."
+msgstr ""
+
 msgid "Audit log"
 msgstr ""
 
@@ -799,6 +802,10 @@ msgid ""
 "up."
 msgstr ""
 
+#, python-format
+msgid "Closing %(day)s will:"
+msgstr ""
+
 msgid "Code"
 msgstr ""
 
@@ -907,6 +914,10 @@ msgid "Departure"
 msgstr ""
 
 msgid "Departures"
+msgstr ""
+
+#, python-format
+msgid "Departures overdue: %(count)s"
 msgstr ""
 
 msgid "Deposit"
@@ -1433,6 +1444,9 @@ msgstr ""
 msgid "Last closed night"
 msgstr ""
 
+msgid "Last month"
+msgstr ""
+
 msgid "Last name"
 msgstr ""
 
@@ -1443,6 +1457,13 @@ msgid "Last used"
 msgstr ""
 
 msgid "Late"
+msgstr ""
+
+#, python-format
+msgid "Late arrivals not checked in: %(count)s"
+msgstr ""
+
+msgid "Leave open (guests in the house who still owe)"
 msgstr ""
 
 #, python-format
@@ -1462,6 +1483,9 @@ msgid ""
 msgstr ""
 
 msgid "Light"
+msgstr ""
+
+msgid "List as still checked in after departure"
 msgstr ""
 
 msgid "Lists every room free on every night of the stay."
@@ -1609,6 +1633,9 @@ msgstr ""
 msgid "Nationality"
 msgstr ""
 
+msgid "Needs attention"
+msgstr ""
+
 msgid "New category"
 msgstr ""
 
@@ -1657,6 +1684,9 @@ msgid "Newest arrivals first."
 msgstr ""
 
 msgid "Next"
+msgstr ""
+
+msgid "Next 30 days"
 msgstr ""
 
 msgid "Next page"
@@ -1713,6 +1743,9 @@ msgid "Nights: %(nights)s"
 msgstr ""
 
 msgid "No account exists yet."
+msgstr ""
+
+msgid "No backup in the last 24 hours."
 msgstr ""
 
 msgid "No backups yet."
@@ -1820,6 +1853,9 @@ msgid ""
 msgstr ""
 
 msgid "Notes"
+msgstr ""
+
+msgid "Nothing needs attention."
 msgstr ""
 
 msgid "Nothing paid yet"
@@ -1949,10 +1985,16 @@ msgstr ""
 msgid "Percentage"
 msgstr ""
 
+msgid "Periods"
+msgstr ""
+
 msgid "Phone"
 msgstr ""
 
 msgid "Preferences useful to the staff. No sensitive information."
+msgstr ""
+
+msgid "Preview"
 msgstr ""
 
 msgid "Previous"
@@ -2052,6 +2094,9 @@ msgid "Record a payment"
 msgstr ""
 
 msgid "Record a payment first"
+msgstr ""
+
+msgid "Record as no-shows"
 msgstr ""
 
 msgid "Record the no-show"
@@ -2307,6 +2352,10 @@ msgid "Rooms free for the same dates:"
 msgstr ""
 
 msgid "Rooms not ready"
+msgstr ""
+
+#, python-format
+msgid "Rooms not ready for today's arrivals: %(count)s"
 msgstr ""
 
 msgid "Rooms that are not ready, with a button to move each to its next state."
@@ -2592,6 +2641,9 @@ msgstr ""
 msgid "The arrival time has passed: record a no-show instead of a cancellation."
 msgstr ""
 
+msgid "The audit log was altered: check it now."
+msgstr ""
+
 msgid "The bill is closed: discounts can no longer change."
 msgstr ""
 
@@ -2758,6 +2810,9 @@ msgstr ""
 msgid "This code is not correct. Check the phone's time and try again."
 msgstr ""
 
+msgid "This day is already closed."
+msgstr ""
+
 msgid "This day was already closed; nothing changed."
 msgstr ""
 
@@ -2819,6 +2874,9 @@ msgid "This isn't possible for a reservation in this state."
 msgstr ""
 
 msgid "This maintenance period is already over."
+msgstr ""
+
+msgid "This month"
 msgstr ""
 
 msgid "This operation isn't allowed."
@@ -2981,6 +3039,10 @@ msgstr ""
 msgid "Unpaid after departure lists invoices that still owe money."
 msgstr ""
 
+#, python-format
+msgid "Unpaid invoices after departure: %(count)s"
+msgstr ""
+
 msgid "Untick to take the room out of service (it can no longer be booked)."
 msgstr ""
 
@@ -3124,7 +3186,16 @@ msgid ""
 " be shown again."
 msgstr ""
 
+msgid "Year to date"
+msgstr ""
+
+msgid "Yesterday"
+msgstr ""
+
 msgid "Yesterday by default; running it twice changes nothing."
+msgstr ""
+
+msgid "Yesterday is not closed yet (night audit)."
 msgstr ""
 
 #, python-format

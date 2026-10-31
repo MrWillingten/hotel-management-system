@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-31 12:01+0100\n"
+"POT-Creation-Date: 2026-10-31 12:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -417,6 +417,9 @@ msgstr "12 حرفًا على الأقل. الجملة القصيرة سهلة ا
 msgid "At most the balance due."
 msgstr "لا يتجاوز الرصيد المستحق."
 
+msgid "At the top, only what is wrong now (late arrivals, rooms not ready...)."
+msgstr "في الأعلى، ما يحتاج إلى معالجة الآن فقط (وصول متأخر، غرف غير جاهزة...)."
+
 msgid "Audit log"
 msgstr "سجل التدقيق"
 
@@ -789,6 +792,10 @@ msgstr ""
 "يُقفل يومًا منتهيًا: يُسجَّل النزلاء الذين لم يحضروا كعدم حضور وتُثبَّت أرقام اليوم. وتُقفل "
 "الأيام الفائتة تلقائيًا عند التشغيل."
 
+#, python-format
+msgid "Closing %(day)s will:"
+msgstr "إغلاق يوم %(day)s سيؤدي إلى:"
+
 msgid "Code"
 msgstr "الرمز"
 
@@ -894,6 +901,10 @@ msgstr "المغادرة"
 
 msgid "Departures"
 msgstr "المغادرون"
+
+#, python-format
+msgid "Departures overdue: %(count)s"
+msgstr "مغادرات متأخرة: %(count)s"
 
 msgid "Deposit"
 msgstr "عربون"
@@ -1413,6 +1424,9 @@ msgstr "اللغة والمظهر"
 msgid "Last closed night"
 msgstr "آخر ليلة مغلقة"
 
+msgid "Last month"
+msgstr "الشهر الماضي"
+
 msgid "Last name"
 msgstr "اللقب"
 
@@ -1424,6 +1438,13 @@ msgstr "آخر استخدام"
 
 msgid "Late"
 msgstr "متأخر"
+
+#, python-format
+msgid "Late arrivals not checked in: %(count)s"
+msgstr "وصول متأخر دون تسجيل: %(count)s"
+
+msgid "Leave open (guests in the house who still owe)"
+msgstr "تبقى مفتوحة (نزلاء مقيمون ما زالوا مدينين)"
 
 #, python-format
 msgid "Leaves on %(date)s"
@@ -1441,6 +1462,9 @@ msgstr "تتيح لبرنامج آخر قراءة أرقام الفندق (دو�
 
 msgid "Light"
 msgstr "فاتح"
+
+msgid "List as still checked in after departure"
+msgstr "إدراج النزلاء الباقين بعد موعد المغادرة"
 
 msgid "Lists every room free on every night of the stay."
 msgstr "يعرض كل غرفة شاغرة في كل ليالي الإقامة."
@@ -1591,6 +1615,9 @@ msgstr "بطاقة التعريف الوطنية"
 msgid "Nationality"
 msgstr "الجنسية"
 
+msgid "Needs attention"
+msgstr "يتطلب الانتباه"
+
 msgid "New category"
 msgstr "فئة جديدة"
 
@@ -1640,6 +1667,9 @@ msgstr "الأحدث وصولًا أولًا."
 
 msgid "Next"
 msgstr "التالي"
+
+msgid "Next 30 days"
+msgstr "الأيام الثلاثون القادمة"
 
 msgid "Next page"
 msgstr "الصفحة التالية"
@@ -1696,6 +1726,9 @@ msgstr "عدد الليالي: %(nights)s"
 
 msgid "No account exists yet."
 msgstr "لا يوجد أي حساب بعد."
+
+msgid "No backup in the last 24 hours."
+msgstr "لا توجد نسخة احتياطية خلال آخر 24 ساعة."
 
 msgid "No backups yet."
 msgstr "لا توجد نسخ احتياطية بعد."
@@ -1805,6 +1838,9 @@ msgstr ""
 
 msgid "Notes"
 msgstr "ملاحظات"
+
+msgid "Nothing needs attention."
+msgstr "لا شيء يتطلب الانتباه."
 
 msgid "Nothing paid yet"
 msgstr "لم يُدفع شيء بعد"
@@ -1932,11 +1968,17 @@ msgstr "المدفوعات المستلمة"
 msgid "Percentage"
 msgstr "نسبة مئوية"
 
+msgid "Periods"
+msgstr "الفترات"
+
 msgid "Phone"
 msgstr "الهاتف"
 
 msgid "Preferences useful to the staff. No sensitive information."
 msgstr "تفضيلات مفيدة للموظفين. بدون معلومات حساسة."
+
+msgid "Preview"
+msgstr "معاينة"
 
 msgid "Previous"
 msgstr "السابقة"
@@ -2040,6 +2082,9 @@ msgstr "تسجيل دفعة"
 
 msgid "Record a payment first"
 msgstr "سجّل دفعة أولاً"
+
+msgid "Record as no-shows"
+msgstr "تسجيل كعدم حضور"
 
 msgid "Record the no-show"
 msgstr "تأكيد عدم الحضور"
@@ -2293,6 +2338,10 @@ msgstr "غرف متاحة في التواريخ نفسها:"
 
 msgid "Rooms not ready"
 msgstr "غرف غير جاهزة"
+
+#, python-format
+msgid "Rooms not ready for today's arrivals: %(count)s"
+msgstr "غرف غير جاهزة لوافدي اليوم: %(count)s"
 
 msgid "Rooms that are not ready, with a button to move each to its next state."
 msgstr "الغرف غير الجاهزة، مع زر لنقل كل منها إلى حالتها التالية."
@@ -2565,6 +2614,9 @@ msgstr "لا يمكن أن يكون تاريخ الوصول في الماضي."
 msgid "The arrival time has passed: record a no-show instead of a cancellation."
 msgstr "مضى وقت الوصول: سجّل عدم حضور بدلًا من الإلغاء."
 
+msgid "The audit log was altered: check it now."
+msgstr "تم التلاعب بسجل التدقيق: افحصه الآن."
+
 msgid "The bill is closed: discounts can no longer change."
 msgstr "كشف الحساب مغلق: لم يعد بالإمكان تغيير التخفيضات."
 
@@ -2721,6 +2773,9 @@ msgstr "هذا الرمز غير صحيح أو سبق استخدامه. جرّب
 msgid "This code is not correct. Check the phone's time and try again."
 msgstr "هذا الرمز غير صحيح. تحقّق من ساعة الهاتف وحاول مرة أخرى."
 
+msgid "This day is already closed."
+msgstr "هذا اليوم مغلق بالفعل."
+
 msgid "This day was already closed; nothing changed."
 msgstr "كان هذا اليوم مقفلاً من قبل؛ لم يتغير شيء."
 
@@ -2775,6 +2830,9 @@ msgstr "هذا غير ممكن لحجز في هذه الحالة."
 
 msgid "This maintenance period is already over."
 msgstr "انتهت فترة الصيانة هذه بالفعل."
+
+msgid "This month"
+msgstr "هذا الشهر"
 
 msgid "This operation isn't allowed."
 msgstr "هذه العملية غير مسموح بها."
@@ -2935,6 +2993,10 @@ msgstr "غير مسدد بعد المغادرة"
 msgid "Unpaid after departure lists invoices that still owe money."
 msgstr "تعرض «غير مسدد بعد المغادرة» الفواتير التي ما زال عليها مبالغ."
 
+#, python-format
+msgid "Unpaid invoices after departure: %(count)s"
+msgstr "فواتير غير مدفوعة بعد المغادرة: %(count)s"
+
 msgid "Untick to take the room out of service (it can no longer be booked)."
 msgstr "أزل التحديد لإخراج الغرفة من الخدمة (لن يمكن حجزها بعد ذلك)."
 
@@ -3071,8 +3133,17 @@ msgstr ""
 "دوّن هذه الرموز أو اطبعها واحفظها في مكان آمن بعيدًا عن هاتفك. يصلح كل رمز مرة واحدة إذا فُقد "
 "الهاتف. لن تُعرض مرة أخرى."
 
+msgid "Year to date"
+msgstr "منذ بداية السنة"
+
+msgid "Yesterday"
+msgstr "أمس"
+
 msgid "Yesterday by default; running it twice changes nothing."
 msgstr "يوم أمس افتراضيًا؛ ولا يغيّر تشغيله مرتين شيئًا."
+
+msgid "Yesterday is not closed yet (night audit)."
+msgstr "لم يُغلق يوم أمس بعد (التدقيق الليلي)."
 
 #, python-format
 msgid "You already have %(max)s active tokens. Revoke one first."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hotel VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-31 12:01+0100\n"
+"POT-Creation-Date: 2026-10-31 12:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -433,6 +433,9 @@ msgstr "Au moins 12 caractères. Une courte phrase est facile à retenir et diff
 msgid "At most the balance due."
 msgstr "Au plus le solde dû."
 
+msgid "At the top, only what is wrong now (late arrivals, rooms not ready...)."
+msgstr "En haut, seulement ce qui ne va pas maintenant (arrivées en retard, chambres pas prêtes...)."
+
 msgid "Audit log"
 msgstr "Journal d'audit"
 
@@ -813,6 +816,10 @@ msgstr ""
 "Clôture une journée terminée : les clients jamais arrivés deviennent des non-présentations et les"
 " chiffres du jour sont figés. Les jours manqués sont clôturés automatiquement au démarrage."
 
+#, python-format
+msgid "Closing %(day)s will:"
+msgstr "La clôture du %(day)s va :"
+
 msgid "Code"
 msgstr "Code"
 
@@ -922,6 +929,10 @@ msgstr "Départ"
 
 msgid "Departures"
 msgstr "Départs"
+
+#, python-format
+msgid "Departures overdue: %(count)s"
+msgstr "Départs en retard : %(count)s"
 
 msgid "Deposit"
 msgstr "Acompte"
@@ -1453,6 +1464,9 @@ msgstr "Langue et thème"
 msgid "Last closed night"
 msgstr "Dernière nuit fermée"
 
+msgid "Last month"
+msgstr "Mois dernier"
+
 msgid "Last name"
 msgstr "Nom"
 
@@ -1464,6 +1478,13 @@ msgstr "Dernière utilisation"
 
 msgid "Late"
 msgstr "En retard"
+
+#, python-format
+msgid "Late arrivals not checked in: %(count)s"
+msgstr "Arrivées en retard non enregistrées : %(count)s"
+
+msgid "Leave open (guests in the house who still owe)"
+msgstr "Laisser ouverts (clients présents qui doivent encore)"
 
 #, python-format
 msgid "Leaves on %(date)s"
@@ -1483,6 +1504,9 @@ msgstr ""
 
 msgid "Light"
 msgstr "Clair"
+
+msgid "List as still checked in after departure"
+msgstr "Signaler comme encore présents après le départ prévu"
 
 msgid "Lists every room free on every night of the stay."
 msgstr "Liste toutes les chambres libres chaque nuit du séjour."
@@ -1633,6 +1657,9 @@ msgstr "Carte d'identité nationale (CIN)"
 msgid "Nationality"
 msgstr "Nationalité"
 
+msgid "Needs attention"
+msgstr "À traiter"
+
 msgid "New category"
 msgstr "Nouvelle catégorie"
 
@@ -1684,6 +1711,9 @@ msgstr "Arrivées les plus récentes en premier."
 
 msgid "Next"
 msgstr "Suivant"
+
+msgid "Next 30 days"
+msgstr "30 prochains jours"
 
 msgid "Next page"
 msgstr "Page suivante"
@@ -1740,6 +1770,9 @@ msgstr "Nuits : %(nights)s"
 
 msgid "No account exists yet."
 msgstr "Aucun compte n'existe encore."
+
+msgid "No backup in the last 24 hours."
+msgstr "Aucune sauvegarde depuis 24 heures."
 
 msgid "No backups yet."
 msgstr "Aucune sauvegarde pour l'instant."
@@ -1849,6 +1882,9 @@ msgstr ""
 
 msgid "Notes"
 msgstr "Remarques"
+
+msgid "Nothing needs attention."
+msgstr "Rien à traiter."
 
 msgid "Nothing paid yet"
 msgstr "Rien n'est encore payé"
@@ -1978,11 +2014,17 @@ msgstr "Paiements reçus"
 msgid "Percentage"
 msgstr "Pourcentage"
 
+msgid "Periods"
+msgstr "Périodes"
+
 msgid "Phone"
 msgstr "Téléphone"
 
 msgid "Preferences useful to the staff. No sensitive information."
 msgstr "Préférences utiles au personnel. Aucune information sensible."
+
+msgid "Preview"
+msgstr "Aperçu"
 
 msgid "Previous"
 msgstr "Précédente"
@@ -2088,6 +2130,9 @@ msgstr "Enregistrer un paiement"
 
 msgid "Record a payment first"
 msgstr "Enregistrer d'abord un paiement"
+
+msgid "Record as no-shows"
+msgstr "Enregistrer comme non présentés"
 
 msgid "Record the no-show"
 msgstr "Enregistrer la non-présentation"
@@ -2341,6 +2386,10 @@ msgstr "Chambres libres aux mêmes dates :"
 
 msgid "Rooms not ready"
 msgstr "Chambres non prêtes"
+
+#, python-format
+msgid "Rooms not ready for today's arrivals: %(count)s"
+msgstr "Chambres pas prêtes pour les arrivées du jour : %(count)s"
 
 msgid "Rooms that are not ready, with a button to move each to its next state."
 msgstr "Les chambres non prêtes, avec un bouton pour passer chacune à l’état suivant."
@@ -2621,6 +2670,9 @@ msgstr "La date d'arrivée ne peut pas être passée."
 msgid "The arrival time has passed: record a no-show instead of a cancellation."
 msgstr "L'heure d'arrivée est passée : enregistrez une non-présentation plutôt qu'une annulation."
 
+msgid "The audit log was altered: check it now."
+msgstr "Le journal d'audit a été modifié : vérifiez-le maintenant."
+
 msgid "The bill is closed: discounts can no longer change."
 msgstr "La note est clôturée : les remises ne peuvent plus changer."
 
@@ -2783,6 +2835,9 @@ msgstr "Ce code est incorrect ou a déjà été utilisé. Essayez le suivant."
 msgid "This code is not correct. Check the phone's time and try again."
 msgstr "Ce code est incorrect. Vérifiez l’heure du téléphone et réessayez."
 
+msgid "This day is already closed."
+msgstr "Cette journée est déjà clôturée."
+
 msgid "This day was already closed; nothing changed."
 msgstr "Cette journée était déjà clôturée ; rien n'a changé."
 
@@ -2837,6 +2892,9 @@ msgstr "Impossible pour une réservation dans cet état."
 
 msgid "This maintenance period is already over."
 msgstr "Cette période de maintenance est déjà terminée."
+
+msgid "This month"
+msgstr "Ce mois-ci"
 
 msgid "This operation isn't allowed."
 msgstr "Cette opération n'est pas autorisée."
@@ -3004,6 +3062,10 @@ msgstr "Impayés après départ"
 msgid "Unpaid after departure lists invoices that still owe money."
 msgstr "« Impayés après départ » liste les factures encore dues."
 
+#, python-format
+msgid "Unpaid invoices after departure: %(count)s"
+msgstr "Factures impayées après départ : %(count)s"
+
 msgid "Untick to take the room out of service (it can no longer be booked)."
 msgstr "Décochez pour mettre la chambre hors service (elle ne peut plus être réservée)."
 
@@ -3148,8 +3210,17 @@ msgstr ""
 "Notez ou imprimez ces codes et gardez-les en lieu sûr, loin de votre téléphone. Chacun fonctionne"
 " une seule fois, si le téléphone est perdu. Ils ne seront plus affichés."
 
+msgid "Year to date"
+msgstr "Depuis le début de l'année"
+
+msgid "Yesterday"
+msgstr "Hier"
+
 msgid "Yesterday by default; running it twice changes nothing."
 msgstr "La veille par défaut ; le lancer deux fois ne change rien."
+
+msgid "Yesterday is not closed yet (night audit)."
+msgstr "Hier n'est pas encore clôturé (audit de nuit)."
 
 #, python-format
 msgid "You already have %(max)s active tokens. Revoke one first."

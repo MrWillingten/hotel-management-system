@@ -2,18 +2,34 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 from datetime import date, timedelta
 
 from hotel.domain.actor import Actor
 from hotel.domain.clock import Clock
 from hotel.domain.enums import Role
 from hotel.domain.errors import HotelError, ValidationError
+from hotel.domain.money import Money
 from hotel.domain.night_audit import AuditOutcome, DailySnapshot, days_to_close
+from hotel.domain.reservations import Reservation
 from hotel.persistence.unit_of_work import UnitOfWorkFactory
 from hotel.services.audit import record
 from hotel.services.authorization import require_role
+from hotel.services.billing import bill_for
 from hotel.services.reports import ReportService
 from hotel.services.reservations import ReservationService
+
+
+@dataclass(frozen=True, slots=True)
+class AuditPreview:
+    """Story 7.10: what closing `day` would do, shown before the button (nothing is written)."""
+
+    day: date
+    already_closed: bool
+    no_shows: list[Reservation] = field(default_factory=list)  # will become no-shows
+    overdue: list[Reservation] = field(default_factory=list)  # still in after their departure
+    open_balances: int = 0  # stays in the house that still owe money
+    open_total: Money = field(default_factory=Money.zero)
 
 
 class NightAuditService:
@@ -33,6 +49,30 @@ class NightAuditService:
         require_role(actor, Role.MANAGER)
         with self._uow() as uow:
             return uow.snapshots.recent()
+
+    def last_closed_day(self, actor: Actor) -> date | None:
+        require_role(actor, Role.MANAGER)
+        with self._uow() as uow:
+            return uow.snapshots.last_closed_day()
+
+    def preview(self, actor: Actor, day: date | None = None) -> AuditPreview:
+        """The consequences of run(day), read only: the manager sees them before confirming."""
+        require_role(actor, Role.MANAGER)
+        today = self._clock.today()
+        day = day or today - timedelta(days=1)
+        with self._uow() as uow:
+            if uow.snapshots.get(day) is not None:
+                return AuditPreview(day, already_closed=True)
+            due = [bill_for(uow, r).balance for r in uow.reservations.in_house()]
+            owing = [b for b in due if not b.is_negative() and not b.is_zero()]
+            return AuditPreview(
+                day,
+                already_closed=False,
+                no_shows=uow.reservations.not_arrived(day),
+                overdue=uow.reservations.departures(day),
+                open_balances=len(owing),
+                open_total=sum(owing, Money.zero()),
+            )
 
     def run(self, actor: Actor, day: date | None = None) -> AuditOutcome:
         """Close `day` (yesterday by default). Running it again changes nothing."""
